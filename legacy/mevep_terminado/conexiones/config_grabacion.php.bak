@@ -1,0 +1,8 @@
+<?php
+
+ include("adodb.inc.php");
+ $db_os = &ADONewConnection('mysql');
+ $db_os->NConnect("localhost", "root", "", "laboratorio_V1");
+
+ 
+?>

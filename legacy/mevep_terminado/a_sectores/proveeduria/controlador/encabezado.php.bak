@@ -1,0 +1,33 @@
+<?php
+ECHO "ENCABEZADO";
+//  dl("php_TM20v53ts-vc9-x86.dll");
+
+//phpinfo();
+
+//exit;
+
+  $port = IF_OPEN("COM7",9600);
+
+
+
+
+  if ( $port == -1) 
+  {   echo "impresora ocupada";   return;  }
+
+$nError = IF_SERIAL("27-0163848-435");
+
+
+   $nError = IF_WRITE("@PONEENCABEZADO|1|MEVEP");
+ $nError = IF_WRITE("@PONEENCABEZADO|2|------------------------ ");
+ $nError = IF_WRITE("@PONEENCABEZADO|3|CIERRE Z ");
+ $nError = IF_WRITE("@PONEENCABEZADO|4|------------------------ ");
+
+
+  $err = IF_WRITE("@CIERREZ|P");
+
+  printf($err);
+
+  $err = IF_CLOSE();
+
+?>
+

@@ -1,0 +1,93 @@
+<?php 
+include ("../../conexiones/config.inc.php");
+
+ $contra=strtoupper($_REQUEST["contra"]);
+$cod_socio=$_REQUEST["cod_socio"];
+$nuevo_cod_socio=$_REQUEST["nuevo_cod_socio"];
+$ruta=$_REQUEST["ruta"];
+
+
+if ($contra == "RAZA"){
+
+$sql="select * from particulares where cod_socio  = '$cod_socio'";
+$result = $db->Execute($sql);
+
+ 
+$apellido=strtoupper($result->fields["apellido"]);
+$nombre=strtoupper($result->fields["nombre"]);
+$tipo_doc=strtoupper($result->fields["tipo_doc"]);
+$documento=strtoupper($result->fields["documento"]);
+$telefono=strtoupper($result->fields["telefono"]);
+$domicilio=strtoupper($result->fields["domicilio"]);
+$localidad=strtoupper($result->fields["localidad"]);
+$departamento=strtoupper($result->fields["departamento"]);
+$cod_postal=strtoupper($result->fields["cod_postal"]);
+
+$fecha_pago=strtoupper($result->fields["fecha_pago"]);
+$debito=strtoupper($result->fields["debito"]);
+$sexo=strtoupper($result->fields["sexo"]);
+$deuda=strtoupper($result->fields["deuda"]);
+$cantidad=strtoupper($result->fields["cantidad"]);
+ 
+$importe_deuda=strtoupper($result->fields["importe_deuda"]);
+$importe_cuota=strtoupper($result->fields["importe_cuota"]);
+$llamada=strtoupper($result->fields["llamada"]);
+$motivo=strtoupper($result->fields["motivo"]);
+$no_imprimir=strtoupper($result->fields["no_imprimir"]);
+
+$celular=strtoupper($result->fields["celular"]);
+$mail=strtoupper($result->fields["mail"]);
+$fecha_ingreso=strtoupper($result->fields["fecha_ingreso"]);
+$cobrador=strtoupper($result->fields["cobrador"]);
+$habilitar_hc=strtoupper($result->fields["habilitar_hc"]);
+
+
+$sql = "INSERT INTO `socios` ( `cod_socio` , `apellido` , `nombre` , `tipo_doc` , `documento` , `telefono` , `domicilio` , `localidad` , `departamento` , `cod_postal` , `fecha_pago` , `debito` , `sexo` , `deuda` , `cantidad` , `ruta` , `importe_deuda` , `importe_cuota` , `llamada` , `motivo` , `no_imprimir` , `celular` , `mail` , `fecha_ingreso` , `cobrador` ) VALUES ( '$nuevo_cod_socio' , '$apellido' , '$nombre' , '$tipo_doc' , '$documento' , '$telefono' , '$domicilio' , '$localidad' , '$departamento' , '$cod_postal' , '$fecha_pago' , '$debito' , '$sexo' , '$deuda' , '$cantidad' , '$ruta' , '$importe_deuda' , '$importe_cuota' , '$llamada' , '$motivo' , '$tipo_pago' , '$celular' , '$mail' , '$fecha_ingreso' , '$cobrador' )";
+mysql_query($sql);
+
+ 
+  $sql1="select * from animal_particular where cod_socio = $cod_socio order by  fecha_nac";
+$result1 = $db->Execute($sql1);
+
+$nombre=strtoupper($result1->fields["nombre"]);
+$especie=strtoupper($result1->fields["especie"]);
+$raza=strtoupper($result1->fields["raza"]);
+$pelaje=strtoupper($result1->fields["pelaje"]);
+$tamanio=strtoupper($result1->fields["tamanio"]);
+$color=strtoupper($result1->fields["color"]);
+$sexo=strtoupper($result1->fields["sexo"]);
+$fecha_nac=strtoupper($result1->fields["fecha_nac"]);
+$cod_animal=strtoupper($result1->fields["cod_animal"]);
+
+$historia_clinica=strtoupper($result1->fields["historia_clinica"]);
+$motivo=strtoupper($result1->fields["motivo"]);
+$nuevo=strtoupper($result1->fields["nuevo"]);
+$nuevos=strtoupper($result1->fields["nuevos"]);
+ 
+   $sql = "INSERT INTO `animal` ( `cod_socio` , `nombre` , `especie` , `raza` , `pelaje` , `tamanio` , `color` , `sexo` , `fecha_nac` , `historia_clinica` , `cod_animal` , `motivo` , `nuevo` , `nuevos` )  VALUES ('$nuevo_cod_socio' , '$nombre' , '$especie' , '$raza' , '$pelaje' , '$tamanio' , '$color' , '$sexo_mascota' , '$fecha_nac' , '$historia_clinica' , '$cod_animal' , '$motivo' , '$nuevo' , '$nuevos')";
+mysql_query($sql);
+
+		 	
+$sql = "UPDATE `diagnostico` SET `cod_socio` = '$cod_socio' WHERE `cod_socio` = '$nuevo_cod_socio'";
+mysql_query($sql);
+
+$sql = "UPDATE `vacunas` SET `cod_socio` = '$cod_socio' WHERE `cod_socio` = '$nuevo_cod_socio'";
+mysql_query($sql);
+
+
+$sql = "DELETE FROM animal_particular where cod_socio = $cod_socio";
+mysql_query($sql);
+
+ $sql = "DELETE FROM particulares where cod_socio = $cod_socio";
+mysql_query($sql);
+
+
+
+$leyenda = "SE ELIMINO EL PARTICULAR Y SUS MASCOTAS";
+include ("../../alertas/campo_informacion.php");
+
+}ELSE{
+
+$leyenda = "CLAVE DE SEGURIDAD INCORRECTA";
+include ("../../alertas/campo_informacion2.php");
+}

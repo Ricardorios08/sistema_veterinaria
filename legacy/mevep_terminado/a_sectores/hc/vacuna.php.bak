@@ -1,0 +1,379 @@
+<style type="text/css">
+<!--
+.Estilo1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 18px;
+}
+.Estilo2 {font-family: Arial, Helvetica, sans-serif}
+.Estilo3 {font-size: 12px}
+.Estilo4 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo6 {color: #FFFFFF}
+.Estilo7 {font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 18px; color: #FFFFFF; }
+.Estilo9 {
+	font-size: 16px;
+	font-weight: bold;
+}
+-->
+</style>
+
+<?php 
+
+
+include ("../../conexiones/config.inc.php");
+
+
+  $cod_socio= $_REQUEST['cod_socio'];
+  $cod_operacion= $_REQUEST['cod_operacion'];
+
+$usuario= $_REQUEST['usuario'];
+$tipo= $_REQUEST['tipo'];
+
+
+ $sql="select * from  usuario  where id = $usuario";
+ $result = $db->Execute($sql);
+$nombre_vet=$result->fields["nombre"];
+
+
+
+if ($tipo == "part"){
+$sql="select * from particulares where cod_socio = $cod_socio";
+}else{
+$sql="select * from socios where cod_socio = $cod_socio";
+}
+
+ $result = $db->Execute($sql);
+
+	
+$cod_socio=$result->fields["cod_socio"];
+$apellido=strtoupper($result->fields["apellido"]);
+$nombre=strtoupper($result->fields["nombre"]);
+$tipo_doc=strtoupper($result->fields["tipo_doc"]);
+$documento=strtoupper($result->fields["documento"]);
+$telefono=strtoupper($result->fields["telefono"]);
+$domicilio=strtoupper($result->fields["domicilio"]);
+$localidad=strtoupper($result->fields["localidad"]);
+$departamento=strtoupper($result->fields["departamento"]);
+$cod_postal=strtoupper($result->fields["cod_postal"]);
+$fecha_pago=strtoupper($result->fields["fecha_pago"]);
+$debito=strtoupper($result->fields["debito"]);
+$sexo=strtoupper($result->fields["sexo"]);
+$deuda=strtoupper($result->fields["deuda"]);
+$motivo=strtoupper($result->fields["motivo"]);
+$cobrador=strtoupper($result->fields["cobrador"]);
+
+
+if ($tipo == "part"){
+$sql1="select * from animal_particular where cod_socio = $cod_socio";
+}else{
+$sql1="select * from animal where cod_socio = $cod_socio";
+}
+
+
+
+$result1 = $db->Execute($sql1);
+
+	
+$nombre_mascota=strtoupper($result1->fields["nombre"]);
+$especie=strtoupper($result1->fields["especie"]);
+$raza=strtoupper($result1->fields["raza"]);
+$pelaje=strtoupper($result1->fields["pelaje"]);
+$tamanio=strtoupper($result1->fields["tamanio"]);
+$color=strtoupper($result1->fields["color"]);
+$sexo_mascota=strtoupper($result1->fields["sexo"]);
+$fecha_nac=strtoupper($result1->fields["fecha_nac"]);
+$cod_animal=strtoupper($result1->fields["cod_animal"]);
+
+
+$dia_nac = substr($fecha_nac,8,2);
+$mes_nac = substr($fecha_nac,5,2);
+$anio_nac = substr($fecha_nac,0,4);
+
+$hoy = date("d/m/Y");
+
+?>
+
+<form action="guardar_vacuna.php" method="post">
+<table width="650" border="0" cellspacing="0">
+  <tr bgcolor="#FFFFFF">
+    <td height="36" colspan="8"><div align="right"><span class="Estilo4">NOMBRE VETERINARIO: <span class="Estilo2"><?php echo $nombre_vet;?></span></span></div></td>
+  </tr>
+  <tr bgcolor="#336666">
+    <td height="36" colspan="8"><div align="center" class="Estilo1 Estilo6">HISTORIA<span class="Estilo1">: <?php echo $cod_socio;?> - <?php echo $apellido;?>, <?php echo $nombre;?></span></div></td>
+  </tr>
+
+   <tr bgcolor="#EBEBEB">
+          <td colspan="2" bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS"> <span class="Estilo4">MASCOTA</span></font></div></td>
+          <td width="136" bgcolor="#FFFFFF"><div align="left" class="Estilo9"> <font face="Trebuchet MS"><?php print("$nombre_mascota");?></font></div></td>
+          <td width="104" bgcolor="#CCCCCC"><font size="2" face="Trebuchet MS">TAMA&Ntilde;O</font></td>
+          <td colspan="4" bgcolor="#FFFFFF"><font size="2" face="Trebuchet MS"><?php print("$tamanio");?></font></td>
+  </tr>
+        <tr bgcolor="#EBEBEB">
+          <td colspan="2" bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS">ESPECIE</font></div></td>
+          <td bgcolor="#FFFFFF"><div align="left"><font size="2" face="Trebuchet MS"><?php print("$especie");?></font></div></td>
+          <td bgcolor="#CCCCCC"><font size="2" face="Trebuchet MS">COLOR</font></td>
+          <td colspan="4" bgcolor="#FFFFFF"><font size="2" face="Trebuchet MS"><?php print("$color");?></font></td>
+        </tr>
+        <tr bgcolor="#EBEBEB">
+          <td colspan="2" bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS">RAZA</font></div></td>
+          <td bgcolor="#FFFFFF"><div align="left"><font size="2" face="Trebuchet MS"><?php print("$raza");?></font></div></td>
+          <td bgcolor="#CCCCCC"><font size="2" face="Trebuchet MS">SEXO</font></td>
+          <td colspan="4" bgcolor="#FFFFFF"><font size="2" face="Trebuchet MS"><?php print("$sexo");?></font></td>
+        </tr>
+        <tr bgcolor="#EBEBEB">
+          <td colspan="2" bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS">PELAJE</font></div></td>
+          <td bgcolor="#FFFFFF"><div align="left"><font size="2" face="Trebuchet MS"><?php print("$pelaje");?></font></div></td>
+          <td bgcolor="#CCCCCC"><font size="2" face="Trebuchet MS">FECHA NAC</font></td>
+          <td colspan="4" bgcolor="#FFFFFF"><font size="2" face="Trebuchet MS">
+            <input name="dia_nac" type="text" id="dia_nac" value="<?php echo $dia_nac;?>" size="2">
+          /
+          <input name="mes_nac" type="text" id="mes_nac" value="<?php echo $mes_nac;?>" size="2">
+          /
+          <input name="anio_nac" type="text" id="anio_nac" value="<?php echo $anio_nac;?>" size="4" maxlength="4">
+          </font></td>
+        </tr>
+  <tr bgcolor="#336666">
+    <td height="36" colspan="8"><div align="center"><span class="Estilo7">CALENDARIO DE VACUNACIONES</span></div></td>
+  </tr>
+  <tr bgcolor="#EBEBEB">
+    <td bgcolor="#FFFFFF"><div align="center"><span class="Estilo2 Estilo3"><strong><strong>VACUNA</strong></strong></span></div></td>
+    <td bgcolor="#CCCCCC"><div align="center"><span class="Estilo2 Estilo3"><strong><strong>PESO</strong></strong></span></div></td>
+    <td bgcolor="#FFFFFF"><div align="center"><span class="Estilo2 Estilo3"><strong>Dosis </strong></span></div></td>
+    <td><div align="center"><span class="Estilo2 Estilo3"><strong><strong>Dosis </strong></strong></span></div></td>
+    <td width="107" bgcolor="#FFFFFF"><div align="center"><span class="Estilo2 Estilo3"><strong><strong>Dosis </strong></strong></span></div></td>
+    <td width="92" bgcolor="#EBEBEB"><div align="center"><span class="Estilo2 Estilo3"><strong><strong><strong>Rabia</strong></strong></strong></span></div></td>
+    <td width="94" bgcolor="#FFFFFF"><div align="center"><span class="Estilo2 Estilo3"><strong><strong>Refuerzo Anual</strong></strong></span></div></td>
+    <td width="98" bgcolor="#EBEBEB"><div align="center"><span class="Estilo2 Estilo3"><strong><strong>Triple Felina </strong></strong></span></div></td>
+  </tr>
+
+<?php
+
+
+
+
+
+
+  $sql1="select * from vacunas where cod_socio = $cod_socio and tipo = '$tipo' order by  fecha_vacuna";
+$result1 = $db->Execute($sql1);
+
+  If (!$result1) die("fallo".$db->ErrorMsg());
+  while (!$result1->EOF) {
+
+$cont = $cont + 1;
+
+$cont1 = $cont1 + 1;
+
+
+
+	  $fecha_vacuna=strtoupper($result1->fields["fecha_vacuna"]);
+
+
+$fecha = date_create($fecha_vacuna);
+date_add($fecha, date_interval_create_from_date_string('21 days'));
+ $fecha_vacuna_2 = date_format($fecha, 'Y-m-d');
+
+$fecha = date_create($fecha_vacuna_2);
+date_add($fecha, date_interval_create_from_date_string('21 days'));
+  $fecha_vacuna_3 = date_format($fecha, 'Y-m-d');
+
+$fecha = date_create($fecha_vacuna_3);
+date_add($fecha, date_interval_create_from_date_string('30 days'));
+  $fecha_vacuna_rabia = date_format($fecha, 'Y-m-d');
+
+$fecha = date_create($fecha_vacuna_3);
+date_add($fecha, date_interval_create_from_date_string('365 days'));
+  $fecha_quintuple = date_format($fecha, 'Y-m-d');
+
+
+
+$fecha = date_create($fecha_vacuna);
+date_add($fecha, date_interval_create_from_date_string('365 days'));
+  $fecha_refuerzo = date_format($fecha, 'Y-m-d');
+
+
+
+
+$fecha = date_create($fecha_vacuna);
+date_add($fecha, date_interval_create_from_date_string('21 days'));
+  $fecha_21 = date_format($fecha, 'Y-m-d');
+
+$fecha = date_create($fecha_vacuna);
+date_add($fecha, date_interval_create_from_date_string('30 days'));
+  $fecha_30 = date_format($fecha, 'Y-m-d');
+
+
+$fecha = date_create($fecha_vacuna);
+date_add($fecha, date_interval_create_from_date_string('365 days'));
+  $fecha_anual = date_format($fecha, 'Y-m-d');
+
+
+$dia = substr($fecha_21,8,2);
+$mes = substr($fecha_21,5,2);
+$anio = substr($fecha_21,0,4);
+$fecha_21 = $dia."/".$mes."/".$anio;
+
+$dia = substr($fecha_30,8,2);
+$mes = substr($fecha_30,5,2);
+$anio = substr($fecha_30,0,4);
+$fecha_30 = $dia."/".$mes."/".$anio;
+
+$dia = substr($fecha_anual,8,2);
+$mes = substr($fecha_anual,5,2);
+$anio = substr($fecha_anual,0,4);
+$fecha_anual = $dia."/".$mes."/".$anio;
+
+
+
+
+$vacuna=strtoupper($result1->fields["vacuna"]);
+$fecha_nac=strtoupper($result1->fields["fecha_nac"]);
+
+$peso=strtoupper($result1->fields["peso"]);
+
+
+
+$dia = substr($fecha_nac,8,2);
+$mes = substr($fecha_nac,5,2);
+$anio = substr($fecha_nac,0,4);
+$fecha_nac = $dia."/".$mes."/".$anio;
+
+$dia = substr($fecha_vacuna,8,2);
+$mes = substr($fecha_vacuna,5,2);
+$anio = substr($fecha_vacuna,0,4);
+$fecha_vacuna = $dia."/".$mes."/".$anio;
+
+$dia = substr($fecha_vacuna_2,8,2);
+$mes = substr($fecha_vacuna_2,5,2);
+$anio = substr($fecha_vacuna_2,0,4);
+$fecha_vacuna_2 = $dia."/".$mes."/".$anio;
+
+$dia = substr($fecha_vacuna_3,8,2);
+$mes = substr($fecha_vacuna_3,5,2);
+$anio = substr($fecha_vacuna_3,0,4);
+$fecha_vacuna_3 = $dia."/".$mes."/".$anio;
+
+$dia = substr($fecha_vacuna_rabia,8,2);
+$mes = substr($fecha_vacuna_rabia,5,2);
+$anio = substr($fecha_vacuna_rabia,0,4);
+$fecha_vacuna_rabia = $dia."/".$mes."/".$anio;
+
+$dia = substr($fecha_quintuple,8,2);
+$mes = substr($fecha_quintuple,5,2);
+$anio = substr($fecha_quintuple,0,4);
+$fecha_quintuple = $dia."/".$mes."/".$anio;
+
+$dia = substr($fecha_refuerzo,8,2);
+$mes = substr($fecha_refuerzo,5,2);
+$anio = substr($fecha_refuerzo,0,4);
+$fecha_refuerzo = $dia."/".$mes."/".$anio;
+
+
+
+   if ($cont == 1){?>
+  <tr bgcolor="#FFFF99">
+    <td width="124"><div align="center" class="Estilo2 Estilo3"><?php echo $vacuna;?></div></td>
+    <td width="79"><div align="center"><span class="Estilo2 Estilo3"><?php echo $peso;?></span></div></td>
+    <td><div align="center" class="Estilo4">
+      <div align="center"><span class="Estilo2 Estilo3"><?php echo $fecha_vacuna;?></span></div>
+    </div></td>
+    <td><div align="center"><span class="Estilo2 Estilo3"><?php echo $fecha_vacuna_2;?></span></div></td>
+    <td><div align="center"><span class="Estilo2 Estilo3"><?php echo $fecha_vacuna_3;?></span></div></td>
+    <td><div align="center"><span class="Estilo2 Estilo3"><?php echo $fecha_vacuna_rabia;?></span></div></td>
+    <td><div align="center"><span class="Estilo2 Estilo3"><?php echo $fecha_quintuple;?></span></div></td>
+    <td><div align="center"><span class="Estilo2 Estilo3"><?php echo $fecha_quintuple;?></span></div></td>
+  </tr>
+ 
+  </tr>
+
+ <?php }else{
+	 
+	 if ($cont1 == 2){?>
+  <tr bgcolor="#EBEBEB">
+    <td bgcolor="#FFFFFF"><div align="center"><span class="Estilo2 Estilo3"><strong><strong>VACUNA</strong></strong></span></div></td>
+    <td bgcolor="#CCCCCC"><div align="center"><span class="Estilo2 Estilo3"><strong><strong>PESO</strong></strong></span></div></td>
+    <td bgcolor="#FFFFFF"><div align="center"><span class="Estilo2 Estilo3"><strong>Fecha Vacuna </strong></span></div></td>
+    <td><div align="center"><span class="Estilo2 Estilo3"><strong><strong><strong><strong><strong><strong> + 21 dias </strong></strong></strong></strong></strong></strong></span></div></td>
+    <td bgcolor="#FFFFFF"><div align="center"><span class="Estilo2 Estilo3"><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Rabia (30 d&iacute;as) </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></span></div></td>
+    <td bgcolor="#EBEBEB"><div align="center"><span class="Estilo2 Estilo3"><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Refuerzo Anual</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></span></div></td>
+    <td bgcolor="#FFFFFF"><div align="center"><span class="Estilo2 Estilo3"><strong><strong><strong><strong><strong><strong><strong>Triple Felina</strong></strong></strong></strong></strong></strong></strong></span></div></td>
+    <td bgcolor="#EBEBEB"><div align="center"><span class="Estilo2 Estilo3"><strong></strong></span></div></td>
+<?php }?>
+
+
+ <tr bgcolor="#EBEBEB">
+    <td width="124" bgcolor="#FFFFFF"><div align="center" class="Estilo2 Estilo3"><?php echo $vacuna;?></div></td>
+    <td width="79" bgcolor="#CCCCCC"><div align="center"><span class="Estilo2 Estilo3"><?php echo $peso;?></span></div></td>
+    <td bgcolor="#FFFFFF"><div align="center" class="Estilo4">
+      <div align="center"><span class="Estilo2 Estilo3"><?php echo $fecha_vacuna;?></span></div>
+    </div></td>
+    <td><div align="center"><span class="Estilo2 Estilo3"><?php echo $fecha_21;?></span></div></td>
+    <td bgcolor="#FFFFFF"><div align="center"><span class="Estilo2 Estilo3"><?php echo $fecha_30;?></span></div></td>
+    <td bgcolor="#EBEBEB"><div align="center"><span class="Estilo2 Estilo3"><?php echo $fecha_anual;?></span></div></td>
+    <td bgcolor="#FFFFFF"><div align="center"><span class="Estilo2 Estilo3"><?php echo $fecha_anual;?></span></div></td>
+    <td bgcolor="#EBEBEB"><div align="center"></div></td>
+  </tr>
+ 
+
+
+
+
+ <?php }
+
+
+$result1->MoveNext();
+	}
+
+
+$dia1 = date("d");
+$mes1 = date("m");
+$anio1 = date("Y");
+
+
+?>
+</table>
+<table width="650" border="0" cellspacing="0">
+  <tr bgcolor="#336666">
+    <td height="36" colspan="2"><div align="center" class="Estilo7">NUEVA VACUNA</div></td>
+  </tr>
+  <tr>
+    <td width="118" bgcolor="#EBEBEB"><div align="center" class="Estilo2 Estilo3">
+      <div align="right"><strong>FECHA:</strong> </div>
+    </div></td>
+    <td width="728" bgcolor="#EBEBEB"><div align="center" class="Estilo4">
+      <div align="left"><span class="Estilo2 Estilo3"> <font size="2" face="Trebuchet MS">
+        <input name="dia_vac" type="text" id="dia_vac" value="<?php echo $dia1;?>" size="2">
+/
+<input name="mes_vac" type="text" id="mes_vac" value="<?php echo $mes1;?>" size="2">
+/
+<input name="anio_vac" type="text" id="anio_vac" value="<?php echo $anio1;?>" size="4" maxlength="4">
+      </font></span></div>
+    </div></td>
+  </tr>
+  <tr>
+    <td bgcolor="#EBEBEB"><div align="right">Peso:
+      
+    </div></td>
+    <td bgcolor="#EBEBEB"><input name="peso" type="text" id="peso" size="10">
+    kg</td>
+  </tr>
+  <tr>
+    <td bgcolor="#EBEBEB"><div align="right"><strong>Vacuna:</strong></div></td>
+    <td bgcolor="#EBEBEB"><select name="vacuna[]" id="vacuna[]">
+      <option value="PUPY">PUPY</option>
+      <option value="QUINTUPLE">QUINTUPLE</option>
+      <option value="RABIA">RABIA</option>
+      <option value="TRIPLE FELINA">TRIPLE FELINA</option>
+    </select></td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td colspan="2"><div align="center">
+
+<input name="cod_socio" type="hidden" value = "<?php echo $cod_socio;?>" size="40">
+<input name="usuario" type="hidden" value = "<?php echo $usuario;?>" size="40">
+<input name="tipo" type="hidden" value = "<?php echo $tipo;?>" size="40">
+
+<input name="cod_operacion" type="hidden" value = "<?php echo $cod_operacion;?>" size="40">
+      <input type="submit" name="Submit" value="GUARDAR VACUNAS">
+    </div></td>
+  </tr>
+</table>

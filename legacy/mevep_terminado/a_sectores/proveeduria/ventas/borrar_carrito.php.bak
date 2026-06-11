@@ -1,0 +1,16 @@
+<?php 
+include ("../../../conexiones/config_pro.php");
+
+$cod_detalle = $_REQUEST['cod_detalle'];
+$id= $_REQUEST['id'];
+ 
+
+
+ $sql = "DELETE FROM ventas1_deta_temp where nro_factura = $id";
+mysql_query($sql);
+
+
+$bande = 2;
+include ("../mercaderia/buscar_mercaderia.php");
+?>
+

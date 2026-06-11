@@ -1,0 +1,35 @@
+<?php
+include ("../../../conexiones/config.inc.php");
+
+$cuota_actual = $_REQUEST['cuota_actual'];
+$cuota_nueva = $_REQUEST['cuota_nueva'];
+$segu = strtoupper($_REQUEST['segu']);
+
+if ($segu == "RAZA"){
+if ($cuota_actual == ""){
+$leyenda = "NO INGRESO CUOTA ACTUAL";
+include ("../../../alertas/campo_informacion.php");
+exit;
+}
+
+if ($cuota_nueva == ""){
+$leyenda = "NO INGRESO CUOTA NUEVA";
+include ("../../../alertas/campo_informacion.php");
+exit;
+}
+
+
+ $sql = "UPDATE `socios` SET `importe_cuota` = '$cuota_nueva' WHERE `importe_cuota` = $cuota_actual";
+ mysql_query($sql);
+
+
+$leyenda = "SE CAMBIARION TODAS LAS CUOTAS DE $".$cuota_actual." por ".$cuota_nueva;
+include ("../../../alertas/campo_informacion.php");
+include ("cambiar_cuota.php");
+
+}
+ELSE
+
+{
+include ("cambiar_cuota.php");
+}

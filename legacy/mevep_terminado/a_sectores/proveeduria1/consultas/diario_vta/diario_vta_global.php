@@ -1,0 +1,362 @@
+<style type="text/css">
+<!--
+.Estilo2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+.Estilo5 {font-size: 12px}
+.Estilo8 {
+	font-size: 14px;
+	color: #FFFFFF;
+}
+.Estilo10 {font-size: 14px; color: #000000; }
+-->
+</style>
+ 
+
+<!-- 
+<a href="imp_pendientes.php?a='excel'&&buscar_por=<?print("$buscar_por");?>"><IMG SRC="../../imagenes/botones//btn_exportar.gif" alt="Exportar" border = "0"></a> -->
+
+
+<body onUnload="window.opener.openedImprimir=0;" onLoad="window.print(); window.close(); cerrar()"> 
+
+<style type="text/css">
+<!--
+.Estilo5 {font-family: Arial, Helvetica, sans-serif}
+.Estilo8 {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.Estilo70 {font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
+.Estilo72 {font-size: 12px}
+.Estilo72 {font-family: Arial, Helvetica, sans-serif}
+.Estilo74 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; }
+-->
+</style>
+<table width="102%" height="48" border="0">
+  <!--DWLayoutTable-->
+<tr valign="middle" bgcolor="#000099">
+    <td height="21" colspan="5"><div align="center" class="Estilo2">
+      <div align="right"><span class="Estilo5"><span class="Estilo8">Diario de Ventas Mensual Emitido  dia: <?ECHO $fecha_a;?></span> </span></div>
+    </div></td>
+  </tr>
+<tr valign="middle" bgcolor="#000099">
+  <td height="21" colspan="5" bgcolor="#FFFFFF"><hr noshade></td>
+</tr>
+
+
+	 <?
+
+include ("../../../../conexiones/config_pro.php");
+
+
+$fecha_desde = $anio."-".$mes."-01";
+$fecha_hasta =$anio."-".$mes."-31";
+
+ $sql2="select fecha from ventas_encabezado where fecha between '$fecha_desde' and '$fecha_hasta' group by fecha order by fecha";
+$result123 = $db->Execute($sql2);
+
+  if (!$result123) die("fallo".$db->ErrorMsg());
+  while (!$result123->EOF) {
+
+ $fecha1=strtoupper($result123->fields["fecha"]);
+
+$dia1 = substr($fecha1,8,2);
+$mes1 = substr($fecha1,5,2);
+$anio1 = substr($fecha1,0,4);
+
+$fecha20 = $dia1."-".$mes1."-".$anio1;
+	
+
+
+ $sql="select * from ventas_encabezado where fecha = '$fecha1' ORDER by tipo_fact , nro_factura, fecha desc";
+$result = $db->Execute($sql);
+
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+$cuent = $cuenta;
+
+$nro_cliente=strtoupper($result->fields["nro_cliente"]);
+$nro_cuenta=strtoupper($result->fields["nro_cuenta"]);
+
+if ($nro_cliente != 0){
+$cuenta=$nro_cliente;
+$tipo_cuenta = 1; //cliente
+}elseif ($nro_cuenta != 0){
+$cuenta=$nro_cuenta;
+$tipo_cuenta = 2; //asociado
+}
+
+ $cod_movimiento=strtoupper($result->fields["cod_operacion"]);
+ $forma_pago=strtoupper($result->fields["forma_pago"]);
+$nro_factura=strtoupper($result->fields["nro_factura"]);
+$cod_operacion = strtoupper($result->fields["cod_operacion"]);
+$denominacion=strtoupper($result->fields["denominacion"]);
+$tipo_fact=strtoupper($result->fields["tipo_fact"]);
+
+
+
+
+$fecha=strtoupper($result->fields["fecha"]);
+$descuento=strtoupper($result->fields["descuento"]);
+
+$bonificacion=strtoupper($result->fields["bonificacion"]);
+$subtotal=strtoupper($result->fields["subtotal"]);
+$iva=strtoupper($result->fields["iva"]);
+$total=strtoupper($result->fields["total"]);
+$periodo=strtoupper($result->fields["periodo"]);
+$anio=strtoupper($result->fields["anio"]);
+$neto=strtoupper($result->fields["neto"]);
+
+$auxi = $neto;
+
+if ($cod_operacion == 3){
+$auxi = ($auxi * -1);
+}
+
+if ($forma_pago == "CONTADO"){
+$auxi_contado = $auxi_contado + $auxi;}
+else
+	{
+if ($tipo_cuenta == 1){ //cliente
+$auxi_externo = $auxi_externo + $auxi;
+}
+else
+		{
+$auxi_asociado = $auxi_asociado + $auxi;
+		}
+
+	}
+
+
+
+SWITCH ($cod_movimiento){
+
+case "1":{
+$entrada = $precio_renglon;
+$movimiento = "FACTURA";
+BREAK;
+}
+
+case "2":{
+$entrada = $precio_renglon;
+$movimiento = "N/DEBITO";
+BREAK;
+}
+
+case "3":{
+$salida = $precio_renglon;
+
+
+$sql3="select * from resumen_cta_vta where comprobante = '$nro_factura' ";
+$result3 = $db->Execute($sql3);
+$afectacion=strtoupper($result3->fields["afectacion"]);
+//$movimiento = "N/C(".$afectacion.")";
+$movimiento = "N/CREDITO";
+
+BREAK;
+}
+
+case "4":{
+$salida = $precio_renglon;
+$movimiento = "PAGO POR CAJA";
+BREAK;
+}
+
+
+CASE "5":{
+$salida = $precio_renglon;
+$movimiento = "DESC X LIQUIDACION";
+BREAK;
+}
+
+CASE "6":{
+$salida = ($precio_renglon * -1);
+$movimiento = "ANULADA";
+BREAK;
+}
+
+}
+
+
+if ($forma_pago == 'CTA/CTE'){
+$cta_cte = $neto;
+if ($cod_movimiento == 3){//nota
+$cta_cte = ($cta_cte * -1);
+}
+
+
+IF ($tipo_cuenta == 1){
+	$suma_cta_cte_cliente = $suma_cta_cte_cliente + $neto;
+}else	
+	{$suma_cta_cte_asociado = $suma_cta_cte_asociado + $neto;
+}
+
+
+$suma_cta_cte = $suma_cta_cte + $cta_cte;
+
+
+}
+ELSEIF($forma_pago == 'CONTADO'){
+$contado = $neto;
+if ($cod_movimiento == 3){//nota
+$contado = ($contado * -1);
+}
+
+
+$suma_iva = $suma_iva + $iva;
+
+
+$suma_contado = $suma_contado + $contado;
+}
+
+
+
+if ($cta_cte == 0.00){
+	$cta_cte = "-";
+}
+else
+
+	  {
+$cta_cte = "$ ".number_format($cta_cte,2);
+	  }
+
+if ($contado == 0.00){
+	$contado = "-";
+}
+else
+{
+$contado = "$ ".number_format($contado,2);
+	  }
+
+
+
+
+//$cuenta = "(".$cuenta.") ".$denominacion;
+?>
+<!-- <tr>
+  <td height="21"><div align="center" class="Estilo70"><?print("$movimiento");?></div></td>
+<td><div align="center" class="Estilo5"><?print("$tipo_fact");?> - <?print("$nro_factura");?></div></td>
+<td><div align="center" class="Estilo5"> <div align="left"><?print("$cuenta");?> 
+ - <?print("$denominacion");?></div>
+</div>    </td>
+
+
+
+<td><div align="center" class="Estilo5">
+  <div align="right"><?echo $cta_cte;?></div>
+</div></td>
+<td><div align="center" class="Estilo5">
+  <div align="right"><?echo $contado;?></div>
+</div></td>
+</tr>
+
+ -->
+
+
+
+<?
+
+$cuenta = "";
+	
+
+	$result->MoveNext();
+	}
+
+
+
+/////////////////
+ $sql1 = "SELECT sum(iva) as iva_facturas FROM ventas_encabezado WHERE fecha = '$fecha' AND ( cod_operacion = 0 OR cod_operacion = 1 OR cod_operacion = 2 )";
+$result1 = $db->Execute($sql1);
+$iva_facturas=$result1->fields["iva_facturas"];
+
+ $sql2 = "SELECT sum(iva) as iva_nc FROM ventas_encabezado WHERE fecha = '$fecha' AND cod_operacion = '3' ";
+$result2 = $db->Execute($sql2);
+$iva_nc=$result2->fields["iva_nc"];
+
+
+	$iva = $iva_facturas - $iva_nc;
+
+
+$suma_ventas = $suma_contado + $suma_cta_cte - $iva;
+
+
+$suma_debe = $auxi_externo + $auxi_asociado + $auxi_contado;
+$suma_haber = $suma_ventas + $iva;
+	?>
+</table>
+
+
+
+
+
+<table width="102%" border="0">
+  <tr>
+    <td width="62%"><div align="center" class="Estilo2"><strong>MOVIMIENTO DEL DIA: <span class="Estilo5"><span class="Estilo10"><?ECHO $fecha20;?></span></span></strong></div></td>
+    <td width="20%"><div align="center" class="Estilo2"><strong>DEBE </strong></div></td>
+    <td width="18%"><div align="center" class="Estilo2"><strong>HABER</strong></div></td>
+  </tr>
+  <tr>
+    <td><span class="Estilo2">1211001 Deudores por Ventas Proveedur&iacute;a Asociados </span></td>
+    <td><div align="right"><span class="Estilo2"><?echo number_format($auxi_asociado,2);?></span></div></td>
+    <td><div align="center">-</div></td>
+  </tr>
+  <tr>
+    <td><span class="Estilo2">1211002 Deudores por Ventas Proveedur&iacute;a Externos </span></td>
+    <td><div align="right"><span class="Estilo2"><?echo number_format($auxi_externo,2);?></span></div></td>
+    <td><div align="center">-</div></td>
+  </tr>
+  <tr>
+    <td><span class="Estilo2">1110101 Fondos a Depositar </span></td>
+    <td><div align="right"><span class="Estilo2"><?echo number_format($auxi_contado,2);?></span></div></td>
+    <td><div align="center">-</div></td>
+  </tr>
+  <tr>
+    <td><div align="right"><span class="Estilo2">a 4110201 Ventas Proveedur&iacute;a &nbsp;&nbsp;&nbsp;</span></div></td>
+    <td><div align="center">-</div></td>
+    <td><div align="right"><span class="Estilo2"><?echo number_format($suma_ventas,2);?></span></div></td>
+  </tr>
+  <tr>
+    <td><div align="right"><span class="Estilo2">a 2410107 IVA D&eacute;bito Fiscal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div></td>
+    <td><div align="center">-</div></td>
+    <td><div align="right"><span class="Estilo2"><?echo number_format($iva,2);?></span></div></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><hr noshade></td>
+    <td><hr noshade></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><div align="right"><span class="Estilo2"><?echo number_format($suma_debe,2);?></span></div></td>
+    <td><div align="right"><span class="Estilo2"><?echo number_format($suma_haber,2);?></span></div></td>
+  </tr>
+  <tr>
+    <td colspan="3"><hr noshade></td>
+  </tr>
+</table>
+
+<?
+
+
+$suma_debe = "";
+$suma_haber= "";
+$iva= "";
+$suma_ventas= 0;
+$auxi_contado= "";
+$auxi_externo= "";
+$auxi_asociado= "";
+$suma_contado = "";
+	$suma_cta_cte = "";
+	$iva_nc = "";
+	$iva_facturas = "";
+	$contado = "";
+	$cta_cte = "";
+
+	echo "<br>";
+	$result123->MoveNext();
+	}
+
+	?>

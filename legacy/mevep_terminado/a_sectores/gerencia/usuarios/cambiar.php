@@ -1,0 +1,112 @@
+<style type="text/css">
+<!--
+.Estilo2 {
+	font-family: "Trebuchet MS";
+	color: #FFFFFF;
+}
+.Estilo7 {font-family: "Trebuchet MS"}
+.Estilo9 {font-size: 12px; font-family: "Trebuchet MS"; }
+-->
+</style>
+
+<?php
+
+$dia = date("d");
+$mes = date("m");
+$anio = date("y");
+
+
+$id=$_REQUEST['id1'];
+$usuario=$_REQUEST['usuario'];
+
+	include ("../../../conexiones/config.inc.php");
+
+
+  $sql="select * from usuario where id = $usuario";
+$result = $db->Execute($sql);
+
+$rol=$result->fields["rol"];
+
+
+
+/*if ($rol != "ADMIN"){
+$leyenda = "SOLO EL ADMINISTRADOR PUEDE CAMBIAR EL PERFIL";
+include ("../../../alertas/campo_informacion2.php");
+exit;
+}*/
+
+
+  $sql="select * from usuario where id = $id";
+$result = $db->Execute($sql);
+
+$rol=$result->fields["rol"];
+$nombre=$result->fields["usuario"];
+  $contrasena=$result->fields["contrasena"];
+
+
+?>
+   <FORM  method="post" action="guardar.php">
+   <table width="100%" border="0"   >
+    
+    <tr bgcolor="#C4D7E6">
+      <td height="36" colspan="2" bgcolor="#666666"><div align="center"><span class="Estilo7 Estilo2">CAMBIAR CONTRASE&Ntilde;A </span></div></td>
+    </tr>
+    
+    <tr bgcolor="#C4D7E6">
+      <td height="21" bgcolor="#FFFFCC"><div align="right" class="Estilo9">USUARIO</div></td>
+      <td height="21" bgcolor="#FFFFCC"><?PHP echo $nombre;?>
+      <input name="nombre" type="text" id="nombre" value = "<?php echo $nombre;?>"  size="15"></td>
+    </tr>
+    <tr bgcolor="#C4D7E6">
+      <td height="21" bgcolor="#FFFFCC"><div align="right" class="Estilo9">Contrase&ntilde;a anterior </div></td>
+      <td height="21" bgcolor="#FFFFCC"><input name="contra_anterior" type="password"  size="15" value = "">
+	  <input name="id" type="hidden" value="<?php echo $id;?>">
+	  </td>
+    </tr>
+    <tr bgcolor="#C4D7E6">
+      <td width="406" height="21" bgcolor="#FFFFCC"><div align="right" class="Estilo9">Contrase&ntilde;a Nueva </div></td>
+      <td width="434" height="21" bgcolor="#FFFFCC"><input name="contra_nueva" type="password" id="contra_nueva" size="15"></td>
+    </tr>
+    <tr bgcolor="#C4D7E6">
+      <td height="21" bgcolor="#FFFFCC"><div align="right" class="Estilo9">Repita Contrase&ntilde;a </div></td>
+      <td height="21" bgcolor="#FFFFCC"><input name="contra_repita" type="password" id="contra_repita" size="15"></td>
+    </tr>
+    <!-- <tr bgcolor="#C4D7E6">
+      <td height="21" bgcolor="#FFFFCC"><div align="right" class="Estilo9">Rol</div></td>
+      <td height="21" bgcolor="#FFFFCC">
+      
+		<select name="rol[]" id="tipo_afiliado[]"onkeypress="return verif_caracter(this,event)">
+		    <optgroup label="SELECCIONADA"> </optgroup>
+	        <option value="<?php echo $rol;?>" selected><?php echo $rol;?></option>
+			<option value="ADMIN" >ADMIN</option>
+			<option value="TECNICA">TECNICA/O</option>
+	 
+			</optgroup>
+		</select>
+
+      </td>
+    </tr> -->
+    
+
+
+	 <tr bgcolor="#C4D7E6">
+	   <td height="36" colspan="2" bgcolor="#666666"><div align="center">
+	     <INPUT type="submit" name="submit" value="Exportar">
+       </div></td>
+     </tr>
+  </table>
+   </form>
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+

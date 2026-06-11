@@ -1,0 +1,44 @@
+<?php
+ECHO "CIERRE JORNADA";
+//  dl("php_TM20v53ts-vc9-x86.dll");
+
+//phpinfo();
+
+//exit;
+
+  $port = IF_OPEN("COM3",9600);
+
+$dia = $_REQUEST['dia'];
+$mes = $_REQUEST['mes'];
+$anio = $_REQUEST['anio'];
+
+$fecha = $anio.$mes.$dia;
+
+$dia1 = $_REQUEST['dia1'];
+$mes1 = $_REQUEST['mes1'];
+$anio1 = $_REQUEST['anio1'];
+
+  $fecha1 = $anio1.$mes1.$dia1;
+
+
+
+  if ( $port == -1) 
+  {   echo "impresora ocupada";   return;  }
+
+$nError = IF_SERIAL("27-0163848-435");
+
+
+ $nError = IF_WRITE("@PONEENCABEZADO|11|MEVEP");
+ //$nError = IF_WRITE("@PONEENCABEZADO|12|------------------------ ");
+// $nError = IF_WRITE("@PONEENCABEZADO|13|CIERRE Z ");
+ //$nError = IF_WRITE("@PONEENCABEZADO|14|------------------------ ");
+
+
+  $err = IF_WRITE("@AUDITORIAF|".$fecha."|".$fecha1."|T");
+
+  printf($err);
+
+  $err = IF_CLOSE();
+
+?>
+

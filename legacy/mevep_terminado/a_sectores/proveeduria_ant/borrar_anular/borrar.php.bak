@@ -1,0 +1,74 @@
+<?
+include ("../../../conexiones/config_grabacion.php");
+
+$nro_factura = $_REQUEST['nro_factura'];
+
+INCLUDE ("../../../conexiones/config_gb.php");
+ $sql2="select *  from ordenes where nro_fac = '$nro_factura' group by nro_fac";
+$result2 = $db->Execute($sql2);
+
+$periodo=strtoupper($result2->fields["periodo"]);
+$anio=strtoupper($result2->fields["ano"]);
+$lote=strtoupper($result2->fields["lote"]);
+$marca=strtoupper($result2->fields["marca"]);
+$nro_os=strtoupper($result2->fields["nro_os"]);
+
+$sql11="select * from incremento where nro_os = $nro_os";
+$result11 = $db_os->Execute($sql11);
+
+$acto_bioquimico=ucwords($result11->fields["acto_bioquimico"]);
+
+
+ $sql = "UPDATE `periodos_cerrados` SET `facturado` = 'NO' WHERE periodo = '$periodo' and anio = $anio and nro_os = '$nro_os' and lote = '$lote'";
+mysql_query($sql);
+
+
+
+INCLUDE ("../../../conexiones/config_fa.php");
+$sql = "delete from factura where nro_factura = $nro_factura and estado = 'PENDIENTE'";
+mysql_query($sql);
+
+INCLUDE ("../../../conexiones/config_gb.php");
+
+$sql = "DELETE FROM `detalle` WHERE  `nro_practica` = '998' and nro_factura = $nro_factura";
+mysql_query($sql);
+$sql = "DELETE FROM `detalle` WHERE  `nro_practica` = '677' and nro_factura = $nro_factura"; 
+mysql_query($sql);
+$sql = "DELETE FROM `detalle` WHERE   nro_practica = 999 and nro_factura = $nro_factura";
+mysql_query($sql);
+
+
+if ($acto_bioquimico == "SI"){
+$sql = "DELETE FROM `detalle` WHERE  `nro_practica` = '001' and nro_factura = $nro_factura";
+mysql_query($sql);
+}
+
+if ($nro_os == 5073){
+INCLUDE ("../../../conexiones/config_gb.php");
+$sql = "UPDATE `detalle` SET `valor` = 0 , `nro_factura` = 0 , `confirmada` = '1' WHERE `nro_factura` = $nro_factura";
+mysql_query($sql);
+
+ $sql = "UPDATE `ordenes` SET `fecha_fac` = 0000/00/00,`nro_fac` = 0 , `confirmada` = '1'WHERE `nro_fac` = $nro_factura";
+mysql_query($sql);
+}else{
+INCLUDE ("../../../conexiones/config_gb.php");
+$sql = "UPDATE `detalle` SET `valor` = 0 , `nro_factura` = 0 , `confirmada` = '7' WHERE `nro_factura` = $nro_factura";
+mysql_query($sql);
+
+ $sql = "UPDATE `ordenes` SET `fecha_fac` = 0000/00/00,`nro_fac` = 0 , `confirmada` = '7'WHERE `nro_fac` = $nro_factura";
+mysql_query($sql);
+}
+
+INCLUDE ("../../../conexiones/config_liq.php");
+$sql = "delete from composicion where nro_factura = $nro_factura";
+mysql_query($sql);
+
+
+$nro_factura = "";
+$band  = 1;
+$medio = "pantalla";
+
+$leyenda = "Se ha Eliminado alguna basura que haya quedado en los registros de composicion, ordenes y facturas";
+include ("../../../alertas/campo_informacion.php");
+include ("facturas.php");
+

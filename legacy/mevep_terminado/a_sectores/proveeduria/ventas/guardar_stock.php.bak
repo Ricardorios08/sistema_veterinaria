@@ -1,0 +1,9 @@
+<?php
+
+ECHO $tipo_fact = $_REQUEST['tipo_fact'];
+
+
+$sql = "DELETE FROM ventas1_deta_temp";
+mysql_query($sql);
+
+?>

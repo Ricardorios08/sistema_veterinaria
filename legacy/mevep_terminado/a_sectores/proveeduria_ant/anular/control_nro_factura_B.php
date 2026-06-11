@@ -1,0 +1,489 @@
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<script language="javascript">
+function on_load()
+{
+document.getElementById("leyenda12").focus();
+document.getElementById("leyenda12").style.backgroundColor = "#CCFFCC";
+}
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+
+
+				case "fact":
+				document.getElementById("nro_factura_nuevo").focus();
+
+document.getElementById("fact").style.backgroundColor = "#FFFFFF";
+document.getElementById("nro_factura_nuevo").style.backgroundColor = "#CCFFCC";
+				break;
+				
+				case "nro_factura_nuevo":
+				document.getElementById("leyenda1").focus();
+
+document.getElementById("nro_factura_nuevo").style.backgroundColor = "#FFFFFF";
+document.getElementById("leyenda1").style.backgroundColor = "#CCFFCC";
+				break;
+				
+				
+				case "leyenda1":
+				document.getElementById("ok").focus();
+document.getElementById("leyenda1").style.backgroundColor = "#FFFFFF";
+document.getElementById("ok").style.backgroundColor = "#CCFFCC";
+
+
+				break;
+								
+		}
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+
+<style type="text/css">
+<!--
+.Estilo4 {font-family: Arial, Helvetica, sans-serif}
+.Estilo14 {color: #000000}
+.Estilo15 {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.Estilo16 {font-size: 12px}
+.Estilo17 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo18 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000; }
+.Estilo21 {color: #FFFFFF}
+.Estilo23 {font-weight: bold; font-size: 12px; }
+.Estilo24 {font-weight: bold; color: #000000; }
+.Estilo26 {font-family: Arial, Helvetica, sans-serif; color: #FFFFFF;}
+.Estilo27 {color: #000000; font-size: 12px;}
+.Estilo28 {font-size: 14px}
+-->
+ </style>
+<body onload = "on_load ()">
+<?
+$nro_factura_afectada= $_REQUEST['nro_factura_afectada'];
+
+$nro_factura_nc =$_REQUEST['nro_factura_nc'];
+
+$fecha_hoy = date("d-m-y");
+$fecha_guardar = date ("Y-m-d");
+
+
+include("../../../conexiones/config_pro.php");
+$sql2 = "SELECT * FROM `notacredito_encab_temp`  WHERE  `nro_factura` = '$nro_factura_nc' and tipo_fact = '$tipo_fact_afectado'";
+$result = $db->Execute($sql2);
+$nro_cliente=strtoupper($result->fields["nro_cliente"]);
+$operador=strtoupper($result->fields["operador"]);
+ $nro_cuenta=strtoupper($result->fields["nro_cuenta"]);
+$denominacion=strtoupper($result->fields["denominacion"]);
+$fecha_original=strtoupper($result->fields["fecha"]);
+$descuento=strtoupper($result->fields["descuento"]);
+$bruto=strtoupper($result->fields["bruto"]);
+
+
+if ($descuento != 0.00){
+$porc_dto = round($descuento / $bruto,2);
+}
+
+
+$dia = substr($fecha,8,2);
+$mes=substr($fecha,5,2);
+$anio =substr($fecha,2,2);
+$forma_pago=strtoupper($result->fields["forma_pago"]);
+
+$bruto=strtoupper($result->fields["bruto"]);
+$descuento=strtoupper($result->fields["descuento"]);
+$total_iva=strtoupper($result->fields["iva"]);
+$retencion=strtoupper($result->fields["retencion"]);
+$total_fact=strtoupper($result->fields["neto"]);
+
+$periodo=strtoupper($result->fields["periodo"]);
+$anio=strtoupper($result->fields["anio"]);
+
+
+
+
+Switch ($operador){
+	case "101":{
+		$nombre_operador = "Sergio Zavala";
+		break;
+	}
+
+	case "201":{
+$nombre_operador = "Juan Tomas";
+break;
+	}
+}
+
+
+switch ($mes)
+					{
+		case "ENERO":{$periodo1= "01".$año; $mes_actual="01";}break;
+		case "FEBRERO":{$periodo1= "02".$año;$mes_actual="02";}break;
+		case "MARZO":{$periodo1= "03".$año;$mes_actual="03";}break;
+		case "ABRIL":{$periodo1= "04".$año;$mes_actual="04";}break;
+		case "MAYO":{$periodo1= "05".$año;$mes_actual="05";}break;
+		case "JUNIO":{$periodo1= "06".$año;$mes_actual="06";}break;
+		case "JULIO":{$periodo1= "07".$año;$mes_actual="07";}break;
+		case "AGOSTO":{$periodo1= "08".$año;$mes_actual="08";}break;
+		case "SETIEMBRE":{$periodo1= "09".$año;$mes_actual="09";break;}
+		case "OCTUBRE":{$periodo1= "10".$año;$mes_actual="10";}break;
+		case "NOVIEMBRE":{$periodo1= "11".$año;$mes_actual="11";}break;
+		case "DICIEMBRE":{$periodo1= "12".$año;$mes_actual="12";}break;
+					}
+
+
+ 
+if ($nro_cliente != 0){
+$cuenta=$nro_cliente;
+}elseif ($nro_cuenta != 0){
+$cuenta=$nro_cuenta;
+}
+
+
+if ($nro_cliente!=0){
+ include("../../../conexiones/config_pro.php");
+$sql="select * from clientes where cuenta like '$nro_cliente'";
+$result = $db->Execute($sql);
+$denominacion=strtoupper($result->fields["denominacion"]);
+$domicilio=$result->fields["domicilio"];
+$puerta=$result->fields["puerta"];
+$localidad=$result->fields["localidad"];
+$direccion = $domicilio." ".$puerta." - ".$localidad;
+$cuit=$result->fields["cuit"];
+
+
+$sql7="select * from condiciones_clientes where cuenta like '$nro_cliente'";
+$result7 = $db->Execute($sql7);
+$plan=strtoupper($result7->fields["plan"]);
+
+$iva =$result7->fields["iva"];
+
+
+
+$todo = $denominacion." (".$nro_cliente.")";
+$band = "cliente";
+}
+elseif ($nro_cuenta!=""){ 
+ include("../../../conexiones/config.inc.php");
+$sql="select * from datos_laboratorio where nro_laboratorio like '$nro_cuenta'";
+$result=$db->Execute($sql);
+
+ $nombre_laboratorio=strtoupper($result->fields["nombre_laboratorio"]);
+$matricula1=$result->fields["matricula"];
+$domicilio=$result->fields["domicilio"];
+$nro_domicilio=$result->fields["nro_domicilio"];
+$departamento=$result->fields["departamento"];
+
+
+$direccion = $domicilio." ".$nro_domicilio." - ".$departamento;
+
+
+
+$sql1="select * from datos_personales where matricula like '$nro_cuenta'";
+$result1 = $db->Execute($sql1);
+
+$nombre=strtoupper($result1->fields["nombre"]);
+$apellido=strtoupper($result1->fields["apellido"]);
+
+ $sql2="select * from afip where nro_laboratorio like '$nro_cuenta'";
+$result2 = $db->Execute($sql2);
+ $cuit=strtoupper($result2->fields["nro_afip"]);
+ $sit_iva=strtoupper($result2->fields["sit_iva"]);
+
+switch ($sit_iva){
+	case "RESPONSABLE INSCRIPTO":{
+$iva = "Responsable Inscripto";
+$tipo_iva = 1;
+		break;
+	}
+
+	case "EXENTO":{
+$iva = "Exento";
+$tipo_iva = 3;
+		break;
+	}
+
+		case "MONOTRIBUTISTA":{
+$iva = "Monotributo";
+$tipo_iva = 2;
+		break;
+	}
+
+		case "MON":{
+$iva = "Monotributo";
+$tipo_iva = 2;
+		break;
+	}
+
+			case "CONS. FINAL":{
+$iva = "Cons. FInal";
+$fact = "B";
+$tipo_iva = 4;
+$leyenda = "Irregular situación AFIP";
+include ("../../../alertas/campo_vacio.php");
+EXIT;
+		break;
+	}
+
+}
+$todo="Lab. ".$nombre_laboratorio." (".$cuenta.")";
+$band = "cuenta";
+}
+
+$leyenda= "FACTURA AFECTADA Nº ".$nro_factura_afectada;
+?>
+
+<!-- <?if ($fact == "A"){?>
+<FORM name="form" ACTION="factura_papel_prueba.php" METHOD = "POST">
+<?}else{?>
+<FORM name="form" ACTION="factura_papel_prueba.php" METHOD = "POST">
+<?}?> -->
+
+
+<FORM name="form" ACTION="factura_papel_nc.php" METHOD = "POST">
+
+
+<table width="95%" border="0">
+  <tr bgcolor="#E6E6E6">
+    <td height="32" colspan="2" ><div align="center" class="Estilo15" >
+      <div align="center" class="Estilo14">
+        <input name="Actualizar" type="submit" id ="button"  value="Actualizar Stock">
+        REVISAR NOTA DE CREDITO E IMPRIMIR</div>
+    </div></td>
+    <td width="32%" > <input type="button" value="Corregir" onKeyPress="history.back()" onCLICK="history.back()" id ="boton" style="font-family: Verdana; font-size: 14 pt"></td>
+  </tr>
+  <tr bgcolor="#C1F2FF">
+    <td bgcolor="#C9FADF"><div align="right" class="Estilo4 Estilo16"><span class="Estilo17  Estilo14">N&ordm; NOTA DE CREDITO EMITIDO POR SISTEMA: </span></div></td>
+    <td colspan="2" bgcolor="#F2FACB"><span class="Estilo14 Estilo4"><?echo $tipo_fact_afectado;?> - <?echo $nro_factura_nc;?> </span></td>
+  </tr>
+  <tr bgcolor="#C1F2FF">
+    <td width="45%" bgcolor="#C9FADF"><div align="right" class="Estilo17"><span class="Estilo18">En caso de no coincidir Cambiar por:
+      </span></div></td>
+    <td colspan="2" bgcolor="#F2FACB"><span class="Estilo14 Estilo17">
+	<input name="fact_nuevo" type="text" size="1" id ="fact" onKeyPress="return verif_caracter(this,event)">
+      <input name="nro_factura_nuevo" type="text" size="4" id ="nro_factura_nuevo" onKeyPress="return verif_caracter(this,event)">
+                  <input name="nro_factura_nc" type="hidden" value ="<?echo $nro_factura_nc;?>">
+            <input name="nro_factura_afectada" type="hidden" value ="<?echo $nro_factura_afectada;?>">
+            <input name="nro_factura" type="hidden" value ="<?echo $nro_factura_nc;?>">
+            <input name="tipo_fact_afectado" type="hidden" value ="<?echo $tipo_fact_afectado;?>">
+
+    </span></td>
+  </tr>
+  <tr bgcolor="#C1F2FF">
+    <td height="38" bgcolor="#C9FADF"><div align="right" class="Estilo17"><span class="Estilo18">
+        Ingrese Leyenda rengl&oacute;n 1
+              
+  </span></div></td>
+    <td colspan="2" bgcolor="#F2FACB"><span class="Estilo14 Estilo17">
+<input name="leyenda1" type="text" id="leyenda12" size="30" maxlength="30"  value = "<?echo $leyenda;?>"onKeyPress="return verif_caracter(this,event)">      
+<input type="image" name="imprimir" src="../../../imagenes/botones/btn_imprimir.gif" value = "imprimir" id = "ok">
+    </span></td>
+  </tr>
+</table>
+
+
+ <table width="95%" height="68" border="0">
+      <!--DWLayoutTable-->
+      <tr bgcolor="#C4D7E6">
+        <td height="20" colspan="2"><div align="left" class="Estilo8  Estilo14"><span class="Estilo11 Estilo14  Estilo4"><span class="Estilo16">Sres:</span> <span class="Estilo21"><span class="Estilo18"><?echo $denominacion." (".$nro.")";?></span></span></span></div></td>
+        <td width="54%" height="20"><div align="right" class="Estilo26"><span class="Estilo16"><span class="Estilo11 Estilo4 Estilo14"><span class="Estilo27">Fecha: <?echo $fecha_hoy;?></span></span></span></div></td>
+      </tr>
+      <tr bgcolor="#C4D7E6">
+        <td height="20" colspan="2"><div align="left" class="Estilo8 Estilo4"><span class="Estilo16">Domicilio:</span><span class="Estilo21"> <span class="Estilo21"><span class="Estilo18"><?echo $direccion;?></span></span></span></div>          </td>
+        <td height="20"><div align="right" class="Estilo8 Estilo4"><span class="Estilo16">Operador: <span class="Estilo16"><?echo $operador;?> Control: <?echo $tipo_fact_afectado?> - <?echo $nro_factura_nc?></span></span></div></td>
+      </tr>
+      <tr bgcolor="#C4D7E6">
+        <td width="34%" height="20"><div align="left" class="Estilo7 Estilo4  Estilo21"></div>          <div align="left" class="Estilo8 Estilo16"></div>          
+        <span class="Estilo7 Estilo4 Estilo11  Estilo14 Estilo16">IVA</span><span class="Estilo7 Estilo19  Estilo4 Estilo16">:</span><span class="Estilo7 Estilo4 Estilo17 Estilo14 Estilo16"> <?print("$iva");?> - Cuit: <?echo $cuit;?> </span><span class="Estilo16"></span></span></span></td>
+        <td colspan="2"><div align="right" class="Estilo8"><span class="Estilo26"><span class="Estilo11  Estilo14"><span class="Estilo17">COND.  VENTA: <?echo $forma_pago;?></span></span></span></div></td>
+   </tr>
+ </table>
+
+<table width="95%" border="0">
+  <!--DWLayoutTable-->
+        <tr bgcolor="#000099"><td width="48" height="21" valign="middle"><div align="center" class="Estilo4 Estilo7 Estilo10 Estilo21 Estilo16"></div>
+            <div align="right" class="Estilo11 Estilo4 Estilo7 Estilo10 Estilo21 Estilo16">
+              <div align="center"><span class="Estilo4">Cant</span></div>
+          </div>            </td>
+        <td colspan="4" valign="middle"><div align="center" class="Estilo11 Estilo4 Estilo7 Estilo10 Estilo21 Estilo16">
+          <div align="center">Detalle</div>
+        </div></td>
+        <td width="78" valign="middle"><div align="center"><span class="Estilo11 Estilo4 Estilo7 Estilo10 Estilo21 Estilo16">Presentaci&oacute;n</span></div>          <div align="center"><span class="Estilo11 Estilo4 Estilo7 Estilo10 Estilo21 Estilo16"> </span></div>          <div align="center"><span class="Estilo11 Estilo4 Estilo7 Estilo10 Estilo21 Estilo16"> </span></div></td>
+        <td width="35"><div align="center" class="Estilo11 Estilo21 Estilo16"><span class="Estilo11 Estilo4 Estilo7 Estilo10 Estilo21 Estilo16">Lote</span></div></td>
+        <td colspan="2"><div align="center" class="Estilo11 Estilo21 Estilo16"><span class="Estilo11 Estilo4 Estilo7 Estilo10 Estilo21 Estilo16">Vto Lote</span></div></td>
+        <td width="126"><span class="Estilo11 Estilo21 Estilo16"><span class="Estilo4">Pr. Unit. </span></span></td>
+        <td width="97"><span class="Estilo11 Estilo21 Estilo16"><span class="Estilo4">Total</span></span></td>
+      </tr>
+
+
+<?
+
+include("../../../conexiones/config_pro.php");
+ $sql = "SELECT * FROM `notacredito_deta_temp`  WHERE  `nro_factura` = '$nro_factura_nc' and tipo_fact = '$tipo_fact_afectado'";
+$result = $db->Execute($sql);
+if (!$result) die("fallo".$db->ErrorMsg());
+
+ while (!$result->EOF) {
+
+$cod_mercaderia=strtoupper($result->fields["cod_mercaderia"]);
+$cantidad=strtoupper($result->fields["cantidad"]);
+$presentacion=strtoupper($result->fields["presentacion"]);
+$descripcion=strtoupper($result->fields["descripcion"]);
+$cod_detalle=strtoupper($result->fields["cod_detalle"]);
+$lote1=strtoupper($result->fields["lote"]);
+$mes_lote=strtoupper($result->fields["mes_lote"]);
+$anio_lote=strtoupper($result->fields["anio_lote"]);
+$vto_lote = $mes_lote."/".$anio_lote;
+ $precio_actualizado=strtoupper($result->fields["precio_unitario"]);
+$precio_actualizado = round($precio_actualizado,2);
+
+$total_renglon = round($precio_actualizado * $cantidad,2);
+
+$subtotal = round($subtotal + $total_renglon,2);
+
+$cont = $cont + 1;
+
+
+if ($nro_factura_nuevo != ""){
+$nro_factura= $nro_factura_nuevo;
+}
+
+
+
+
+?><tr bgcolor="#E8DCFC">
+    <td height="21" scope="col"><div align="center" class="Estilo7 Estilo4 Estilo16"><span class="Estilo40 Estilo17  Estilo14"><?echo $cantidad;?></span></div></td>
+
+    <td colspan="4" valign="top" scope="col"><div align="center"  ">
+          <div align="left" class="Estilo17" ><?echo $cod_mercaderia. " - ".$descripcion?></div>
+    </div></td>
+    <td valign="top" scope="col"><div align="center"><span class="Estilo17"><?echo $presentacion;?></span></div>      <div align="center"></div>      <div align="center"></div></td>
+    <td scope="col"><div align="right" class="Estilo40 Estilo14 Estilo17 Estilo7 Estilo4 Estilo16">
+      <div align="center"><span class="Estilo17"><?echo $lote1;?></span></div>
+    </div></td>
+    <td colspan="2" scope="col"><div align="right" class="Estilo40 Estilo14 Estilo17 Estilo7 Estilo4 Estilo16">
+      <div align="right"><span class="Estilo17"><?echo $mes_lote." - ".$anio_lote;?></span></div>
+    </div></td>
+   
+    <td>$ <?echo round($precio_actualizado,2);?></td>
+    <td>$ <?echo round($total_renglon,2);?></td>
+    </tr>
+
+<?
+	 $result->MoveNext();
+		}
+ 
+
+
+if ($tipo_fact_afectado == "A"){
+
+$neto_gravado= $subtotal;
+
+$porc_dto;
+$desc_factura = round($neto_gravado * $porc_dto,2);
+$subtotal = $subtotal - $desc_factura;
+$iva_fact = round(($subtotal * 21)/100,2);
+
+$total_factura = $subtotal + $iva_fact;
+}
+
+else
+
+{
+
+$desc_factura = round($subtotal * $porc_dto,2);
+$neto_gravado = round(($subtotal/1.21),2);
+$iva_fact = $subtotal - $neto_gravado;
+$total_factura = $subtotal - $desc_factura;
+}
+
+if ($tipo_fact_afectado == "B"){?>
+<tr bgcolor="#E6E6E6">
+  <td height="40" colspan="3" scope="col"><div align="center"><span class="Estilo4 Estilo28"><strong>SubTotal: $ <span class="Estilo14 Estilo17">
+    <input name="subtotal" type="text" id ="subtotal" onKeyPress="return verif_caracter(this,event)" value="<?echo number_format($subtotal,2);?>" size="7">
+  </span></strong></span></div>    
+  <div align="right"></div></td>
+  <td colspan="3" scope="col"><div align="right"><span class="Estilo4 Estilo13"><span class="Estilo23"><span class="Estilo24"><span class="Estilo28"><span class="Estilo14 Estilo39 Estilo38 Estilo28  Estilo4">Descuento: $ <span class="Estilo4 Estilo28"><strong><span class="Estilo14 Estilo17">
+    <input name="descuento" type="text" id ="descuento" onKeyPress="return verif_caracter(this,event)" value="<?echo number_format($desc_factura,2);?>" size="7">
+  </span></strong></span></span></span></span></span></span></div></td>
+  <td colspan="4" scope="col"><div align="right"><span class="Estilo4 Estilo13"><span class="Estilo23"><span class="Estilo24"><span class="Estilo28"></span></span></span></span></div>    <div align="right"><span class="Estilo14 Estilo39 Estilo38 Estilo28  Estilo4"><strong>TOTAL: $ <span class="Estilo4 Estilo13"><span class="Estilo23"><span class="Estilo24"><span class="Estilo28"><span class="Estilo4 Estilo28"><strong><span class="Estilo14 Estilo17">
+    <input name="total_factura" type="text" id ="total_factura" onKeyPress="return verif_caracter(this,event)" value="<?echo number_format($total_factura,2);?>" size="7">
+  </span></strong></span></span></span></span></span>
+   </strong></span></span></div></td>
+  <td>&nbsp;</td>
+  </tr>
+<?}?>
+
+<?if ($tipo_fact_afectado == "A"){?>
+<tr bgcolor="#E6E6E6">
+  <td height="18" colspan="2" valign="middle" scope="col"><div align="right"><span class="Estilo4 Estilo28"></span></div>    <div align="right"></div>    <div align="center"><span class="Estilo4 Estilo28"></span><span class="Estilo4 Estilo28"><strong>SubTotal: $ <strong><span class="Estilo14 Estilo17">
+  </span></strong></strong></span></div></td>
+  <td colspan="2" valign="middle" scope="col"><div align="center"><span class="Estilo4 Estilo28"><span class="Estilo4 Estilo13"><span class="Estilo23"><span class="Estilo24"><span class="Estilo28"><strong>Desc. $ <span class="Estilo14 Estilo39 Estilo38 Estilo28  Estilo4"><strong><span class="Estilo14 Estilo17">
+  </span></strong></span></strong></span></span></span></span></span></div></td>
+  <td colspan="4" valign="middle" scope="col"><div align="center"><span class="Estilo4 Estilo13"><span class="Estilo23"><span class="Estilo24"><span class="Estilo28"><span class="Estilo4 Estilo28"><strong>Neto Grav. $ <strong><span class="Estilo14 Estilo39 Estilo38 Estilo28  Estilo4"><strong><span class="Estilo14 Estilo17">
+  </span></strong></span></strong></strong></span></span></span></span></span></div></td>
+  <td colspan="2" scope="col"><div align="center"><span class="Estilo4 Estilo13"><span class="Estilo23"><span class="Estilo24"><span class="Estilo28"><span class="Estilo14 Estilo39 Estilo38 Estilo28  Estilo4">IVA: $ <span class="Estilo4 Estilo28"><strong><strong><strong><span class="Estilo14 Estilo17">
+  </span></strong></strong></strong></span></span></span></span></span></span></div></td>
+  <td scope="col"><div align="right"><span class="Estilo4 Estilo13"><span class="Estilo23"><span class="Estilo24"><span class="Estilo28"></span></span></span></span></div>    
+    <div align="center"><span class="Estilo14 Estilo39 Estilo38 Estilo28  Estilo4"><strong>TOTAL: $ <strong><span class="Estilo4 Estilo13"><span class="Estilo23"><span class="Estilo24"><span class="Estilo28"><span class="Estilo4 Estilo28"><strong><span class="Estilo14 Estilo17">
+      </span></strong></span></span></span></span></span></strong>
+    </strong></span></span></div></td>
+  </tr>
+<tr bgcolor="#E6E6E6">
+  <td height="24" colspan="2" valign="middle" scope="col"><div align="center"><span class="Estilo4 Estilo28"><strong><strong><span class="Estilo14 Estilo17">
+      <input name="subtotal" type="text" id ="subtotal22" onKeyPress="return verif_caracter(this,event)" value="<?echo number_format($subtotal,2);?>" size="7">
+  </span></strong></strong></span></div></td>
+  <td colspan="2" valign="middle" scope="col"><div align="center"><span class="Estilo4 Estilo28"><span class="Estilo4 Estilo13"><span class="Estilo23"><span class="Estilo24"><span class="Estilo28"><strong><span class="Estilo14 Estilo39 Estilo38 Estilo28  Estilo4"><strong><span class="Estilo14 Estilo17">
+      <input name="descuento" type="text" id ="descuento23" onKeyPress="return verif_caracter(this,event)" value="<?echo number_format($desc_factura,2);?>" size="7">
+  </span></strong></span></strong></span></span></span></span></span></div></td>
+  <td colspan="4" valign="middle" scope="col"><div align="center"><span class="Estilo4 Estilo13"><span class="Estilo23"><span class="Estilo24"><span class="Estilo28"><span class="Estilo4 Estilo28"><strong><strong><span class="Estilo14 Estilo39 Estilo38 Estilo28  Estilo4"><strong><span class="Estilo14 Estilo17">
+      <input name="neto_gravado" type="text" id ="descuento223" onKeyPress="return verif_caracter(this,event)" value="<?echo number_format($neto_gravado,2);?>" size="7">
+  </span></strong></span></strong></strong></span></span></span></span></span></div></td>
+  <td colspan="2" scope="col"><div align="center"><span class="Estilo4 Estilo13"><span class="Estilo23"><span class="Estilo24"><span class="Estilo28"><span class="Estilo14 Estilo39 Estilo38 Estilo28  Estilo4"><span class="Estilo4 Estilo28"><strong><strong><strong><span class="Estilo14 Estilo17">
+      <input name="iva_fact" type="text" id ="descuento2222" onKeyPress="return verif_caracter(this,event)" value="<?echo number_format($iva_fact,2);?>" size="7">
+  </span></strong></strong></strong></span></span></span></span></span></span></div></td>
+  <td scope="col"><div align="center"><span class="Estilo14 Estilo39 Estilo38 Estilo28  Estilo4"><strong><strong><span class="Estilo4 Estilo13"><span class="Estilo23"><span class="Estilo24"><span class="Estilo28"><span class="Estilo4 Estilo28"><strong><span class="Estilo14 Estilo17">
+      <input name="total_factura" type="text" id ="total_factura22" onKeyPress="return verif_caracter(this,event)" value="<?echo number_format($total_factura,2);?>" size="7">
+  </span></strong></span></span></span></span></span></strong></strong></span></div></td>
+</tr>
+<tr>
+  <td height="3"></td>
+  <td width="130"></td>
+  <td width="17"></td>
+  <td width="91"></td>
+  <td width="2"></td>
+  <td></td>
+  <td></td>
+  <td width="57"></td>
+  <td width="0"></td>
+  <td></td>
+  <td></td>
+</tr>
+<?}?>
+
+ </table>
+
+
+<?$total_factura = 0;
+$neto = 0;
+$iva = 0;
+$sumatoria = $cont;
+		$cont = 0;
+
+//include ("espacios_en_blancos.php");
+$sumatoria = 0;?>
+</html>
+</form>
+</body>

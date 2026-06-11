@@ -1,0 +1,35 @@
+<?php 
+include ("../../../conexiones/config_pro.php");
+
+//planes y tasas
+$cod_tasa=$_POST["cod_tasa"];
+$iva_normal=$_POST["iva_normal"];
+$iva_recargo=$_POST["iva_recargo"];
+$iva_especial=$_POST["iva_especial"];
+$percepcion_dgr=$_POST["percepcion_dgr"];
+$multa_dgr=$_POST["multa_dgr"];
+$tasa_ig=$_POST["tasa_ig"];
+
+
+
+if ($cod_tasa == ""){
+$leyenda = "NO INGRESO DENOMINACION O RAZON SOCIAL";
+include ("../../../alertas/campo_vacio.php");
+	exit;
+}
+
+
+
+
+include ("../../../conexiones/config_pro.php");
+$sql = "INSERT INTO `tasas` (`cod_tasa` , `iva_normal` , `iva_recargo` , `iva_especial` , `percepcion_dgr` , `multa_dgr` , `tasa_ig`  ) VALUES ('$cod_tasa' , '$iva_normal' , '$iva_recargo', '$iva_especial' , '$percepcion_dgr' , '$multa_dgr' , '$tasa_ig' )";
+
+mysql_query($sql);
+/*
+$leyenda = "LOS DATOS SE HAN GUARDADO CORRECTAMENTE ";
+include ("../../../alertas/campo_vacio.php");
+
+*/
+include ("../../proveeduria/tasas/entrada_dato.php");
+?>
+

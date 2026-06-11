@@ -1,0 +1,36 @@
+<?php 
+include ("../../../conexiones/config_pro.php");
+
+//planes y tasas
+$cod_plan=$_POST["plan"];
+$descuento_1=$_POST["descuento_1"];
+$descuento_2=$_POST["descuento_2"];
+$recargo_1=$_POST["recargo_1"];
+$recargo_2=$_POST["recargo_2"];
+$recargo_flete=$_POST["recargo_flete"];
+echo "fds".$recargo_impuesto=$_POST["recargo_impuesto"];
+$cuotas=$_POST["cuotas"];
+$recargo_mensual=$_POST["recargo_mensual"];
+
+
+if ($cod_plan == ""){
+$leyenda = "NO INGRESO DENOMINACION O RAZON SOCIAL";
+include ("../../../alertas/campo_vacio.php");
+	exit;
+}
+
+
+
+
+include ("../../../conexiones/config_pro.php");
+$sql = "INSERT INTO `tasas_planes` ( `cod_plan` , `descuento_1` , `descuento_2` , `recargo_1` , `recargo_2` , `recargo_flete` , `recargo_impuestos` , `cuotas` , `recargo_mensual` ) VALUES ('$cod_plan' , '$descuento_1' , '$descuento_2', '$recargo_1' , '$recargo_2' , '$recargo_flete' , '$recargo_impuesto' , '$cuotas' , '$recargo_mensual')";
+
+mysql_query($sql);
+/*
+$leyenda = "LOS DATOS SE HAN GUARDADO CORRECTAMENTE ";
+include ("../../../alertas/campo_vacio.php");
+
+*/
+include ("../../proveeduria/planes/entrada_dato.php");
+?>
+

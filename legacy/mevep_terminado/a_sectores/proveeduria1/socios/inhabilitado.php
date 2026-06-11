@@ -1,0 +1,15 @@
+<?php 
+
+$fecha_pago = date("Y-m-d");
+
+include ("../../conexiones/config.inc.php");
+
+$sql3="select count(estado) as cant from pagos where cod_socio = $cod_socio and estado = 'PENDIENTE'";
+$result3 = $db->Execute($sql3);
+echo $cant=$result3->fields["cant"];
+
+$result3->MoveNext();
+
+?>
+
+

@@ -1,0 +1,20 @@
+<?php
+include ("../../conexiones/config.inc.php");
+
+
+$nro_especialidad=$_POST["nro_especialidad"];
+$especialidad=$_POST["especialidad"];
+
+
+
+echo  $sql = "INSERT INTO especialidad (`nro_especialidad`, `especialidad`, `cod_operacion`) VALUES ('$nro_especialidad', '$especialidad', '')";
+  mysql_query($sql);
+
+
+$bande_nuevo = 1;
+$palabra = $nro_paciente;
+$bande = 2;
+include ("especialidad.php");	
+
+?>
+

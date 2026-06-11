@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>Chat con Ajax</title>
+<script src="ajax.js" type="text/javascript"></script>
+<script src="dom.js" type="text/javascript"></script>
+
+<link href="estilos.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<form name="nuevo_empleado" action="" onSubmit="enviarMensaje(); return false">
+<table width="700" border="0">
+  <tr>
+    <td width="1036" colspan="2">Usuario
+      <input name="usuario" type="text" size="15" >
+      Mensaje<strong>
+      <input name="mensaje" type="text" value="" size="50">
+      <input type="submit" name="Submit" value="Enviar" />    
+        </strong></td>
+    </tr>
+</table>
+</form>
+
+<div id="barra">
+	<div class="c_fecha">
+	  <div align="center">Fecha / Hora </div>
+	</div>
+	<div class="c_usuario">
+	  <div align="center">Usuario</div>
+	</div>
+	<div class="c_mensaje">
+	  <div align="center">Mensaje</div>
+	</div>
+</div>
+<div id="pagina">
+
+</div>
+</body>
+</html>

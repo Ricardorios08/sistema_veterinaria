@@ -1,0 +1,317 @@
+
+            <?include ("../../../conexiones/config_pro.php");
+
+$nro_factura= $_REQUEST['nro_factura'];
+$fact =$_REQUEST['fact'];
+$tipo_fact =$_REQUEST['tipo_fact'];
+$cuit= $_REQUEST['cuit'];
+$direccion= $_REQUEST['direccion'];
+$leyenda2 =  $_REQUEST['leyenda1'];
+$cantidad_cuotas=  $_REQUEST['cantidad_cuotas'];
+
+
+if ($cantidad_cuotas == ""){
+$cantidad_cuotas = 1;
+}
+
+if ($cantidad_cuotas == 0){
+$cantidad_cuotas = 1;
+}
+
+
+if (($cantidad_cuotas > 6) or ($cantidad_cuotas < 0) ) {
+$leyenda = "Máximo de Cuotas = 6";
+	include ("../../../alertas/campo_informacion2.php");
+	EXIT;
+}
+
+if (($cantidad_cuotas < 7) and ($cantidad_cuotas > 1)){
+	$mostrar_recuadro_cuotas = "SI";
+}
+
+
+//$leyenda1 = substr($leyenda_12, 0,30);
+//$leyenda2 = substr($leyenda_12,30,30);
+
+
+$nro_factura_nuevo= $_REQUEST['nro_factura_nuevo'];
+ $fact_nuevo= strtoupper($_REQUEST['fact_nuevo']);
+
+
+
+include("../../../conexiones/config_pro.php");
+$sql2 = "SELECT * FROM `ventas1_encab_temp`  WHERE  `nro_factura` = $nro_factura and tipo_fact = '$fact'";
+$result2 = $db->Execute($sql2);
+
+$nro_cliente=strtoupper($result2->fields["nro_cliente"]);
+$nro_cuenta=strtoupper($result2->fields["nro_cuenta"]);
+$cod_operacion=strtoupper($result2->fields["cod_operacion"]);
+$fact=strtoupper($result2->fields["tipo_fact"]);
+$tipo_iva=strtoupper($result2->fields["tipo"]);
+$tp=strtoupper($result2->fields["tipo"]);
+
+
+$plan=strtoupper($result2->fields["plan"]);
+$operador=strtoupper($result2->fields["operador"]);
+$denominacion=strtoupper($result2->fields["denominacion"]);
+
+$fecha=strtoupper($result2->fields["fecha"]);
+$dia=substr($fecha,8,2);
+$mes=substr($fecha,5,2);
+$anio=substr($fecha,0,4);
+$fecha_a = $dia."/".$mes."/".$anio;
+
+$forma_pago=strtoupper($result2->fields["forma_pago"]);
+$fact=strtoupper($result2->fields["tipo_fact"]);
+$porc_dto=strtoupper($result2->fields["porc_dto"]);
+
+
+if ($nro_cliente != 0){
+$tipo_cuenta = "2"; //tipo 1 externo;
+$leyenda1 = "";
+$nro = $nro_cliente;
+}
+elseif ($nro_cuenta != 0){
+$tipo_cuenta = "1"; //tipo 1 asociado;
+$leyenda1 = "";
+if ($forma_pago == 'CTA/CTE'){
+$leyenda3 = "";
+$leyenda4 = "";
+}
+$nro = $nro_cuenta;
+}
+
+
+if (($nro_factura_nuevo != "") && ($fact_nuevo != "")) {
+$caso = 1;
+}
+if (($nro_factura_nuevo != "") && ($fact_nuevo == "")) {
+$caso = 2;
+}
+if (($nro_factura_nuevo == "") && ($fact_nuevo != "")) {
+$caso = 3;
+}
+if (($nro_factura_nuevo == "") && ($fact_nuevo == "")) {
+$caso = 4;
+}
+
+switch ($caso){
+
+	case "1":{
+ $sql = "UPDATE `ventas1_encab_temp` SET `nro_factura` = '$nro_factura_nuevo' , `tipo_fact` = '$fact_nuevo'  WHERE `nro_factura` = '$nro_factura' and `tipo_fact` = '$fact' ";
+mysql_query($sql);
+
+ $sql = "UPDATE `ventas1_deta_temp` SET `nro_factura` = '$nro_factura_nuevo' , `tipo_fact` = '$fact_nuevo'  WHERE `nro_factura` = '$nro_factura' and `tipo_fact` = '$fact' ";
+mysql_query($sql);
+
+$sql = "INSERT INTO `ventas_encabezado` ( `tipo_fact` , `nro_factura` , `cod_operacion` , `tipo` , `nro_cliente` , `nro_cuenta` , `plan` , `operador` , `denominacion` , `fecha` , `subtotal` , `descuento` , `iva` , `retencion` , `total` , `forma_pago` , `tipo_iva` ) VALUES ( '$fact_nuevo' , '$nro_factura_nuevo' , '1' , '$tipo_iva' , '$nro_cliente' , '$nro_cuenta' , '$plan' , '$operador' , '$denominacion' , '$fecha' , '$bruto' ,  '$descuento' , '$iva' , '$retencion' , '$neto' , '$forma_pago' , '$tp' )";
+mysql_query($sql);
+
+$fact = $fact_nuevo;
+$nro_factura = $nro_factura_nuevo;
+break;
+	}
+
+	case "2":{
+ $sql = "UPDATE `ventas1_encab_temp` SET `nro_factura` = '$nro_factura_nuevo'   WHERE `nro_factura` = '$nro_factura' and `tipo_fact` = '$fact' ";
+mysql_query($sql);
+
+ $sql = "UPDATE `ventas1_deta_temp` SET `nro_factura` = '$nro_factura_nuevo'  WHERE `nro_factura` = '$nro_factura' and `tipo_fact` = '$fact' ";
+mysql_query($sql);
+
+ $sql = "INSERT INTO `ventas_encabezado` ( `tipo_fact` , `nro_factura` , `cod_operacion` , `tipo` , `nro_cliente` , `nro_cuenta` , `plan` , `operador` , `denominacion` , `fecha` , `subtotal` , `descuento` , `iva` , `retencion` , `total` , `forma_pago` , `tipo_iva`) VALUES ( '$fact' , '$nro_factura_nuevo' , '1' , '$tipo_iva' , '$nro_cliente' , '$nro_cuenta' , '$plan' , '$operador' , '$denominacion' , '$fecha' , '$bruto' ,  '$descuento' , '$iva' , '$retencion' , '$neto' , '$forma_pago' , '$tp' )";
+mysql_query($sql);
+$nro_factura = $nro_factura_nuevo;
+break;
+	}
+
+		case "3":{
+ $sql = "UPDATE `ventas1_encab_temp` SET `tipo_fact` = '$fact_nuevo'  WHERE `nro_factura` = '$nro_factura' and `tipo_fact` = '$fact_nuevo' ";
+mysql_query($sql);
+
+ $sql = "UPDATE `ventas1_deta_temp` SET `tipo_fact` = '$fact_nuevo'  WHERE `nro_factura` = '$nro_factura' and `tipo_fact` = '$fact' ";
+
+mysql_query($sql);
+
+ $sql = "INSERT INTO `ventas_encabezado` ( `tipo_fact` , `nro_factura` , `cod_operacion` , `tipo` , `nro_cliente` , `nro_cuenta` , `plan` , `operador` , `denominacion` , `fecha` , `subtotal` , `descuento` , `iva` , `retencion` , `total` , `forma_pago` , `tipo_iva`) VALUES ( '$fact_nuevo' , '$nro_factura' , '1' , '$tipo_iva' , '$nro_cliente' , '$nro_cuenta' , '$plan' , '$operador' , '$denominacion' , '$fecha' , '$bruto' ,  '$descuento' , '$iva' , '$retencion' , '$neto' , '$forma_pago' , '$tp' )";
+mysql_query($sql);
+$fact = $fact_nuevo;
+break;
+	}
+
+		case "4":{
+$sql = "INSERT INTO `ventas_encabezado` ( `tipo_fact` , `nro_factura` , `cod_operacion` , `tipo` , `nro_cliente` , `nro_cuenta` , `plan` , `operador` , `denominacion` , `fecha` , `subtotal` , `descuento` , `iva` , `retencion` , `total` , `forma_pago` , `tipo_iva` ) VALUES ( '$fact' , '$nro_factura' , '1' , '$tipo_iva' , '$nro_cliente' , '$nro_cuenta' , '$plan' , '$operador' , '$denominacion' , '$fecha' , '$bruto' ,  '$descuento' , '$iva' , '$retencion' , '$neto' , '$forma_pago' , '$tp')";
+mysql_query($sql);
+
+break;
+	}
+
+
+}
+
+
+include("../../../conexiones/config_pro.php");
+ $sql6 = "SELECT * FROM `ventas1_encab_temp`  WHERE  `nro_factura` = $nro_factura";
+$result6 = $db->Execute($sql6);
+$forma_pago=strtoupper($result6->fields["forma_pago"]);
+$porc_dto=strtoupper($result6->fields["porc_dto"]);
+$tipo_fact=strtoupper($result6->fields["tipo_fact"]);
+
+
+ $sql3 = "SELECT * FROM `ventas1_deta_temp`  WHERE  `nro_factura` = $nro_factura order by cod_detalle desc";
+$result3 = $db->Execute($sql3);
+
+
+if (!$result3) die("fallo".$db->ErrorMsg());
+
+ while (!$result3->EOF) {
+$renglon = $renglon + 1;
+
+$cod_mercaderia=strtoupper($result3->fields["cod_mercaderia"]);
+$cantidad=strtoupper($result3->fields["cantidad"]);
+$descripcion=strtoupper($result3->fields["descripcion"]);
+$cod_detalle=$result3->fields["cod_detalle"];
+$precio_unitario=$result3->fields["precio_unitario"];
+$iva_unitario=$result3->fields["iva_unitario"];
+$tasa_iva=$result3->fields["presentacion"];
+
+$descuento=$result3->fields["descuento"];
+$neto_gravado_unitario=$result3->fields["neto_gravado_unitario"];
+$iva_unitario_total=$result3->fields["iva_unitario_total"];
+$total=$result3->fields["total"];
+
+
+
+$neto_gravado_total= $neto_gravado_total + $neto_gravado_unitario;
+$iva_total = $iva_total + $iva_unitario_total;
+$suma_total = $suma_total + $total;
+
+
+
+
+
+
+$cont = $cont + 1;
+
+
+if ($nro_factura_nuevo != ""){
+$nro_factura= $nro_factura_nuevo;
+}
+
+
+
+ $sql = "UPDATE `existencias` SET `cantidad_salida` = '$cantidad_a_guardar' WHERE cod_mercaderia = '$cod_mercaderia'";
+//mysql_query($sql);
+
+ $sql = "INSERT INTO `stock` ( `cod_mercaderia` , `fecha` ,  `tipo_fact` , `cod_movimiento` , `nro_comprobante` , `cantidad` , `precio_unitario` , `lote` , `mes_lote` , `anio_lote` , `cuenta` ,  `tipo_cuenta` ) VALUES ('$cod_mercaderia' , '$fecha' , '$fact' , '5' , '$nro_factura' , '$cantidad' , '$precio_unitario' , '' , '' , '' , '$nro' ,  '$tipo_cuenta')" ;
+//mysql_query($sql);
+
+
+
+
+echo $sql = "INSERT INTO `ventas_detalle` ( `tipo_fact` , `nro_factura` , `cod_detalle` , `cod_mercaderia` , `descripcion` , `presentacion` , `lote` , `mes_lote` , `descuento` , `cantidad` , `precio_unitario` , `iva_unitario` , `neto_gravado_unitario`, `iva_unitario_total`, `total`  )  VALUES ( '$fact' , '$nro_factura' , '' ,'$cod_mercaderia' , '$descripcion', '$iva_normal' , '$descuento' , '$mes_lote' , '$descuento' , '$cantidad' , '$precio_unitario' , '$iva_unitario' , '$neto_gravado_unitario' , '$iva_unitario_total' , '$total')";
+mysql_query($sql);
+
+
+
+
+
+	 $result3->MoveNext();
+				}
+
+$suma_total = $suma_total + ($suma_precio_unitario + $suma_iva_unitario);
+
+$sumatoria = $cont;
+$cont = 0;
+$sumatoria = 0;
+
+
+?>
+</table>
+
+
+<?
+if ($desc_factura_b == 0){$desc_factura_b  = "-";}else{$desc_factura_b  = number_format($desc_factura_b,2);}
+if ($desc_factura == 0){$desc_factura  = "-";}else{$desc_factura  = number_format($desc_factura,2);}
+
+
+
+if ($tipo_fact == "B"){
+ECHO $sql = "UPDATE `ventas_encabezado` SET `subtotal` = '$suma_total', `descuento` = '$descuento' , `iva` = '$iva_total' , `retencion` = '', `total` = '$suma_total' , `neto_gravado` = '$neto_gravado_total' WHERE `tipo_fact` = '$fact' AND `nro_factura` = '$nro_factura'";
+mysql_query($sql);
+
+
+if ($forma_pago == 'CTA/CTE'){
+$sql = "INSERT INTO `resumen_cta_vta` ( `cuenta` , `tipo_cuenta` , `fecha` , `tipo_fact` , `comprobante` , `cod_movimiento` , `importe` , `vencimiento` , `referencia` , `afectacion` ) VALUES ( '$nro' , '$tipo_cuenta' ,'$fecha' , '$fact' , '$nro_factura' , '1' , '$suma_total' , '$vencimiento1' , '$referencia' , '$afectacion')";
+mysql_query($sql);
+}
+
+if ($forma_pago == 'CTA/CTE'){
+$sql = "INSERT INTO `composicion_saldos` ( `cuenta` , `tipo_cuenta` , `tipo_fact` , `comprobante` , `fecha_emision` , `importe_original` , `fecha_pago` , `saldo` , `vencimiento` , `cuotas` , `cuotas_pagadas` , `cod_movimiento` ) VALUES ( '$nro' , '$tipo_cuenta' , '$fact' ,  '$nro_factura' , '$fecha' , '$suma_total' , '' , '$suma_total' , '$vencimiento1' , '$cantidad_cuotas' , '0', 'VENTA' )";
+mysql_query($sql);
+}
+
+$sql = "INSERT INTO `iva_facturas` (`tipo_fact` , `nro_factura` , `tasa` ) VALUES ('$fact' , '$nro_factura' , '$iva_normal')";
+mysql_query($sql);
+
+
+
+}else
+{
+ECHO $sql = "UPDATE `ventas_encabezado` SET `subtotal` = '$suma_total', `descuento` = '$descuento' , `iva` = '$iva_total' , `retencion` = '' , `neto_gravado` = '$neto_gravado_total', `total` = '$suma_total' WHERE `tipo_fact` = '$fact' AND `nro_factura` = '$nro_factura'";
+mysql_query($sql);
+
+if ($forma_pago == 'CTA/CTE'){
+ $sql = "INSERT INTO `resumen_cta_vta` ( `cuenta` , `tipo_cuenta` , `fecha` , `tipo_fact` , `comprobante` , `cod_movimiento` , `importe` , `vencimiento` , `referencia` , `afectacion` ) VALUES ( '$nro' , '$tipo_cuenta' ,'$fecha' , '$fact' , '$nro_factura' , '1' , '$suma_total' , '$vencimiento1' , '$referencia' , '$afectacion')";
+mysql_query($sql);
+}
+
+if ($forma_pago == 'CTA/CTE'){
+$sql = "INSERT INTO `composicion_saldos` ( `cuenta` , `tipo_cuenta` , `tipo_fact` , `comprobante` , `fecha_emision` , `importe_original` , `fecha_pago` , `saldo` , `vencimiento` , `cuotas` , `cuotas_pagadas` , `cod_movimiento` ) VALUES ( '$nro' , '$tipo_cuenta' , '$fact' ,  '$nro_factura' , '$fecha' , '$suma_total' , '' , '$suma_total' , '$vencimiento1' , '$cantidad_cuotas' , '0', 'VENTA' )";
+mysql_query($sql);
+}
+
+$sql = "INSERT INTO `iva_facturas` (`tipo_fact` , `nro_factura` , `tasa` ) VALUES ('$fact' , '$nro_factura' , '$iva_normal')";
+mysql_query($sql);
+
+}
+
+ $sumatoria = $cont;
+		$cont = 0;
+
+
+
+
+
+//11 ventas
+//12 nota de debito
+
+//21 pago
+//22 nota de credito
+
+
+
+$total_factura = 0;
+$subtotal = 0;
+$neto_gravado = 0;
+$desc_fact= 0;
+$iva = 0;
+
+
+	?>
+<?
+$sql = "TRUNCATE TABLE `ventas1_deta_temp`";
+mysql_query($sql);
+$sql = "TRUNCATE TABLE `ventas1_encab_temp`";
+mysql_query($sql);
+
+$total_factura = 0;
+$neto = 0;
+$iva = 0;
+
+$leyenda  = "SE ACTUALIZO FACTURA DE VENTA";
+include ("../../../alertas/campo_informacion.php");
+include ("entrada_factura.php");
+
+?>
+

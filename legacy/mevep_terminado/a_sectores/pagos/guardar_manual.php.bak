@@ -1,0 +1,109 @@
+<?php
+
+include ("../../conexiones/config.inc.php");
+
+echo $submit= $_REQUEST['Submit'];
+$contra= $_REQUEST['contra'];
+
+
+
+$fecha_pago= $_REQUEST['fecha_pago'];
+
+$dia = substr($fecha_pago,0,2);
+$mes1 = substr($fecha_pago,3,2);
+$anio = substr($fecha_pago,6,4);
+
+$fecha_pago = $anio."-".$mes1."-".$dia;
+
+$cod_socio= $_REQUEST['cod_socio'];
+
+  $palabra = $cod_socio;
+
+
+$anio= $_REQUEST['anio'];
+
+$cobrador=$_POST["cobrador"];
+ 
+
+$mes=$_POST["mes"];
+ 
+ $nro_boleta= $_REQUEST['nro_boleta'];
+
+echo $submit;
+exit;
+
+if ($submit == "ACEPTAR"){
+
+
+if ($cobrador == 0){
+$leyenda = "INGRESE N° COBRADOR";
+include ("../../alertas/campo_informacion2.php");
+echo "N° INGRESE COBRADOR";
+?><BR><?php
+echo "10 LOCAL";
+?><BR><?php
+echo "11 DANIEL";
+?><BR><?php
+echo "12 JORGE";
+?><BR><?php
+echo "13 GUSTAVO";
+?><BR><?php
+echo "14 RICARDO";
+?><BR><?php
+
+
+EXIT;
+}
+
+
+$anio_pago = "20".$anio_pago;
+     $sql = "SELECT *  FROM `pagos` WHERE  `cod_socio` = '$cod_socio' AND `mes` = '$mes' AND `anio` = '$anio' and nro_boleta = $nro_boleta";
+$result = $db->Execute($sql);
+
+
+$estado=$result->fields["estado"];
+
+if ($estado == ""){
+$leyenda = "COD BARRA INEXISTENTE";
+include ("../../alertas/campo_informacion2.php");
+exit;
+}
+
+if ($estado == "PENDIENTE"){
+$sql = "UPDATE `pagos` SET `estado` = 'PAGADO',  `fecha_pago` = '$fecha_pago' , `cobrador` = '$cobrador' WHERE `cod_socio` = '$cod_socio' AND `mes` = '$mes' AND `anio` = '$anio'";
+$result = $db->Execute($sql);
+$leyenda = "PAGO ACEPTADO";
+include ("../../alertas/campo_informacion2.php");
+
+}else{
+
+$leyenda = "YA INGRESO ESA BOLETA";
+include ("../../alertas/campo_informacion2.php");
+exit;
+}
+
+include ("entrada_pago_cobrador.php");
+//include ("ver_ultimos ingresados.php");
+
+}ELSE{
+
+
+if (($contra == "450 gramos") OR ($contra == "450 GRAMOS")){
+
+include ("../../conexiones/config.inc.php");
+ $sql = "delete from pagos WHERE `cod_socio` = '$cod_socio' AND `mes` = '$mes' AND `anio` = '$anio'";
+$result = $db->Execute($sql);
+}else{
+$leyenda = "CONTRASEÑA INCORRECTA";
+include ("../../alertas/campo_informacion2.php");
+exit;
+}
+
+ $leyenda = "DEUDA ELIMINADA";
+include ("../../alertas/campo_informacion.php");
+   $cod_socio;
+$bande = 4;
+$palabra = $cod_socio;
+include ("../socios/buscar_socios1.php");
+}
+

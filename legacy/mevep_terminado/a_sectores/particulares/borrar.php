@@ -1,0 +1,22 @@
+<?php 
+include ("../../conexiones/config.inc.php");
+
+ $contra=strtoupper($_REQUEST["contra"]);
+$cod_socio=$_REQUEST["cod_socio"];
+
+
+if ($contra == "RAZA"){
+ $sql = "DELETE FROM animal_particular where cod_socio = $cod_socio";
+mysql_query($sql);
+
+ $sql = "DELETE FROM particulares where cod_socio = $cod_socio";
+mysql_query($sql);
+
+$leyenda = "SE ELIMINO EL PARTICULAR Y SUS MASCOTAS";
+include ("../../alertas/campo_informacion.php");
+
+}ELSE{
+
+$leyenda = "CLAVE DE SEGURIDAD INCORRECTA";
+include ("../../alertas/campo_informacion2.php");
+}

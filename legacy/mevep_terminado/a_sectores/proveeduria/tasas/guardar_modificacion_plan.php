@@ -1,0 +1,37 @@
+<?php 
+include ("../../../conexiones/config_pro.php");
+
+//planes y tasas
+$cod_plan=$_POST["plan"];
+$descuento_1=$_POST["descuento_1"];
+$descuento_2=$_POST["descuento_2"];
+$recargo_1=$_POST["recargo_1"];
+$recargo_2=$_POST["recargo_2"];
+$recargo_flete=$_POST["recargo_flete"];
+$recargo_impuesto=$_POST["recargo_impuesto"];
+$cuotas=$_POST["cuotas"];
+$recargo_mensual=$_POST["recargo_mensual"];
+
+
+if ($cod_plan == ""){
+$leyenda = "NO INGRESO DENOMINACION O RAZON SOCIAL";
+include ("../../../alertas/campo_vacio.php");
+	exit;
+}
+
+
+
+
+include ("../../../conexiones/config_pro.php");
+
+$sql = "UPDATE `tasas_planes` SET `descuento_1` = '$descuento_1',`descuento_2` = '$descuento_2',`recargo_1` = '$recargo_1',`recargo_2` = '$recargo_2',recargo_flete = '$cod_plan', `recargo_impuestos` = '$recargo_impuesto', `cuotas` = '$cuotas', `recargo_mensual` = '$recargo_mensual' WHERE `cod_plan` = '$cod_plan' ";
+
+mysql_query($sql);
+/*
+$leyenda = "LOS DATOS SE HAN GUARDADO CORRECTAMENTE ";
+include ("../../../alertas/campo_vacio.php");
+
+*/
+include ("../../proveeduria/planes/entrada_dato.php");
+?>
+

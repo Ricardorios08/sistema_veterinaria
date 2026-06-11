@@ -1,0 +1,229 @@
+<?php
+require('../../drivers/fpdf/fpdf.php');
+//require('ean_13_sincheck.php');
+require('ean13.php');
+
+$pdf=new PDF_EAN13('L','mm','A5');
+
+
+$pdf->SetDisplayMode(76.5,'two');
+
+
+
+$pdf->AddPage();
+
+include("../../conexiones/config.inc.php");
+
+
+$anio =$_POST["anio"];
+
+
+$desde=$_POST["desde"];
+$hasta=$_POST["hasta"];
+
+$me=$_POST["mes"];
+	for ($i=0;$i<count($me);$i++)    
+	{     
+	$mes = $me[$i];    
+	}
+
+
+
+
+$fecha_fac=$_POST["fecha_fac"];
+
+$observaciones=$_POST["observaciones"];
+
+
+switch ($mes){
+
+case "01":{$mes10 = "ENERO";break;}
+case "02":{$mes10 = "FEBRERO";break;}
+case "03":{$mes10 = "MARZO";break;}
+case "04":{$mes10 = "ABRIL";break;}
+case "05":{$mes10 = "MAYO";break;}
+case "06":{$mes10 = "JUNIO";break;}
+case "07":{$mes10 = "JULIO";break;}
+case "08":{$mes10 = "AGOSTO";break;}
+case "09":{$mes10 = "SEPTIEMBRE";break;}
+case "10":{$mes10 = "OCTUBRE";break;}
+case "11":{$mes10 = "NOVIEMBRE";break;}
+case "12":{$mes10 = "DICIEMBRE";break;}
+
+}
+
+
+if ($desde == ""){
+$leyenda = "NO INGRESO RANGO DESDE";
+include ("../../alertas/campo_informacion.php");
+EXIT;
+}
+
+if ($hasta == ""){
+$leyenda = "NO INGRESO RANGO DESDE";
+include ("../../alertas/campo_informacion.php");
+EXIT;
+}
+
+
+$hoy = date("d/m/y");
+
+
+$sql = "SELECT * FROM `socios` WHERE ruta BETWEEN '$desde' AND '$hasta'  and no_imprimir = 'FALSO' order by ruta";
+$result2 = $db->Execute($sql);
+
+if (!$result2) die("fallo".$db->ErrorMsg());
+while (!$result2->EOF) {
+
+IF ($conta > 1){
+$pdf->AddPage();
+}
+
+$conta = 2;
+$cod_socio=utf8_decode($result2->fields["cod_socio"]);
+$apellido=utf8_decode(strtoupper($result2->fields["apellido"]));
+$nombre=utf8_decode(strtoupper($result2->fields["nombre"]));
+$tipo_doc=utf8_decode(strtoupper($result2->fields["tipo_doc"]));
+$documento=utf8_decode(strtoupper($result2->fields["documento"]));
+$telefono=utf8_decode(strtoupper($result2->fields["telefono"]));
+$domicilio=utf8_decode(strtoupper($result2->fields["domicilio"]));
+$departamento=utf8_decode(strtoupper($result2->fields["departamento"]));
+$cobrador=utf8_decode(strtoupper($result2->fields["cobrador"]));
+
+$ruta=utf8_decode(strtoupper($result2->fields["ruta"]));
+
+
+$importe_deuda=utf8_decode(strtoupper($result2->fields["importe_deuda"]));
+$importe_cuota=utf8_decode(strtoupper($result2->fields["importe_cuota"]));
+$importe_cuota_barra=utf8_decode(strtoupper($result2->fields["importe_cuota"]));
+
+$sql1="select * from animal where cod_socio = $cod_socio";
+$result1 = $db->Execute($sql1);
+$nombre_mascota=utf8_decode(strtoupper($result1->fields["nombre"]));
+
+$sql1="select * from pagos where cod_socio = $cod_socio and mes = '$mes' and anio = $anio";
+$result1 = $db->Execute($sql1);
+$nro_boleta=utf8_decode(strtoupper($result1->fields["nro_boleta"]));
+$importe_cuota=utf8_decode(strtoupper($result1->fields["importe"]));
+
+
+$nro_boleta = str_pad($nro_boleta, 8, "0", STR_PAD_LEFT);
+
+
+$sql1="select * from animal where cod_socio = $cod_socio";
+$result1 = $db->Execute($sql1);
+$nombre_mascota=utf8_decode(strtoupper($result1->fields["nombre"]));
+
+$nombre = $apellido.", ".$nombre;
+
+
+list($precio_entero1,$precio_decimal1) = explode(".",$importe_cuota_barra);
+if (strlen($precio_decimal1) == 1){
+$precio_decimal1 = $precio_decimal1."0";
+}
+$importe_cuota_barra = $precio_entero1."".$precio_decimal1;
+
+
+
+$anio_barra = substr($anio,2,2);
+
+if (strlen($importe_cuota_barra) == 4){
+$importe_cuota_barra = "0".$importe_cuota_barra;
+}
+ $cod_barra = $cod_socio.$mes.$anio_barra.$cobrador;
+
+
+$pdf->SetFont('Arial','',9);
+
+
+$pdf->SetY(5);
+$pdf->SetX(70);
+$pdf->Cell(40,5,"Nº: ".$nro_boleta);
+
+$pdf->SetX(179);
+$pdf->Cell(180,5,"Nº: ".$nro_boleta);
+$pdf->Ln();
+
+
+$pdf->SetY(30);
+$pdf->SetX(70);
+$pdf->Cell(40,5,$fecha_fac);
+
+$pdf->SetX(179);
+$pdf->Cell(180,5,$fecha_fac);
+$pdf->Ln();
+$pdf->Ln();
+$pdf->SetX(20);
+$pdf->Cell(40,5,$nombre.' ('.$cod_socio.")");
+$pdf->SetX(129);
+$pdf->Cell(40,5,$nombre.' ('.$cod_socio.")");
+$pdf->Ln();
+$pdf->SetX(20);
+$pdf->Cell(40,5,$domicilio." - ".$departamento);
+$pdf->SetX(129);
+$pdf->Cell(40,5,$domicilio." - ".$departamento);
+$pdf->Ln();
+
+$leyenda = "1 Abono por: ".$nombre_mascota;
+$pdf->SetY(60);
+$pdf->Cell(40,5,$leyenda);
+$pdf->SetX(90);
+$pdf->Cell(40,5,$importe_cuota);
+$pdf->SetX(124);
+$pdf->Cell(40,5,$leyenda);
+$pdf->SetX(194);
+$pdf->Cell(40,5,$importe_cuota);
+$pdf->Ln();
+
+$pdf->SetFont('Arial','B',28);
+$pdf->SetY(80);
+$pdf->SetX(25);
+
+$pdf->Cell(40,5,$mes10);
+$pdf->SetX(126);
+$pdf->Cell(40,5,$mes10);
+
+
+$pdf->SetFont('Arial','',8);
+
+$pdf->SetY(90);
+$pdf->SetX(120);
+$pdf->MultiCell(80,5,$observaciones);
+
+$pdf->SetFont('Arial','',9);
+
+
+$pdf->SetY(121);
+
+$pdf->SetX(10);
+$pdf->Cell(40,5,$ruta);
+
+
+$pdf->SetX(90);
+$pdf->Cell(40,5,$importe_cuota);
+
+
+$pdf->SetX(194);
+$pdf->Cell(40,5,$importe_cuota);
+
+$pdf->EAN13(30,90,$cod_barra);
+
+//$pdf->Code39(10,90,$cod_barra,1,10);
+//$pdf->Code39(130,90,$cod_barra,1,10);
+
+$pdf->Ln();
+
+
+
+
+$result2->MoveNext();
+
+
+}
+
+
+$nombre = "FACTURA.PDF";
+
+
+$pdf->Output();
+?>

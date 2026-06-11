@@ -1,0 +1,46 @@
+
+<?
+
+include ("../../../../conexiones/config_pro.php");
+
+
+$fecha_desde = "200-0-01";
+$fecha_hasta =$anio."-".$mes."-31";
+
+ $sql="select * from ventas_encabezado where cod_operacion = '3'";
+$result = $db->Execute($sql);
+
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+
+$nro_factura=strtoupper($result->fields["nro_factura"]);
+$tipo_fact=strtoupper($result->fields["tipo_fact"]);
+$afectacion=strtoupper($result->fields["afectacion"]);
+
+
+$sql1="select * from `ventas_encabezado` where nro_factura = $afectacion";
+$result1 = $db->Execute($sql1);
+$cheque=strtoupper($result1->fields["cheque"]);
+$contado=strtoupper($result1->fields["contado"]);
+
+
+
+
+
+
+echo  $sql23 = "UPDATE `ventas_encabezado` SET `cheque` = '$cheque' , `contado` = '$contado' WHERE `tipo_fact` = '$tipo_fact' AND `nro_factura` = '$nro_factura'";
+//mysql_query($sql23);
+
+echo "<br>";
+
+$result->MoveNext(); // CAMBIA ANALITICO
+	}
+
+
+
+$leyenda = "SE ACTUALIZO AFECTACION EN VENTAS ENCABEZADO";
+include ("../../../../alertas/campo_informacion.php");
+$cheque = 1;
+//include ("diario_vta.php");
+

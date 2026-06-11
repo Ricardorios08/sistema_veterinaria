@@ -1,0 +1,130 @@
+<?php
+
+ 
+
+ 
+
+
+$desde = $_REQUEST['desde'];
+$hasta= $_REQUEST['hasta'];
+
+
+
+
+$desde1 = $_REQUEST['desde1'];
+$hasta1= $_REQUEST['hasta1'];
+
+$desde2 = $_REQUEST['desde2'];
+$hasta2= $_REQUEST['hasta2'];
+
+$desde3 = $_REQUEST['desde3'];
+$hasta3= $_REQUEST['hasta3'];
+
+$desde4 = $_REQUEST['desde4'];
+$hasta4= $_REQUEST['hasta4'];
+
+$a = $desde;
+$b = $desde + 125;
+$c = $b + 125;
+$d = $c + 125;
+
+$a1 = $a;
+$b1 = $b;
+$c1 = $c;
+$d1 = $d;
+
+
+require('code128.php');
+
+$pdf=new PDF_Code128('L','mm','A4');
+
+ 
+
+$code='1245678';
+
+for ($i = $desde; $i <= $hasta; $i++) { // matriz
+
+
+$pdf->AddPage();
+
+
+$a1 = $a1 + 1; 
+$b1 = $b1 + 1; 
+$c1 = $c1 + 1; 
+$d1 = $d1 + 1; 
+
+
+$pdf->SetFont('Arial','',8);
+
+ 
+ /////// 1 
+$pdf->Code128(15,35,$a1,30,7);
+$pdf->SetXY(15,28.5);
+$pdf->Write(10,$a1);
+
+$pdf->Code128(15,58,$a1,30,7);
+$pdf->SetXY(15,51.5);
+$pdf->Write(10,$a1);
+
+$pdf->Code128(15,77,$a1,30,5);
+$pdf->SetXY(15,70.8);
+$pdf->Write(10,$a1);
+
+
+/////// 1 
+$pdf->Code128(89,35,$b1,30,7);
+$pdf->SetXY(89,28.5);
+$pdf->Write(10,$b1);
+
+$pdf->Code128(89,58,$b1,30,7);
+$pdf->SetXY(89,51.5);
+$pdf->Write(10,$b1);
+
+$pdf->Code128(90,77,$b1,30,5);
+$pdf->SetXY(89,70.8);
+$pdf->Write(10,$b1);
+
+
+
+/////// 1 
+$pdf->Code128(157,35,$c1,30,7);
+$pdf->SetXY(157,28.5);
+$pdf->Write(10,$c1);
+
+
+$pdf->Code128(157,58,$c1,30,7);
+$pdf->SetXY(157,51.5);
+$pdf->Write(10,$c1);
+
+$pdf->Code128(157,77,$c1,30,5);
+$pdf->SetXY(157,70.8);
+$pdf->Write(10,$c1);
+
+
+
+/////// 1 
+$pdf->Code128(236,35,$d1,30,7);
+$pdf->SetXY(236,28.5);
+$pdf->Write(10,$d1);
+
+$pdf->Code128(236,58,$d1,30,7);
+$pdf->SetXY(236,51.5);
+$pdf->Write(10,$d1);
+
+$pdf->Code128(236,77,$d1,30,5);
+$pdf->SetXY(236,70.8);
+$pdf->Write(10,$d1);
+
+
+
+
+
+
+} // fin matriz
+
+
+
+$pdf->Output();
+?>
+
+

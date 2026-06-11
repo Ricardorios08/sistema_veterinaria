@@ -1,0 +1,19 @@
+<BODY background="pescar.bmp"><CENTER><TABLE WIDTH="90%" BORDER=0><TR><TD>  
+
+<?php
+include ("../../../conexiones/config_pro.php");
+
+//tabla mercaderia
+$cod_mevep=$_POST["cod_merca"];
+$nombre=$_POST["nombre"];
+$documento=$_POST["precio_actualizado"];
+$cbu=$_POST["precio_actualizado"];
+$monto_descontar=$_POST["tipo_moneda"];
+$fecha_ingreso=$_POST["fecha_ingreso"];
+
+echo $sql = "INSERT INTO `mevep`.`debito` (`cod_mevep`, `nombre`, `documento`, `cbu`, `monto_descontar` , `fecha_ingreso`) VALUES ('$cod_mevep', '$nombre', '$documento', '$cbu', '$monto_descontar' , '$fecha_ingreso')";
+mysql_query($sql);
+include ("../../proveeduria/debito/entrada_debito.php");
+
+?>
+

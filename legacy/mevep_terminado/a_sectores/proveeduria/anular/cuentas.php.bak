@@ -1,0 +1,97 @@
+<?
+
+$sql3 = "SELECT * FROM `tasas_planes`  WHERE  `cod_plan` = $plan";
+$result3 = $db->Execute($sql3);
+
+
+$precio = $precio_actualizado;
+
+
+$descuento_1=strtoupper($result3->fields["descuento_1"]);
+$porc_descuento_1= (($precio_actualizado * $descuento_1)/100);
+$precio_actualizado = $precio_actualizado - $porc_descuento_1;
+
+
+$descuento_2=strtoupper($result3->fields["descuento_2"]);
+$porc_descuento_2= (($precio_actualizado * $descuento_2)/100);
+$precio_actualizado = $precio_actualizado - $porc_descuento_2;
+
+$recargo_1=strtoupper($result3->fields["recargo_1"]);
+$porc_recargo_1= (($precio_actualizado * $recargo_1)/100);
+$precio_actualizado = $precio_actualizado + $porc_recargo_1;
+
+$recargo_2=strtoupper($result3->fields["recargo_2"]);
+$porc_recargo_2= (($precio_actualizado * $recargo_2)/100);
+$precio_actualizado = $precio_actualizado + $porc_recargo_2;
+
+
+
+$recargo_impuesto=strtoupper($result3->fields["recargo_impuestos"]);
+$porc_recargo_impuesto= (($precio_actualizado * $recargo_impuesto)/100);
+$precio_actualizado = $precio_actualizado + $porc_recargo_impuesto;
+
+
+
+$desc_articulo = ($precio_actualizado * $porc_dto)/100;
+
+$desc_factura = $desc_factura + $desc_articulo;
+
+
+
+
+
+$precio_actualizado = round($precio_actualizado,2);
+
+if ($descripcion != "") {
+
+if ($cantidad == ""){
+$leyenda = "NO INGRESO CANTIDAD";
+include ("../../../alertas/campo_vacio.php");
+exit;
+}
+
+if ($cod_mercaderia== ""){
+$leyenda = "NO INGRESO MERCADERIA";
+include ("../../../alertas/campo_vacio.php");
+exit;
+}
+
+if ($descripcion == ""){
+	$leyenda = "PRODUCTO INEXISTENTE";
+	include ("../../../alertas/campo_vacio.php");
+exit;
+}
+
+$total = $precio_actualizado * $cantidad;
+//$total = $cantidad * $precio_unitario;
+
+$sql9 = "SELECT count(*) as total FROM `deta_fact`  WHERE  `nro_factura` = $nro_factura";
+$total_ordenes = $db->Execute($sql9);
+$items=$total_ordenes->fields["total"];
+
+
+
+
+if ($items < 18){
+
+
+ if ($band== "SI"){
+$sql = "INSERT INTO `ventas1_deta_temp` ( `nro_factura` , `cod_detalle` , `cod_mercaderia` , `descripcion` , `presentacion` , `lote` , `mes_lote` , `anio_lote` , `cantidad` , `precio_unitario` , `total` , `tipo_fact`)  VALUES ('$nro_factura' , '' ,'$cod_mercaderia' , '$descripcion', '$presentacion' , '$lote' , '$mes_lote' , '$anio_lote' , '$dif' , '$precio' , '$total' , '$tipo_fact')";
+mysql_query($sql);}
+else
+	{ 
+ $sql = "INSERT INTO `ventas1_deta_temp` ( `nro_factura` , `cod_detalle` , `cod_mercaderia` , `descripcion` , `presentacion` , `lote` , `mes_lote` , `anio_lote` , `cantidad` , `precio_unitario` , `total` , `tipo_fact`)  VALUES ('$nro_factura' , '' ,'$cod_mercaderia' , '$descripcion', '$presentacion' , '$lote' , '$mes_lote' , '$anio_lote' , '$cantidad' , '$precio' , '$total' , '$tipo_fact')";
+mysql_query($sql);
+	}
+
+
+}
+else{
+	echo "CANTIDAD DE ITEMS COMPLETOS, POR FAVOR PROCEDA A FACTURA";
+
+}
+
+}
+
+
+?>

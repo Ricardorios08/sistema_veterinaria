@@ -1,0 +1,20 @@
+<?php 
+
+echo $sql1="select * from animal_particular where cod_socio = $cod_socio and cod_animal = $cod_animal";
+$result1 = $db->Execute($sql1);
+
+	
+$nombre_mascota=strtoupper($result1->fields["nombre"]);
+$especie=strtoupper($result1->fields["especie"]);
+$raza=strtoupper($result1->fields["raza"]);
+$pelaje=strtoupper($result1->fields["pelaje"]);
+$tamanio=strtoupper($result1->fields["tamanio"]);
+$color=strtoupper($result1->fields["color"]);
+$sexo_mascota=strtoupper($result1->fields["sexo"]);
+$fecha_nac=strtoupper($result1->fields["fecha_nac"]);
+$cod_animal=strtoupper($result1->fields["cod_animal"]);
+
+
+$dia_nac = substr($fecha_nac,8,2);
+$mes_nac = substr($fecha_nac,5,2);
+$anio_nac = substr($fecha_nac,0,4);

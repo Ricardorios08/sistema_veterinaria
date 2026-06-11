@@ -1,0 +1,16 @@
+<?php
+
+ //dl("php_lxv4.dll");
+include ("lx300.php");
+  $port = IF_OPEN("COM2",9600);
+
+  if ( $port == -1) 
+  {   echo "impresora ocupada";   return;  }
+
+  $err = IF_WRITE("@CIERREZ|P");
+
+  printf($err);
+
+  $err =IF_CLOSE();
+
+?>

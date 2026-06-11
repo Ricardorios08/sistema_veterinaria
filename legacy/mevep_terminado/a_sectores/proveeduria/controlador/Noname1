@@ -1,0 +1,71 @@
+<?php
+
+//phpinfo();
+// include ("php_TM20v52ts.dLL");
+
+//  INCLUDE ("Tm20PhpApi.php");
+
+
+
+  $port = IF_OPEN("COM8",9600);
+
+  if ( $port == -1) 
+  { 
+   echo "impresora ocupada";   
+   return;  
+  }
+
+  $nError = IF_WRITE("@PONEENCABEZADO|1|EJEMPLO TIQUE");
+  $nError = IF_WRITE("@TIQUEABRE|B|");
+  $nError = IF_WRITE("@TIQUEITEM|PREDNISOLONA|    1.000|      0.01|21.00|M|1|0|0|");
+  $nError = IF_WRITE("@TIQUEPAGO|Su Pago......|00000.121|T|");
+  $nError = IF_WRITE("@TIQUECIERRA|T|");
+
+ $nDoc  =  IF_READ(3);
+
+
+  $nError = IF_CLOSE();
+
+
+
+?>
+<?php
+
+phpinfo();
+// include ("php_TM20v52ts.dLL");
+
+//  INCLUDE ("Tm20PhpApi.php");
+
+
+
+  $port = IF_OPEN("COM8",9600);
+
+  if ( $port == -1) 
+  { 
+   echo "impresora ocupada";   
+   return;  
+  }
+
+  $nError = IF_WRITE("@PONEENCABEZADO|5|EJEMPLO FACTURA A");
+
+  $nError = IF_WRITE("@FACTABRE|T|C|A|1|P|10|I|I|SUDAMERICANA LIBROS SRL||CUIT|30692137449|N|MEXICO 564|||Remito 01-2345||C");
+   
+  $nError = IF_WRITE("@FACTITEM|Mouse Genius XScrol|1.0|0.10|10.50|M|1|0||||0|0");
+
+
+  // Ejemplo de un descuento global del 10% sobre el monto total
+
+  $nError = IF_WRITE("@FACTPAGO|DESCUENTO 10%|0.00|D");
+   
+  $nError = IF_WRITE("@FACTPAGO|PAGO|00.10|T");
+   
+  $nError = IF_WRITE("@FACTCIERRA|T|A|FINAL");
+
+  // Recuperar el nro de documento impreso
+
+  $nDoc  =  IF_READ(3);
+
+
+  $nError = IF_CLOSE();
+
+?>

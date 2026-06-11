@@ -1,0 +1,38 @@
+<?php
+
+include ("../../conexiones/config.inc.php");
+
+$nro_profesional=$_REQUEST["nro_profesional"];
+
+$sql="select * from profesionales  where nro_profesional = $nro_profesional";
+$result = $db->Execute($sql);
+
+$nro_profesional=strtoupper($result->fields["nro_profesional"]);
+$apellido=strtoupper($result->fields["apellido"]);
+$nombre=strtoupper($result->fields["nombre"]);
+$especialidad=strtoupper($result->fields["especialidad"]);
+$sexo =$result->fields["sexo"];
+$fecha_nacimiento =$result->fields["fecha_nacimiento"];
+
+$dia = substr($fecha_nhacimiento,8,2);
+$mes = substr($fecha_nhacimiento,5,2);
+$anio = substr($fecha_nhacimiento,0,4);
+
+$domicilio =$result->fields["domicilio"];
+$localidad =$result->fields["localidad"];
+$telefono =$result->fields["telefono"];
+$celular =$result->fields["celular"];
+$mail =$result->fields["mail"];
+$lunes =$result->fields["lunes"];
+$martes =$result->fields["martes"];
+$miercoles =$result->fields["miercoles"];
+$jueves =$result->fields["jueves"];
+$viernes =$result->fields["viernes"];
+$sabado =$result->fields["sabado"];
+$duracion_consulta =$result->fields["duracion_consulta"];
+$espacio_entre_turnos =$result->fields["espacio_entre_turnos"];
+$cantidad_turnos_diarios =$result->fields["cantidad_turnos_diarios"];
+$turno =$result->fields["turno"];
+$horario_turno_manana =$result->fields["horario_turno_manana"];
+$horario_turno_tarde =$result->fields["horario_turno_tarde"];
+$tipo_horario =$result->fields["tipo_horario"];

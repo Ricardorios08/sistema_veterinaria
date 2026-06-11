@@ -1,0 +1,2302 @@
+=== LEGACY DATABASE STRUCTURE FOR u259434644_sigma_turnos ===
+
+Tables found: archivos_adjuntos, convenio_practica, convenio_practica_complejo, convenio_referencia, datos_os, datos_principales, deta_modulo, deta_planillas, deta_planillas_ver, detalle, detalle_modulo, detalle_temp, empleados, especialidad, grabadas_temp, lista_espera, lista_espera_detalle, localidades, modulo, ordenes, pacientes, pacientes_historia_clinica, planillas, profesionales, profesionales_dias, tcalendario, turno, turno_ant, usuario
+
+==================================================
+TABLE: archivos_adjuntos
+==================================================
+Columns:
+  - id: bigint(20) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+  - documento_id: int(10) | Null: NO | Key:  | Default: null | Extra: 
+  - profesionales_id: int(10) | Null: NO | Key:  | Default: null | Extra: 
+  - fecha_subida: datetime | Null: NO | Key:  | Default: current_timestamp() | Extra: 
+  - ruta_archivo: text | Null: NO | Key:  | Default: null | Extra: 
+  - nombre_archivo: varchar(30) | Null: NO | Key:  | Default: null | Extra: 
+  - observaciones: text | Null: NO | Key:  | Default: null | Extra: 
+  - tipo_archivo: varchar(30) | Null: NO | Key:  | Default: null | Extra: 
+  - usuario_id: int(10) | Null: NO | Key:  | Default: null | Extra: 
+  - archivo: mediumblob | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 1
+
+Sample Records:
+[
+  {
+    "id": "3",
+    "documento_id": 27949722,
+    "profesionales_id": 0,
+    "fecha_subida": "2025-08-01T21:11:32.000Z",
+    "ruta_archivo": "27949722_2025-08-01_1056-EVELINA ROSALES.pdf",
+    "nombre_archivo": "1056-EVELINA ROSALES.pdf",
+    "observaciones": "1056-ROSALES EVELINA ",
+    "tipo_archivo": "",
+    "usuario_id": 0,
+    "archivo": {
+      "type": "Buffer",
+      "data": []
+    }
+  }
+]
+
+==================================================
+TABLE: convenio_practica
+==================================================
+Columns:
+  - cod_practica: int(6) | Null: NO | Key: MUL | Default: 0 | Extra: 
+  - nro_os: varchar(6) | Null: NO | Key:  | Default: 0 | Extra: 
+  - cod_equivalencia: varchar(6) | Null: NO | Key:  | Default:  | Extra: 
+  - categoria: int(2) | Null: NO | Key:  | Default: 0 | Extra: 
+  - honorarios: decimal(6,2) | Null: NO | Key:  | Default: 0.00 | Extra: 
+  - gastos: decimal(6,2) | Null: NO | Key:  | Default: 0.00 | Extra: 
+  - valor: decimal(6,2) | Null: NO | Key:  | Default: 0.00 | Extra: 
+  - practica: varchar(50) | Null: NO | Key:  | Default:  | Extra: 
+  - metodo: text | Null: NO | Key:  | Default: null | Extra: 
+  - referencia: text | Null: NO | Key:  | Default: null | Extra: 
+  - prioridad: int(1) | Null: NO | Key:  | Default: 0 | Extra: 
+  - salto: int(1) | Null: NO | Key:  | Default: 0 | Extra: 
+  - referencia1: text | Null: NO | Key:  | Default: null | Extra: 
+  - referencia2: text | Null: NO | Key:  | Default: null | Extra: 
+  - referencia3: text | Null: NO | Key:  | Default: null | Extra: 
+  - unidad: varchar(10) | Null: NO | Key:  | Default: null | Extra: 
+  - nueva: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - por: int(2) | Null: NO | Key:  | Default: null | Extra: 
+  - tipo_det: varchar(20) | Null: NO | Key:  | Default: null | Extra: 
+  - deriva: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - lab_derivacion: int(2) | Null: NO | Key:  | Default: null | Extra: 
+  - clase: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - decimal: int(1) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 1322
+
+Sample Records:
+[
+  {
+    "cod_practica": 1,
+    "nro_os": "4975",
+    "cod_equivalencia": "",
+    "categoria": 1,
+    "honorarios": "2.00",
+    "gastos": "0.00",
+    "valor": "0.00",
+    "practica": "ACTO BIOQUÍMICO.",
+    "metodo": "Cinético U.V.",
+    "referencia": "",
+    "prioridad": 0,
+    "salto": 0,
+    "referencia1": "",
+    "referencia2": "",
+    "referencia3": "",
+    "unidad": "g",
+    "nueva": 0,
+    "por": 0,
+    "tipo_det": "Desde-Hasta",
+    "deriva": 0,
+    "lab_derivacion": 0,
+    "clase": 0,
+    "decimal": 0
+  },
+  {
+    "cod_practica": 2,
+    "nro_os": "4975",
+    "cod_equivalencia": "",
+    "categoria": 1,
+    "honorarios": "1.00",
+    "gastos": "0.00",
+    "valor": "0.00",
+    "practica": "ACETONURIA.",
+    "metodo": "a",
+    "referencia": "b",
+    "prioridad": 0,
+    "salto": 0,
+    "referencia1": "",
+    "referencia2": "",
+    "referencia3": "",
+    "unidad": "",
+    "nueva": 0,
+    "por": 0,
+    "tipo_det": "Desde-Hasta",
+    "deriva": 0,
+    "lab_derivacion": 0,
+    "clase": 0,
+    "decimal": 0
+  },
+  {
+    "cod_practica": 4,
+    "nro_os": "4975",
+    "cod_equivalencia": "",
+    "categoria": 1,
+    "honorarios": "0.00",
+    "gastos": "0.00",
+    "valor": "0.00",
+    "practica": "ACIDIMETRIA GASTRICA , CURVA DE",
+    "metodo": "c",
+    "referencia": "d",
+    "prioridad": 0,
+    "salto": 0,
+    "referencia1": "",
+    "referencia2": "",
+    "referencia3": "",
+    "unidad": "",
+    "nueva": 0,
+    "por": 0,
+    "tipo_det": "Desde-Hasta",
+    "deriva": 0,
+    "lab_derivacion": 0,
+    "clase": 0,
+    "decimal": 0
+  },
+  {
+    "cod_practica": 5,
+    "nro_os": "4975",
+    "cod_equivalencia": "",
+    "categoria": 1,
+    "honorarios": "10.00",
+    "gastos": "0.00",
+    "valor": "0.00",
+    "practica": "ACIDO BASE , Estado Acido Base (EAB).",
+    "metodo": "e",
+    "referencia": "f",
+    "prioridad": 0,
+    "salto": 0,
+    "referencia1": "",
+    "referencia2": "",
+    "referencia3": "",
+    "unidad": "",
+    "nueva": 0,
+    "por": 0,
+    "tipo_det": "Desde-Hasta",
+    "deriva": 0,
+    "lab_derivacion": 0,
+    "clase": 0,
+    "decimal": 0
+  },
+  {
+    "cod_practica": 6,
+    "nro_os": "4975",
+    "cod_equivalencia": "",
+    "categoria": 1,
+    "honorarios": "12.00",
+    "gastos": "0.00",
+    "valor": "0.00",
+    "practica": "ACTH  - HORMONA ADRENOCORTICOTROFINA.",
+    "metodo": "QUIMIOLUMINISCENCIA",
+    "referencia": "",
+    "prioridad": 0,
+    "salto": 0,
+    "referencia1": "",
+    "referencia2": "",
+    "referencia3": "",
+    "unidad": "pg/ml",
+    "nueva": 0,
+    "por": 0,
+    "tipo_det": "Desde-Hasta",
+    "deriva": 1,
+    "lab_derivacion": 0,
+    "clase": 0,
+    "decimal": 0
+  }
+]
+
+==================================================
+TABLE: convenio_practica_complejo
+==================================================
+Columns:
+  - cod_practica: int(6) | Null: NO | Key: MUL | Default: 0 | Extra: 
+  - renglon1: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon1_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon1_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon1_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon2: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon2_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon2_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon2_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon3: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon3_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon3_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon3_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon4: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon4_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon4_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon4_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon5: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon5_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon5_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon5_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon6: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon6_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon6_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon6_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon7: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon7_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon7_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon7_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon8: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon8_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon8_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon8_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon9: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon9_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon9_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon9_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon10: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon10_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon10_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon10_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon11: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon11_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon11_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon11_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon12: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon12_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon12_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon12_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon13: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon13_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon13_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon13_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon14: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon14_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon14_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon14_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon15: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon15_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon15_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon15_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon16: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon16_2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon16_3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon16_4: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 6
+
+Sample Records:
+[
+  {
+    "cod_practica": 412,
+    "renglon1": "Metodo: asi",
+    "renglon1_2": "",
+    "renglon1_3": "",
+    "renglon1_4": "3",
+    "renglon2": "Resultado: ",
+    "renglon2_2": "g/l",
+    "renglon2_3": "",
+    "renglon2_4": "1",
+    "renglon3": "VR: 10-11 g/l",
+    "renglon3_2": "",
+    "renglon3_3": "",
+    "renglon3_4": "3",
+    "renglon4": "",
+    "renglon4_2": "",
+    "renglon4_3": "  ",
+    "renglon4_4": "4",
+    "renglon5": "A los 120 min: ",
+    "renglon5_2": "g/l",
+    "renglon5_3": "",
+    "renglon5_4": "1",
+    "renglon6": "VR: 10-11 g/l",
+    "renglon6_2": "",
+    "renglon6_3": "",
+    "renglon6_4": "3",
+    "renglon7": "",
+    "renglon7_2": "",
+    "renglon7_3": "",
+    "renglon7_4": "4",
+    "renglon8": "",
+    "renglon8_2": "",
+    "renglon8_3": "",
+    "renglon8_4": "4",
+    "renglon9": "",
+    "renglon9_2": "",
+    "renglon9_3": "",
+    "renglon9_4": "4",
+    "renglon10": "",
+    "renglon10_2": "",
+    "renglon10_3": "",
+    "renglon10_4": "4",
+    "renglon11": "",
+    "renglon11_2": "",
+    "renglon11_3": "",
+    "renglon11_4": "4",
+    "renglon12": "",
+    "renglon12_2": "",
+    "renglon12_3": "",
+    "renglon12_4": "4",
+    "renglon13": "",
+    "renglon13_2": "",
+    "renglon13_3": "",
+    "renglon13_4": "4",
+    "renglon14": "",
+    "renglon14_2": "",
+    "renglon14_3": "",
+    "renglon14_4": "4",
+    "renglon15": "",
+    "renglon15_2": "",
+    "renglon15_3": "",
+    "renglon15_4": "4",
+    "renglon16": "",
+    "renglon16_2": "",
+    "renglon16_3": "",
+    "renglon16_4": "4"
+  },
+  {
+    "cod_practica": 413,
+    "renglon1": "GLUCEMIA",
+    "renglon1_2": "",
+    "renglon1_3": "",
+    "renglon1_4": "4",
+    "renglon2": "Basal",
+    "renglon2_2": "g/l",
+    "renglon2_3": "70 a 110 mg/dl",
+    "renglon2_4": "1",
+    "renglon3": "A los 30 min.: ",
+    "renglon3_2": "g/l",
+    "renglon3_3": "inferior a 140 mg/dl",
+    "renglon3_4": "1",
+    "renglon4": "A los 60 min. : ",
+    "renglon4_2": "g/l",
+    "renglon4_3": "",
+    "renglon4_4": "1",
+    "renglon5": "A los 120 min. : ",
+    "renglon5_2": "g/l",
+    "renglon5_3": "",
+    "renglon5_4": "1",
+    "renglon6": "A los 180 min. : ",
+    "renglon6_2": "",
+    "renglon6_3": "",
+    "renglon6_4": "1",
+    "renglon7": "",
+    "renglon7_2": "",
+    "renglon7_3": "",
+    "renglon7_4": "4",
+    "renglon8": "INSULINEMIA",
+    "renglon8_2": "",
+    "renglon8_3": "",
+    "renglon8_4": "4",
+    "renglon9": "Basal: ",
+    "renglon9_2": "g/l",
+    "renglon9_3": "",
+    "renglon9_4": "1",
+    "renglon10": "A los 30 min. : ",
+    "renglon10_2": "g/l",
+    "renglon10_3": "",
+    "renglon10_4": "1",
+    "renglon11": "A los 60 min. : ",
+    "renglon11_2": "g/l",
+    "renglon11_3": "",
+    "renglon11_4": "1",
+    "renglon12": "A los 120 min. : ",
+    "renglon12_2": "g/l",
+    "renglon12_3": "",
+    "renglon12_4": "1",
+    "renglon13": "A los 180 min. : ",
+    "renglon13_2": "g/l",
+    "renglon13_3": "",
+    "renglon13_4": "1",
+    "renglon14": "",
+    "renglon14_2": "",
+    "renglon14_3": "",
+    "renglon14_4": "4",
+    "renglon15": "",
+    "renglon15_2": "",
+    "renglon15_3": "",
+    "renglon15_4": "4",
+    "renglon16": "",
+    "renglon16_2": "",
+    "renglon16_3": "",
+    "renglon16_4": "4"
+  },
+  {
+    "cod_practica": 1,
+    "renglon1": "aa",
+    "renglon1_2": "",
+    "renglon1_3": "",
+    "renglon1_4": "1",
+    "renglon2": "",
+    "renglon2_2": "",
+    "renglon2_3": "",
+    "renglon2_4": "4",
+    "renglon3": "",
+    "renglon3_2": "",
+    "renglon3_3": "",
+    "renglon3_4": "4",
+    "renglon4": "",
+    "renglon4_2": "",
+    "renglon4_3": "",
+    "renglon4_4": "4",
+    "renglon5": "",
+    "renglon5_2": "",
+    "renglon5_3": "",
+    "renglon5_4": "4",
+    "renglon6": "",
+    "renglon6_2": "",
+    "renglon6_3": "",
+    "renglon6_4": "4",
+    "renglon7": "",
+    "renglon7_2": "",
+    "renglon7_3": "",
+    "renglon7_4": "4",
+    "renglon8": "",
+    "renglon8_2": "",
+    "renglon8_3": "",
+    "renglon8_4": "4",
+    "renglon9": "",
+    "renglon9_2": "",
+    "renglon9_3": "",
+    "renglon9_4": "4",
+    "renglon10": "",
+    "renglon10_2": "",
+    "renglon10_3": "",
+    "renglon10_4": "4",
+    "renglon11": "",
+    "renglon11_2": "",
+    "renglon11_3": "",
+    "renglon11_4": "4",
+    "renglon12": "",
+    "renglon12_2": "",
+    "renglon12_3": "",
+    "renglon12_4": "4",
+    "renglon13": "",
+    "renglon13_2": "",
+    "renglon13_3": "",
+    "renglon13_4": "4",
+    "renglon14": "",
+    "renglon14_2": "",
+    "renglon14_3": "",
+    "renglon14_4": "4",
+    "renglon15": "",
+    "renglon15_2": "",
+    "renglon15_3": "",
+    "renglon15_4": "4",
+    "renglon16": "",
+    "renglon16_2": "",
+    "renglon16_3": "",
+    "renglon16_4": "4"
+  },
+  {
+    "cod_practica": 13,
+    "renglon1": "",
+    "renglon1_2": "",
+    "renglon1_3": "",
+    "renglon1_4": "4",
+    "renglon2": "MEDIO SALINO",
+    "renglon2_2": "",
+    "renglon2_3": "",
+    "renglon2_4": "4",
+    "renglon3": "",
+    "renglon3_2": "",
+    "renglon3_3": "",
+    "renglon3_4": "4",
+    "renglon4": "Valor Hallado:",
+    "renglon4_2": "",
+    "renglon4_3": "",
+    "renglon4_4": "1",
+    "renglon5": "",
+    "renglon5_2": "",
+    "renglon5_3": "",
+    "renglon5_4": "4",
+    "renglon6": "",
+    "renglon6_2": "",
+    "renglon6_3": "",
+    "renglon6_4": "4",
+    "renglon7": "MEDIO ALBUMINOSO:",
+    "renglon7_2": "",
+    "renglon7_3": "",
+    "renglon7_4": "4",
+    "renglon8": "",
+    "renglon8_2": "",
+    "renglon8_3": "",
+    "renglon8_4": "4",
+    "renglon9": "Valor Hallado:",
+    "renglon9_2": "",
+    "renglon9_3": "",
+    "renglon9_4": "1",
+    "renglon10": "",
+    "renglon10_2": "",
+    "renglon10_3": "",
+    "renglon10_4": "4",
+    "renglon11": "",
+    "renglon11_2": "",
+    "renglon11_3": "",
+    "renglon11_4": "4",
+    "renglon12": "",
+    "renglon12_2": "",
+    "renglon12_3": "",
+    "renglon12_4": "4",
+    "renglon13": "",
+    "renglon13_2": "",
+    "renglon13_3": "",
+    "renglon13_4": "4",
+    "renglon14": "",
+    "renglon14_2": "",
+    "renglon14_3": "",
+    "renglon14_4": "4",
+    "renglon15": "",
+    "renglon15_2": "",
+    "renglon15_3": "",
+    "renglon15_4": "4",
+    "renglon16": "",
+    "renglon16_2": "",
+    "renglon16_3": "",
+    "renglon16_4": "4"
+  },
+  {
+    "cod_practica": 110,
+    "renglon1": "",
+    "renglon1_2": "",
+    "renglon1_3": "",
+    "renglon1_4": "4",
+    "renglon2": "TOTAL:",
+    "renglon2_2": "mg/dl",
+    "renglon2_3": "V.R. Lim. sup ref.: 1.00 ",
+    "renglon2_4": "1",
+    "renglon3": "",
+    "renglon3_2": "",
+    "renglon3_3": "",
+    "renglon3_4": "4",
+    "renglon4": "DIRECTA: ",
+    "renglon4_2": "mg/dl",
+    "renglon4_3": "V.R. Lim. sup ref.: 0.20 ",
+    "renglon4_4": "1",
+    "renglon5": "",
+    "renglon5_2": "",
+    "renglon5_3": "",
+    "renglon5_4": "4",
+    "renglon6": "INDIRECTA: ",
+    "renglon6_2": "mg/dl",
+    "renglon6_3": "V.R. Lim. sup ref.: 0.80 ",
+    "renglon6_4": "1",
+    "renglon7": "",
+    "renglon7_2": "",
+    "renglon7_3": "",
+    "renglon7_4": "4",
+    "renglon8": "",
+    "renglon8_2": "",
+    "renglon8_3": "",
+    "renglon8_4": "4",
+    "renglon9": "",
+    "renglon9_2": "",
+    "renglon9_3": "",
+    "renglon9_4": "4",
+    "renglon10": "",
+    "renglon10_2": "",
+    "renglon10_3": "",
+    "renglon10_4": "4",
+    "renglon11": "",
+    "renglon11_2": "",
+    "renglon11_3": "",
+    "renglon11_4": "4",
+    "renglon12": "",
+    "renglon12_2": "",
+    "renglon12_3": "",
+    "renglon12_4": "4",
+    "renglon13": "",
+    "renglon13_2": "",
+    "renglon13_3": "",
+    "renglon13_4": "4",
+    "renglon14": "",
+    "renglon14_2": "",
+    "renglon14_3": "",
+    "renglon14_4": "4",
+    "renglon15": "",
+    "renglon15_2": "",
+    "renglon15_3": "",
+    "renglon15_4": "4",
+    "renglon16": "",
+    "renglon16_2": "",
+    "renglon16_3": "",
+    "renglon16_4": "4"
+  }
+]
+
+==================================================
+TABLE: convenio_referencia
+==================================================
+Columns:
+  - cod_practica: int(6) | Null: NO | Key: MUL | Default: 0 | Extra: 
+  - cod_operacion: int(10) | Null: NO | Key: MUL | Default: null | Extra: auto_increment
+  - tipo: varchar(10) | Null: NO | Key:  | Default: null | Extra: 
+  - desde: decimal(10,2) | Null: NO | Key:  | Default: null | Extra: 
+  - hasta: decimal(10,2) | Null: NO | Key:  | Default: null | Extra: 
+  - unidades: varchar(10) | Null: NO | Key:  | Default: null | Extra: 
+  - columna1: varchar(30) | Null: NO | Key:  | Default: null | Extra: 
+  - columna2: varchar(20) | Null: NO | Key:  | Default: null | Extra: 
+  - anio_d: int(10) | Null: NO | Key:  | Default: null | Extra: 
+  - anio_h: int(10) | Null: NO | Key:  | Default: null | Extra: 
+  - nro_ref: int(6) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 340
+
+Sample Records:
+[
+  {
+    "cod_practica": 410,
+    "cod_operacion": 381,
+    "tipo": "Masculino",
+    "desde": "3.75",
+    "hasta": "5.87",
+    "unidades": "",
+    "columna1": "",
+    "columna2": "Niños",
+    "anio_d": 2,
+    "anio_h": 13,
+    "nro_ref": 0
+  },
+  {
+    "cod_practica": 410,
+    "cod_operacion": 11,
+    "tipo": "Femenino",
+    "desde": "5.85",
+    "hasta": "6.85",
+    "unidades": "",
+    "columna1": "",
+    "columna2": "adultos",
+    "anio_d": 14,
+    "anio_h": 22,
+    "nro_ref": 0
+  },
+  {
+    "cod_practica": 190,
+    "cod_operacion": 519,
+    "tipo": "",
+    "desde": "0.00",
+    "hasta": "110.00",
+    "unidades": "",
+    "columna1": "Mujer",
+    "columna2": "",
+    "anio_d": 0,
+    "anio_h": 0,
+    "nro_ref": 0
+  },
+  {
+    "cod_practica": 190,
+    "cod_operacion": 518,
+    "tipo": "",
+    "desde": "0.00",
+    "hasta": "130.00",
+    "unidades": "",
+    "columna1": "Hombre",
+    "columna2": "",
+    "anio_d": 0,
+    "anio_h": 0,
+    "nro_ref": 0
+  },
+  {
+    "cod_practica": 1070,
+    "cod_operacion": 112,
+    "tipo": "Masculino",
+    "desde": "4.00",
+    "hasta": "6.00",
+    "unidades": "",
+    "columna1": "",
+    "columna2": "",
+    "anio_d": 0,
+    "anio_h": 0,
+    "nro_ref": 0
+  }
+]
+
+==================================================
+TABLE: datos_os
+==================================================
+Columns:
+  - nro_os: int(10) | Null: NO | Key: PRI | Default: 0 | Extra: 
+  - domicilio_n: varchar(30) | Null: NO | Key:  | Default:  | Extra: 
+  - localidad_n: varchar(25) | Null: NO | Key:  | Default:  | Extra: 
+  - cod_area_n: varchar(7) | Null: NO | Key:  | Default:  | Extra: 
+  - telefono_n: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - telefax_n: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - denominacion: varchar(40) | Null: NO | Key:  | Default:  | Extra: 
+  - sigla: varchar(20) | Null: NO | Key:  | Default:  | Extra: 
+  - cod_postal_n: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - email_n: varchar(50) | Null: NO | Key:  | Default:  | Extra: 
+  - cuit: varchar(15) | Null: NO | Key:  | Default:  | Extra: 
+  - nro_prestador: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - contacto: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - nivel: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - cargo: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - domi_facturacion: varchar(30) | Null: NO | Key:  | Default:  | Extra: 
+  - domicilio_l: varchar(30) | Null: NO | Key:  | Default:  | Extra: 
+  - cod_area_l: int(7) | Null: NO | Key:  | Default: 0 | Extra: 
+  - telefono_l: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - telefax_l: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - localidad_l: varchar(25) | Null: NO | Key:  | Default:  | Extra: 
+  - cod_postal_l: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - email_l: varchar(50) | Null: NO | Key:  | Default:  | Extra: 
+  - inscripcion: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - activa: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - ws: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - nro_os_facturar: int(4) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 70
+
+Sample Records:
+[
+  {
+    "nro_os": 1,
+    "domicilio_n": "",
+    "localidad_n": "",
+    "cod_area_n": "",
+    "telefono_n": 0,
+    "telefax_n": 0,
+    "denominacion": "A PARTICULAR",
+    "sigla": "A PARTICULAR",
+    "cod_postal_n": 0,
+    "email_n": "",
+    "cuit": "",
+    "nro_prestador": "",
+    "contacto": "",
+    "nivel": "",
+    "cargo": "",
+    "domi_facturacion": "1",
+    "domicilio_l": "",
+    "cod_area_l": 0,
+    "telefono_l": 0,
+    "telefax_l": 0,
+    "localidad_l": "",
+    "cod_postal_l": 0,
+    "email_l": "",
+    "inscripcion": "1",
+    "activa": 0,
+    "ws": 0,
+    "nro_os_facturar": 10
+  },
+  {
+    "nro_os": 1034,
+    "domicilio_n": "PEDRO MOLINA 249 P.B. 4*",
+    "localidad_n": "",
+    "cod_area_n": "",
+    "telefono_n": 294170,
+    "telefax_n": 0,
+    "denominacion": "OB.SOC.PERS.DIR.EMP.ALIMENTAC.",
+    "sigla": "OPDEA",
+    "cod_postal_n": 0,
+    "email_n": "",
+    "cuit": "33-54833535-9",
+    "nro_prestador": "",
+    "contacto": "",
+    "nivel": "",
+    "cargo": "",
+    "domi_facturacion": "",
+    "domicilio_l": "PEDRO MOLINA 249 P.B. 4*",
+    "cod_area_l": 0,
+    "telefono_l": 0,
+    "telefax_l": 0,
+    "localidad_l": "",
+    "cod_postal_l": 0,
+    "email_l": "",
+    "inscripcion": "1",
+    "activa": 1,
+    "ws": 0,
+    "nro_os_facturar": 0
+  },
+  {
+    "nro_os": 1041,
+    "domicilio_n": "BELGRANO 827",
+    "localidad_n": "",
+    "cod_area_n": "",
+    "telefono_n": 4491010,
+    "telefax_n": 0,
+    "denominacion": "ORGANIZA.DE SERV.DTOS.EMPRESAR",
+    "sigla": "OSDE",
+    "cod_postal_n": 0,
+    "email_n": "",
+    "cuit": "30-54674125-3",
+    "nro_prestador": "",
+    "contacto": "",
+    "nivel": "",
+    "cargo": "",
+    "domi_facturacion": "",
+    "domicilio_l": "BELGRANO 827",
+    "cod_area_l": 0,
+    "telefono_l": 0,
+    "telefax_l": 0,
+    "localidad_l": "",
+    "cod_postal_l": 0,
+    "email_l": "",
+    "inscripcion": "1",
+    "activa": 1,
+    "ws": 0,
+    "nro_os_facturar": 0
+  },
+  {
+    "nro_os": 1076,
+    "domicilio_n": "9 DE JULIO 1485 - 6TO.PISO",
+    "localidad_n": "",
+    "cod_area_n": "261",
+    "telefono_n": 4205305,
+    "telefax_n": 0,
+    "denominacion": "OB.SOC.PERS.DIRC.SAN.L.PASTEUR",
+    "sigla": "PASTEUR",
+    "cod_postal_n": 0,
+    "email_n": "",
+    "cuit": "30-55832555-7",
+    "nro_prestador": "",
+    "contacto": "",
+    "nivel": "",
+    "cargo": "",
+    "domi_facturacion": "",
+    "domicilio_l": "9 DE JULIO 1485 - 6TO.PISO",
+    "cod_area_l": 261,
+    "telefono_l": 0,
+    "telefax_l": 0,
+    "localidad_l": "",
+    "cod_postal_l": 0,
+    "email_l": "WWW.OSLPASTEUR.COM.AR",
+    "inscripcion": "1",
+    "activa": 1,
+    "ws": 0,
+    "nro_os_facturar": 0
+  },
+  {
+    "nro_os": 2042,
+    "domicilio_n": "AV. AVELLANEDA  2144 -CABA",
+    "localidad_n": "",
+    "cod_area_n": "011",
+    "telefono_n": 46337878,
+    "telefax_n": 0,
+    "denominacion": "OB.SOC.AG.PROP.MEDICA REP.ARG.",
+    "sigla": "AAPM",
+    "cod_postal_n": 0,
+    "email_n": "",
+    "cuit": "30-62313465-9",
+    "nro_prestador": "",
+    "contacto": "",
+    "nivel": "",
+    "cargo": "",
+    "domi_facturacion": "",
+    "domicilio_l": "AV. AVELLANEDA 2.144- CABA",
+    "cod_area_l": 11,
+    "telefono_l": 0,
+    "telefax_l": 0,
+    "localidad_l": "",
+    "cod_postal_l": 0,
+    "email_l": "",
+    "inscripcion": "1",
+    "activa": 1,
+    "ws": 0,
+    "nro_os_facturar": 0
+  }
+]
+
+==================================================
+TABLE: datos_principales
+==================================================
+Columns:
+  - nombre_laboratorio: varchar(50) | Null: NO | Key:  | Default:  | Extra: 
+  - matricula: varchar(6) | Null: NO | Key:  | Default:  | Extra: 
+  - direccion: varchar(50) | Null: NO | Key:  | Default:  | Extra: 
+  - telefono: varchar(20) | Null: NO | Key:  | Default:  | Extra: 
+  - localidad: varchar(20) | Null: NO | Key:  | Default:  | Extra: 
+  - mail: varchar(50) | Null: NO | Key:  | Default:  | Extra: 
+  - cuit: varchar(15) | Null: NO | Key:  | Default: null | Extra: 
+  - ingresos_brutos: varchar(20) | Null: NO | Key:  | Default: null | Extra: 
+  - comercio: int(10) | Null: NO | Key:  | Default: null | Extra: 
+  - inicio_actividad: date | Null: NO | Key:  | Default: null | Extra: 
+  - id: int(5) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon1: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - renglon3: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - terminal: varchar(4) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 1
+
+Sample Records:
+[
+  {
+    "nombre_laboratorio": "",
+    "matricula": "CUENTA",
+    "direccion": "",
+    "telefono": "",
+    "localidad": "",
+    "mail": "",
+    "cuit": "",
+    "ingresos_brutos": " \t",
+    "comercio": 0,
+    "inicio_actividad": null,
+    "id": 3,
+    "renglon1": "",
+    "renglon3": "",
+    "terminal": "0026"
+  }
+]
+
+==================================================
+TABLE: deta_modulo
+==================================================
+Columns:
+  - cod_modulo: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - cod_practica: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - a: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - b: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - c: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - cod_operacion: int(5) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+
+Row Count: 3
+
+Sample Records:
+[
+  {
+    "cod_modulo": 18,
+    "cod_practica": 475,
+    "a": "",
+    "b": "",
+    "c": "",
+    "cod_operacion": 1671
+  },
+  {
+    "cod_modulo": 18,
+    "cod_practica": 412,
+    "a": "",
+    "b": "",
+    "c": "",
+    "cod_operacion": 1672
+  },
+  {
+    "cod_modulo": 18,
+    "cod_practica": 904,
+    "a": "",
+    "b": "",
+    "c": "",
+    "cod_operacion": 1674
+  }
+]
+
+==================================================
+TABLE: deta_planillas
+==================================================
+Columns:
+  - cod_modulo: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - cod_practica: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - a: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - b: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - c: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - cod_operacion: int(5) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+
+Row Count: 17
+
+Sample Records:
+[
+  {
+    "cod_modulo": 2,
+    "cod_practica": 412,
+    "a": "",
+    "b": "",
+    "c": "",
+    "cod_operacion": 3
+  },
+  {
+    "cod_modulo": 2,
+    "cod_practica": 902,
+    "a": "",
+    "b": "",
+    "c": "",
+    "cod_operacion": 4
+  },
+  {
+    "cod_modulo": 2,
+    "cod_practica": 904,
+    "a": "",
+    "b": "",
+    "c": "",
+    "cod_operacion": 5
+  },
+  {
+    "cod_modulo": 2,
+    "cod_practica": 192,
+    "a": "",
+    "b": "",
+    "c": "",
+    "cod_operacion": 6
+  },
+  {
+    "cod_modulo": 2,
+    "cod_practica": 174,
+    "a": "",
+    "b": "",
+    "c": "",
+    "cod_operacion": 7
+  }
+]
+
+==================================================
+TABLE: deta_planillas_ver
+==================================================
+Columns:
+  - cod_modulo: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - cod_practica: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - nombre_columna: varchar(6) | Null: NO | Key:  | Default:  | Extra: 
+  - cod_operacion: int(5) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+
+Row Count: 24
+
+Sample Records:
+[
+  {
+    "cod_modulo": 2,
+    "cod_practica": 412,
+    "nombre_columna": "GLU",
+    "cod_operacion": 7
+  },
+  {
+    "cod_modulo": 2,
+    "cod_practica": 902,
+    "nombre_columna": "URE",
+    "cod_operacion": 8
+  },
+  {
+    "cod_modulo": 2,
+    "cod_practica": 904,
+    "nombre_columna": "ACU",
+    "cod_operacion": 9
+  },
+  {
+    "cod_modulo": 2,
+    "cod_practica": 192,
+    "nombre_columna": "CRE",
+    "cod_operacion": 10
+  },
+  {
+    "cod_modulo": 2,
+    "cod_practica": 174,
+    "nombre_columna": "CTO",
+    "cod_operacion": 11
+  }
+]
+
+==================================================
+TABLE: detalle
+==================================================
+Columns:
+  - cod_grabacion: int(25) | Null: NO | Key:  | Default: 0 | Extra: 
+  - nro_os: int(6) | Null: NO | Key:  | Default: 0 | Extra: 
+  - nro_paciente: int(8) | Null: NO | Key:  | Default: 0 | Extra: 
+  - nro_orden: varchar(20) | Null: NO | Key:  | Default: 0 | Extra: 
+  - nro_practica: int(10) | Null: YES | Key:  | Default: 0 | Extra: 
+  - valor: decimal(10,2) | Null: NO | Key:  | Default: 0.00 | Extra: 
+  - periodo: int(4) | Null: NO | Key:  | Default: 0 | Extra: 
+  - ano: varchar(4) | Null: NO | Key:  | Default:  | Extra: 
+  - nro_factura: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - confirmada: char(2) | Null: NO | Key:  | Default:  | Extra: 
+  - cod_operacion: int(5) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+  - marca: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - lote: varchar(20) | Null: NO | Key:  | Default:  | Extra: 
+  - operador: varchar(4) | Null: NO | Key:  | Default:  | Extra: 
+  - categoria: int(1) | Null: NO | Key:  | Default: 0 | Extra: 
+  - coseguro: decimal(6,2) | Null: NO | Key:  | Default: 0.00 | Extra: 
+  - tipo_fact: char(1) | Null: NO | Key:  | Default:  | Extra: 
+  - prioridad: int(1) | Null: NO | Key:  | Default: 0 | Extra: 
+  - imprimir: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - deriva: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - cod_mega: varchar(12) | Null: NO | Key:  | Default: null | Extra: 
+  - nro_lab: int(2) | Null: NO | Key:  | Default: null | Extra: 
+  - fecha: date | Null: NO | Key:  | Default: null | Extra: 
+  - clase: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - enter: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - nro_ref: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - orden: int(11) | Null: NO | Key:  | Default: null | Extra: 
+  - facturar: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - completo: int(1) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 0
+
+
+==================================================
+TABLE: detalle_modulo
+==================================================
+Columns:
+  - cod_grabacion: int(25) | Null: NO | Key: MUL | Default: 0 | Extra: 
+  - modulo1: text | Null: NO | Key:  | Default: null | Extra: 
+  - modulo2: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - modulo3: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - modulo4: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - modulo5: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - modulo6: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - modulo7: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - modulo8: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - modulo9: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - modulo10: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - modulo11: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - modulo12: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - modulo13: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 1
+
+Sample Records:
+[
+  {
+    "cod_grabacion": 5,
+    "modulo1": "fsdfsdfds  fdsfds fdsfds fsdfsd fsdfds fsdf fsdfsd fsdfsd f fsdfsdfsd df sdf sdfsdfsd fsdfsdf fsdfsdf fsdfsdf sdfsdfsdf fsdf\r\nkjhkjh\r\nkjh\r\nkjh\r\n\r\nkjh\r\nkjh\r\nkjh",
+    "modulo2": "",
+    "modulo3": "",
+    "modulo4": "",
+    "modulo5": "",
+    "modulo6": "",
+    "modulo7": "",
+    "modulo8": "",
+    "modulo9": "",
+    "modulo10": "",
+    "modulo11": "",
+    "modulo12": "",
+    "modulo13": ""
+  }
+]
+
+==================================================
+TABLE: detalle_temp
+==================================================
+Columns:
+  - cod_grabacion: int(25) | Null: NO | Key:  | Default: 0 | Extra: 
+  - nro_practica: int(4) | Null: YES | Key:  | Default: 0 | Extra: 
+  - practica: varchar(28) | Null: NO | Key:  | Default:  | Extra: 
+  - cod_operacion: int(2) unsigned zerofill | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+  - operador: int(3) | Null: NO | Key:  | Default: 0 | Extra: 
+  - nro_laboratorio: varchar(6) | Null: NO | Key:  | Default:  | Extra: 
+  - honorarios: decimal(10,2) | Null: NO | Key:  | Default: null | Extra: 
+  - categoria: int(1) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 0
+
+
+==================================================
+TABLE: empleados
+==================================================
+Columns:
+  - id: int(10) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+  - apellido: varchar(30) | Null: NO | Key:  | Default:  | Extra: 
+  - nombre: varchar(30) | Null: NO | Key:  | Default:  | Extra: 
+  - direccion: varchar(50) | Null: NO | Key:  | Default:  | Extra: 
+  - telefono: varchar(25) | Null: NO | Key:  | Default:  | Extra: 
+  - celular: varchar(25) | Null: NO | Key:  | Default:  | Extra: 
+  - email: varchar(35) | Null: NO | Key:  | Default:  | Extra: 
+  - interno: varchar(4) | Null: NO | Key:  | Default:  | Extra: 
+  - sector: varchar(20) | Null: NO | Key:  | Default:  | Extra: 
+  - puesto: varchar(35) | Null: NO | Key:  | Default:  | Extra: 
+  - mes: char(2) | Null: NO | Key:  | Default:  | Extra: 
+  - anio: varchar(4) | Null: NO | Key:  | Default:  | Extra: 
+  - empleado: int(1) | Null: NO | Key:  | Default: 0 | Extra: 
+  - fecha_nac: date | Null: NO | Key:  | Default: 0000-00-00 | Extra: 
+  - sexo: int(1) | Null: NO | Key:  | Default: 0 | Extra: 
+
+Row Count: 0
+
+
+==================================================
+TABLE: especialidad
+==================================================
+Columns:
+  - nro_especialidad: int(10) | Null: NO | Key:  | Default: null | Extra: 
+  - especialidad: varchar(80) | Null: NO | Key:  | Default: null | Extra: 
+  - cod_operacion: int(10) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+
+Row Count: 7
+
+Sample Records:
+[
+  {
+    "nro_especialidad": 1,
+    "especialidad": "ODONTOLOGIA",
+    "cod_operacion": 1
+  },
+  {
+    "nro_especialidad": 2,
+    "especialidad": "PSICOLOGIA",
+    "cod_operacion": 2
+  },
+  {
+    "nro_especialidad": 3,
+    "especialidad": "NUTRICION",
+    "cod_operacion": 3
+  },
+  {
+    "nro_especialidad": 4,
+    "especialidad": "PEDIATRA",
+    "cod_operacion": 4
+  },
+  {
+    "nro_especialidad": 5,
+    "especialidad": "MEDICO",
+    "cod_operacion": 5
+  }
+]
+
+==================================================
+TABLE: grabadas_temp
+==================================================
+Columns:
+  - cod_grabacion: int(25) | Null: NO | Key: PRI | Default: 0 | Extra: 
+  - periodo: int(2) unsigned zerofill | Null: NO | Key:  | Default: 00 | Extra: 
+  - ano: varchar(8) | Null: NO | Key:  | Default:  | Extra: 
+  - nro_os: varchar(6) | Null: NO | Key:  | Default:  | Extra: 
+  - sigla: varchar(25) | Null: NO | Key:  | Default:  | Extra: 
+  - nro_laboratorio: int(6) | Null: NO | Key: MUL | Default: 0 | Extra: 
+  - nombre_laboratorio: varchar(25) | Null: NO | Key:  | Default:  | Extra: 
+  - matricula: varchar(6) | Null: NO | Key:  | Default:  | Extra: 
+  - nro_afiliado: varchar(14) | Null: NO | Key:  | Default: 0 | Extra: 
+  - nombre_afiliado: varchar(25) | Null: NO | Key:  | Default:  | Extra: 
+  - nro_orden: varchar(12) | Null: NO | Key:  | Default: 000000000000 | Extra: 
+  - fecha: date | Null: NO | Key:  | Default: 0000-00-00 | Extra: 
+  - medico: varchar(25) | Null: NO | Key:  | Default:  | Extra: 
+  - nombre_medico: varchar(25) | Null: NO | Key:  | Default:  | Extra: 
+  - coseguro: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - autorizacion: int(10) | Null: NO | Key: MUL | Default: 0 | Extra: 
+  - fecha_fac: date | Null: NO | Key:  | Default: 0000-00-00 | Extra: 
+  - nro_fac: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - confirmada: int(2) | Null: NO | Key:  | Default: 0 | Extra: 
+  - marca: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - lote: varchar(40) | Null: NO | Key:  | Default:  | Extra: 
+  - operador: varchar(4) | Null: NO | Key:  | Default:  | Extra: 
+  - nombre_operador: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - fecha_realizacion: date | Null: NO | Key:  | Default: 0000-00-00 | Extra: 
+  - diagnostico: varchar(120) | Null: NO | Key:  | Default:  | Extra: 
+  - motivo: varchar(120) | Null: NO | Key:  | Default:  | Extra: 
+  - observaciones: varchar(120) | Null: NO | Key:  | Default:  | Extra: 
+  - modulo: int(4) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 0
+
+
+==================================================
+TABLE: lista_espera
+==================================================
+Columns:
+  - fecha_llegada: date | Null: NO | Key:  | Default: null | Extra: 
+  - hora_llegada: time | Null: NO | Key:  | Default: null | Extra: 
+  - documento: int(10) | Null: NO | Key:  | Default: null | Extra: 
+  - atendido: varchar(1) | Null: NO | Key:  | Default: null | Extra: 
+  - cod_operacion: int(15) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+  - tipo: varchar(20) | Null: NO | Key:  | Default: null | Extra: 
+  - orden: int(11) | Null: NO | Key:  | Default: null | Extra: 
+  - profesional: int(4) | Null: NO | Key:  | Default: null | Extra: 
+  - nombre_profesional: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - nombre_paciente: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - hora: time | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 52
+
+Sample Records:
+[
+  {
+    "fecha_llegada": "2024-07-01T03:00:00.000Z",
+    "hora_llegada": "21:17:00",
+    "documento": 34355847,
+    "atendido": "S",
+    "cod_operacion": 87,
+    "tipo": "NORMAL",
+    "orden": 0,
+    "profesional": 22,
+    "nombre_profesional": "",
+    "nombre_paciente": "",
+    "hora": "08:30:00"
+  },
+  {
+    "fecha_llegada": "2024-07-03T03:00:00.000Z",
+    "hora_llegada": "08:27:00",
+    "documento": 27842426,
+    "atendido": "N",
+    "cod_operacion": 88,
+    "tipo": "NORMAL",
+    "orden": 0,
+    "profesional": 2,
+    "nombre_profesional": "",
+    "nombre_paciente": "",
+    "hora": "08:15:00"
+  },
+  {
+    "fecha_llegada": "2024-07-03T03:00:00.000Z",
+    "hora_llegada": "08:46:00",
+    "documento": 27842426,
+    "atendido": "S",
+    "cod_operacion": 89,
+    "tipo": "NORMAL",
+    "orden": 0,
+    "profesional": 3,
+    "nombre_profesional": "",
+    "nombre_paciente": "",
+    "hora": "08:45:00"
+  },
+  {
+    "fecha_llegada": "2024-07-03T03:00:00.000Z",
+    "hora_llegada": "10:45:00",
+    "documento": 32354807,
+    "atendido": "N",
+    "cod_operacion": 90,
+    "tipo": "NORMAL",
+    "orden": 0,
+    "profesional": 2,
+    "nombre_profesional": "",
+    "nombre_paciente": "",
+    "hora": "09:00:00"
+  },
+  {
+    "fecha_llegada": "2024-07-03T03:00:00.000Z",
+    "hora_llegada": "11:05:00",
+    "documento": 93468666,
+    "atendido": "N",
+    "cod_operacion": 92,
+    "tipo": "NORMAL",
+    "orden": 0,
+    "profesional": 2,
+    "nombre_profesional": "",
+    "nombre_paciente": "",
+    "hora": "11:00:00"
+  }
+]
+
+==================================================
+TABLE: lista_espera_detalle
+==================================================
+Columns:
+  - id: int(15) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+  - lista_espera_id: int(11) | Null: NO | Key:  | Default: null | Extra: 
+  - profesional_id: int(4) | Null: NO | Key:  | Default: null | Extra: 
+  - fecha_registro: datetime | Null: YES | Key:  | Default: current_timestamp() | Extra: 
+  - observaciones: varchar(255) | Null: NO | Key:  | Default: null | Extra: 
+  - importe: double(15,2) | Null: NO | Key:  | Default: null | Extra: 
+  - saldo: double(15,2) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 0
+
+
+==================================================
+TABLE: localidades
+==================================================
+Columns:
+  - localidad: varchar(40) | Null: NO | Key:  | Default: null | Extra: 
+  - departamento: varchar(40) | Null: NO | Key:  | Default: null | Extra: 
+  - cod_postal: int(6) | Null: NO | Key:  | Default: null | Extra: 
+  - cod_operacion: int(5) | Null: NO | Key: MUL | Default: null | Extra: auto_increment
+
+Row Count: 192
+
+Sample Records:
+[
+  {
+    "localidad": "San Martín",
+    "departamento": "SAN MARTIN",
+    "cod_postal": 5570,
+    "cod_operacion": 1
+  },
+  {
+    "localidad": "Alto Salvador",
+    "departamento": "SAN MARTIN",
+    "cod_postal": 5570,
+    "cod_operacion": 2
+  },
+  {
+    "localidad": "Alto Verde",
+    "departamento": "SAN MARTIN",
+    "cod_postal": 5570,
+    "cod_operacion": 3
+  },
+  {
+    "localidad": "Barrio Chivilcoy",
+    "departamento": "SAN MARTIN",
+    "cod_postal": 5570,
+    "cod_operacion": 4
+  },
+  {
+    "localidad": "Barrio Emanuel",
+    "departamento": "SAN MARTIN",
+    "cod_postal": 5570,
+    "cod_operacion": 5
+  }
+]
+
+==================================================
+TABLE: modulo
+==================================================
+Columns:
+  - cod_modulo: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - nombre_modulo: varchar(60) | Null: NO | Key:  | Default:  | Extra: 
+  - categoria: varchar(40) | Null: NO | Key:  | Default: 0 | Extra: 
+
+Row Count: 6
+
+Sample Records:
+[
+  {
+    "cod_modulo": 18,
+    "nombre_modulo": "ASDFGH",
+    "categoria": ""
+  },
+  {
+    "cod_modulo": 16,
+    "nombre_modulo": "ASDF",
+    "categoria": ""
+  },
+  {
+    "cod_modulo": 14,
+    "nombre_modulo": "AAAAAA",
+    "categoria": ""
+  },
+  {
+    "cod_modulo": 13,
+    "nombre_modulo": "aaa",
+    "categoria": ""
+  },
+  {
+    "cod_modulo": 17,
+    "nombre_modulo": "ASDF",
+    "categoria": ""
+  }
+]
+
+==================================================
+TABLE: ordenes
+==================================================
+Columns:
+  - cod_grabacion: int(25) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+  - periodo: int(4) | Null: NO | Key:  | Default: 0 | Extra: 
+  - ano: varchar(8) | Null: NO | Key:  | Default:  | Extra: 
+  - nro_os: int(6) | Null: NO | Key:  | Default: 0 | Extra: 
+  - nro_paciente: int(6) | Null: NO | Key:  | Default: 0 | Extra: 
+  - matricula: varchar(6) | Null: NO | Key:  | Default:  | Extra: 
+  - nro_afiliado: text | Null: NO | Key:  | Default: null | Extra: 
+  - nro_orden: varchar(40) | Null: NO | Key: MUL | Default: 0 | Extra: 
+  - fecha: date | Null: NO | Key:  | Default: 0000-00-00 | Extra: 
+  - medico: varchar(25) | Null: NO | Key:  | Default: 0 | Extra: 
+  - coseguro: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - autorizacion: int(10) | Null: NO | Key: MUL | Default: 0 | Extra: 
+  - fecha_fac: date | Null: NO | Key:  | Default: 0000-00-00 | Extra: 
+  - nro_fac: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - confirmada: int(2) | Null: NO | Key:  | Default: 0 | Extra: 
+  - marca: varchar(10) | Null: NO | Key:  | Default:  | Extra: 
+  - lote: varchar(20) | Null: NO | Key:  | Default:  | Extra: 
+  - operador: varchar(4) | Null: NO | Key:  | Default:  | Extra: 
+  - suma_coseguro: decimal(6,2) | Null: NO | Key:  | Default: 0.00 | Extra: 
+  - tipo_fact: char(1) | Null: NO | Key:  | Default:  | Extra: 
+  - cod_diag: varchar(4) | Null: NO | Key:  | Default:  | Extra: 
+  - cod_grabacion1: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - fecha_grabacion: date | Null: NO | Key:  | Default: 0000-00-00 | Extra: 
+  - iva: decimal(10,2) | Null: NO | Key:  | Default: 0.00 | Extra: 
+  - neto_gravado: decimal(10,2) | Null: NO | Key:  | Default: 0.00 | Extra: 
+  - exento: decimal(10,2) | Null: NO | Key:  | Default: 0.00 | Extra: 
+  - total_orden: decimal(10,2) | Null: NO | Key:  | Default: 0.00 | Extra: 
+  - fecha_realizacion: date | Null: NO | Key:  | Default: 0000-00-00 | Extra: 
+  - diagnostico: varchar(120) | Null: NO | Key:  | Default:  | Extra: 
+  - motivo: varchar(120) | Null: NO | Key:  | Default:  | Extra: 
+  - observaciones: varchar(120) | Null: NO | Key:  | Default:  | Extra: 
+  - modulo: int(4) | Null: NO | Key:  | Default: null | Extra: 
+  - nombre_medico: varchar(25) | Null: NO | Key:  | Default: null | Extra: 
+  - autorizacion_ws: int(15) | Null: NO | Key:  | Default: null | Extra: 
+  - fecha_osde: varchar(8) | Null: NO | Key:  | Default: null | Extra: 
+  - hora_osde: varchar(8) | Null: NO | Key:  | Default: null | Extra: 
+  - cuit_osde: varchar(20) | Null: NO | Key:  | Default: null | Extra: 
+  - mensaje_osde: text | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 0
+
+
+==================================================
+TABLE: pacientes
+==================================================
+Columns:
+  - nro_paciente: int(8) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+  - nro_afiliado: varchar(20) | Null: NO | Key:  | Default: 0 | Extra: 
+  - nombre: varchar(30) | Null: NO | Key:  | Default:  | Extra: 
+  - tipo_doc: char(7) | Null: NO | Key:  | Default:  | Extra: 
+  - nro_documento: int(8) | Null: NO | Key: UNI | Default: 0 | Extra: 
+  - nro_os: varchar(12) | Null: NO | Key:  | Default:  | Extra: 
+  - domicilio: varchar(40) | Null: NO | Key:  | Default:  | Extra: 
+  - localidad: varchar(25) | Null: NO | Key:  | Default:  | Extra: 
+  - telefono: varchar(12) | Null: NO | Key:  | Default:  | Extra: 
+  - celular: varchar(12) | Null: NO | Key:  | Default:  | Extra: 
+  - sexo: varchar(20) | Null: NO | Key:  | Default:  | Extra: 
+  - fecha_nacimiento: date | Null: NO | Key:  | Default: 0000-00-00 | Extra: 
+  - apellido: varchar(30) | Null: NO | Key:  | Default: null | Extra: 
+  - tipo_afiliado: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - coseguro: varchar(10) | Null: NO | Key:  | Default: null | Extra: 
+  - plan: varchar(20) | Null: NO | Key:  | Default: null | Extra: 
+  - activo: varchar(80) | Null: NO | Key:  | Default: null | Extra: 
+  - ultima_fecha: date | Null: NO | Key:  | Default: null | Extra: 
+  - nro_llegada: int(5) | Null: NO | Key:  | Default: null | Extra: 
+  - track: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - ultima_01a: varchar(20) | Null: NO | Key:  | Default: null | Extra: 
+  - mail: text | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 47
+
+Sample Records:
+[
+  {
+    "nro_paciente": 2,
+    "nro_afiliado": "27842426",
+    "nombre": "PABLO",
+    "tipo_doc": "D.N.I",
+    "nro_documento": 27842426,
+    "nro_os": "1",
+    "domicilio": "",
+    "localidad": "Villa Nueva",
+    "telefono": "",
+    "celular": "2615172856",
+    "sexo": "Masculino",
+    "fecha_nacimiento": "1980-04-15T03:00:00.000Z",
+    "apellido": "MASSI",
+    "tipo_afiliado": 0,
+    "coseguro": "",
+    "plan": "",
+    "activo": "",
+    "ultima_fecha": null,
+    "nro_llegada": 0,
+    "track": "",
+    "ultima_01a": "",
+    "mail": ""
+  },
+  {
+    "nro_paciente": 3,
+    "nro_afiliado": "27949722",
+    "nombre": "EVELINA",
+    "tipo_doc": "D.N.I",
+    "nro_documento": 27949722,
+    "nro_os": "1041",
+    "domicilio": "LAGUNA LARGA 998",
+    "localidad": "Las Tortugas",
+    "telefono": "2616404319",
+    "celular": "2616404319",
+    "sexo": "Femenino",
+    "fecha_nacimiento": "1980-02-04T03:00:00.000Z",
+    "apellido": "ROSALES",
+    "tipo_afiliado": 0,
+    "coseguro": "",
+    "plan": "",
+    "activo": "",
+    "ultima_fecha": null,
+    "nro_llegada": 0,
+    "track": "",
+    "ultima_01a": "",
+    "mail": ""
+  },
+  {
+    "nro_paciente": 5,
+    "nro_afiliado": "32354807",
+    "nombre": "GISELLA",
+    "tipo_doc": "D.N.I",
+    "nro_documento": 32354807,
+    "nro_os": "1",
+    "domicilio": "",
+    "localidad": "",
+    "telefono": "",
+    "celular": "",
+    "sexo": "",
+    "fecha_nacimiento": null,
+    "apellido": "CARRA",
+    "tipo_afiliado": 0,
+    "coseguro": "",
+    "plan": "",
+    "activo": "",
+    "ultima_fecha": null,
+    "nro_llegada": 0,
+    "track": "",
+    "ultima_01a": "",
+    "mail": ""
+  },
+  {
+    "nro_paciente": 6,
+    "nro_afiliado": "93468666",
+    "nombre": "EDUARDO",
+    "tipo_doc": "DNI",
+    "nro_documento": 93468666,
+    "nro_os": "1",
+    "domicilio": "",
+    "localidad": "",
+    "telefono": "",
+    "celular": "",
+    "sexo": "",
+    "fecha_nacimiento": "1929-08-30T04:00:00.000Z",
+    "apellido": "GIAMPETRI",
+    "tipo_afiliado": 0,
+    "coseguro": "",
+    "plan": "",
+    "activo": "",
+    "ultima_fecha": null,
+    "nro_llegada": 0,
+    "track": "",
+    "ultima_01a": "",
+    "mail": ""
+  },
+  {
+    "nro_paciente": 7,
+    "nro_afiliado": "3390454",
+    "nombre": "JUANA",
+    "tipo_doc": "DNI",
+    "nro_documento": 3390454,
+    "nro_os": "1",
+    "domicilio": "",
+    "localidad": "",
+    "telefono": "",
+    "celular": "",
+    "sexo": "",
+    "fecha_nacimiento": null,
+    "apellido": "MOYANO",
+    "tipo_afiliado": 0,
+    "coseguro": "",
+    "plan": "",
+    "activo": "",
+    "ultima_fecha": null,
+    "nro_llegada": 0,
+    "track": "",
+    "ultima_01a": "",
+    "mail": ""
+  }
+]
+
+==================================================
+TABLE: pacientes_historia_clinica
+==================================================
+Columns:
+  - id_historia_clinica: int(10) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+  - nro_paciente: int(8) | Null: NO | Key:  | Default: 0 | Extra: 
+  - nro_documento: int(8) | Null: NO | Key:  | Default: 0 | Extra: 
+  - motivo_evolucion: text | Null: NO | Key:  | Default: null | Extra: 
+  - examen_fisico: text | Null: NO | Key:  | Default: null | Extra: 
+  - estudios_imagenes_realizados: text | Null: NO | Key:  | Default: null | Extra: 
+  - diagnosticos: text | Null: NO | Key:  | Default: null | Extra: 
+  - estudios_imagenes_realizar: text | Null: NO | Key:  | Default: null | Extra: 
+  - medicamento_recetas: text | Null: NO | Key:  | Default: null | Extra: 
+  - otras_indicaciones: text | Null: NO | Key:  | Default: null | Extra: 
+  - candidad_tiempo: int(5) | Null: NO | Key:  | Default: null | Extra: 
+  - unidad_tiempo: enum('dias','semanas','meses','años') | Null: NO | Key:  | Default: null | Extra: 
+  - fecha_turno: datetime | Null: NO | Key:  | Default: current_timestamp() | Extra: 
+  - fecha_carga: datetime | Null: NO | Key:  | Default: current_timestamp() | Extra: 
+  - profesionales_id: int(10) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 4
+
+Sample Records:
+[
+  {
+    "id_historia_clinica": 12,
+    "nro_paciente": 40,
+    "nro_documento": 13400379,
+    "motivo_evolucion": "GFGHFG",
+    "examen_fisico": "HGF",
+    "estudios_imagenes_realizados": "HFG",
+    "diagnosticos": "",
+    "estudios_imagenes_realizar": "",
+    "medicamento_recetas": "",
+    "otras_indicaciones": "",
+    "candidad_tiempo": 0,
+    "unidad_tiempo": "",
+    "fecha_turno": null,
+    "fecha_carga": "2025-11-12T21:10:07.000Z",
+    "profesionales_id": 16
+  },
+  {
+    "id_historia_clinica": 21,
+    "nro_paciente": 17,
+    "nro_documento": 8513004,
+    "motivo_evolucion": "jkhk",
+    "examen_fisico": "jk",
+    "estudios_imagenes_realizados": "khj",
+    "diagnosticos": "kjh",
+    "estudios_imagenes_realizar": "",
+    "medicamento_recetas": "",
+    "otras_indicaciones": "",
+    "candidad_tiempo": 0,
+    "unidad_tiempo": "",
+    "fecha_turno": null,
+    "fecha_carga": "2025-11-12T21:37:13.000Z",
+    "profesionales_id": 0
+  },
+  {
+    "id_historia_clinica": 22,
+    "nro_paciente": 17,
+    "nro_documento": 8513004,
+    "motivo_evolucion": "fds",
+    "examen_fisico": "fds",
+    "estudios_imagenes_realizados": "fds",
+    "diagnosticos": "fds",
+    "estudios_imagenes_realizar": "",
+    "medicamento_recetas": "",
+    "otras_indicaciones": "",
+    "candidad_tiempo": 0,
+    "unidad_tiempo": "",
+    "fecha_turno": null,
+    "fecha_carga": "2025-11-12T21:38:35.000Z",
+    "profesionales_id": 16
+  },
+  {
+    "id_historia_clinica": 23,
+    "nro_paciente": 17,
+    "nro_documento": 8513004,
+    "motivo_evolucion": "fsd",
+    "examen_fisico": "fds",
+    "estudios_imagenes_realizados": "fsd",
+    "diagnosticos": "fsd",
+    "estudios_imagenes_realizar": "fsd",
+    "medicamento_recetas": "",
+    "otras_indicaciones": "",
+    "candidad_tiempo": 0,
+    "unidad_tiempo": "",
+    "fecha_turno": null,
+    "fecha_carga": "2025-11-12T21:39:03.000Z",
+    "profesionales_id": 0
+  }
+]
+
+==================================================
+TABLE: planillas
+==================================================
+Columns:
+  - cod_modulo: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+  - nombre_modulo: varchar(60) | Null: NO | Key:  | Default:  | Extra: 
+  - categoria: varchar(40) | Null: NO | Key:  | Default: 0 | Extra: 
+
+Row Count: 2
+
+Sample Records:
+[
+  {
+    "cod_modulo": 1,
+    "nombre_modulo": "SEROLOGIA",
+    "categoria": ""
+  },
+  {
+    "cod_modulo": 2,
+    "nombre_modulo": "QUIMICA1",
+    "categoria": ""
+  }
+]
+
+==================================================
+TABLE: profesionales
+==================================================
+Columns:
+  - nro_profesional: int(10) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+  - apellido: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - nombre: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - especialidad: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - sexo: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - fecha_nacimiento: date | Null: NO | Key:  | Default: null | Extra: 
+  - domicilio: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - localidad: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - telefono: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - celular: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - mail: varchar(150) | Null: NO | Key:  | Default: null | Extra: 
+  - lunes: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - martes: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - miercoles: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - jueves: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - viernes: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - sabado: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - duracion_consulta: varchar(10) | Null: NO | Key:  | Default: null | Extra: 
+  - espacio_entre_turnos: int(10) | Null: NO | Key:  | Default: null | Extra: 
+  - cantidad_turnos_diarios: int(10) | Null: NO | Key:  | Default: null | Extra: 
+  - turno: varchar(20) | Null: NO | Key:  | Default: null | Extra: 
+  - horario_turno_manana: varchar(6) | Null: NO | Key:  | Default: null | Extra: 
+  - horario_turno_tarde: varchar(6) | Null: NO | Key:  | Default: null | Extra: 
+  - tipo_horario: varchar(10) | Null: NO | Key:  | Default: null | Extra: 
+  - observaciones: text | Null: NO | Key:  | Default: null | Extra: 
+  - lunes1: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - martes1: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - miercoles1: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - jueves1: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - viernes1: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - sabado1: int(1) | Null: NO | Key:  | Default: null | Extra: 
+  - usuario_id: int(40) | Null: NO | Key:  | Default: null | Extra: 
+  - nombre_usuario: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - password: varchar(30) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 3
+
+Sample Records:
+[
+  {
+    "nro_profesional": 12,
+    "apellido": "LOPEZ",
+    "nombre": "ANDREA",
+    "especialidad": "ECG",
+    "sexo": "Femenino",
+    "fecha_nacimiento": null,
+    "domicilio": "",
+    "localidad": "",
+    "telefono": "2614175539",
+    "celular": "",
+    "mail": "",
+    "lunes": 0,
+    "martes": 0,
+    "miercoles": 0,
+    "jueves": 1,
+    "viernes": 0,
+    "sabado": 0,
+    "duracion_consulta": "00:00",
+    "espacio_entre_turnos": 10,
+    "cantidad_turnos_diarios": 8,
+    "turno": "Mañana",
+    "horario_turno_manana": "08:00",
+    "horario_turno_tarde": "",
+    "tipo_horario": "Corrido",
+    "observaciones": "",
+    "lunes1": 0,
+    "martes1": 0,
+    "miercoles1": 0,
+    "jueves1": 0,
+    "viernes1": 0,
+    "sabado1": 0,
+    "usuario_id": 0,
+    "nombre_usuario": "",
+    "password": ""
+  },
+  {
+    "nro_profesional": 16,
+    "apellido": "CARRADA",
+    "nombre": "ROMINA",
+    "especialidad": "",
+    "sexo": "F",
+    "fecha_nacimiento": null,
+    "domicilio": "",
+    "localidad": "",
+    "telefono": "2614175539",
+    "celular": "",
+    "mail": "",
+    "lunes": 0,
+    "martes": 0,
+    "miercoles": 1,
+    "jueves": 0,
+    "viernes": 0,
+    "sabado": 0,
+    "duracion_consulta": "00:20",
+    "espacio_entre_turnos": 2,
+    "cantidad_turnos_diarios": 8,
+    "turno": "Mañana",
+    "horario_turno_manana": "08:00",
+    "horario_turno_tarde": "",
+    "tipo_horario": "Corrido",
+    "observaciones": "",
+    "lunes1": 0,
+    "martes1": 0,
+    "miercoles1": 0,
+    "jueves1": 0,
+    "viernes1": 0,
+    "sabado1": 0,
+    "usuario_id": 0,
+    "nombre_usuario": "",
+    "password": ""
+  },
+  {
+    "nro_profesional": 17,
+    "apellido": "ARJONA",
+    "nombre": "NATALIA",
+    "especialidad": "",
+    "sexo": "Femenino",
+    "fecha_nacimiento": null,
+    "domicilio": "",
+    "localidad": "",
+    "telefono": "",
+    "celular": "",
+    "mail": "",
+    "lunes": 0,
+    "martes": 0,
+    "miercoles": 0,
+    "jueves": 0,
+    "viernes": 1,
+    "sabado": 0,
+    "duracion_consulta": "00:30",
+    "espacio_entre_turnos": 0,
+    "cantidad_turnos_diarios": 10,
+    "turno": "Tarde",
+    "horario_turno_manana": "14:00",
+    "horario_turno_tarde": "",
+    "tipo_horario": "",
+    "observaciones": "",
+    "lunes1": 0,
+    "martes1": 0,
+    "miercoles1": 0,
+    "jueves1": 0,
+    "viernes1": 0,
+    "sabado1": 0,
+    "usuario_id": 0,
+    "nombre_usuario": "",
+    "password": ""
+  }
+]
+
+==================================================
+TABLE: profesionales_dias
+==================================================
+Columns:
+  - nro_profesional: int(10) | Null: NO | Key:  | Default: null | Extra: 
+  - cod_dia: int(11) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+  - dia: varchar(15) | Null: NO | Key:  | Default: null | Extra: 
+  - hora: varchar(10) | Null: NO | Key:  | Default: null | Extra: 
+  - turno: varchar(20) | Null: NO | Key:  | Default: null | Extra: 
+  - motivo: varchar(30) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 6
+
+Sample Records:
+[
+  {
+    "nro_profesional": 2,
+    "cod_dia": 12,
+    "dia": "Jueves",
+    "hora": "08:00",
+    "turno": "Maï¿½ana",
+    "motivo": "ECG"
+  },
+  {
+    "nro_profesional": 2,
+    "cod_dia": 13,
+    "dia": "Jueves",
+    "hora": "08:00",
+    "turno": "",
+    "motivo": "ECG"
+  },
+  {
+    "nro_profesional": 9,
+    "cod_dia": 14,
+    "dia": "Miercoles",
+    "hora": "08:00",
+    "turno": "Maï¿½ana",
+    "motivo": ""
+  },
+  {
+    "nro_profesional": 0,
+    "cod_dia": 15,
+    "dia": "",
+    "hora": "08:00",
+    "turno": "",
+    "motivo": "CONSUTA"
+  },
+  {
+    "nro_profesional": 12,
+    "cod_dia": 16,
+    "dia": "Jueves",
+    "hora": "08:00",
+    "turno": "Maï¿½ana",
+    "motivo": "ECG"
+  }
+]
+
+==================================================
+TABLE: tcalendario
+==================================================
+Columns:
+  - fecha: date | Null: NO | Key:  | Default: null | Extra: 
+  - evento: varchar(100) | Null: NO | Key:  | Default: null | Extra: 
+  - profesional: int(10) | Null: NO | Key:  | Default: null | Extra: 
+  - hora: varchar(10) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 0
+
+
+==================================================
+TABLE: turno
+==================================================
+Columns:
+  - cod_operacion: int(11) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+  - nro_turno: int(11) | Null: NO | Key:  | Default: null | Extra: 
+  - fecha_turno: date | Null: NO | Key:  | Default: null | Extra: 
+  - nro_profesional: int(10) | Null: NO | Key:  | Default: null | Extra: 
+  - col1: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col2: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col3: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col4: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col5: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col6: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col7: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col8: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col9: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col10: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col11: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col12: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col13: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col14: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col15: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 530
+
+Sample Records:
+[
+  {
+    "cod_operacion": 95,
+    "nro_turno": 1,
+    "fecha_turno": "2024-07-03T03:00:00.000Z",
+    "nro_profesional": 2,
+    "col1": "08:15",
+    "col2": "",
+    "col3": "",
+    "col4": "",
+    "col5": "27842426",
+    "col6": "",
+    "col7": "1",
+    "col8": "",
+    "col9": "",
+    "col10": "",
+    "col11": "",
+    "col12": "",
+    "col13": "",
+    "col14": "",
+    "col15": ""
+  },
+  {
+    "cod_operacion": 96,
+    "nro_turno": 2,
+    "fecha_turno": "2024-07-03T03:00:00.000Z",
+    "nro_profesional": 2,
+    "col1": "08:30",
+    "col2": "",
+    "col3": "",
+    "col4": "",
+    "col5": "",
+    "col6": "",
+    "col7": "",
+    "col8": "",
+    "col9": "",
+    "col10": "",
+    "col11": "",
+    "col12": "",
+    "col13": "",
+    "col14": "",
+    "col15": ""
+  },
+  {
+    "cod_operacion": 97,
+    "nro_turno": 3,
+    "fecha_turno": "2024-07-03T03:00:00.000Z",
+    "nro_profesional": 2,
+    "col1": "08:45",
+    "col2": "",
+    "col3": "",
+    "col4": "",
+    "col5": "",
+    "col6": "",
+    "col7": "",
+    "col8": "",
+    "col9": "",
+    "col10": "",
+    "col11": "",
+    "col12": "",
+    "col13": "",
+    "col14": "",
+    "col15": ""
+  },
+  {
+    "cod_operacion": 98,
+    "nro_turno": 4,
+    "fecha_turno": "2024-07-03T03:00:00.000Z",
+    "nro_profesional": 2,
+    "col1": "09:00",
+    "col2": "",
+    "col3": "",
+    "col4": "",
+    "col5": "32354807",
+    "col6": "",
+    "col7": "1",
+    "col8": "",
+    "col9": "",
+    "col10": "",
+    "col11": "",
+    "col12": "",
+    "col13": "",
+    "col14": "",
+    "col15": ""
+  },
+  {
+    "cod_operacion": 99,
+    "nro_turno": 5,
+    "fecha_turno": "2024-07-03T03:00:00.000Z",
+    "nro_profesional": 2,
+    "col1": "09:15",
+    "col2": "",
+    "col3": "",
+    "col4": "",
+    "col5": "",
+    "col6": "",
+    "col7": "",
+    "col8": "",
+    "col9": "",
+    "col10": "",
+    "col11": "",
+    "col12": "",
+    "col13": "",
+    "col14": "",
+    "col15": ""
+  }
+]
+
+==================================================
+TABLE: turno_ant
+==================================================
+Columns:
+  - cod_operacion: int(11) | Null: NO | Key: MUL | Default: null | Extra: auto_increment
+  - nro_turno: int(11) | Null: NO | Key:  | Default: null | Extra: 
+  - fecha_turno: date | Null: NO | Key:  | Default: null | Extra: 
+  - nro_profesional: int(10) | Null: NO | Key:  | Default: null | Extra: 
+  - col1: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col2: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col3: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col4: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col5: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col6: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col7: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col8: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col9: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col10: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col11: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col12: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col13: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col14: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+  - col15: varchar(50) | Null: NO | Key:  | Default: null | Extra: 
+
+Row Count: 929
+
+Sample Records:
+[
+  {
+    "cod_operacion": 1,
+    "nro_turno": 1,
+    "fecha_turno": "2015-02-04T03:00:00.000Z",
+    "nro_profesional": 6,
+    "col1": "8:30",
+    "col2": "",
+    "col3": "Restaño Patricia",
+    "col4": "Osep",
+    "col5": "4375219",
+    "col6": "",
+    "col7": "",
+    "col8": "",
+    "col9": "",
+    "col10": "",
+    "col11": "",
+    "col12": "",
+    "col13": "",
+    "col14": "",
+    "col15": ""
+  },
+  {
+    "cod_operacion": 2,
+    "nro_turno": 2,
+    "fecha_turno": "2015-02-04T03:00:00.000Z",
+    "nro_profesional": 6,
+    "col1": "09:00",
+    "col2": "",
+    "col3": "Molina Leonela",
+    "col4": "Ospemon",
+    "col5": "156066875",
+    "col6": "cancelo",
+    "col7": "",
+    "col8": "",
+    "col9": "",
+    "col10": "",
+    "col11": "",
+    "col12": "",
+    "col13": "",
+    "col14": "",
+    "col15": ""
+  },
+  {
+    "cod_operacion": 3,
+    "nro_turno": 3,
+    "fecha_turno": "2015-02-04T03:00:00.000Z",
+    "nro_profesional": 6,
+    "col1": "09.30",
+    "col2": "",
+    "col3": "Anabel Dominguez",
+    "col4": "Particular",
+    "col5": "155959884",
+    "col6": "4973326",
+    "col7": "",
+    "col8": "",
+    "col9": "",
+    "col10": "",
+    "col11": "",
+    "col12": "",
+    "col13": "",
+    "col14": "",
+    "col15": ""
+  },
+  {
+    "cod_operacion": 4,
+    "nro_turno": 4,
+    "fecha_turno": "2015-02-04T03:00:00.000Z",
+    "nro_profesional": 6,
+    "col1": "10:00",
+    "col2": "",
+    "col3": "Pelayes Analía",
+    "col4": "",
+    "col5": "156255153",
+    "col6": "",
+    "col7": "",
+    "col8": "",
+    "col9": "",
+    "col10": "",
+    "col11": "",
+    "col12": "",
+    "col13": "",
+    "col14": "",
+    "col15": ""
+  },
+  {
+    "cod_operacion": 5,
+    "nro_turno": 5,
+    "fecha_turno": "2015-02-04T03:00:00.000Z",
+    "nro_profesional": 6,
+    "col1": "10.30",
+    "col2": "",
+    "col3": "Fuenzalida M. Belén",
+    "col4": "",
+    "col5": "156851229",
+    "col6": "",
+    "col7": "",
+    "col8": "",
+    "col9": "",
+    "col10": "",
+    "col11": "",
+    "col12": "",
+    "col13": "",
+    "col14": "",
+    "col15": ""
+  }
+]
+
+==================================================
+TABLE: usuario
+==================================================
+Columns:
+  - id: bigint(10) | Null: NO | Key: PRI | Default: null | Extra: auto_increment
+  - usuario: varchar(20) | Null: NO | Key:  | Default:  | Extra: 
+  - contrasena: varchar(20) | Null: NO | Key:  | Default: 0 | Extra: 
+  - rol: varchar(20) | Null: NO | Key:  | Default:  | Extra: 
+  - profesionales_id: int(10) | Null: NO | Key:  | Default: 0 | Extra: 
+
+Row Count: 9
+
+Sample Records:
+[
+  {
+    "id": "1",
+    "usuario": "admin",
+    "contrasena": "sigma2024",
+    "rol": "ADMIN",
+    "profesionales_id": 0
+  },
+  {
+    "id": "2",
+    "usuario": "recepcion",
+    "contrasena": "recepcion2024",
+    "rol": "RECEPCION",
+    "profesionales_id": 0
+  },
+  {
+    "id": "3",
+    "usuario": "prueba_medico",
+    "contrasena": "123",
+    "rol": "MEDICOS",
+    "profesionales_id": 1
+  },
+  {
+    "id": "4",
+    "usuario": "prueba_admin",
+    "contrasena": "123",
+    "rol": "ADMIN",
+    "profesionales_id": 0
+  },
+  {
+    "id": "5",
+    "usuario": "prueba_recepcion",
+    "contrasena": "123",
+    "rol": "RECEPCION",
+    "profesionales_id": 0
+  }
+]
+

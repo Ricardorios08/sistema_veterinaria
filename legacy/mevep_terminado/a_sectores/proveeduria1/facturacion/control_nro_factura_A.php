@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<script language="javascript">
+function on_load()
+{
+document.getElementById("fact").focus();
+document.getElementById("fact").style.backgroundColor = "#CCFFCC";
+}
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+
+
+				case "fact":
+				document.getElementById("nro_factura_nuevo").focus();
+
+document.getElementById("fact").style.backgroundColor = "#FFFFFF";
+document.getElementById("nro_factura_nuevo").style.backgroundColor = "#CCFFCC";
+				break;
+				
+				case "nro_factura_nuevo":
+				document.getElementById("leyenda1").focus();
+
+document.getElementById("nro_factura_nuevo").style.backgroundColor = "#FFFFFF";
+document.getElementById("leyenda1").style.backgroundColor = "#CCFFCC";
+				break;
+				
+					case "leyenda1":
+				document.getElementById("cantidad_cuotas").focus();
+
+document.getElementById("leyenda1").style.backgroundColor = "#FFFFFF";
+document.getElementById("cantidad_cuotas").style.backgroundColor = "#CCFFCC";
+				break;
+
+	case "cantidad_cuotas":
+				document.getElementById("imprimir").focus();
+
+document.getElementById("cantidad_cuotas").style.backgroundColor = "#FFFFFF";
+document.getElementById("imprimir").style.backgroundColor = "#CCFFCC";
+				break;
+
+				
+
+
+												
+		}
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+
+<style type="text/css">
+<!--
+.Estilo14 {color: #000000}
+.Estilo15 {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.Estilo16 {font-size: 12px}
+.Estilo17 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo18 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000; }
+body {
+	background-image: url(../../..//imagenes/logito.png);
+}
+-->
+
+<!--
+.Estilo16 {font-family: Arial, Helvetica, sans-serif}
+-->
+
+
+<!--
+-->
+
+<!--
+body {
+	background-image: url(../../../imagenes/logito.png);
+}
+-->
+
+
+
+
+ </style>
+<body onload = "on_load ()">
+<?
+$nro_factura= $_REQUEST['nro_factura'];
+$fact =$_REQUEST['fact'];
+$tipo_fact =$_REQUEST['tipo_fact'];
+$cuit= $_REQUEST['cuit'];
+$direccion= $_REQUEST['direccion'];
+
+
+include("../../../conexiones/config_pro.php");
+$sql2 = "SELECT * FROM `ventas1_encab_temp`  WHERE  `nro_factura` = $nro_factura and tipo_fact = '$fact'";
+$result2 = $db->Execute($sql2);
+
+$nro_fa=strtoupper($result2->fields["nro_factura"]);
+
+if ($nro_fa ==0){
+$leyenda = "NO TIENE PRODUCTOS A FACTURAR";
+include ("../../../alertas/campo_vacio.php");
+exit;
+}
+
+
+$nro_cliente=strtoupper($result2->fields["nro_cliente"]);
+$nro_cuenta=strtoupper($result2->fields["nro_cuenta"]);
+$cod_operacion=strtoupper($result2->fields["cod_operacion"]);
+
+$plan=strtoupper($result2->fields["plan"]);
+$operador=strtoupper($result2->fields["operador"]);
+$denominacion=strtoupper($result2->fields["denominacion"]);
+$fecha=strtoupper($result2->fields["fecha"]);
+$forma_pago=strtoupper($result2->fields["forma_pago"]);
+$porc_dto=strtoupper($result2->fields["porc_dto"]);
+$tipo_iva=strtoupper($result2->fields["tipo"]);
+
+
+
+switch ($tipo_iva){
+	case "1":{
+$tipo_fact = "Responsable Inscripto";
+$fact = "A";
+		break;
+	}
+
+	case "4":{
+$tipo_fact = "Exento";
+$fact = "B";
+		break;
+	}
+
+		case "3":{
+$tipo_fact = "Monotributo";
+$fact = "B";
+		break;
+	}
+
+		
+}
+
+
+
+
+if ($nro_cliente != 0){
+$tipo_cuenta = "2"; //tipo 1 externo;
+$leyenda1 = "";
+$nro = $nro_cliente;
+}
+elseif ($nro_cuenta != 0){
+$tipo_cuenta = "1"; //tipo 1 asociado;
+$leyenda1 = "";
+if ($forma_pago == 'CTA/CTE'){
+$leyenda3 = "";
+$leyenda4 = "";
+}
+$nro = $nro_cuenta;
+}
+?>
+
+<!-- <?if ($fact == "A"){?>
+<FORM name="form" ACTION="factura_papel_prueba.php" METHOD = "POST">
+<?}else{?>
+<FORM name="form" ACTION="factura_papel_prueba.php" METHOD = "POST">
+<?}?> -->
+
+
+<FORM name="form" ACTION="factura_papel.php" METHOD = "POST">
+
+
+  <table width="686" border="0">
+  <tr bgcolor="#E6E6E6">
+    <td height="32" colspan="3" ><div align="center" class="Estilo15" >
+      <div align="center" class="Estilo14">      REVISAR  FACTURA E IMPRIMIR</div>
+    </div> </td>
+    </tr>
+  <tr bgcolor="#C1F2FF">
+    <td colspan="3" bgcolor="#E6E6E6"><div align="center"><span class="Estilo14"><span class="Estilo17"><span class="Estilo18"><span class="Estilo14 Estilo17">
+        <input name="button" type="button" id ="button6" style="font-family: Verdana; font-size: 14 pt" onClick="history.back()" onKeyPress="history.back()" value="CORREGIR">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <input name="impri" type="image" src="../../../imagenes/botones/btn_imprimir.gif" id ="impri3" value="IMPRI" onClick="return confirm('Si est&aacute;n todos los datos correctos IMPRIMA');">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <input name="actua" type="submit" id ="actua3" value="ACTUALIZAR" onClick="return confirm('Si est&aacute;n todos los datos correctos ACTUALIZA STOCK');">
+    </span></span></span></span></div></td>
+    </tr>
+  <tr bgcolor="#C1F2FF">
+    <td bgcolor="#C9FADF"><div align="right"><span class="Estilo16">N&ordm; FACTURA EMITIDO POR SISTEMA:
+          </div>
+    </div></td>
+    <td width="54%" colspan="2" bgcolor="#F2FACB"><?echo $fact;?> - <?echo $nro_factura;?> </td>
+  </tr>
+  <tr bgcolor="#C1F2FF">
+    <td width="46%" bgcolor="#C9FADF"><div align="right"><span class="Estilo16">En caso de no coincidir Cambiar por:
+      </span></div></td>
+    <td colspan="2" bgcolor="#F2FACB">
+      <input name="fact_nuevo" type="text" size="1" id ="fact" onKeyPress="return verif_caracter(this,event)">
+      <input name="nro_factura_nuevo" type="text" size="4" id ="nro_factura_nuevo" onKeyPress="return verif_caracter(this,event)">
+      <input name="nro_factura" type="hidden" value ="<?echo $nro_factura;?>">
+      <input name="fact" type="hidden" value ="<?echo $fact;?>">
+      <input name="tipo_fact" type="hidden" value ="<?echo $tipo_fact;?>">
+      <input name="direccion" type="hidden" value ="<?echo $direccion;?>">
+      <input name="cuit" type="hidden" value ="<?echo $cuit;?>">
+	  <input name="nro" type="hidden" value ="<?echo $nro;?>">
+</td>
+  </tr>
+  <tr bgcolor="#C1F2FF">
+    <td bgcolor="#C9FADF"><div align="right"><span class="Estilo16"> Ingrese Leyenda rengl&oacute;n 1 </span></div></td>
+    <td colspan="2" bgcolor="#F2FACB">
+      <input name="leyenda1" type="text" id="leyenda1" size="30" maxlength="30"  onKeyPress="return verif_caracter(this,event)">
+      
+
+      <!-- <a href="factura_papel_A.php?nro_factura=<?print("$nro_factura");?>&fact=<?print("$fact");?>&tipo_fact=<?print("$tipo_fact");?>&cuit=<?print("$cuit");?>&direccion=<?print("$direccion");?>&leyenda2=<?print("$leyenda1");?>&cantidad_cuotas=<?print("$cantidad_cuotas");?>&nro_factura_nuevo=<?print("$nro_factura_nuevo");?>&fact_nuevo=<?print("$fact_nuevo");?>"><img src="../../../imagenes/botones/btn_imprimir.gif" alt="Imprimir" border = "0" onclick="return confirm('Si están todos los datos correctos IMPRIMA');"></a>
+    </span> --></td>
+	  
+    </tr>
+
+<?if ($forma_pago == "CTA/CTE"){?>
+<?}?>
+</table>
+
+
+ <table width="686" height="68" border="0" background="../../../imagenes/factura/denominacion.gif">
+      <tr>
+        <td><span class="Estilo16">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sres: <?echo $denominacion." (".$nro.")";?></span><span class="Estilo16"><br>
+        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Domicilio:<?echo $direccion;?></span><span class="Estilo16"><br>
+        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IVA: <?print("$tipo_fact");?> - Cuit: <?echo $cuit;?></span></td>
+        <td><div align="right"><span class="Estilo16">&nbsp;Fecha: <?echo $fecha;?></span><span class="Estilo16"> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<br>
+          Operador: <?echo $operador;?> &nbsp;&nbsp;&nbsp;&nbsp;Control: <?echo $fact?> - <?echo $nro_factura?> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        COND. VENTA: <?echo $forma_pago;?> &nbsp;&nbsp;&nbsp;&nbsp;</span><span class="Estilo16"> &nbsp;&nbsp;&nbsp;&nbsp;</span></div></td>
+      </tr>
+ </table>
+
+<?include ("mostrar_detalle.php");?>
+
+
+
+<?$total_factura = 0;
+$neto = 0;
+$iva = 0;
+$sumatoria = $cont;
+		$cont = 0;
+
+//include ("espacios_en_blancos.php");
+$sumatoria = 0;?>
+</html>
+</form>
+</body>

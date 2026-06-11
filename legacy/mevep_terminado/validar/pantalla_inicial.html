@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documento sin t&iacute;tulo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+
+	
+
+.Estilo1 {
+	font-family: "Arial Black";
+	font-size: 24px;
+}
+.Estilo4 {font-family: Arial, Helvetica, sans-serif; font-size: 16px; }
+.Estilo5 {color: #000099}
+.Estilo15 {font-family: Arial, Helvetica, sans-serif}
+.Estilo16 {font-size: 16px}
+.Estilo17 {color: #000066}
+-->
+</style>
+<script language="javascript">
+<!--
+function on_load()
+{
+document.getElementById("usuario").focus();
+}
+
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				case "usuario":
+				document.getElementById("password").focus();
+				
+				break;
+				case "password":
+				document.getElementById("entrar").focus();
+				break;
+			
+		}
+		return false;
+	}
+	return true;
+}
+
+
+
+<script language="JavaScript" src="../imagenes/fuegos/rutbasicas.js">
+
+<script language="JavaScript" src="../imagenes/fuegos/artificiales.js">
+
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+
+</head>
+<!-- <BODY  bgcolor="#000066" background="../IMAGENES/BOTONES/BARRA/fondo3.jpg" > -->
+<!-- <BODY  bgcolor="#000066" background="../IMAGENES/fondo.jpg" >  -->
+<!-- <BODY  bgcolor="#000066" background="../IMAGENES/ladrillos.jpg" >  -->
+<BODY  bgcolor="#000066" background="../IMAGENES/fondo_relleno.png" onLoad="on_load()" > 
+<script language="JavaScript">
+ponerFuegos(3, 400, 400, 300, true);
+</script>
+<div align="center" class="Estilo1">
+  <p class="Estilo5"></p>
+</div>
+<TR><TD>  
+<FORM ACTION="../validar/validar.php" method="post" TARGET = "central">
+
+  <div align="left"><font size="1"> </font>
+  </div>
+  <table width="103%" height="470" border="0" align="center">
+    <tr>
+      <th height="39" bgcolor="#E6E6E6" scope="col"><div align="right" class="Estilo15 Estilo17">
+        <div align="center" class="Estilo5"><span class="Estilo4">USUARIO: </span>
+            <input type="text" name="usuario" size = "12" id = "usuario">
+            <span class="Estilo16">&nbsp;&nbsp;&nbsp;&nbsp;CONTRASE&Ntilde;A: </span>
+            <input type="password" name="password" size = "6" id = "password">
+            <span class="Estilo16">&nbsp;&nbsp;&nbsp;&nbsp;</span>        
+			    <input type="Submit" name="bLogin" value="Entrar" id ="entrar">
+        </div>
+      </div>
+        </th>
+      </tr>
+    <tr>
+      <th width="53%" scope="col"><a href="#" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image2','','../imagenes/botones/menu/sala.jpg',1)"><img src="..//imagenes/botones/barra/institucional.png"  border="0"></a></th>
+      </tr>
+    <tr>
+      <th scope="col"><div align="right"><span class="Estilo15">RyS</span></div></th>
+    </tr>
+  </table>
+  
+</form>
+</body>
+</html>
+

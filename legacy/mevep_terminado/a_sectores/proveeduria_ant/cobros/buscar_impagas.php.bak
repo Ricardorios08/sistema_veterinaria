@@ -1,0 +1,92 @@
+<style type="text/css">
+<!--
+.Estilo22 {font-family: Arial, Helvetica, sans-serif; font-size: 10px; }
+-->
+</style>
+ <table width="330" border="0">
+    <tr bgcolor="#993333">
+      <td height="27" colspan="3" bgcolor="#E8DCFC"><div align="center"><span class="Estilo1"><font color="#000000"><font color="#000000">
+        <font face="Arial, Helvetica, sans-serif">
+        <?
+$nro_os=$_REQUEST ['nro_os'];
+$nro_factura=$_REQUEST ['nro_factura'];
+
+
+$hoy = date("d/m/y");
+
+
+
+?>
+        </font></font><font face="Arial, Helvetica, sans-serif">Obras sociales Pendientes de Cobro</font></font></span></div></td>
+    </tr>
+
+     <tr bgcolor="#FFFFFF">
+       <td><div align="center"><span class="Estilo22">Obra </span></div></td>
+       <td><div align="center"><span class="Estilo22">N&ordm; Factura </span></div></td>
+       <td><div align="center"><span class="Estilo22"> Saldo </span></div></td>
+     </tr>
+	 <?
+include ("../../../conexiones/config_fa.php");
+
+	 if ($cuenta == "")
+	 {
+$sql="select * from factura where estado like 'PENDIENTE' group by nro_os";
+	 }
+	 else
+	 {
+
+$sql="select * from factura where nro_os like '$cuenta' and  estado like 'PENDIENTE' order by nro_os";
+	 }
+
+$result = $db->Execute($sql);
+
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+$tipo_fact=strtoupper($result->fields["tipo_fact"]);
+$nro_factura=strtoupper($result->fields["nro_factura"]);
+$fecha=strtoupper($result->fields["fecha"]);
+$periodo=strtoupper($result->fields["periodo"]);
+$nro_os=strtoupper($result->fields["nro_os"]);
+$saldo=strtoupper($result->fields["total"]);
+$cant_bioq=strtoupper($result->fields["cant_bioquimicos"]);
+$cant_ordenes=strtoupper($result->fields["cant_ordenes"]);
+$estado=strtoupper($result->fields["estado"]);
+
+
+
+include ("../../../conexiones/config_os.php");
+$sql1="select * from datos_os where nro_os like '$nro_os'";
+$result1 = $db->Execute($sql1);
+$sigla=strtoupper($result1->fields["sigla"]);
+
+
+
+if ($cuenta != ""){
+
+?>
+  <tr bgcolor="#FFFFFF"> 
+
+   <td width="131"><div align="left" class="Estilo6"><font color="#336600" size="2" face="Arial, Helvetica, sans-serif"><?echo $nro_os." - ".$sigla;?></font></div>      </td>
+    <td width="106"><span class="Estilo6"><font color="#336600" size="2" face="Arial, Helvetica, sans-serif"><?echo $tipo_fact." - ".$nro_factura;?></font></span></td>
+    <td width="79"><span class="Estilo6"><font color="#336600" size="2" face="Arial, Helvetica, sans-serif">$ <?echo $saldo;?></font></span></td>
+ </tr>
+
+ <?}else{?>
+ <tr bgcolor="#FFFFFF">
+   <td colspan="3"><span class="Estilo6"><font color="#336600" size="2" face="Arial, Helvetica, sans-serif"><?echo $nro_os." - ".$sigla;?></font></span></td>
+ </tr>
+<?}?>
+
+
+
+
+<?
+	$result->MoveNext();
+	}
+
+
+	?>
+</table>
+</td>
+  </tr>

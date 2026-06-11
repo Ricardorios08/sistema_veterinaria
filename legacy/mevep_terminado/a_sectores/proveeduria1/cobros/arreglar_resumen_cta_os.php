@@ -1,0 +1,26 @@
+<?
+include ("../../../conexiones/config_grabacion.php");
+$sql="select * from factura";
+$result = $db_fa->Execute($sql);
+
+ if (!$result) die("fallo".$db_fa->ErrorMsg());
+  while (!$result->EOF) {
+
+
+$nro_factura=ucwords($result->fields["nro_factura"]);
+$estado=ucwords($result->fields["estado"]);
+$tipo_fact=ucwords($result->fields["tipo_fact"]);
+$total=$result->fields["total"];
+$tipo_operacion=$result->fields["tipo_operacion"];
+$nro_os=$result->fields["nro_os"];
+ECHO $fecha=$result->fields["fecha"];
+
+
+ $sql5 = "INSERT INTO `resumen_cta_vta_os` ( `cuenta` , `tipo_cuenta` , `fecha` , `tipo_fact` , `comprobante` , `cod_movimiento` , `importe` , `vencimiento` , `referencia` , `afectacion` )  VALUES ('$nro_os' , '3' , '$fecha' , '$tipo_fact' , '$nro_factura' , '$tipo_operacion' , '$total' , '' , '' , '' )";
+$result5 = $db_liq->Execute($sql5);
+
+
+echo "<br>";
+$result->MoveNext();
+	}
+?>

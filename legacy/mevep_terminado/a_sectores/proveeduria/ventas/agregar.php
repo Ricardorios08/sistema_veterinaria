@@ -1,0 +1,83 @@
+<?php 
+
+include ("../../../conexiones/config.inc.php");
+
+  $id=$_REQUEST["id"];
+  $cod_merca=$_REQUEST["cod_merca"];
+
+  $palabra=$_REQUEST["palabra"];
+
+
+$sql1="select sum(cantidad_ingresada) as cantidad_ingresada from existencias where cod_mercaderia = $cod_merca";
+$result1 = $db->Execute($sql1);
+$cantidad_ingresada=strtoupper($result1->fields["cantidad_ingresada"]);
+
+$sql1="select sum(cantidad_salida) as cantidad_salida from existencias where cod_mercaderia = $cod_merca";
+$result1 = $db->Execute($sql1);
+$cantidad_salida=strtoupper($result1->fields["cantidad_salida"]);
+
+ $suma_existente = $cantidad_ingresada - $cantidad_salida;
+
+
+
+///if ($suma_existente > 0){
+ $sql = "SELECT * FROM `mercaderia`  WHERE  `cod_merca` = $cod_merca";
+$result = $db->Execute($sql);
+
+$cod_merca=$result->fields["cod_merca"];
+$nombre=strtoupper($result->fields["nombre"]);
+ $descripcion=strtoupper($result->fields["descripcion"]);
+ $precio_actualizado=strtoupper($result->fields["precio_actualizado"]);
+$proveedor=strtoupper($result->fields["proveedor"]);
+$cod_tasa=strtoupper($result->fields["cod_tasa"]);
+
+$cod_marca=strtoupper($result->fields["cod_marca"]);
+$cod_categoria=strtoupper($result->fields["cod_categoria"]);
+
+
+$sql2="select * from marca1 where cod_marca = $cod_marca";
+$result2 = $db->Execute($sql2);
+$marca=$result2->fields["marca"];
+
+$sql2="select * from categoria where cod_categoria = $cod_categoria";
+$result2 = $db->Execute($sql2);
+$categoria=$result2->fields["categoria"];
+
+
+  $sql2="select * from tasas where cod_tasa = $cod_tasa";
+ $result2 = $db->Execute($sql2);
+
+   $tasa=$result2->fields["iva_normal"];
+  $tasa_particulares=strtoupper($result2->fields["iva_recargo"]);
+
+ $socios = $precio_actualizado * $tasa/100;
+$no_socios = $precio_actualizado * $tasa_particulares/100;
+
+$final = $socios + $precio_actualizado;
+$sql4="select * from proveedores where cuenta = $proveedor";
+ $result4 = $db->Execute($sql4);
+ $denominacion=strtoupper($result4->fields["denominacion"]);
+
+
+
+ $sql3 = "SELECT * FROM `ventas1_deta_temp`  WHERE  `cod_merca` = $cod_merca and nro_factura = '$id'";
+$result3 = $db->Execute($sql3);
+$cod_mer=$result3->fields["cod_mercaderia"];
+
+
+ $sql = "INSERT INTO `ventas1_deta_temp` ( `nro_factura` , `cod_detalle` , `cod_mercaderia` , `descripcion` , `presentacion` , `lote` , `mes_lote` , `anio_lote` , `cantidad` , `precio_unitario` , `total` , `tipo_fact` , `iva_renglon`)  VALUES ('$id' , '' ,'$cod_merca' , '$nombre', '$descripcion' , '$lote' , '$mes_lote' , '$anio_lote' , '1' , '$final' , '$final' , '' ,  '$tasa')";
+mysql_query($sql);
+
+$bande = 2;
+
+include ("../mercaderia/buscar_mercaderia.php");
+//}
+//else
+//{
+
+//$leyenda = "NO QUEDAN ESE ARTICULO EN STOCK";
+//include ("../../../alertas/campo_informacion.php");
+//exit;
+//}
+
+?>

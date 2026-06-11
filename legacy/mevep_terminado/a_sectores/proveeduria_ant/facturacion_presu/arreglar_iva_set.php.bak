@@ -1,0 +1,43 @@
+<?include ("../../../conexiones/config_pro.php");
+
+include("../../../conexiones/config_pro.php");
+$sql2 = "SELECT * FROM `ventas_encabezado` where fecha between '2009-09-01' AND '2009-10-15' and ((cod_operacion = '1') or (cod_operacion = '3')) and tipo_fact = 'B'" ;
+$result2 = $db->Execute($sql2);
+
+if (!$result2) die("fallo".$db->ErrorMsg());
+
+ while (!$result2->EOF) {
+
+echo "NRO FACTURA ".$nro_factura=strtoupper($result2->fields["nro_factura"]);
+$neto=$result2->fields["neto"];
+$tipo_iva=strtoupper($result2->fields["tipo_iva"]);
+$descuento=$result2->fields["descuento"];
+
+
+echo "<br>";
+echo " BRUTO: ".$bruto = $neto + $descuento;
+echo "<br>";
+echo " BASE DEL BRUTO: ".$base_bruto = ($bruto / 1.21);
+echo "<br>";
+echo " BASE DESCUENTO: ".$base_descuento = ($descuento / 1.21);
+
+echo "<br>";
+echo "NETO GRAVADO: ".$neto_gravado = round($base_bruto - $base_descuento,2);
+echo "<br>";
+$iva = round(($neto_gravado * 21 / 100),2);
+
+if ($tipo_iva != 4){
+
+
+ECHO $sql = "UPDATE `ventas_encabezado` SET  `neto_gravado` = '$neto_gravado' , `iva` = '$iva' WHERE `tipo_fact` = 'B' AND `nro_factura` = '$nro_factura'";
+//mysql_query($sql);
+ }
+echo "<br>";
+echo "<br>";
+	 $result2->MoveNext();
+		}
+
+
+
+
+

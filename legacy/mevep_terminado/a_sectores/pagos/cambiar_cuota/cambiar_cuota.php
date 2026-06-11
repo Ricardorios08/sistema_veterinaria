@@ -1,0 +1,53 @@
+ 
+<form action="guardar_cuota.php" method="post">
+<table width="800" border="0" cellspacing="0">
+  <!--DWLayoutTable-->
+  <tr bordercolor="#FFFFCC" bgcolor="#E6E6E6">
+    <td colspan="5"><div align="center"><font color="#FFFFFF" size="2" face="Trebuchet MS"><font color="#000000">LISTADO DE DIFERENTES CUOTAS. Emitido el <?php echo $hoy;?></font></font></div></td>
+  </tr>
+  <tr bordercolor="#FFFFCC" bgcolor="#CCCCCC">
+    <td colspan="2">Cambiar: 
+    <input name="cuota_actual" type="text" id="cuota_actual"onKeyPress="return verif_caracter(this,event)" size="5" maxlength="60" tabindex="2">Por: 
+    <input name="cuota_nueva" type="text" id="cuota_nueva"onKeyPress="return verif_caracter(this,event)" size="5" maxlength="60" tabindex="2">
+    <label>Seg:
+    <input name="segu" type="text" id="segu"onKeyPress="return verif_caracter(this,event)" size="5" maxlength="60" tabindex="2"> 
+    <input type="submit" name="Submit" value="Cambiar">
+    </label></td>
+  <tr bordercolor="#FFFFCC" bgcolor="#CCCCCC">
+  
+    <td width="387"><div align="center"><strong><font color="#000000" size="2" face="Trebuchet MS">IMPORTE</font></strong></div></td>
+    <td width="409"><div align="center"><strong><font color="#000000" size="2" face="Trebuchet MS">CANTIDAD</font></strong></div></td>
+     
+    <?php 
+include ("../../../conexiones/config.inc.php");
+
+ $sql="select * from socios group by importe_cuota";
+ $result = $db->Execute($sql);
+
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+	 $importe_cuota=$result->fields["importe_cuota"];
+
+
+
+ $sql2="select count(importe_cuota) as cantidad  from socios where importe_cuota = $importe_cuota";
+ $result2 = $db->Execute($sql2);
+ $cantidad=$result2->fields["cantidad"];
+
+?>
+ <tr bgcolor="#EBEBEB">
+         
+          <td valign="top"><div align="center"><font size="2" face="Trebuchet MS"><?php print("$importe_cuota");?></font></div></td>
+          <td valign="top"><?php print("$cantidad");?></td>
+        </tr>
+
+<?php
+$result->MoveNext();
+	}
+
+?>
+</table>
+
+
+ </form>

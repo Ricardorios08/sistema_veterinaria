@@ -1,0 +1,75 @@
+<?php
+global $buscador_rapido;
+
+if ($borrar != 1){
+$buscador_rapido=$_POST["buscador_rapido"];
+}
+
+$hoy = date("d/m/Y");
+ include("adodb.inc.php");
+ $db = NewADOConnection('mysql');
+ $db->Connect("localhost", "root", "", "proveeduria");
+
+$B = 1;
+
+
+$palabra=$_POST["busca"];
+
+
+
+$sql="select * from stock where cod_mercaderia like '$palabra'";
+$result = $db->Execute($sql);
+
+echo $sql1="select * from mercaderia where cod_merca = $palabra";
+$result1 = $db->Execute($sql1);
+$descripcion=strtoupper($result1->fields["descripcion"]);
+
+
+?>
+<table width="103%" height="58" border="0">
+  <tr bordercolor="#FFFFCC" bgcolor="#000099">
+    <td colspan="11"><div align="right"><font color="#FFFFFF" face="Arial, Helvetica, sans-serif"><strong>FICHA STOCK</strong> <?echo $hoy;?> </font></div></td>
+  </tr>
+  <tr bordercolor="#FFFFFF" bgcolor="#E6E6E6">
+    <td colspan="7"><font face="Arial, Helvetica, sans-serif"><strong><font size="2"><?print("$palabra");?> - <?print("$descripcion");?></font></strong></font></td>
+  </tr>
+  <tr bordercolor="#FFFFFF" bgcolor="#000099">
+
+	<td width="5%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">FECHA</font></div></td>
+    <td width="11%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">MOVIMIENTO</font></div></td>
+
+<td width="10%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">COMPROBANTE</font></div></td>
+
+<?if ($opcion == "valor"){?>
+<td width="10%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">CANTIDAD</font></div></td>
+<?}?>
+
+
+	<td width="12%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">ENTRADA</font></div></td>
+    <td width="12%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">SALIDA</font></div></td>
+<td width="10%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">SALDO</font></div></td>
+</tr>
+
+  <?
+
+
+
+$anio_actual = date("y");
+$mes_actual = date ("m");
+
+
+
+ switch ($opcion){
+
+	 case "valor":{
+include ("valor.php");
+break;
+	 }
+
+	 case "unidades":{
+
+include ("unidades.php");
+break;
+	 }
+ }
+

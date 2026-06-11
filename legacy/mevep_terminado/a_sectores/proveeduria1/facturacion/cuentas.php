@@ -1,0 +1,47 @@
+<?
+
+if ($nombre != "") {
+
+if ($cantidad == ""){
+$leyenda = "NO INGRESO CANTIDAD";
+include ("../../../alertas/campo_vacio.php");
+exit;
+}
+
+if ($cod_mercaderia== ""){
+$leyenda = "NO INGRESO MERCADERIA";
+include ("../../../alertas/campo_vacio.php");
+exit;
+}
+
+
+
+
+
+$neto_gravado_unitario = $precio_actualizado * $cantidad;
+$iva_unitario = ($precio_actualizado * $iva_normal)/100;
+$iva_unitario_total = $iva_unitario * $cantidad;
+$total = $neto_gravado_unitario  + $iva_unitario_total;
+
+
+
+//$total = $cantidad * $precio_unitario;
+
+$sql9 = "SELECT count(*) as total FROM `ventas1_encab_temp`  WHERE  `nro_factura` = $nro_factura and tipo_fact = '$fact'";
+$total_ordenes = $db->Execute($sql9);
+$items=$total_ordenes->fields["total"];
+
+
+
+
+if ($items < 18){
+$sql = "INSERT INTO `ventas1_deta_temp` ( `tipo_fact` , `nro_factura` , `cod_detalle` , `cod_mercaderia` , `descripcion` , `presentacion` , `lote` , `mes_lote` , `descuento` , `cantidad` , `precio_unitario` , `iva_unitario` , `neto_gravado_unitario`, `iva_unitario_total`, `total`  )  VALUES ( '$fact' , '$nro_factura' , '' ,'$cod_mercaderia' , '$descripcion', '$iva_normal' , '$descuento' , '$mes_lote' , '$descuento' , '$cantidad' , '$precio_actualizado' , '$iva_unitario' , '$neto_gravado_unitario' , '$iva_unitario_total' , '$total')";
+mysql_query($sql);
+}else{
+	echo "CANTIDAD DE ITEMS COMPLETOS, POR FAVOR PROCEDA A FACTURA";
+}
+
+}
+
+
+

@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Documento sin t&iacute;tulo</title>
+<link href="../../menus.css" rel="stylesheet" type="text/css" />
+<link href="../../css/botonera.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+<!--
+.Estilo3 {
+	font-family: "Trebuchet MS";
+	color: #FFFFFF;
+}
+.Estilo12 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo6 {
+	color: #FFFFFF;
+	font-size: 12px;
+}
+.Estilo13 {font-family: "Trebuchet MS"}
+.Estilo15 {font-family: "Trebuchet MS"; font-size: 12px; }
+.Estilo16 {color: #FFFFFF}
+-->
+</style>
+</head>
+
+<body>
+
+<?php 
+include ("../../conexiones/config.inc.php");
+ $sql="select ruta from socios where no_imprimir = 'FALSO' order by ruta desc";
+$result = $db->Execute($sql);
+
+$ruta=$result->fields["ruta"];
+
+
+$fecha = date("d/m/Y");
+
+$mes = date("m");
+$anio = date("Y");
+
+switch ($mes){
+
+case "01":{$mes = "ENERO";break;}
+case "02":{$mes = "FEBRERO";break;}
+case "03":{$mes = "MARZO";break;}
+case "04":{$mes = "ABRIL";break;}
+case "05":{$mes = "MAYO";break;}
+case "06":{$mes = "JUNIO";break;}
+case "07":{$mes = "JULIO";break;}
+case "08":{$mes = "AGOSTO";break;}
+case "09":{$mes = "SEPTIEMBRE";break;}
+case "10":{$mes = "OCTUBRE";break;}
+case "11":{$mes = "NOVIEMBRE";break;}
+case "12":{$mes = "DICIEMBRE";break;}
+
+}
+
+?>
+<table width="166"  border="0">
+  <tr bgcolor="#990033"> </tr>
+  <tr>
+    <td bgcolor="#666666"><div align="center" class="titulo">PAGOS</div></td>
+  </tr>
+</table>
+<div id="menuv">
+		<ul>
+			<ul>
+			 			  
+			<li><a href="entrada_pago_cobrador.php" target = "central" onmouseover="window.status='Ingreso Nuevo Paciente';return true" onmouseout="window.status='';return true">Cobrador (Lector)</a></li>
+<li><a href="entrada_cuota.php" target = "central" onmouseover="window.status='Ingreso Nuevo Paciente';return true" onmouseout="window.status='';return true">Generar Cuota</a></li>
+<li><a href="CTACTE/consultas.php" target = "central" onmouseover="window.status='Ingreso Nuevo Paciente';return true" onmouseout="window.status='';return true">Cobrador</a></li>
+
+<li><a href="generar_deuda.php" target = "central" onmouseover="window.status='Ingreso Nuevo Paciente';return true" onmouseout="window.status='';return true">Gen. Deuda o Adelanto</a></li>
+
+<li><a href="cambiar_cuota/cambiar_cuota.php" target = "central" onmouseover="window.status='Ingreso Nuevo Paciente';return true" onmouseout="window.status='';return true">Cambiar Cuotas</a></li>
+
+<li><a href="cobradores/entrada_dato.php" target = "central" onmouseover="window.status='Ingreso Nuevo Paciente';return true" onmouseout="window.status='';return true">Nuevo Cobrador</a></li>
+<li><a href="cobradores/ver_cobradores.php" target = "central" onmouseover="window.status='Ingreso Nuevo Paciente';return true" onmouseout="window.status='';return true">Ver Cobradores</a></li>
+
+
+<li><a href="plan/entrada_dato.php" target = "central" onmouseover="window.status='Ingreso Nuevo Paciente';return true" onmouseout="window.status='';return true">Nuevo Plan</a></li>
+<li><a href="plan/ver_cobradores.php" target = "central" onmouseover="window.status='Ingreso Nuevo Paciente';return true" onmouseout="window.status='';return true">Ver Plan</a></li>
+
+
+
+			<!-- <li><a href="entrada_pago_cobrador_manual.php" target = "central" onmouseover="window.status='Ingreso Nuevo Paciente';return true" onmouseout="window.status='';return true">Cobrador (Manual)</a></li> -->
+
+		<!-- 	<li><a href="entrada_pago_local.php" target = "central" onmouseover="window.status='Ingreso Nuevo Paciente';return true" onmouseout="window.status='';return true">Local</a></li>  -->
+
+		  </ul>
+		</ul>
+</div>
+  
+  <form action="seleccionar_pagos.php" method="post"  target ="central">
+    <table width="166" border="0" align="left">
+      <tr>
+        <td colspan="2" align="center" bgcolor="#666666" class="titulo" scope="row">BUSCAR</td>
+      </tr>
+      <tr>
+        <td valign="middle" class="Estilo12" scope="row"><div align="right"><span class="Estilo13">BOLETA</span></div></td>
+        <td valign="middle" class="Estilo12" scope="row"><input name="boleta" type="text" id="cod_socio" size="14" / VALUE = "" /></td>
+      </tr>
+      <tr>
+        <td width="71" valign="middle" class="Estilo12" scope="row"><div align="right"><span class="Estilo13">SOCIO:</span>          </div>
+          </div></td>
+        <td width="70" valign="middle" class="Estilo12" scope="row">
+          <div align="left">
+            <input name="cod_socio" type="text" id="desde3" size="14" / VALUE = "">
+        </div></td>
+      </tr>
+      <tr>
+        <td valign="middle" class="Estilo55" scope="row"><div align="right" class="Estilo15">
+          <div align="right">COB.</div>
+        </div></td>
+        <td valign="middle" class="Estilo12" scope="row">
+          <div align="left">
+            	 <?php 
+$sql = "SELECT * FROM cobradores";
+$result = $db->Execute($sql);
+echo "<select name=cobrador[] size=1 id =nro_os onKeyPress='return verif_caracter(this,event)'>";
+echo"<option value=''>COBRADOR</option>";
+
+if (!$result) die("fallo".$db->ErrorMsg());
+while (!$result->EOF) {
+
+$nombre_cobrador=strtoupper($result->fields["nombre_cobrador"]);
+
+$cod_cobrador=$result->fields["cod_cobrador"];
+ 
+
+echo"<option value=$cod_cobrador>$cod_cobrador - $nombre_cobrador</option>";
+$result->MoveNext();
+	}
+echo"</select>";
+?>
+        </div></td>
+      </tr>
+      <tr>
+        <td valign="middle" class="Estilo55" scope="row"><div align="center" class="Estilo15">
+          <div align="right">MES</div>
+        </div></td>
+        <td valign="middle" class="Estilo12" scope="row"><select name="mes[]" id="mes" onkeypress="return verif_caracter(this,event)" tabindex="4">
+          <option value="01">ENERO</option>
+          <option value="02">FEBRERO</option>
+          <option value="03">MARZO</option>
+          <option value="04">ABRIL</option>
+          <option value="05">MAYO</option>
+          <option value="06">JUNIO</option>
+          <option value="07">JULIO</option>
+          <option value="08">AGOSTO</option>
+          <option value="09">SEPTIEMBRE</option>
+          <option value="10">OCTUBRE</option>
+          <option value="11">NOVIEMBRE</option>
+          <option value="12">DICIEMBRE</option>
+                </select></td>
+      </tr>
+      <tr>
+        <td valign="middle" class="Estilo55" scope="row"><div align="center" class="Estilo15">
+          <div align="right">A&Ntilde;O</div>
+        </div></td>
+        <td valign="middle" class="Estilo12" scope="row"><input name="anio" type="text" id="anio" size="10" value ="<?php echo $anio;?>"></td>
+      </tr>
+      <tr>
+        <td colspan="2" valign="middle" class="Estilo12" scope="row"><div align="center">
+            <input type="submit" name="Submit" value="BUSCAR" / class = 'bot1'>
+        </div></td>
+      </tr>
+    </table>
+
+
+  </form>
+</body>
+</html>

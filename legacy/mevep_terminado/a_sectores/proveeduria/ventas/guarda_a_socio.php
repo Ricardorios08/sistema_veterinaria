@@ -1,0 +1,15 @@
+<?php 
+//449 - B
+//5 - A
+
+$sql2="select * from `ventas_encabezado`  where tipo_fact = 'A' order by nro_factura desc";
+$result2 = $db->Execute($sql2);
+$nro_factura=$result2->fields["nro_factura"]+1;
+
+
+
+
+
+
+$sql = "INSERT INTO `ventas_encabezado` (`tipo_fact`, `nro_factura`, `cod_operacion`, `tipo`, `nro_cliente`, `nro_cuenta`, `plan`, `operador`, `denominacion`, `fecha`, `bruto`, `descuento`, `neto_gravado`, `iva`, `retencion`, `neto`, `forma_pago`, `periodo`, `anio`, `tipo_iva`, `cheque`, `contado`, `afectacion` , `cuit`  , `domicilio` , `localidad`) VALUES ('A', '$nro_factura', '', '$tipo', '$cod_socio', '$cod_socio', '', '$id', '$denominacion', '$fecha', '$total_par', '', '$neto_gravado', '$iva', '', '$total', '$tipo_pago', '', '', '$iva', '', '', '' , '$cuit_socio' , '$domicilio' , '$departamento')";
+mysql_query($sql);

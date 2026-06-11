@@ -1,0 +1,108 @@
+<style type="text/css">
+<!--
+.Estilo17 {font-size: 10px}
+.Estilo18 {font-family: Arial, Helvetica, sans-serif}
+.Estilo19 {font-size: 10px; font-family: Arial, Helvetica, sans-serif; }
+.Estilo20 {color: #000000}
+.Estilo21 {
+	font-size: 12px;
+	color: #FF0000;
+}
+.Estilo22 {
+	font-weight: bold;
+	color: #FFFFFF;
+}
+-->
+</style>
+ <table width="332" border="0">
+   <!--DWLayoutTable-->
+   <tr bgcolor="#000099">
+     <td height="27" colspan="3"><div align="center"><span class="Estilo1 Estilo22"> 
+         <font face="Arial, Helvetica, sans-serif">
+      <?
+$nro_os=$_REQUEST ['nro_os'];
+$nro_factura=$_REQUEST ['nro_factura'];
+$cuenta=$_REQUEST ['cuenta'];
+
+$hoy = date("d/m/y");
+
+
+
+?>
+      ABM PROVEEDURIA </font></span></div></td>
+   </tr>
+   <tr bgcolor="#E1F2EF">
+     <td width="138"><div align="center" class="Estilo17 Estilo18 Estilo20">Comp.</div></td>
+   
+     <td width="154"><div align="center"><span class="Estilo19">Saldo</span></div></td>
+     <td width="81"><div align="center" class="Estilo19">Vto</div></td>
+   </tr>
+   <?
+include ("../../../conexiones/config_grabacion.php");
+
+	 if ($cuenta == "")
+	 {
+$sql="select * from composicion_saldos where tipo_cuenta = 1 and saldo > 0";
+	 }
+	 else
+	 {
+
+$sql="select * from composicion_saldos where tipo_cuenta = 1 and saldo > 0 and cuenta = $cuenta";
+	 }
+
+$result = $db_pro->Execute($sql);
+
+  if (!$result) die("fallo".$db_pro->ErrorMsg());
+  while (!$result->EOF) {
+
+$nro_laborat = $nro_laboratorio;
+$nro_laboratorio=strtoupper($result->fields["cuenta"]);
+
+$tipo_fact=strtoupper($result->fields["tipo_fact"]);
+
+$comprobante=strtoupper($result->fields["comprobante"]);
+$vencimiento=strtoupper($result->fields["vencimiento"]);
+$saldo=round($result->fields["saldo"],2);
+$total = $total + $saldo;
+$dia = substr($vencimiento,8,2);
+$mes= substr($vencimiento,5,2);
+$anio= substr($vencimiento,0,4);
+
+$vencimiento = $dia."/".$mes."/".$anio;
+
+$sql1="select * from datos_laboratorio where nro_laboratorio like '$nro_laboratorio'";
+$result1 = $db_bq->Execute($sql1);
+$nombre_laboratorio=strtoupper($result1->fields["nombre_laboratorio"]);
+$todo = $nombre_laboratorio." - ".$nro_laboratorio;
+
+if ($nro_laborat != $nro_laboratorio){?> 
+<tr>  <td height="20" colspan="3" valign="top" bgcolor="#E6E6E6"><div align="left" class="Estilo6 Estilo17 Estilo20">
+    <div align="center"><font face="Arial, Helvetica, sans-serif"><?echo $todo;?></font></div>
+  </div></td>
+  <?}?>
+   <tr bgcolor="#FFFFFF">
+     <td><div align="left" class="Estilo6 Estilo17 Estilo20">
+         <div align="center"><font face="Arial, Helvetica, sans-serif"><?echo $tipo_fact." - ".$comprobante;?></font></div>
+     </div></td>
+     
+     <td><div align="center" class="Estilo6 Estilo17 Estilo20" >$ <?echo $saldo;?></font></span></div></td>
+     <td><div align="right" class="Estilo6 Estilo17 Estilo20"><font face="Arial, Helvetica, sans-serif"><font face="Arial, Helvetica, sans-serif"><?echo $vencimiento;?></font></font></span></div></td>
+   </tr>
+   
+   <?
+	$result->MoveNext();
+	}
+
+
+	?>
+	<tr bgcolor="#FFFFFF">
+     <td colspan="3"><hr noshade></td>
+   </tr>
+   <tr bgcolor="#FFFFFF">
+     <td colspan="2">&nbsp;</td>
+     <td><div align="center"><span class="Estilo6 Estilo21"><font face="Arial, Helvetica, sans-serif">$ <?echo number_format($total,2);?></font></span></div></td>
+   </tr>
+ </table>
+ </td>
+ </tr>
+ 

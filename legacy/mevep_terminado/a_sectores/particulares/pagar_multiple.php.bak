@@ -1,0 +1,113 @@
+<style type="text/css">
+<!--
+.Estilo2 {
+	font-size: 12px;
+	font-family: "Trebuchet MS";
+}
+-->
+</style>
+
+<table width="138" border="0" cellspacing="0">
+<tr>
+<?php 
+
+
+include ("../../conexiones/config.inc.php");
+
+$cod_socio = $_REQUEST["cod_socio"];
+$fecha_pago = date("Y-m-d");
+$cod_socio;
+
+
+
+
+
+
+
+include ("../../conexiones/config.inc.php");
+
+   $sql4="select * from pagos where cod_socio = $cod_socio and estado LIKE 'PENDIENTE%' order by anio, mes";
+ $result4 = $db->Execute($sql4);
+
+  if (!$result4) die("fallo".$db->ErrorMsg());
+  while (!$result4->EOF) {
+
+	$cont = $cont + 1;
+$anio=$result4->fields["anio"];
+$mes=$result4->fields["mes"];
+$mes_mostrar = $mes;
+
+switch ($mes){
+case "1":{$mes_mostrar = "ENERO";break;}
+case "2":{$mes_mostrar = "FEBRERO";break;}
+case "3":{$mes_mostrar = "MARZO";break;}
+case "4":{$mes_mostrar = "ABRIL";break;}
+case "5":{$mes_mostrar = "MAYO";break;}
+case "6":{$mes_mostrar = "JUNIO";break;}
+case "7":{$mes_mostrar = "JULIO";break;}
+case "8":{$mes_mostrar = "AGOSTO";break;}
+case "9":{$mes_mostrar = "SEPTIEMBRE";break;}
+case "10":{$mes_mostrar = "OCTUBRE";break;}
+case "11":{$mes_mostrar = "NOVIEMBRE";break;}
+case "12":{$mes_mostrar = "DICIEMBRE";break;}
+
+
+}
+
+$mes_pagar=$result4->fields["mes"];
+$anio_pagar=$result4->fields["anio"];
+
+$importe=$result4->fields["importe"];
+ $cobrador=$result4->fields["cobrador"];
+$nro_boleta=$result4->fields["nro_boleta"];
+
+  $nro_boleta11=$_POST[estudios.$nro_boleta];
+
+ ECHO $sql = "SELECT *  FROM `pagos` WHERE  `cod_socio` = '$cod_socio' and nro_boleta = $nro_boleta11";
+$result = $db->Execute($sql);
+
+
+$estado=$result->fields["estado"];
+
+
+
+if ($estado == "PENDIENTE"){
+ $sql = "UPDATE `pagos` SET `estado` = 'PAGADO',  `fecha_pago` = '$fecha_pago' , `cobrador` = '$cobrador' WHERE `cod_socio` = '$cod_socio' and nro_boleta = $nro_boleta11";
+$result = $db->Execute($sql);
+//$leyenda = "PAGO ACEPTADO";
+//include ("../../alertas/campo_informacion2.php");
+
+}else{
+
+$leyenda = "YA INGRESO ESA BOLETA";
+include ("../../alertas/campo_informacion2.php");
+exit;
+}
+
+$total_importe = $total_importe + $importe;
+
+
+?>
+    <td width="110" bgcolor="#FFCC00">  <div align="center" class="Estilo1 Estilo2"> <?php echo $mes_mostrar."/".$anio;?>  $<?php echo $importe;?></div></td>
+    <td width="38" bgcolor="#FFCC00"><div align="center">
+        </div></td>
+
+  <?php 
+
+if ($cont == 9){
+	$cont = 0;
+?><tr><?php 
+}
+
+
+
+$result4->MoveNext();
+	}
+
+?>
+<tr>
+  <td colspan="10" bgcolor="#CCCCCC"><div align="center">$<?php echo $total_importe;?> </div></td>
+  </tr>
+</table>
+</form>
+

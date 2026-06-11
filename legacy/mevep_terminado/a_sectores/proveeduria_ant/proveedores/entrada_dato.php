@@ -1,0 +1,217 @@
+<script language="javascript">
+function on_load()
+{
+document.getElementById("cuenta").focus();
+}
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				case "cuenta":
+				document.getElementById("denominacion").focus();
+				break;
+				case "denominacion":
+				document.getElementById("contacto").focus();
+				break;
+				case "contacto":
+				document.getElementById("domicilio").focus();
+				break;
+				case "domicilio":
+				document.getElementById("puerta").focus();
+				break;
+				case "puerta":
+				document.getElementById("referencia").focus();
+				break;
+				case "referencia":
+				document.getElementById("localidad").focus();
+				break;
+				case "localidad":
+				document.getElementById("cod_postal").focus();
+				break;
+				case "cod_postal":
+				document.getElementById("caracteristica_1").focus();
+				break;
+
+				case "caracteristica_1":
+				document.getElementById("telefono_1").focus();
+				break;
+				case "telefono_1":
+				document.getElementById("caracteristica_2").focus();
+				break;
+
+				case "caracteristica_2":
+				document.getElementById("telefono_2").focus();
+				break;
+				case "telefono_2":
+				document.getElementById("caracteristica_3").focus();
+				break;
+				case "caracteristica_3":
+				document.getElementById("telefono_3").focus();
+				break;
+				case "telefono_3":
+				document.getElementById("email").focus();
+				break;
+				case "email":
+				document.getElementById("cuit").focus();
+				break;
+				case "cuit":
+				document.getElementById("tipo_iva").focus();
+				break;
+				case "tipo_iva":
+				document.getElementById("ing_bruto").focus();
+				break;
+				case "ing_bruto":
+				document.getElementById("nro_ib").focus();
+				break;
+				case "nro_ib":
+				document.getElementById("pago_orden").focus();
+				break;
+				
+				case "pago_orden":
+				document.getElementById("observaciones").focus();
+				break;
+				case "observaciones":
+				document.getElementById("guardar").focus();
+				break;
+				
+		}
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+<?php $hoy = date("d/m/y");
+
+include ("../../../conexiones/config_pro.php");
+$sql="select * from proveedores ORDER BY cuenta DESC";
+$result = $db->Execute($sql);
+ $cuenta=($result->fields["cuenta"] + 1);
+?>
+<BODY background="../../../imagenes/logito.png" onload = "on_load ()">
+<FORM name="form" ACTION="guardar_proveedores.php" METHOD = "POST">
+<table width="850" border="0">
+    <tr align="center" bordercolor="#FFFFFF" bgcolor="#666666"> 
+      <td height="31" colspan="3"><font color="#FFFFFF" face="Arial, Helvetica, sans-serif"><strong>ALTA DE PROVEEDOR </strong></font></td>
+  </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#E1F2EF"> 
+      <td width="36%" bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Numero de Cuenta</font>
+      </div></td>
+      <td width="64%" colspan="2" bgcolor="#9FE1BB"><input type="text" name="cuenta" id="cuenta" value = "<?php echo $cuenta;?>" onKeyPress="return verif_caracter(this,event)" size="5" >        
+      <div align="right"></div></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#E1F2EF">
+      <td bgcolor="#A0A7F5"><div align="right"><font size="2" face="Arial, Helvetica, sans-serif">Raz&oacute;n social o Apellido y Nombre</font> </div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><input type="text" name="denominacion" id="denominacion"  size="25" onKeyPress="return verif_caracter(this,event)">      </td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#E1F2EF">
+      <td bgcolor="#A0A7F5"><div align="right"><font size="2" face="Arial, Helvetica, sans-serif">Nombre</font> <font color="#000000" size="2" face="Arial, Helvetica, sans-serif">del Contacto</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><input type="text" name="contacto" id="contacto"  size="25" onKeyPress="return verif_caracter(this,event)">        </td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#E1F2EF"> 
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Calle</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><input type="text" name="domicilio"  id="domicilio"  size="25" onKeyPress="return verif_caracter(this,event)">
+      <font size="2" face="Arial, Helvetica, sans-serif">Nro</font> <input type="text" name="puerta" id="puerta"  size="4"onKeyPress="return verif_caracter(this,event)"></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#E1F2EF"> 
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Referencia</font></div></td>
+      <td bgcolor="#9FE1BB"><input type="text" name="referencia" id="referencia"  size="35"onKeyPress="return verif_caracter(this,event)"></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#E1F2EF">
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Localidad</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><select name="localidad[]" id="localidad" onkeypress="return verif_caracter(this,event)">
+        <optgroup label="Capital">
+        <option value="Ciudad">Ciudad<font size="2"></font><font size="2"></font><font size="2"></font><font size="2"></font></option>
+        </optgroup>
+        <optgroup label="Guaymallén">
+        <option value ="Guaymallen">San Jose<font size="2"></font><font size="2"></font><font size="2"></font><font size="2"></font></option>
+        <option value ="Guaymallen">Dorrego<font size="2"></font><font size="2"></font><font size="2"></font><font size="2"></font></option>
+        <option value ="Guaymallen">Villa Nueva<font size="2"></font><font size="2"></font><font size="2"></font><font size="2"></font></option>
+        <option value ="Guaymallen">Pedro Molina<font size="2"></font><font size="2"></font><font size="2"></font><font size="2"></font></option>
+        <option value ="Guaymallen">Rodeo del Medio<font size="2"></font><font size="2"></font><font size="2"></font><font size="2"></font></option>
+        <option value ="Guaymallen">Rodeo de la Cruz<font size="2"></font><font size="2"></font><font size="2"></font><font size="2"></font></option>
+        </optgroup>
+        <optgroup label="Godoy Cruz">
+        <option value = "Godoy Cruz">Godoy Cruz<font size="2"></font><font size="2"></font><font size="2"></font><font size="2"></font></option>
+        </optgroup>
+        <optgroup label="Las Heras">
+        <option value = "Las Heras"> Las Heras<font size="2"></font><font size="2"></font><font size="2"></font><font size="2"></font></option>
+        </optgroup>
+      </select>
+      <font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Codigo Postal
+      <input type="text" name="cod_postal" id ="cod_postal" size="5" onKeyPress="return verif_caracter(this,event)">
+      </font></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#E1F2EF"> 
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Telefono(1)</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><input name="caracteristica_1" type="text" id="caracteristica_1" onKeyPress="return verif_caracter(this,event)" value="0261" size="7">
+        <input type="text" name="telefono_1" id="telefono_1" size="15" onKeyPress="return verif_caracter(this,event)">
+      <font size="2" face="Arial, Helvetica, sans-serif">      (Fijo)</font> </td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#E1F2EF"> 
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Telefono(2)</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB">        <input name="caracteristica_2" type="text" id="caracteristica_2" onKeyPress="return verif_caracter(this,event)" value="0261" size="7">       
+ <input type="text" name="telefono_2" id="telefono_2" size="15" onKeyPress="return verif_caracter(this,event)">
+ <font size="2" face="Arial, Helvetica, sans-serif">(Fijo) </font> <div align="right"></div>                  </td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#E1F2EF">
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Telefono(3)</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><input name="caracteristica_3" type="text" id="caracteristica_3" onKeyPress="return verif_caracter(this,event)" value="0261" size="7">   
+     <input type="text" name="telefono_3" id="telefono_3" size="15" onKeyPress="return verif_caracter(this,event)">
+        <font size="2" face="Arial, Helvetica, sans-serif">(Celular)
+        </font>        <div align="right"></div>
+      <div align="left"> </div></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#E1F2EF">
+      <td height="24" bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Email</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><input type="text" name="email" id="email" size="30" onKeyPress="return verif_caracter(this,event)"></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#666666">
+      <td height="24" colspan="3"><div align="right"></div>        
+      <div align="center"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif"><strong>INSCRIPCIONES</strong></font></div></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#E1F2EF">
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">N&ordm; Cuit</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><strong>
+        <input type="text" size ="15" name="cuit" id="cuit" onKeyPress="return verif_caracter(this,event)">
+        </strong><strong>
+         
+      </strong></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#E1F2EF">
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Tipo de IVA</font><strong> </strong></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><strong>
+        <select name="tipo_iva[]" tabindex="13"id="tipo_iva"onkeypress="return verif_caracter(this,event)">
+          <option value = "1">Responsable Inscripto </option>
+          <option value = "3">Monotributista</option>
+          <option value = "4">Exento </option>
+          <option value = "5">Consumidor Final </option>
+        </select>
+      </strong></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#E1F2EF">
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Pago a la orden de: </font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><strong>
+        <input type="text" size = "25" name="pago_orden" id="pago_orden" onKeyPress="return verif_caracter(this,event)">
+      </strong></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#E1F2EF">
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Observaciones</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><strong>
+        <input type="text" size = "25" name="observaciones" id="observaciones" onKeyPress="return verif_caracter(this,event)">
+      </strong></td>
+    </tr>
+  <tr bordercolor="#FFFFFF" bgcolor="#CCCCCC">
+    <td colspan="3"><div align="center">
+      <input type="Submit" name="Submit" value="GUARDAR" id = "guardar">
+    </div></td>
+  </tr>
+</table>

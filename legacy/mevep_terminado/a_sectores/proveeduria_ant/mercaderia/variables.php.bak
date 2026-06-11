@@ -1,0 +1,32 @@
+<?php
+include ("../../../conexiones/config_grabacion.php");
+$sql = "SELECT * FROM `mercaderia` WHERE `cod_merca` = $cod_merca";
+$result = $db_pro->Execute($sql);
+//tabla mercaderia
+$cod_merca=$result->fields["cod_merca"];
+$nombre=strtoupper($result->fields["nombre"]);
+$proveedor=$result->fields["proveedor"];
+$precio_actualizado=$result->fields["precio_actualizado"];
+$tipo_moneda=$result->fields["tipo_moneda"];
+$cod_tasa=$result->fields["cod_tasa"];
+
+switch ($tipo_moneda){
+	case "d":{$tipo = "DOLAR";BREAK;}
+	case "p":{$tipo = "PESOS";BREAK;}
+}
+
+$sql2="select * from tasas where cod_tasa = $cod_tasa";
+$result2 = $db_pro->Execute($sql2);
+$iva_normal=strtoupper($result2->fields["iva_normal"]);
+
+$por_iva = "Tasa: ".$cod_tasa. " - Porc.: ".$iva_normal;
+$por_iva1 = $cod_tasa. " - Porc.: ".$iva_normal;
+
+$sql="select * from proveedores where cuenta = $proveedor order by denominacion";
+$result = $db_pro->Execute($sql);
+
+$denominacion=strtoupper($result->fields["denominacion"]);
+
+
+?>
+

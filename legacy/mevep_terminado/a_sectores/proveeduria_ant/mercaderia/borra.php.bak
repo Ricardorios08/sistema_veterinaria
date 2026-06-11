@@ -1,0 +1,16 @@
+
+
+<?php
+
+include ("../../../conexiones/config_pro.php");
+
+$cod_merca = $_GET['cod_merca'];
+$SQL="Delete From mercaderia where codigo = $cod_merca";
+$db->Execute($SQL);
+
+$buscador_rapido = 2;
+$palabra = $a;
+$borrar = 1;
+//include ("buscar_mercaderia.php");
+echo "Mercaderia Eliminada";
+

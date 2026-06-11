@@ -1,0 +1,266 @@
+z<?php 
+include ("../../../conexiones/config_pro.php");
+
+$id=$_REQUEST["id"];
+$fecha = date("Y-m-d");
+
+ $tipo_fact=$_REQUEST["tipo_fact"];
+$cod_socio=$_REQUEST["cod_socio"];
+$cuit_socio=$_REQUEST["cuit_socio"];
+$descuento=$_REQUEST["descuento"];
+
+
+
+
+
+if (($tipo_fact == "A") and ($cod_socio == "")){
+$leyenda = "DEBE INGRESAR SOCIO";
+include ("../../../alertas/campo_informacion2.php");
+exit;
+}
+
+if (($tipo_fact == "A") and ($cuit_socio == "")){
+$leyenda = "DEBE INGRESAR CUIT";
+include ("../../../alertas/campo_informacion2.php");
+exit;
+}
+
+
+if (($tipo_fact == "B") and ($cod_socio == "")){
+$leyenda = "DEBE INGRESAR SOCIO";
+include ("../../../alertas/campo_informacion2.php");
+exit;
+}
+
+if (($tipo_fact == "B") and ($cod_socio != "")){
+$sql="select * from socios where cod_socio = $cod_socio";
+ $result = $db->Execute($sql);
+$cod_socio1=$result->fields["cod_socio"];
+
+if ($cod_socio1 == ""){
+$leyenda = "NO EXISTE SOCIO";
+include ("../../../alertas/campo_informacion2.php");
+exit;
+}
+
+}
+
+if ($tipo_fact == "A"){
+$sql="select * from socios where cod_socio = $cod_socio";
+ $result = $db->Execute($sql);
+  $apellido=$result->fields["apellido"];
+
+  if ($apellido == ""){
+$leyenda = "NO EXISTE SOCIO";
+include ("../../../alertas/campo_informacion2.php");
+EXIT;
+  }
+
+  $nombre=$result->fields["nombre"];
+  $domicilio=$result->fields["domicilio"];
+    $departamento=$result->fields["departamento"];
+
+echo $denominacion = $apellido." ".$nombre;
+
+include ("genera_ticket_a_socio.php");
+include ("guarda_a_socio.php");
+}
+
+
+
+if ($tipo_fact == "B"){
+$sql="select * from socios where cod_socio = $cod_socio";
+ $result = $db->Execute($sql);
+   $apellido=$result->fields["apellido"];
+   $nombre=$result->fields["nombre"];
+$denominacion = $apellido." ".$nombre;
+
+include ("genera_ticket_b_soc.php");
+include ("guarda_b_socio.php");
+}
+
+if ($tipo_fact == "BB"){
+ $denominacion_particular=$_REQUEST["denominacion_particular"];
+include ("genera_ticket_b.php");
+//include ("confirmar_stock.php");
+include ("guarda_b_particular.php");
+}
+
+if ($tipo_fact == "AA"){
+
+$denominacion_particular_A=$_REQUEST["denominacion_particular_A"];
+$domicilio_particular=$_REQUEST["domicilio_particular"];
+$localidad_particular=$_REQUEST["localidad_particular"];
+$cuit_particular=$_REQUEST["cuit_particular"];
+
+if ($denominacion_particular_A == ""){
+$leyenda = "NO INGRESO DENOMINACION";
+include ("../../../alertas/campo_informacion2.php");
+exit;
+}
+if ($domicilio_particular == ""){
+$leyenda = "NO INGRESO DOMICILIO";
+include ("../../../alertas/campo_informacion2.php");
+exit;
+}
+if ($localidad_particular == ""){
+$leyenda = "NO INGRESO LOCALIDAD";
+include ("../../../alertas/campo_informacion2.php");
+exit;
+}
+if ($cuit_particular == ""){
+$leyenda = "NO INGRESO CUIT RESPONSABLE INSCRIPTO";
+include ("../../../alertas/campo_informacion2.php");
+exit;
+}
+
+ $denominacion_particular_A;
+
+include ("genera_ticket_a.php");
+include ("guarda_a_particular.php");
+}
+
+
+
+
+
+exit;
+$id=$_REQUEST["id"];
+$fecha = date("Y-m-d");
+$denominacion=$_REQUEST["denominacion"];
+$domicilio=$_REQUEST["domicilio"];
+$puerta=$_REQUEST["puerta"];
+$localidad=$_REQUEST["localidad"];
+$caracteristica_1=$_REQUEST["caracteristica_1"];
+$telefono_1=$_REQUEST["telefono_1"];
+$caracteristica_3=$_REQUEST["caracteristica_3"];
+$telefono_3=$_REQUEST["telefono_3"];
+$email=$_REQUEST["email"];
+$cuit=$_REQUEST["cuit"];
+
+$ivas=$_REQUEST["iva"];
+for ($i=0;$i<count($ivas);$i++)    
+{     
+$iva = $ivas[$i];    
+}
+
+
+$tipo_pago=$_REQUEST["tipo_pago"];
+
+
+
+$cliente=$_REQUEST["clientes"];
+for ($i=0;$i<count($cliente);$i++)    
+{     
+$clientes = $cliente[$i];    
+}
+
+IF ($iva == ""){$iva = 3;}
+
+///// CASO CLIENTES
+if (($clientes == "") and ($denominacion == "")){$clientes = 1;}
+
+if ($clientes != '1'){
+if ($denominacion != ''){
+ $sql = "INSERT INTO `clientes` ( `cuenta` , `estado` , `denominacion` , `domicilio` , `puerta` , `referencia` , `cod_postal` , `localidad` , `caracteristica_1` , `telefono_1` , `caracteristica_2` , `telefono_2` , `caracteristica_3` , `telefono_3` , `email`, `cuit` , `tipo_iva`) VALUES ('$cuenta' , '$estado' , '$denominacion' , '$domicilio' , '$puerta' , '$referencia' , '$cod_postal' , '$localidad' , '$caracteristica_1' , '$telefono_1' , '$caracteristica_2' , '$telefono_2' , '$caracteristica_3' , '$telefono_3' , '$email', '$cuit' , '$iva' )";
+mysql_query($sql);
+}
+}
+
+
+
+
+
+   $sql="select * from clientes where cuenta = '$clientes'";
+  $result = $db->Execute($sql);
+
+$tipo_iva=$result->fields["tipo_iva"];
+$cuit=$result->fields["cuit"];
+
+switch ($tipo_iva){
+case "1":{$tipo_fact = "A";BREAK;}
+case "2":{$tipo_fact = "B";BREAK;}
+case "3":{$tipo_fact = "C";BREAK;}
+}
+
+
+
+
+
+///// CASO MERCADERIA
+
+
+$sql = "INSERT INTO `ventas_encabezado` (`tipo_fact`, `nro_factura`, `cod_operacion`, `tipo`, `nro_cliente`, `nro_cuenta`, `plan`, `operador`, `denominacion`, `fecha`, `bruto`, `descuento`, `neto_gravado`, `iva`, `retencion`, `neto`, `forma_pago`, `periodo`, `anio`, `tipo_iva`, `cheque`, `contado`, `afectacion`) VALUES ('$tipo_fact', '', '', '$tipo', '$clientes', '$clientes', '', '$id', '$denominacion', '$fecha', '', '', '', '', '', '', '$tipo_psgo', '', '', '$iva', '', '', '')";
+mysql_query($sql);
+
+$idgenerado = mysql_insert_id();
+
+
+
+  $sql="select * from `ventas1_deta_temp` where nro_factura = '$id' group by cod_mercaderia order by cod_mercaderia";
+  $result = $db->Execute($sql);
+
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+
+$cod_mercaderia=$result->fields["cod_mercaderia"];
+$descripcion=strtoupper($result->fields["descripcion"]);
+$presentacion=strtoupper($result->fields["presentacion"]);
+$cantidad=strtoupper($result->fields["cantidad"]);
+$precio_unitario=strtoupper($result->fields["precio_unitario"]);
+$total=strtoupper($result->fields["total"]);
+$iva_renglon=strtoupper($result->fields["iva_renglon"]);
+$cod_detalle=strtoupper($result->fields["cod_detalle"]);
+
+ $sql1="select sum(cantidad) as cantidad, sum(total) as total from `ventas1_deta_temp` where nro_factura = '$id' and cod_mercaderia = $cod_mercaderia";
+$result1 = $db->Execute($sql1);
+$cantidad=strtoupper($result1->fields["cantidad"]);
+$total=strtoupper($result1->fields["total"]);
+
+$total_pagar = $total_pagar + $total;
+
+
+
+
+$sql1="select * from existencias where cod_mercaderia = $cod_mercaderia";
+$result1 = $db->Execute($sql1);
+$cantidad_salida=strtoupper($result1->fields["cantidad_salida"]);
+
+
+
+
+$cantidad_a_guardar = $cantidad_salida + $cantidad;
+
+
+ $sql = "INSERT INTO `ventas_detalle` (`tipo_fact`, `nro_factura`, `cod_detalle`, `cod_mercaderia`, `descripcion`, `presentacion`, `lote`, `mes_lote`, `descuento`, `cantidad`, `precio_unitario`, `iva_unitario`, `neto_gravado_unitario`, `iva_unitario_total`, `total`) VALUES ('$tipo_fact', '$idgenerado', '', '$cod_mercaderia', '$descripcion', '$presentacion', '$lote', '$mes_lote', '$descuento', '$cantidad', '$precio_unitario', '$iva_unitario', '$neto_gravado_unitario', '$iva_unitario_total', '$total')";
+mysql_query($sql);
+
+
+ $sql   = "UPDATE `existencias` SET `cantidad_salida` = '$cantidad_a_guardar' WHERE cod_mercaderia = $cod_mercaderia";
+mysql_query($sql);
+
+  $sql   = "INSERT INTO `stock` ( `cod_mercaderia` , `fecha` ,  `tipo_fact` , `cod_movimiento` , `nro_comprobante` , `cantidad` , `precio_unitario` , `lote` , `mes_lote` , `anio_lote` , `cuenta` ,  `tipo_cuenta` ) VALUES ('$cod_mercaderia' , '$fecha' , '$tipo_fact' , '5' , '$idgenerado' , '$cantidad' , '$precio_unitario' , '$lote' , '$mes_lote' , '$anio_lote' , '$clientes' ,  '$tipo_cuenta')" ;
+mysql_query($sql);
+
+ 
+
+$result->MoveNext();
+	}
+
+
+
+ 
+$sql = "UPDATE `ventas_encabezado` SET `bruto` = '$total_pagar' , `neto` = '$total_pagar' WHERE `nro_factura` = $idgenerado";
+mysql_query($sql);
+
+ 
+ $sql = "DELETE FROM ventas1_deta_temp where nro_factura = $id";
+mysql_query($sql);
+
+
+$leyenda = "LOS DATOS SE HAN GUARDADO CORRECTAMENTE ";
+include ("../../../alertas/campo_informacion.php");
+
+?>
+

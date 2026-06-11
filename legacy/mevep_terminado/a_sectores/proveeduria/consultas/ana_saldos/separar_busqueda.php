@@ -1,0 +1,18 @@
+<?php 
+
+$busca = $_REQUEST['busca'];
+$buscador_rapido = $_REQUEST['buscador_rapido'];
+$ver= $_REQUEST['ver'];
+
+
+$opcione=$_POST["opciones"];
+	for ($i=0;$i<count($opcione);$i++)    
+	{     
+$opciones = $opcione[$i];    
+	}
+$opcion = $_REQUEST['opcion'];
+
+
+include ("ana_saldos.php");
+
+?>

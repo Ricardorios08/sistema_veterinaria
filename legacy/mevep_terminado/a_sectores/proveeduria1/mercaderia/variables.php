@@ -1,0 +1,49 @@
+<?php
+include ("../../../conexiones/config_pro.php");
+echo $sql = "SELECT * FROM `mercaderia` WHERE `cod_merca` = $cod_merca";
+$result = $db->Execute($sql);
+//tabla mercaderia
+$cod_merca=strtoupper($result->fields["cod_merca"]);
+$descripcion=strtoupper($result->fields["descripcion"]);
+$nombre=strtoupper($result->fields["nombre"]);
+$tipo=strtoupper($result->fields["tipo"]);
+
+switch ($tipo){
+	case "1": {//reactivos
+	$tipo_p = "Reactivos";
+	break;}
+
+		case "2": {//reactivos
+	$tipo_p = "Materiales";
+	break;}
+
+		case "3": {//reactivos
+	$tipo_p = "Equipamiento";
+	break;}
+}
+
+$tipo_p;
+
+$presentacion=strtoupper($result->fields["presentacion"]);
+$factorconver=strtoupper($result->fields["factorconver"]);
+$cadenafrio=strtoupper($result->fields["cadenafrio"]);
+$proveedor=strtoupper($result->fields["proveedor"]);
+$fabricante=strtoupper($result->fields["fabricante"]);
+$cod_tasa=strtoupper($result->fields["id_tasa"]);
+
+$sql2="select * from tasas where cod_tasa = $cod_tasa";
+$result2 = $db->Execute($sql2);
+$iva_normal=strtoupper($result2->fields["iva_normal"]);
+
+$por_iva = "Tasa: ".$cod_tasa. " - Porc.: ".$iva_normal;
+
+$margendif=strtoupper($result->fields["margendif"]);
+
+$sql="select * from proveedores where cuenta = $proveedor order by denominacion";
+$result = $db->Execute($sql);
+
+$denominacion=$result->fields["denominacion"];
+
+
+?>
+

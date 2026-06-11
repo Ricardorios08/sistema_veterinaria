@@ -1,0 +1,16 @@
+<body onUnload="window.opener.openedImprimir=0;" onLoad="window.print(); window.close();">
+<?php
+global $buscador_rapido;
+include ("../../../../conexiones/config.inc.php");
+if ($borrar != 1){
+$buscador_rapido=$_POST["buscador_rapido"];
+}
+
+$hoy = date("d/m/Y");
+
+
+$B = 1;
+$cont = 0;
+$pagina = 1;
+echo "--".$palabra=$_POST["busca"];
+

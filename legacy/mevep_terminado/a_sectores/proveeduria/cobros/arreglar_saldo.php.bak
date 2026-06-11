@@ -1,0 +1,22 @@
+<?
+include ("../../../conexiones/config_grabacion.php");
+$sql="select * from factura";
+$result = $db_fa->Execute($sql);
+
+ if (!$result) die("fallo".$db_fa->ErrorMsg());
+  while (!$result->EOF) {
+
+
+$nro_factura=ucwords($result->fields["nro_factura"]);
+$estado=ucwords($result->fields["estado"]);
+$tipo_fact=ucwords($result->fields["tipo_fact"]);
+$total=$result->fields["total"];
+if ($total != 0.00){
+echo $sql1 = "UPDATE `factura` SET `saldo` = '$total' WHERE `nro_factura` = '$nro_factura' and tipo_fact = '$tipo_fact'";
+//$result1 = $db_fa->Execute($sql1);
+}
+
+echo "<br>";
+$result->MoveNext();
+	}
+?>

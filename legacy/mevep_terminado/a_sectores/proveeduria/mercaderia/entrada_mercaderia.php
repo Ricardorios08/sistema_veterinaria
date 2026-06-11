@@ -1,0 +1,218 @@
+<script language="javascript">
+function on_load()
+{
+document.getElementById("cod_merca").focus();
+document.getElementById("cod_merca").select();
+document.getElementById("cod_merca").style.backgroundColor = "#CCFFCC";
+}
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				case "cod_merca":
+				document.getElementById("nombre").focus();
+				document.getElementById("nombre").select();
+				document.getElementById("nombre").style.backgroundColor = "#CCFFCC";
+				break;
+
+	case "nombre":
+				document.getElementById("descripcion").focus();
+				document.getElementById("descripcion").select();
+				document.getElementById("descripcion").style.backgroundColor = "#CCFFCC";
+				break;
+
+				case "descripcion":
+				document.getElementById("proveedor").focus();
+				document.getElementById("proveedor").select();
+				document.getElementById("proveedor").style.backgroundColor = "#CCFFCC";
+				break;
+
+				case "proveedor":
+				document.getElementById("d").focus();
+				document.getElementById("d").select();
+				document.getElementById("d").style.backgroundColor = "#CCFFCC";
+				break;
+
+			 
+
+				case "precio_actualizado":
+				document.getElementById("cod_tasa").focus();
+				document.getElementById("cod_tasa").select();
+				document.getElementById("cod_tasa").style.backgroundColor = "#CCFFCC";
+				break;
+
+				
+				
+		}
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+
+<BODY background="../../../imagenes/logito.png" onload = "on_load ()">
+
+<FORM name="form" ACTION="guardar_mercaderia.php" METHOD = "POST">
+<table width="850" border="0" cellspacing="0">
+    <tr align="center" bordercolor="#FFFFFF" bgcolor="#666666"> 
+      <td height="34" colspan="3"><font color="#FFFFFF" face="Arial, Helvetica, sans-serif"><strong>
+        <?php $hoy = date("d/m/y");
+
+include ("../../../conexiones/config_pro.php");
+ $sql="select * from cod_barra_propio GROUP BY cod_barra ORDER BY cod_barra DESC";
+$result = $db->Execute($sql);
+//$cod_merca=($result->fields["cod_barra"] + 1);
+?>
+      ALTA DE MERCADERIA </strong></font></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#EEEEEE"> 
+      <td width="27%" bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Cod. Barra </font></div></td>
+      <td width="40%" bgcolor="#9FE1BB"><font size="2" face="Arial, Helvetica, sans-serif">
+      <input type="text" name="cod_merca" id="cod_merca" onKeyPress="return verif_caracter(this,event)" size="30" value = "<?php  $cod_merca;?>"> 
+      </font><font size="2" face="Arial, Helvetica, sans-serif">&nbsp; </font><font color="#006633" size="2" face="Arial, Helvetica, sans-serif">&nbsp;
+      
+      </font><font size="2" face="Arial, Helvetica, sans-serif">&nbsp;     </font>      
+      <div align="right"></div></td>
+      <td width="40%" bgcolor="#9FE1BB"><div align="center"><font color="#006633" size="2" face="Arial, Helvetica, sans-serif">
+        </font><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Fecha</font>:<font color="#006633" size="2" face="Arial, Helvetica, sans-serif">
+        <input type="text" name="fecha" id="fecha" onKeyPress="return verif_caracter(this,event)" size="8" value="<?php echo $hoy;?>">
+      </font></div></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC"> 
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Nombre</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><font size="2" face="Arial, Helvetica, sans-serif">
+        <input type="text" name="nombre"  id="nombre"  size="100" onKeyPress="return verif_caracter(this,event)">
+</font></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Descripcion</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><font size="2" face="Arial, Helvetica, sans-serif">
+        <input type="text" name="descripcion"  id="descripcion"  size="100" onKeyPress="return verif_caracter(this,event)">
+      </font></td>
+    </tr>
+    
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC"> 
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Proveedor</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB">
+      <?php 
+
+$sql="select * from proveedores order by denominacion";
+$result = $db->Execute($sql);
+echo "<select name=proveedor[] size=1 id =proveedor onKeyPress='return verif_caracter(this,event)'>";
+echo"<option value=''>seleccione</option>";
+
+if (!$result) die("fallo".$db->ErrorMsg());
+while (!$result->EOF) {
+$cod=$result->fields["cuenta"];
+$a1=strtoupper($result->fields["denominacion"]);
+echo"<option value=$cod>$a1</option>";
+$result->MoveNext();
+	}
+echo"</select>";
+?></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Nuevo proveedor</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><font size="2" face="Arial, Helvetica, sans-serif">
+        <input type="text" name="nuevo_proveedor"  id="nuevo_proveedor"  size="80" onKeyPress="return verif_caracter(this,event)">
+      </font></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Categoria</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB">
+	  
+	  <?php 
+
+ $sql="select * from categoria order by categoria";
+$result = $db->Execute($sql);
+echo "<select name=categoria[] size=1 id =categoria onKeyPress='return verif_caracter(this,event)'>";
+echo"<option value=''>seleccione</option>";
+
+if (!$result) die("fallo".$db->ErrorMsg());
+while (!$result->EOF) {
+$cod=$result->fields["cod_categoria"];
+$a1=strtoupper($result->fields["categoria"]);
+echo"<option value=$cod>$a1</option>";
+$result->MoveNext();
+	}
+echo"</select>";
+?></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Nueva Categoria</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><font size="2" face="Arial, Helvetica, sans-serif">
+        <input type="text" name="nueva_categoria"  id="nueva_categoria"  size="80" onKeyPress="return verif_caracter(this,event)">
+      </font></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Marca</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><?php 
+
+ $sql="select * from marca1 order by marca";
+$result = $db->Execute($sql);
+echo "<select name=marca[] size=1 id =marca onKeyPress='return verif_caracter(this,event)'>";
+echo"<option value=''>seleccione</option>";
+
+if (!$result) die("fallo".$db->ErrorMsg());
+while (!$result->EOF) {
+$cod=$result->fields["cod_marca"];
+$a1=strtoupper($result->fields["marca"]);
+echo"<option value=$cod>$a1</option>";
+$result->MoveNext();
+	}
+echo"</select>";
+?></td>
+    </tr>
+    
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Nueva marca</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><font size="2" face="Arial, Helvetica, sans-serif">
+        <input type="text" name="nueva_marca"  id="nueva_marca"  size="80" onKeyPress="return verif_caracter(this,event)">
+      </font></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Precio </font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB">
+        <input type="text" name="precio_actualizado" id ="precio_actualizado" size="5" onKeyPress="return verif_caracter(this,event)"></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Tasa</font></div></td>
+      <td colspan="2" bgcolor="#9FE1BB"><?php 
+
+include ("../../../conexiones/config_pro.php");
+$sql = "SELECT * FROM `tasas`";
+$result = $db->Execute($sql);
+
+echo "<select name=plan[] size=1 id =cod_tasa  onKeyPress='return verif_caracter(this,event)'>";
+
+
+if (!$result) die("fallo".$db->ErrorMsg());
+while (!$result->EOF) {
+$cod_tasa=$result->fields["cod_tasa"];
+$tasa=strtoupper($result->fields["iva_normal"]);
+$iva_recargo=$result->fields["iva_recargo"];
+echo"<option value=$cod_tasa>$cod_tasa - Particular: $iva_recargo Desc. Socio: $tasa </option>";
+$result->MoveNext();
+	}
+?>
+            <?php 
+echo"</select>";
+?></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td colspan="3" bgcolor="#666666"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif">
+          <input type="Submit" name="guardar" id= "guardar4" value="GUARDAR MERCADERIA" target = "arriba">
+      </font></div></td>
+    </tr>
+</table>
+ 
+</form>

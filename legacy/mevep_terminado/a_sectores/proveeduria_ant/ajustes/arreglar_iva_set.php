@@ -1,0 +1,29 @@
+<?include ("../../../conexiones/config_pro.php");
+
+include("../../../conexiones/config_pro.php");
+$sql2 = "SELECT * FROM `ventas_encabezado` where fecha between '2008-09-01' AND '2008-10-16' and ((cod_operacion = '1') or (cod_operacion = '3')) and tipo_fact = 'B'" ;
+$result2 = $db->Execute($sql2);
+
+if (!$result2) die("fallo".$db->ErrorMsg());
+
+ while (!$result2->EOF) {
+
+echo $nro_factura=strtoupper($result2->fields["nro_factura"]);
+$neto=strtoupper($result2->fields["neto"]);
+
+echo " - ";
+echo $neto_gravado = round(($neto / 1.21),2);
+echo " - ";
+echo $iva= $neto - $neto_gravado;
+
+
+ECHO $sql = "UPDATE `ventas_encabezado` SET  `neto_gravado` = '$neto_gravado' , `iva` = '$iva' WHERE `tipo_fact` = 'B' AND `nro_factura` = '$nro_factura'";
+mysql_query($sql);
+echo "<br>";
+	 $result2->MoveNext();
+		}
+
+
+
+
+

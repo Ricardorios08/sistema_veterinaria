@@ -1,0 +1,65 @@
+ <?php 
+ 
+
+include ("../../../conexiones/config_pro.php");
+
+  $sql="select * from tasas order by cod_tasa";
+ $result = $db->Execute($sql);
+
+
+
+ ?>
+
+
+
+<table width="850" border="0">
+      
+      <tr bgcolor="#000099">
+        <th width="92" scope="row"><div align="center"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">Tasa</font></div></th>
+        <th width="283"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">SOCIOS</font></th>
+        <th width="354"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">PARTICULARES</font></th>
+        <th width="59"><div align="center"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">Modificar</font></div></th>
+        <th width="40"><div align="center"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">Borrar</font></div></th>
+      </tr>
+
+<?php 
+	  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+	
+$cod_tasa=strtoupper($result->fields["cod_tasa"]);
+$iva_normal=strtoupper($result->fields["iva_normal"]);
+$iva_recargo=strtoupper($result->fields["iva_recargo"]);
+$iva_especial=strtoupper($result->fields["iva_especial"]);
+$percepcion_dgr=strtoupper($result->fields["percepcion_dgr"]);
+$multa_dgr=strtoupper($result->fields["multa_dgr"]);
+$tasa_ig=strtoupper($result->fields["tasa_ig"]);
+
+
+if ($iva_normal == 0.00){$iva_normal = "-";}
+if ($iva_recargo == 0.00){$iva_recargo = "-";}
+if ($iva_especial == 0.00){$iva_especial = "-";}
+if ($percepcion_dgr == 0.00){$percepcion_dgr = "-";}
+if ($multa_dgr == 0.00){$multa_dgr = "-";}
+if ($tasa_ig == 0.00){$tasa_ig = "-";}
+
+
+
+?>
+      <tr bgcolor="#E8DCFC">
+        <td bgcolor="#FFFFFF" scope="row"><div align="center"><?php print("$cod_tasa");?>
+          </div>
+        <div align="center"></div></td>
+        <td bgcolor="#FFFFFF"><div align="center"><?php print("$iva_normal");?>
+        </div></td>
+        <td bgcolor="#FFFFFF"><div align="center"><?php print("$iva_recargo");?></div></td>
+        <td bgcolor="#FFFFFF"><div align="center"><a href="modificar.php?id=<?php print("$cod_tasa");?>"><IMG SRC="../../../imagenes/office/027.ico" alt="Modificar" border = "0"></a></div></td>
+        <td bgcolor="#FFFFFF"><div align="center"><a href="borra.php?id=<?php print("$cod_tasa");?>"><IMG SRC="../../../imagenes/office/1047.ico" alt="Eliminar" border = "0"></a></div></td>
+      </tr>
+
+
+	  <?php 
+	  
+	  $result->MoveNext();}?>
+    </table>
+	

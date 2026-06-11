@@ -1,0 +1,29 @@
+ <?php
+include ("../../../conexiones/config.inc.php");
+
+
+$a1_10=$_POST["a1_10"];
+$a11_20=$_POST["a11_20"];
+$a21_31=$_POST["a21_31"];
+$deuda=$_POST["deuda"];
+
+ 
+	
+      $sql11="select *  from plan_cobrador order by cod_plan desc";
+$result11 = $db->Execute($sql11);
+
+$cod_plan=$result11->fields["cod_plan"]+1;
+
+ 
+
+
+echo $sql = "INSERT INTO plan_cobrador ( `cod_plan` , `1_10` , `11_20` , `21_31`  ,  `deuda` ) VALUES ( '$cod_plan' , '$a1_10' , '$a11_20' , '$a21_31' , '$deuda')";
+mysql_query($sql);
+
+
+$leyenda = "LOS DATOS HAN SIDO GUARDADOS EN EL SISTEMA";
+include ("../../../alertas/campo_informacion.php");
+	
+
+?>
+

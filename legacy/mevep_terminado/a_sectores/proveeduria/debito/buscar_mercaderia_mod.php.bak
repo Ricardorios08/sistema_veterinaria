@@ -1,0 +1,103 @@
+<?php
+
+echo $moneda;
+
+global $buscador_rapido;
+
+if ($borrar != 1){
+$buscador_rapido=$_POST["buscador_rapido"];
+}
+
+$hoy = date("d/m/Y");
+ include("../../conexiones/config_grabacion.php");
+
+
+$B = 1;
+$palabra=$_POST["busca"];
+
+if ($palabra == ""){
+$sql="select * from debito order by fecha_ingreso";
+}else{
+$sql="select * from debito where cod_mevep like '%$palabra%' or  nombre like '%$palabra%' or documento like '%$palabra%'";
+}
+$result = $db_pro->Execute($sql);
+
+?><body background="../..//imagenes/logito.png">
+<table width="850" border="0">
+  <tr bordercolor="#FFFFCC" bgcolor="#666666">
+    <td colspan="14"><div align="center"><font color="#FFFFFF" face="Arial, Helvetica, sans-serif">LISTADO DE DEBITOS . Emitido el <?php echo $hoy;?> </font></div></td>
+  </tr>
+  <tr bordercolor="#FFFFFF" bgcolor="#A0A7F5">
+ 
+
+
+    <td width="11%"><div align="center"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">Nº MEVEP</font></div></td>
+    <td width="43%"><div align="center"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">NOMBRE</font></div></td>
+
+<td width="5%"><div align="center"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">DOCUMENTO</font></div></td>
+<td width="10%"><div align="center"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">CBU</font></div></td>
+<td width="12%"><div align="center"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">MONTO A DESCONTAR</font></div></td>
+<td width="6%"><div align="center"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">MOD </font></div></td>
+ <td width="7%"><div align="center"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">BORRAR </font></div></td>
+
+  </tr>
+ 
+ 
+ <?php 
+
+
+
+
+
+ 
+  if (!$result) die("fallo".$db_pro->ErrorMsg());
+  while (!$result->EOF) {
+
+$cont = $cont + 1;
+$cod_mevep=$result->fields["cod_mevep"];
+$cod_operacion=$result->fields["cod_operacion"];
+
+$sql1="select * from socios where cod_socio = $cod_mevep";
+$result1 = $db_pro->Execute($sql1);
+
+$apellido=strtoupper($result1->fields["apellido"]);
+$nombre=strtoupper($result1->fields["nombre"]);
+$documento=strtoupper($result1->fields["documento"]);
+
+$nombre = $apellido.", ".$nombre;
+
+
+$cbu=strtoupper($result->fields["cbu"]);
+$monto_descontar=strtoupper($result->fields["monto_descontar"]);
+
+$total = $total + $monto_descontar;
+
+?>    <tr><td bgcolor="#9FE1BB"><div align="left"><font size="2" face="Arial, Helvetica, sans-serif"><?php print("$cod_mevep");?></font></div></td>
+<td bgcolor="#9FE1BB"><div align="left"><font size="1" face="Arial, Helvetica, sans-serif"><?php print("$nombre");?></font></div></td>
+<td bgcolor="#9FE1BB"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><?php print("$documento");?></font></div></td>
+<td bgcolor="#9FE1BB"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><?php ECHO $cbu;?></font></div></td>
+<td bgcolor="#9FE1BB"><div align="right"><font size="2" face="Arial, Helvetica, sans-serif"><?php ECHO number_format($monto_descontar,2);?></font></div></td>
+ <td bordercolor="#E8DCFC" bgcolor="#9FE1BB"><div align="center"><font size="1" face="Arial, Helvetica, sans-serif"><a href="debito/modificar_mercaderia.php?cod_operacion=<?php print("$cod_operacion");?>"><img src="../../imagenes/office/005.ico" alt="Eliminar" border = "0"></a></font></div></td>
+<td bordercolor="#E8DCFC" bgcolor="#9FE1BB"><div align="center"><font size="1" face="Arial, Helvetica, sans-serif"><a href="debito/borra.php?cod_operacion=<?php print("$cod_operacion");?>"><img src="../../imagenes/office/1047.ico" alt="Ficha" border = "0"></a></font></div></td>
+  </tr>
+ 
+  <?php 
+
+$result->MoveNext();
+	}
+
+?>
+
+<tr>
+   <td colspan="7" bgcolor="#9FE1BB"><hr noshade></td>
+  </tr>
+ <tr>
+   <td bgcolor="#9FE1BB">Cantidad</td>
+   <td bgcolor="#9FE1BB"><font size="1" face="Arial, Helvetica, sans-serif"><?php print("$cantidad");?></font></td>
+   <td bgcolor="#9FE1BB">&nbsp;</td>
+   <td bgcolor="#9FE1BB">&nbsp;</td>
+   <td bgcolor="#9FE1BB"><div align="right"><font size="2" face="Arial, Helvetica, sans-serif"><?php ECHO number_format($total,2);?></font></div></td>
+   <td bordercolor="#E8DCFC" bgcolor="#9FE1BB">&nbsp;</td>
+   <td bordercolor="#E8DCFC" bgcolor="#9FE1BB">&nbsp;</td>
+ </tr>
+</table>

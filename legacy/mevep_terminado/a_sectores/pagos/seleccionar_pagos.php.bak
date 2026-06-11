@@ -1,0 +1,40 @@
+<?php 
+
+$anio=$_POST["anio"];
+$cod_socio=$_POST["cod_socio"];
+$boleta=$_POST["boleta"];
+echo "---".$pago=$_POST["pago"];
+
+$me=$_POST["mes"];
+	for ($i=0;$i<count($me);$i++)    
+	{     
+	$mes = $me[$i];    
+	}
+
+$cobrado=$_POST["cobrador"];
+	for ($i=0;$i<count($cobrado);$i++)    
+	{     
+	$cobrador = $cobrado[$i];    
+	}
+	
+
+if ($boleta == ""){
+
+if (($cobrador == "0") and ($cod_socio == "")){
+include ("cobrador_todos.php");
+exit;
+}
+
+
+
+if ($cod_socio != ""){
+include ("cuotas_socios.php");
+}elseif (($mes != "") and ($anio != "") and ($cobrador == "")){
+include ("cuotas_mes.php");
+}elseif (($mes != "") and ($anio != "") and ($cobrador != "")){
+include ("cuotas_cobrador.php");
+}
+}else{
+
+include ("cuotas_boleta.php");
+}

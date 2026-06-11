@@ -1,0 +1,37 @@
+<?php
+
+include ("../../conexiones/config.inc.php");
+
+
+
+	$nro_boleta=$_POST["nro_boleta"];
+ 
+
+ 
+
+	$cobrado=$_POST["cobrador"];
+	for ($i=0;$i<count($cobrado);$i++)    
+	{     
+	$cobrador = $cobrado[$i];    
+	}
+
+
+	if ($cobrador == ""){
+echo $sql="select * from pagos where nro_boleta = $nro_boleta";
+$result = $db->Execute($sql);
+$cobrador=$result->fields["cobrador"];
+
+	}
+
+
+
+echo $sql = "UPDATE `pagos` SET `cobrador` = '$cobrador' WHERE `nro_boleta` = '$nro_boleta'";
+//mysql_query($sql);
+
+
+$leyenda = "LOS DATOS HAN SIDO MODIFICADOS EN EL SISTEMA";
+include ("../../alertas/campo_informacion.php");
+	
+
+?>
+

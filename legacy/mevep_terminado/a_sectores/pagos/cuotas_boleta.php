@@ -1,0 +1,114 @@
+<!-- <body onUnload="window.opener.openedImprimir=0;" onLoad="window.print(); window.close();"> -->
+<style type="text/css">
+<!--
+.Estilo3 {font-family: "Trebuchet MS"}
+.Estilo4 {font-size: 12px}
+.Estilo5 {font-family: "Trebuchet MS"; font-size: 12px; }
+.Estilo6 {font-size: 24px}
+-->
+</style>
+
+
+<?php
+
+include ("../../conexiones/config.inc.php");
+$hoy = date("d/m/y");
+
+ 
+
+
+ $sql1="select * from pagos where nro_boleta  = $boleta";
+$result1 = $db->Execute($sql1);
+
+ 
+
+
+
+$cod_socio=strtoupper($result1->fields["cod_socio"]);
+$fecha_generacion=strtoupper($result1->fields["fecha_generacion"]);
+$mes=strtoupper($result1->fields["mes"]);
+$anio=strtoupper($result1->fields["anio"]);
+$importe=strtoupper($result1->fields["importe"]);
+$cobrador=strtoupper($result1->fields["cobrador"]);
+$estado=strtoupper($result1->fields["estado"]);
+$observaciones=strtoupper($result1->fields["observaciones"]);
+$fecha_pago=strtoupper($result1->fields["fecha_pago"]);
+
+  $sql11="select *  from cobradores where cod_cobrador = $cobrador";
+$result11 = $db->Execute($sql11);
+
+$nombre_cobrador=strtoupper($result11->fields["nombre_cobrador"]);
+
+$cobrador = $cobrador." - ".$nombre_cobrador;
+
+
+
+
+  $sql="select * from socios where cod_socio = $cod_socio";
+ $result = $db->Execute($sql);
+	
+$cod_socio=$result->fields["cod_socio"];
+$apellido=strtoupper($result->fields["apellido"]);
+$nombre=strtoupper($result->fields["nombre"]);
+
+
+	
+?>
+<form action="modificar_cobrador.php" method="post">
+
+
+ <table width="927" border="0" cellspacing="0">
+      <tr bgcolor="#CCCCCC">
+        <td colspan="7" bgcolor="#EDEDED"><div align="right"><span class="Estilo3 Estilo6">BOLETA N&deg;</span><span class="Estilo3 Estilo6"><strong><font face="Trebuchet MS"><?echo $boleta;?></font></strong></span></div></td>
+      </tr>
+      <tr bgcolor="#CCCCCC">
+        <td colspan="3" bgcolor="#EDEDED"><div align="right"><span class="Estilo3 Estilo6">SOCIO  N&deg;</span></div></td>
+        <td colspan="4" bgcolor="#EDEDED"><span class="Estilo3 Estilo6"><strong><font face="Trebuchet MS"><?echo $cod_socio;?></font></strong>-<strong><font face="Trebuchet MS"><?echo $apellido;?>, <?echo $nombre;?></font></strong></span></td>
+      </tr>
+      <tr bgcolor="#CCCCCC">
+        <td width="161"><div align="center" class="Estilo3 Estilo4">FECHA CREACION </div></td>
+        <td width="78"><div align="center" class="Estilo5">MES</div></td>
+        <td width="91"><div align="center" class="Estilo5">A&Ntilde;O</div></td>
+        <td width="102"><div align="center" class="Estilo5">IMPORTE</div></td>
+        <td width="136"><div align="center" class="Estilo5">ESTADO</div></td>
+        <td width="234"><div align="center" class="Estilo5">COBRADOR</div></td>
+        <td width="111"><div align="center" class="Estilo5">FECHA PAGO </div></td>
+      </tr>
+
+
+
+
+      <tr>
+        <td bgcolor="#CBD3FE"><div align="center"><strong><font size="2" face="Trebuchet MS"><?echo $fecha_generacion;?></font></strong></div></td>
+        <td bgcolor="#CBD3FE"><div align="center"><strong><font size="2" face="Trebuchet MS"><?echo $mes;?></font></strong></div></td>
+        <td bgcolor="#CBD3FE"><div align="center"><strong><font size="2" face="Trebuchet MS"><?echo $anio;?></font></strong></div></td>
+        <td bgcolor="#CBD3FE"><div align="right"><strong><font size="2" face="Trebuchet MS"><?echo $importe;?></font></strong></div></td>
+        <td bgcolor="#CBD3FE"><div align="center"><strong><font size="2" face="Trebuchet MS"><?echo $estado;?></font></strong></div></td>
+        <td bgcolor="#CBD3FE"><div align="center"><strong><font size="2" face="Trebuchet MS"><select name="cobrador[]" id="select2" onkeypress="return verif_caracter(this,event)">
+          <optgroup label = "Opcion Seleccionada">
+          <option value selected = "<?php print("$cobrador");?>"><font color="#000000" size="2"><?php print("$cobrador1");?></font></option>
+          </optgroup>
+          <optgroup label = "Seleccione">
+   <option value="10">LOCAL</option>
+        <option value="11">HECTOR</option>
+        <option value="12">JORGE</option>
+        <option value="13">GUSTAVO</option>
+        <option value="14">RICARDO</option>
+        </select>
+        
+        
+        </font></strong></div></td>
+        <td bgcolor="#CBD3FE"><div align="center"><strong><font size="2" face="Trebuchet MS"><?echo $fecha_pago;?></font></strong></div></td>
+      </tr>
+      <tr>
+        <td height="45" colspan="7" bgcolor="#CBD3FE"><label>
+          <div align="center">
+           <input type="hidden" name="nro_boleta" value="<?php echo $boleta;?>">
+            <input type="submit" name="Submit" value="GUARDAR MODIFICACION">
+            </div>
+        </label></td>
+        </tr>
+    </table>
+ </td>
+
+</form>

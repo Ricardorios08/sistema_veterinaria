@@ -1,0 +1,223 @@
+<style>
+#calendar { font-family:Arial; font-size:12px; } 
+#calendar caption { text-align:left; padding:5px 40px; background-color:#003366; color:#fff; font-weight:bold; }
+#calendar th { background-color:#006699; color:#fff; width:40px; }
+#calendar td { text-align:right; padding:2px 5px; background-color:silver; }
+#calendar .hoy { background-color:green; }
+</style>
+<link href="../../menus.css" rel="stylesheet" type="text/css" />
+
+
+<script language="javascript">
+function on_load()
+{
+document.getElementById("apellido").focus();
+}
+
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				case "apellido":
+				document.getElementById("nombre").focus();
+				break;
+
+				case "nombre":
+				document.getElementById("nro_documento").focus();
+				break;
+				case "nro_documento":
+				document.getElementById("domicilio").focus();
+				break;
+			
+
+				case "domicilio":
+				document.getElementById("telefono").focus();
+				break;
+				case "telefono":
+				document.getElementById("celular").focus();
+				break;
+				case "celular":
+				document.getElementById("dia").focus();
+				break;
+				case "dia":
+				document.getElementById("mes").focus();
+				break;
+				case "mes":
+				document.getElementById("anio").focus();
+				break;
+				case "anio":
+				document.getElementById("GUARDAR").focus();
+				break;
+
+				
+
+
+				
+		}
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+
+<style type="text/css">
+<!--
+.Estilo25 {font-family: "Trebuchet MS"}
+.Estilo45 {font-family: "Trebuchet MS"; font-size: 12px; }
+.Estilo46 {font-size: 12px}
+-->
+</style>
+<BODY onload = "on_load()">
+
+<?php
+
+include ("../../conexiones/config.inc.php");
+$cod_socio=$_POST["cod_socio"];
+
+
+if ($bande != 1){
+$mes1=$_POST["mes"];
+$anio1=$_POST["anio"];
+
+
+}
+
+
+
+ $sql="select * from socios where cod_socio = $cod_socio";
+ $result = $db->Execute($sql);
+
+	
+$cod_socio=$result->fields["cod_socio"];
+$apellido1=strtoupper($result->fields["apellido"]);
+$nombre1=strtoupper($result->fields["nombre"]);
+
+
+$nombre_socio = $apellido1." ".$nombre1;
+
+$sql1="select * from animal where cod_socio = $cod_socio";
+$result1 = $db->Execute($sql1);
+
+$nombre_mascota=strtoupper($result1->fields["nombre"]);
+$especie=strtoupper($result1->fields["especie"]);
+$raza=strtoupper($result1->fields["raza"]);
+$pelaje=strtoupper($result1->fields["pelaje"]);
+$tamanio=strtoupper($result1->fields["tamanio"]);
+$color=strtoupper($result1->fields["color"]);
+$sexo_mascota=strtoupper($result1->fields["sexo"]);
+$fecha_nac=strtoupper($result1->fields["fecha_nac"]);
+$cod_animal=strtoupper($result1->fields["cod_animal"]);
+
+
+
+
+
+$profesionale=$_POST["profesionales"];
+	for ($i=0;$i<count($profesionale);$i++)    
+	{     
+	$profesionales = $profesionale[$i];    
+	}
+
+
+   $sql2="select * from profesionales where nro_profesional = '$profesionales'";
+$result2 = $db->Execute($sql2);
+ $apellido=$result2->fields["apellido"];
+ $nombre=$result2->fields["nombre"];
+
+$especialidad=$result2->fields["especialidad"];
+$sexo=$result2->fields["sexo"];
+$fecha_nacimiento=$result2->fields["fecha_nacimiento"];
+$domicilio=$result2->fields["domicilio"];
+$localidad=$result2->fields["localidad"];
+$telefono=$result2->fields["telefono"];
+$celular=$result2->fields["celular"];
+$mail=$result2->fields["mail"];
+$lunes=$result2->fields["lunes"];
+$martes=$result2->fields["martes"];
+$miercoles=$result2->fields["miercoles"];
+$jueves=$result2->fields["jueves"];
+$viernes=$result2->fields["viernes"];
+$sabado=$result2->fields["sabado"];
+$duracion_consulta=$result2->fields["duracion_consulta"];
+$espacio_entre_turnos=$result2->fields["espacio_entre_turnos"];
+$cantidad_turnos_diarios=$result2->fields["cantidad_turnos_diarios"];
+$turno=$result2->fields["turno"];
+$horario_turno_manana=$result2->fields["horario_turno_manana"];
+$horario_turno_tarde=$result2->fields["horario_turno_tarde"];
+$tipo_horario=$result2->fields["tipo_horario"];
+
+
+ $dia = date("l");
+  	
+if ($lunes == 1){$lunes = "Lunes";}else{$lunes = "";}
+if ($martes == 1){$martes = "Martes";}else{$martes = "";}
+if ($miercoles == 1){$miercoles = "Miercoles";}else{$miercoles = "";}
+if ($jueves == 1){$jueves = "Jueves";}else{$jueves = "";}
+if ($viernes == 1){$viernes = "Viernes";}else{$viernes = "";}
+if ($sabado == 1){$sabado = "Sabado";}else{$sabado = "";}
+ 
+
+$month=$mes1; 
+$year="20".$anio1;
+$diaActual=date("j");
+ 
+
+$diaSemana=date("w",mktime(0,0,0,$month,1,$year))+7; # Obtenemos el ultimo dia del mes 
+$ultimoDiaMes=date("d",(mktime(0,0,0,$month+1,1,$year)-1)); 
+$meses=array(1=>"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"); 
+
+$last_cell=$diaSemana+$ultimoDiaMes; // hacemos un bucle hasta 42, que es el máximo de valores que puede
+
+
+
+
+
+?>
+
+<table width="850" border="0" cellspacing="0">
+    <!--DWLayoutTable-->
+    <tr bordercolor="#FFFFFF" bgcolor="#E6E6E6">
+      <td height="37" colspan="2" bgcolor="#B8B8B8"><div align="center"><font color="#000000" face="Arial, Helvetica, sans-serif">ENTRADA TURNO </font></div></td>
+    </tr>
+    
+    
+    
+
+    <tr bordercolor="#FFFFFF">
+      <td width="234" height="24" bgcolor="#FFFFFF"><div align="center" class="Estilo25"><font color="#000000" size="2">PROFESIONAL</font></div></td>
+      <td bgcolor="#FFFFFF"><?php echo $apellido." ".$nombre;?></td>
+    <tr bordercolor="#FFFFFF">
+      <td height="24" bgcolor="#FFFFFF"><div align="center"><span class="Estilo45">ATIENDE LOS DIAS </span></div></td>
+      <td bgcolor="#FFFFFF"><?php echo $lunes?> <?php echo $martes?> <?php echo $miercoles?> <?php echo $jueves?> <?php echo $viernes?> <?php echo $sabado?></td>
+    <tr bordercolor="#FFFFFF">
+      <td height="24" bgcolor="#FFFFFF"><div align="center"><?php echo $meses[$month]." ".$year?></div></td>
+      <td bgcolor="#FFFFFF"><!--DWLayoutEmptyCell-->&nbsp;</td>
+    <tr bordercolor="#FFFFFF">
+      <td height="24"><div align="center">
+          <div align="center" class="Estilo46"><span class="Estilo45">SOCIO</span>:</div>
+      </div></td>
+      <td><?php echo $nombre_socio;?>
+        &nbsp;</td>
+    <tr bordercolor="#FFFFFF">
+      <td height="24"><div align="center"><font color="#000000" size="2"> <span class="Estilo25"><font color="#000000" size="2">MAdSCOTA</font><font color="#000000" size="2"></font></span><font color="#000000" size="2"><strong>:</strong></font></font></div></td>
+      <td><?php echo $nombre_mascota;?></td>
+    </table>
+
+
+
+
+<?php
+
+include ("calendario1.php");
+
+
+

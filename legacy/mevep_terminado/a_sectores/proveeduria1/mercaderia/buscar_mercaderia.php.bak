@@ -1,0 +1,153 @@
+<?php
+global $buscador_rapido;
+
+if ($borrar != 1){
+$buscador_rapido=$_POST["buscador_rapido"];
+}
+
+$hoy = date("d/m/Y");
+ include("adodb.inc.php");
+ $db = NewADOConnection('mysql');
+ $db->Connect("localhost", "root", "", "proveeduria");
+
+$B = 1;
+$palabra=$_POST["busca"];
+
+$sql="select * from mercaderia where cod_merca like '%$palabra%' or  nombre like '%$palabra%' or proveedor like '%$palabra%' or tipo like '%$palabra%' or presentacion like '%$palabra%' order by nombre, cod_merca asc ";
+
+	$result = $db->Execute($sql);
+?>
+<table width="103%" height="58" border="0">
+  <tr bordercolor="#FFFFCC" bgcolor="#993300">
+    <td colspan="12
+	" bgcolor="#E1F2EF"><div align="center"><font color="#000000" face="Arial, Helvetica, sans-serif">LISTADO DE MEfddfdfdfdRCADERIA . Emitido el <?echo $hoy;?> </font></div></td>
+  </tr>
+  <tr bordercolor="#FFFFFF" bgcolor="#000099">
+    <?
+
+
+switch ($buscador_rapido)
+{
+	case "1"://mostrar sin modificar
+	{ 
+		?>
+    <td width="5%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">CODIGO</font></div></td>
+    <td width="11%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">PRODUCTO</font></div></td>
+    <td width="12%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">TIPO</font></div></td>
+	    <td width="12%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">PRESENTACION</font></div></td>
+		    <td width="12%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">PROVEEDOR</font></div></td>
+
+    <?
+
+
+
+	}
+	break;
+
+
+	case "2": //mostrar con modificar
+	{
+		?>
+    <td width="5%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">CODIGO</font></div></td>
+    <td width="11%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">PRODUCTO</font></div></td>
+    <td width="10%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">TIPO</font></div></td>
+<td width="10%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">PRESENTACION</font></div></td>
+<td width="10%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">PROVEEDOR</font></div></td>
+
+
+
+    <td width="12%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">MODIFICAR </font></div></td>
+    <td width="12%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">ELIMINAR </font></div></td>
+    <td width="12%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">FICHA </font></div></td>
+  </tr>
+  <?
+
+	}
+	break;
+
+}	
+
+
+
+
+
+
+
+ 
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+	
+$cod_merca=strtoupper($result->fields["cod_merca"]);
+$nombre=strtoupper($result->fields["nombre"]);
+$tipo=strtoupper($result->fields["tipo"]);
+$presentacion=strtoupper($result->fields["presentacion"]);
+$proveedor=strtoupper($result->fields["proveedor"]);
+
+
+				  
+
+
+
+	if ($B == 1) {
+
+?>
+  <tr bordercolor="#FFFFFF" bgcolor="#FFFFFF">
+    <?
+$B = 0;
+				}
+	ELSE	{
+	$B=1;
+		 	
+?>
+  <tr bordercolor="#FFFFCC" bgcolor="#FFFFCC">
+    <?
+
+			}
+
+
+
+
+
+switch ($buscador_rapido)
+{
+	case "2": //mostrar sin modificar
+	{
+		?>
+    <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$cod_merca");?></font></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$nombre");?></font></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$tipo");?></font></div></td>
+	<td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$presentacion");?></font></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$proveedor");?></font></div></td>
+
+    <td bordercolor="#E8DCFC" bgcolor="#E8DCFC"><div align="center"><font size="1" face="Arial, Helvetica, sans-serif"><a href="mercaderia/modificar_mercaderia.php?cod_merca=<?print("$cod_merca");?>"><IMG SRC="../../imagenes/office/027.ico" alt="Modificar" border = "0"></a></font></div></td>
+    <td bordercolor="#E8DCFC" bgcolor="#E8DCFC"><div align="center"><font size="1" face="Arial, Helvetica, sans-serif"> <a href="mercaderia/borra.php?cod_merca=<?print("$cod_merca");?>"><IMG SRC="../../imagenes/office/1047.ico" alt="Eliminar" border = "0"></a></font></div></td>
+    <td bordercolor="#E8DCFC" bgcolor="#E8DCFC"><div align="center"><font size="1" face="Arial, Helvetica, sans-serif"> <a href="mercaderia/ficha.php?cod_merca=<?print("$cod_merca");?>"><IMG SRC="../../imagenes/office/005.ico" alt="Ficha" border = "0"></a></font></div></td>
+  </tr>
+  <?
+
+
+
+break;
+}
+
+
+case "1":
+	  {
+	?>
+  <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$id");?></font></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$apellido");?></font></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$nombre");?></font></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$telefono");?></font></div></td>
+  </tr>
+  <?
+
+	break;
+	  }
+	  }
+
+$result->MoveNext();
+	}
+
+?>
+</table>

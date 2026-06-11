@@ -1,0 +1,219 @@
+<style type="text/css">
+<!--
+.Estilo9 {font-family: Arial, Helvetica, sans-serif}
+.Estilo85 {font-size: 12px}
+.Estilo87 {font-size: 10px}
+.Estilo88 {font-family: Arial, Helvetica, sans-serif; font-size: 10px; }
+-->
+</style>
+
+<?
+$a = $_REQUEST['a'];
+$mes= $_REQUEST['mes'];
+$anio= $_REQUEST['anio'];
+$nro_factura= $_REQUEST['nro_factura'];
+
+$b = "Cuentas".date("m/y").".xls";
+switch ($a){
+	case "'imprimir'":{
+?>
+
+<body onUnload="window.opener.openedImprimir=0;" onLoad="window.print(); window.close();"><?		
+
+		break;
+	}
+
+	case "'excel'":{
+header("Content-type: application/vnd.ms-excel");
+header("Content-Disposition: attachment; filename=$b");
+		break;
+	}
+}
+?>
+
+<?
+//$nro_os=$_REQUEST ['nro_os'];
+//$nro_factura=$_REQUEST ['nro_factura'];
+
+
+
+
+$hoy = date("d/m/y");
+
+
+?> 
+<table width="113%" height="115" border="0">
+  <!--DWLayoutTable-->
+  <tr valign="middle" bgcolor="#FFFFFF">
+    <td height="32" colspan="11"><div align="center"><span class="Estilo5"><span class="Estilo9 Estilo1"><strong>Listado de Facturas Vendidas en Proveeduria. Emitidas al: <?ECHO $hoy;?></strong></span> </span></div></td>
+  </tr>
+  <tr bgcolor="#FFFFFF">
+    <td height="17"><div align="center" class="Estilo88">Movimiento</div>
+    <td height="17" colspan="2">      <span class="Estilo88">Denominaci&oacute;n</span>    
+    <td width="4%"><div align="center" class="Estilo88"><span class="Estilo6 Estilo2  Estilo5"><span class="Estilo6">Tipo</span></span></div></td>
+    <td width="7%"><div align="center" class="Estilo88"><span class="Estilo6 Estilo2  Estilo5">N&ordf; Factura</span></div></td>
+    <td width="9%"><div align="center" class="Estilo88"><span class="Estilo6 Estilo2  Estilo5">Fecha</span></div></td>
+    <td width="9%"><div align="center" class="Estilo88"><span class="Estilo6 Estilo2  Estilo5">Bruto</span></div></td>
+    <td width="9%"><div align="center" class="Estilo88"><span class="Estilo6 Estilo2  Estilo5">Descuento</span></div></td>
+    <td width="10%"><div align="center" class="Estilo88"><span class="Estilo6 Estilo2  Estilo5">IVA</span></div></td>
+    <td width="11%"><div align="center" class="Estilo88"><span class="Estilo6 Estilo2  Estilo5">Total</span></div></td>
+  </tr>
+  <tr>
+    <td height="34" colspan="10"><hr noshade></td>
+  </tr>
+  <?
+
+include ("../../../conexiones/config_pro.php");
+
+if (($mes == 13) && ($nro_factura == "") && ($cliente_proveedor == "")){
+$sql="select * from ventas_encabezado ORDER by nro_factura , nro_cuenta, nro_cliente, fecha desc";
+}elseif (($mes == 13) && ($nro_factura != "") && ($cliente_proveedor == "")){
+$sql="select * from ventas_encabezado where nro_factura like '$nro_factura'  ORDER by nro_factura, nro_cuenta, nro_cliente, fecha desc, periodo, anio";
+}elseif (($mes != 13) && ($nro_factura == "") && ($cliente_proveedor == "")){
+$sql="select * from ventas_encabezado where periodo = $mes and anio = $anio ORDER by nro_cuenta, nro_cliente, nro_factura, fecha desc, periodo, anio";
+}elseif (($mes != 13) && ($nro_factura != "") && ($cliente_proveedor == "")){
+$sql="select * from ventas_encabezado where nro_factura like '$nro_factura%' and periodo = $mes and anio = $anio ORDER by nro_cuenta, nro_cliente, nro_factura, fecha desc, periodo, anio";
+}elseif (($mes != 13) && ($nro_factura != "") && ($cliente_proveedor != "")){
+if (is_numeric($cliente_proveedor)==true) {
+$sql="select * from ventas_encabezado where (nro_factura = '$nro_factura' or nro_factura = '$nro_factura' or fecha = '$nro_factura') and periodo = $mes and anio = $anio and nro_proveedor = $cliente_proveedor ORDER by nro_cuenta, nro_cliente, nro_factura, fecha desc, periodo, anio";
+}else{
+$sql="select * from ventas_encabezado where (nro_factura = '$nro_factura' or nro_factura = '$nro_factura' or fecha = '$nro_factura') and periodo = $mes and anio = $anio and denominacion like '$cliente_proveedor%'  ORDER by nro_cuenta, nro_cliente, nro_factura, fecha desc, periodo, anio";}
+}
+elseif (($mes != 13) && ($nro_factura == "") && ($cliente_proveedor != "")){
+if (is_numeric($cliente_proveedor)==true) {
+$sql="select * from ventas_encabezado where periodo = $mes and anio = $anio and (nro_proveedor = $cliente_proveedor) ORDER by nro_cuenta, nro_cliente, nro_factura, fecha desc, periodo, anio";
+}else{
+$sql="select * from ventas_encabezado where periodo = $mes and anio = $anio and (denominacion like '$cliente_proveedor%') ORDER by nro_cuenta, nro_cliente, nro_factura, fecha desc, periodo, anio";
+}
+	}
+	 
+$result = $db->Execute($sql);
+
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+$cuent = $cuenta;
+
+$nro_cliente=strtoupper($result->fields["nro_cliente"]);
+$nro_cuenta=strtoupper($result->fields["nro_cuenta"]);
+
+if ($nro_cliente != 0){
+$cuenta=$nro_cliente;
+}elseif ($nro_cuenta != 0){
+$cuenta=$nro_cuenta;
+}
+
+$nro_factura=strtoupper($result->fields["nro_factura"]);
+
+$denominacion=strtoupper($result->fields["denominacion"]);
+$fecha=strtoupper($result->fields["fecha"]);
+
+$dia = substr($fecha,8,2);
+$mes= substr($fecha,5,2);
+$anio = substr($fecha,0,4);
+
+$fecha = $dia."/".$mes."/".$anio;
+
+$bruto=strtoupper($result->fields["bruto"]);
+$descuento=strtoupper($result->fields["descuento"]);
+$neto_gravado=strtoupper($result->fields["neto_gravado"]);
+$iva=strtoupper($result->fields["iva"]);
+$retencion=strtoupper($result->fields["retencion"]);
+$total=strtoupper($result->fields["neto"]);
+$periodo=strtoupper($result->fields["periodo"]);
+$anio=strtoupper($result->fields["anio"]);
+$tipo_fact=strtoupper($result->fields["tipo_fact"]);
+$cod_operacion=strtoupper($result->fields["cod_operacion"]);
+
+
+if ($iva == 0.00){
+	$iva = "-";
+
+}else {
+$iva = "$ ".number_format($iva,2);
+}
+
+if ($descuento == 0.00){
+	$descuento = "-";
+
+}else {
+$descuento = "$ ".number_format($descuento,2);
+}
+
+if ($total == 0.00){
+	$total = "-";
+
+}else {
+$total = "$ ".number_format($total,2);
+}
+
+if ($retencion == 0.00){
+	$retencion = "-";
+
+}else {
+$retencion = "$ ".number_format($retencion,2);
+}
+
+SWITCH ($cod_operacion){
+
+case "1":{
+$entrada = $precio_renglon;
+$movimiento = "FAC";
+BREAK;
+}
+
+case "2":{
+$entrada = $precio_renglon;
+$movimiento = "NOTA DE DEBITO";
+BREAK;
+}
+
+case "3":{
+$salida = $precio_renglon;
+$movimiento = "NC";
+BREAK;
+}
+
+case "4":{
+$salida = $precio_renglon;
+$movimiento = "PAGO POR CAJA";
+BREAK;
+}
+
+
+CASE "5":{
+$salida = $precio_renglon;
+$movimiento = "DESC X LIQUIDACION";
+BREAK;
+}
+
+CASE "6":{
+$salida = $precio_renglon;
+$movimiento = "ANU";
+$denominacion = "ANULADA";
+BREAK;
+}
+
+}
+?>
+  
+  <tr>
+    <td width="13%"><div align="center"><span class="Estilo81 Estilo9 Estilo85"><?print("$movimiento");?></span></div></td>
+    <td width="3%" height="20"><div align="center"><span class="Estilo81 Estilo9 Estilo85"><?print("$cuenta");?> </span></div></td>
+    <td width="25%"><span class="Estilo81 Estilo9 Estilo85"><span class="Estilo87"><?print("$denominacion");?></span></span></td>
+    <td><div align="center" class="Estilo5 Estilo9 Estilo87"><span class="Estilo2"><?print("$tipo_fact");?></span></div></td>
+    <td><div align="center" class="Estilo5 Estilo9 Estilo87"><span class="Estilo2"><?print("$nro_factura");?></span> </div></td>
+    <td><div align="center" class="Estilo5 Estilo9 Estilo87"><span class="Estilo2"><?print("$fecha");?> </span></div></td>
+    <!-- <td><div align="center" class="Estilo6"><span class="Estilo4 Estilo5"><?print("$proveedor");?></span></div></td> -->
+    <td><div align="center" class="Estilo5 Estilo9 Estilo87"><span class="Estilo2"><?echo $bruto;?> </span></div></td>
+    <td><div align="center" class="Estilo5 Estilo9 Estilo87"><?echo $descuento;?> </div></td>
+    <td><div align="center" class="Estilo88"><span class="Estilo5"><span class="Estilo2"><?echo $iva;?></span></span></div></td>
+    <td><div align="center" class="Estilo5 Estilo9 Estilo87"><span class="Estilo83"><?echo $total;?> </span></div></td>
+  </tr>
+  <?
+	$result->MoveNext();
+	}
+
+
+	?>
+</table>

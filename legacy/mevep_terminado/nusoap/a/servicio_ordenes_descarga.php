@@ -1,0 +1,270 @@
+<?
+require_once("nusoap.php");
+
+$ns = 'http://coprofi.com.ar/sulb/nusoap/lib'; //Espacio de nombres o sitio; sitio donde estará alojado el web service
+
+$server = new soap_server();
+$server->configureWSDL('CanadaTaxCalculator',$ns);
+$server->wsdl->schemaTargetNamespace=$ns;
+$server->register('CalculateOntarioTax',array('amount' => 'xsd:string' , 'apellido' => 'xsd:string'),array('return' => 'xsd:string'),$ns);
+
+
+$server->register('pacientes',array('sql' => 'xsd:string' , 'apellido' => 'xsd:string'),array('return' => 'xsd:string'),$ns);
+$server->register('nro_os',   array('sql' => 'xsd:string' , 'apellido' => 'xsd:string'),array('return' => 'xsd:string'),$ns);
+$server->register('practicas',array('sql' => 'xsd:string' , 'apellido' => 'xsd:string'),array('return' => 'xsd:string'),$ns);
+$server->register('actualizar',array('variable1' => 'xsd:string' , 'variable2' => 'xsd:string'),array('return' => 'xsd:string'),$ns);
+$server->register('obras',array('variable1' => 'xsd:string' , 'variable2' => 'xsd:string'),array('return' => 'xsd:string'),$ns);
+$server->register('mega',array('variable1' => 'xsd:string' , 'variable2' => 'xsd:string'),array('return' => 'xsd:string'),$ns);
+
+
+$server->register('buscar_orden',array('cod_grabacion' => 'xsd:string' , 'apellido' => 'xsd:string'),array('return' => 'xsd:string'),$ns);
+
+
+function CalculateOntarioTax($amount,$apellido){
+
+$taxcalc=$amount.$apellido;
+
+return new soapval('return','xsd:string',$taxcalc);
+}
+
+
+
+function pacientes($sql){
+include ("../../conexiones/config.inc.php");
+$sql1=$sql;
+mysql_query($sql1);
+
+$a = mysql_insert_id();
+return new soapval('return','xsd:string',$a);
+}
+
+function nro_os($sql){
+include ("../../conexiones/config.inc.php");
+$nro_os=$sql;
+
+$sql2="select * from datos_os where nro_os > 999 and nro_os = $nro_os";
+$result2 = $db->Execute($sql2);
+$nro_os1=$result2->fields["nro_os"];
+
+if ($nro_os1 == ""){
+$nro_os = "NO EXISTE OBRA SOCIAL EN ABM";
+}
+
+
+return new soapval('return','xsd:string',$nro_os);
+}
+
+
+
+function practicas($sql,$apellido){
+include ("../../conexiones/config.inc.php");
+$desde=$sql;
+$hasta=$apellido; 
+$enter = "";
+$cont = 0;
+
+$sql2="select * from a_ordenes where fecauto between '$desde' and '$hasta'";
+$result2 = $db->Execute($sql2);
+
+if (!$result2) die("fallo 1".$db->ErrorMsg());
+ while (!$result2->EOF) {
+
+
+$nro_os=$result2->fields["nro_os"];
+$nro_laboratorio=$result2->fields["codbioq"];
+$nroautored=$result2->fields["nroautored"];
+$nroafi=$result2->fields["nroafi"];
+$nro_practica=$result2->fields["codpres"];
+$cantidad=$result2->fields["cantidad"];
+$matpresc=$result2->fields["matpresc"];
+$fecpresc=$result2->fields["fecpresc"];
+$fecrea=$result2->fields["fecrea"];
+ $fecauto=$result2->fields["fecauto"];
+$codseg=$result2->fields["codseg"];
+$nombre_afiliado=$result2->fields["nombre_afiliado"];
+
+
+ 
+
+if ($cont == ""){
+$sql = "('$nro_laboratorio' , '$nroautored' , '$nroafi' , '$nro_practica' , '$cantidad' , '$matpresc' , '$fecpresc' , '$fecrea' , '$fecauto' , '$codseg' , '$nro_os' , '$nombre_afiliado')";
+$cont = $cont + 1;
+$sql1 = $sql;
+}else{
+	$cont = $cont + 1;
+$sql = "('$nro_laboratorio' , '$nroautored' , '$nroafi' , '$nro_practica' , '$cantidad' , '$matpresc' , '$fecpresc' , '$fecrea' , '$fecauto' , '$codseg' , '$nro_os' , '$nombre_afiliado')";
+$sql1 = $sql1.",".$sql;
+}
+
+
+
+
+
+$result2->MoveNext();
+
+	}
+
+$sql1 = $sql1.";";
+return new soapval('return','xsd:string',$sql1);
+}
+
+/////////////////////////////////////////////////////////////
+function actualizar($variable1,$variable2){
+include ("../../conexiones/config.inc.php");
+$desde=$variable1;
+$hasta=$variable2; 
+
+$sql2="select * from arancel order by nro_os";
+$result2 = $db->Execute($sql2);
+
+if (!$result2) die("fallo 1".$db->ErrorMsg());
+ while (!$result2->EOF) {
+
+
+$nro_os=strtoupper($result2->fields["nro_os"]);
+$modalidad=strtoupper($result2->fields["modalidad"]);
+$ug=strtoupper($result2->fields["ug"]);
+$uh=strtoupper($result2->fields["uh"]);
+$modalidad_especiales=strtoupper($result2->fields["modalidad_especiales"]);
+$ug_especiales=strtoupper($result2->fields["ug_especiales"]);
+$uh_especiales=strtoupper($result2->fields["uh_especiales"]);
+$modalidad_alta=strtoupper($result2->fields["modalidad_alta"]);
+$ug_alta=strtoupper($result2->fields["ug_alta"]);
+$uh_alta=strtoupper($result2->fields["uh_alta"]);
+$nomenclador=strtoupper($result2->fields["nomenclador"]);
+
+
+if ($cont == ""){
+$sql = "('$nro_os', '$modalidad', '$ug', '$uh', '$modalidad_especiales', '$ug_especiales', '$uh_especiales', '$modalidad_alta', '$ug_alta', '$uh_alta', '$nomenclador')";
+$cont = $cont + 1;
+$sql1 = $sql;
+}else{
+	$cont = $cont + 1;
+$sql = "('$nro_os', '$modalidad', '$ug', '$uh', '$modalidad_especiales', '$ug_especiales', '$uh_especiales', '$modalidad_alta', '$ug_alta', '$uh_alta', '$nomenclador')";
+$sql1 = $sql1.",".$sql;
+}
+$result2->MoveNext();
+}
+
+$sql1 = $sql1.";";
+return new soapval('return','xsd:string',$sql1);
+}
+
+/////////////////////////////////////////////////////////////
+function obras($variable1,$variable2){
+include ("../../conexiones/config.inc.php");
+$desde=$variable1;
+$hasta=$variable2; 
+
+$sql2="select * from datos_os_abm order by nro_os";
+$result2 = $db->Execute($sql2);
+
+if (!$result2) die("fallo 1".$db->ErrorMsg());
+ while (!$result2->EOF) {
+
+$nro_os=strtoupper($result2->fields["nro_os"]);
+$denominacion=strtoupper($result2->fields["denominacion"]);
+$sigla=strtoupper($result2->fields["sigla"]);
+$inscripcion=strtoupper($result2->fields["inscripcion"]);
+$cuit=strtoupper($result2->fields["cuit"]);
+$domicilio_l=strtoupper($result2->fields["domicilio_l"]);
+$cod_area_l=strtoupper($result2->fields["cod_area_l"]);
+$telefono_l=strtoupper($result2->fields["telefono_l"]);
+$telefax_l=strtoupper($result2->fields["telefax_l"]);
+$email_l=strtoupper($result2->fields["email_l"]);
+$domicilio_n=strtoupper($result2->fields["domicilio_n"]);
+$cod_area_n=strtoupper($result2->fields["cod_area_n"]);
+$telefono_n=strtoupper($result2->fields["telefono_n"]);
+$telefax_n=strtoupper($result2->fields["telefax_n"]);
+$email_n=strtoupper($result2->fields["email_n"]);
+$nro_prestador=strtoupper($result2->fields["nro_prestador"]);
+$contacto=strtoupper($result2->fields["contacto"]);
+$nivel=strtoupper($result2->fields["nivel"]);
+$cargo=strtoupper($result2->fields["cargo"]);
+
+
+if ($cont == ""){
+$sql = "('$nro_os', '$domicilio_n', '$localidad_n', '$cod_area_n', '$telefono_n', '$telefax_n', '$denominacion', '$sigla', '$cod_postal_n', '$email_n', '$cuit', '$nro_prestador', '$contacto', '$nivel', '$cargo', '$domi_facturacion', '$domicilio_l', '$cod_area_l', '$telefono_l', '$telefax_l', '$localidad_l', '$cod_postal_l', '$email_l', '$inscripcion')";
+$cont = $cont + 1;
+$sql1 = $sql;
+}else{
+	$cont = $cont + 1;
+$sql = "('$nro_os', '$domicilio_n', '$localidad_n', '$cod_area_n', '$telefono_n', '$telefax_n', '$denominacion', '$sigla', '$cod_postal_n', '$email_n', '$cuit', '$nro_prestador', '$contacto', '$nivel', '$cargo', '$domi_facturacion', '$domicilio_l', '$cod_area_l', '$telefono_l', '$telefax_l', '$localidad_l', '$cod_postal_l', '$email_l', '$inscripcion')";
+$sql1 = $sql1.",".$sql;
+}
+$result2->MoveNext();
+}
+
+$sql1 = $sql1.";";
+return new soapval('return','xsd:string',$sql1);
+}
+//////////////////////////////
+
+
+function mega($variable1,$variable2){
+include ("../../conexiones/config.inc.php");
+$desde=$variable1;
+$hasta=$variable2; 
+
+$sql2="select * from precio_derivaciones";
+$result2 = $db->Execute($sql2);
+
+if (!$result2) die("fallo 1".$db->ErrorMsg());
+ while (!$result2->EOF) {
+
+$cod_practica=$result2->fields["cod_practica"];
+//$letra=strtoupper($result->fields["letra"]);
+$descripcion=strtoupper($result2->fields["descripcion"]);
+$laboratorio_realizacion=strtoupper($result2->fields["laboratorio_realizacion"]);
+$precio=strtoupper($result2->fields["precio"]);
+$metodo=strtoupper($result2->fields["metodo"]);
+
+
+if ($cont == ""){
+$sql = "('$nro_os', '$domicilio_n', '$localidad_n', '$cod_area_n', '$telefono_n', '$telefax_n', '$denominacion', '$sigla', '$cod_postal_n', '$email_n', '$cuit', '$nro_prestador', '$contacto', '$nivel', '$cargo', '$domi_facturacion', '$domicilio_l', '$cod_area_l', '$telefono_l', '$telefax_l', '$localidad_l', '$cod_postal_l', '$email_l', '$inscripcion')";
+
+
+
+$sql = "('$cod_practica' , '$descripcion' , '$laboratorio_realizacion' , '$precio' , '' , '$metodo')";
+
+
+
+$cont = $cont + 1;
+$sql1 = $sql;
+}else{
+	$cont = $cont + 1;
+$sql = "('$cod_practica' , '$descripcion' , '$laboratorio_realizacion' , '$precio' , '' , '$metodo')";
+$sql1 = $sql1.",".$sql;
+}
+$result2->MoveNext();
+}
+
+$sql1 = $sql1.";";
+return new soapval('return','xsd:string',$sql1);
+}
+//////////////////////////////
+
+
+
+
+function buscar_orden($cod_grabacion){
+include ("../../conexiones/config.inc.php");
+$cod_grabacion1=$cod_grabacion;
+
+$sql2="select * from ordenes where cod_grabacion = $cod_grabacion1";
+$result2 = $db->Execute($sql2);
+$cod_gr=$result2->fields["cod_grabacion"];
+
+
+
+return new soapval('return','xsd:string', $cod_gr);
+}
+
+
+
+
+
+
+$server->service($HTTP_RAW_POST_DATA);
+
+?>

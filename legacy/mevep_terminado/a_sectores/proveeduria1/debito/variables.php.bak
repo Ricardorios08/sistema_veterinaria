@@ -1,0 +1,15 @@
+<?php
+include ("../../../conexiones/config_grabacion.php");
+$cod_mevep = $_REQUEST['cod_mevep'];
+
+$sql = "SELECT * FROM debito WHERE cod_mevep= $cod_mevep";
+$result = $db_pro->Execute($sql);
+
+$cod_mevep=$result->fields["cod_mevep"];
+$nombre=strtoupper($result->fields["nombre"]);
+$documento=$result->fields["documento"];
+$cbu=$result->fields["cbu"];
+$monto_descontar=$result->fields["monto_descontar"];
+$fecha_ingreso=$result->fields["ingreso"];
+?>
+

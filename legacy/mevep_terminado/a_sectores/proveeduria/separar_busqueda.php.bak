@@ -1,0 +1,98 @@
+<?php 
+
+$busca = $_REQUEST['busca'];
+$buscador_rapido = $_REQUEST['buscador_rapido'];
+
+$opcione=$_POST["opciones"];
+	for ($i=0;$i<count($opcione);$i++)    
+	{     
+$opciones = $opcione[$i];    
+	}
+
+
+$pla=$_POST["plan"];
+	for ($i=0;$i<count($pla);$i++)    
+	{     
+$plan = $pla[$i];    
+	}
+
+if ($plan == ""){
+	$plan = 1;
+}
+
+
+
+switch ($opciones){
+	case "mod_cli":{
+include ("clientes/buscar_clientes.php");
+		break;
+	}
+
+	case "clientes":{
+include ("clientes/buscar_clientes1.php");
+		break;
+	}
+
+	case "compara":{
+include ("clientes/compara.php");
+		break;
+	}
+
+	case "menores":{
+include ("clientes/buscar_clientes_menores.php");
+		break;
+	}
+
+	case "sin_iva":{
+include ("clientes/buscar_clientes_siniva.php");
+		break;
+	}
+
+	case "mod_soc":{
+include ("socios/buscar_cuenta.php");
+		break;
+	}
+
+
+	case "mod_pro":{
+include ("proveedores/buscar_proveedores.php");
+		break;
+	}
+
+	case "mercaderia":{
+	
+include ("mercaderia/buscar_mercaderia1.php");
+		break;
+	}
+
+case "mod_deb":{
+include ("debito/buscar_mercaderia_mod.php");
+		break;
+	}
+
+		case "Compras":{
+			include ("compras/buscar_factura_compra.php");
+
+		break;}
+
+
+				case "Existencia":{
+			include ("compras/existencia.php");
+
+		break;
+	}
+
+		case "Facturas":{
+	include ("buscar/buscar_facturas.php");
+
+		break;
+	}
+
+	case "liquidacion":{
+	include ("buscar_novedades_prov.php");
+
+		break;
+	}
+
+}
+?>

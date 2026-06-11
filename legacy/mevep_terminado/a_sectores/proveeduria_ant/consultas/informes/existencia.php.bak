@@ -1,0 +1,199 @@
+<?php
+global $buscador_rapido;
+
+$cod_proveedor=$_POST["cod_proveedor"];
+
+
+if ($borrar != 1){
+$buscador_rapido=$_POST["buscador_rapido"];
+}
+
+$hoy = date("d/m/Y");
+include ("../../../../conexiones/config_pro.php");
+
+$B = 1;
+$palabra=$_POST["busca"];
+
+
+
+if (($palabra == "") and ($cod_proveedor == "") and ($cod_fabricante == "")){
+include ("existencia_todo.php");
+exit;
+}elseif (($palabra == "") and ($cod_proveedor != "") and ($cod_fabricante == "")){
+	include ("existencia_proveedor.php");
+	exit;
+}
+elseif (($palabra == "") and ($cod_fabricante != "") and ($cod_proveedor == "")){
+	include ("existencia_fabricante.php");
+	exit;
+}
+
+elseif (($palabra != "") and ($cod_proveedor == "") and ($cod_fabricante == "")){
+$sql="select * from mercaderia where cod_merca like '$palabra' ";
+}
+	$result = $db->Execute($sql);
+?>
+<table width="750" height="166" border="0">
+  <tr bordercolor="#FFFFCC" bgcolor="#E6E6E6">
+    <td height="40" colspan="12
+	"><div align="center"><font size="3" face="Arial, Helvetica, sans-serif">Asociaci&oacute;n Bioqu&iacute;mica de Mendoza </font></div></td>
+  </tr>
+  <tr bordercolor="#FFFFCC" bgcolor="#E6E6E6">
+    <td height="28" colspan="12
+	"><div align="center"><font color="#000000" face="Arial, Helvetica, sans-serif">LISTADO DE EXISTENCIA DE PROVEEDURIA. Emitido el <?echo $hoy;?> </font></div></td>
+  </tr>
+  <tr bordercolor="#FFFFFF" bgcolor="#000099">
+
+
+
+    <td width="9%" height="21"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">CODIGO</font></div></td>
+    <td width="35%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">PRODUCTO</font></div></td>
+
+<td width="11%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">PRESENTACION</font></div></td>
+	<td width="5%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">LOTE</font></div></td>
+    <td width="6%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">VTO LOTE</font></div></td>
+<td width="6%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">ENTRADAS</font></div></td>
+<td width="5%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">SALIDAS</font></div></td>
+<td width="6%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">SALDO</font></div></td>
+<td width="8%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">ESTADO</font></div></td>
+<td width="9%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">ULT-MOV</font></div></td>
+
+  </tr>
+<?
+
+
+
+$anio_actual = date("y");
+$mes_actual = date ("m");
+
+
+ 
+$cod_merca=strtoupper($result->fields["cod_merca"]);
+
+$sql1="select * from existencias where cod_mercaderia = $cod_merca";
+$result1 = $db->Execute($sql1);
+
+
+
+  if (!$result1) die("fallo".$db->ErrorMsg());
+  while (!$result1->EOF) {
+
+
+$cod_merquita=strtoupper($result1->fields["cod_mercaderia"]);
+
+
+
+if ($cod_merquita == ""){
+
+$result1->MoveNext();
+}
+else
+	  {
+
+$cantidad_ingresada=strtoupper($result1->fields["cantidad_ingresada"]);
+
+
+$cantidad_salida=strtoupper($result1->fields["cantidad_salida"]);
+$lote=strtoupper($result1->fields["lote"]);
+$mes_lote=strtoupper($result1->fields["mes_lote"]);
+$anio_lote=strtoupper($result1->fields["anio_lote"]);
+$fecha_ultimo_mov=strtoupper($result1->fields["fecha_ultimo_mov"]);
+
+$vto_lote = $mes_lote." - ".$anio_lote;
+
+$nombre=strtoupper($result->fields["nombre"]);
+$presentacion=strtoupper($result->fields["presentacion"]);
+$cantidad_existente = $cantidad_ingresada - $cantidad_salida;
+	
+$mes = $mes_lote;
+$anio = $anio_lote;
+
+if ($anio == ""){
+	$anio = $anio_actual;
+}
+else
+		  {
+$estado = "-";
+		  }
+
+
+$suma_ingresada = $suma_ingresada + $cantidad_ingresada;
+$suma_salida = $suma_salida + $cantidad_salida;
+$suma_existente = $suma_existente + $cantidad_existente;
+
+
+if ($anio < $anio_actual){
+$estado = "VENCIDO";
+}
+else{
+
+if ($anio > $anio_actual){
+$estado = "-";}
+else{
+
+if ($mes < $mes_actual){
+$estado = "VENCIDO";
+}
+else{
+	$estado ="-";
+}
+}
+}
+
+
+
+
+
+
+
+
+if ($B == 1) {
+
+?>
+  <tr bordercolor="#FFFFCC" bgcolor="#FFFFCC">
+    <?
+
+			}
+
+
+
+
+		?>
+    <td bgcolor="#E1F2EF"><div align="center"><font size="2"><?print("$cod_merca");?></font></div></td>
+    <td bgcolor="#E1F2EF"><div align="left"><font size="2" face="Arial, Helvetica, sans-serif"><?print("$nombre");?></font></div></td>
+    <td bgcolor="#E1F2EF"><div align="left"><font size="2" face="Arial, Helvetica, sans-serif"><?print("$presentacion");?></font></div></td>
+<td bgcolor="#E1F2EF"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><?print("$lote");?></font></div></td>
+<td bgcolor="#E1F2EF"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><?print("$vto_lote");?></font></div></td>
+
+	<td bgcolor="#E1F2EF"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><?print("$cantidad_ingresada");?></font></div></td>
+		<td bgcolor="#E1F2EF"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><?print("$cantidad_salida");?></font></div></td>
+	<td bgcolor="#E1F2EF"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><?print("$cantidad_existente");?></font></div></td>
+<td bgcolor="#E1F2EF"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><?print("$estado");?></font></div></td>
+<td bgcolor="#E1F2EF"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><?print("$fecha_ultimo_mov");?></font></div></td>
+
+ 
+  </tr>
+  
+
+ <?
+
+$result1->MoveNext();
+	}
+  }
+
+?>
+
+<tr bordercolor="#FFFFCC" bgcolor="#FFFFCC">
+    <td colspan="5" bgcolor="#E6E6E6">&nbsp;</td>
+    <td colspan="3" bgcolor="#E6E6E6"><hr noshade></td>
+    <td colspan="2" bgcolor="#E6E6E6">&nbsp;</td>
+  </tr>
+  <tr bordercolor="#FFFFCC" bgcolor="#FFFFCC">
+    <td colspan="5" bgcolor="#E8DCFC"><div align="right"><strong><font size="2" face="Arial, Helvetica, sans-serif">TOTALES</font></strong></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><font face="Arial, Helvetica, sans-serif"><strong><font size="2"><?print("$suma_ingresada");?></font></strong></font></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><font face="Arial, Helvetica, sans-serif"><strong><font size="2"><?print("$suma_salida");?></font></strong></font></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><font face="Arial, Helvetica, sans-serif"><strong><font size="2"><?print("$suma_existente");?></font></strong></font></div></td>
+    <td colspan="2" bgcolor="#E8DCFC">&nbsp;</td>
+  </tr>
+
+</table>

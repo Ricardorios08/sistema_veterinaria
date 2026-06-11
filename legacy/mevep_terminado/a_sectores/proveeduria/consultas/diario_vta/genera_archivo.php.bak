@@ -1,0 +1,152 @@
+<?php
+global $buscador_rapido;
+
+if ($borrar != 1){
+$buscador_rapido=$_POST["buscador_rapido"];
+}
+
+$hora_inicial  = time();
+ $s = date("Hi",$hora_inicial);
+
+
+
+$anio = date("ymd");
+ $archivo = "proveeduria_".$anio.".txt";
+ $carpeta = "c:/informes/web/";
+
+
+$fecha_hoy = date("YmdHi");
+ if (file_exists($carpeta.$archivo) == true){
+unlink ($carpeta.$archivo);
+ }
+
+
+$hoy = date("d/m/Y");
+ include("adodb.inc.php");
+ $db = NewADOConnection('mysql');
+ $db->Connect("localhost", "root", "", "proveeduria");
+
+$B = 1;
+
+
+//Abrimos el fichero en modo de escritura 
+$hoy = date("ymd");
+$nombre = "proveeduria_".$fecha_hoy.".txt";
+$DescriptorFichero = fopen("c:/informes/web/$nombre","w"); 
+$enter = "\r\n";
+$tab = "\t";
+$cuit_propio = "30-54550865-2";
+
+
+$anio_actual = date("y");
+$mes_actual = date ("m");
+
+ $sql1="select * from existencias where (cantidad_ingresada - cantidad_salida) > 0 order by cod_mercaderia";
+$result1 = $db->Execute($sql1);
+ 
+  if (!$result1) die("fallo".$db->ErrorMsg());
+  while (!$result1->EOF) {
+
+
+$cod_mercaderia=strtoupper($result1->fields["cod_mercaderia"]);
+$cantidad_ingresada=strtoupper($result1->fields["cantidad_ingresada"]);
+$cantidad_salida=strtoupper($result1->fields["cantidad_salida"]);
+$lote=strtoupper($result1->fields["lote"]);
+$mes_lote=strtoupper($result1->fields["mes_lote"]);
+$anio_lote=strtoupper($result1->fields["anio_lote"]);
+$fecha_ultimo_mov=strtoupper($result1->fields["fecha_ultimo_mov"]);
+
+$sql="select * from mercaderia where cod_merca like '$cod_mercaderia' ";
+$result = $db->Execute($sql);
+$descripcion=strtoupper($result->fields["descripcion"]);
+$presentacion=strtoupper($result->fields["presentacion"]);
+$precio_actualizado=number_format($result->fields["precio_actualizado"],2);
+
+
+$precio_diferido = $precio_actualizado;
+$precio_contado = $precio_actualizado;
+
+$incremento1 = round(($precio_diferido * 21)/100,2);
+$precio_diferido = $precio_diferido + $incremento1;
+$incremento2 = round(($precio_diferido * 21)/100,2);
+$precio_diferido = $precio_diferido + $incremento2;
+
+
+$incremento3 = round(($precio_contado * 21)/100,2);
+$precio_contado = $precio_contado + $incremento3;
+$descuento1= round(($precio_contado * 8)/100,2);
+
+$precio_contado = $precio_contado - $descuento1;
+
+
+$incremento4 = round(($precio_contado * 21)/100,2);
+$precio_contado = $precio_contado + $incremento4;
+
+
+$valor1 = $precio_diferido;
+$valor2 = $precio_contado;
+
+
+$vto_lote = $mes_lote." - ".$anio_lote;
+
+
+$cantidad_existente = $cantidad_ingresada - $cantidad_salida;
+	
+$mes = $mes_lote;
+$anio = $anio_lote;
+
+if ($anio == ""){
+	$anio = $anio_actual;
+}
+else
+		  {
+$estado = "-";
+		  }
+
+
+
+if (($anio != "00") && ($mes != "00") or ($anio != "00") or ($mes != "00") ){
+
+if ($anio < $anio_actual){
+$estado = "VENCIDO";
+}
+else{
+
+if ($anio > $anio_actual){
+$estado = "-";}
+else{
+
+if ($mes < $mes_actual){
+$estado = "VENCIDO";
+}
+else{
+	$estado ="-";
+}
+}
+}
+}
+
+
+
+$coma = ";";
+
+
+$string0 = $cod_mercaderia.$coma.$descripcion.$coma.$presentacion.$coma.$lote.$coma.$cantidad_existente.$coma.$valor1.$coma.$valor2.$enter;
+fputs($DescriptorFichero,$string0); 
+
+
+$result1->MoveNext();
+	}
+  fclose($DescriptorFichero); 
+
+include("../../../../conexiones/config_grabacion.php");
+
+
+$ruta="c:/informes/web/comp_saldos_mega".$anio.$mes."01.txt";
+$sql= "SELECT * FROM facturas where saldo > 0 order by cuenta INTO OUTFILE '$ruta' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\r\n'";
+$result = $db_mg->Execute($sql);
+
+$ruta="c:/informes/web/comp_saldos_provee".$anio.$mes."01.txt";
+$sql= "SELECT * FROM composicion_saldos where saldo > 0 order by cuenta INTO OUTFILE '$ruta' FIELDS TERMINATED BY ';' LINES TERMINATED BY '\r\n'";
+$result = $db_pro->Execute($sql);
+?>

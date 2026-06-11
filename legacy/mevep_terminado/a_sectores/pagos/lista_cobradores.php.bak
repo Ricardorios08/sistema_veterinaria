@@ -1,0 +1,84 @@
+<!-- <body onUnload="window.opener.openedImprimir=0;" onLoad="window.print(); window.close();"> -->
+<style type="text/css">
+<!--
+.Estilo4 {font-family: Geneva, Arial, Helvetica, sans-serif; font-size: 12px; }
+-->
+</style>
+
+
+<?php
+
+include ("../../../conexiones/config.inc.php");
+
+
+global $buscador_rapido;
+
+if ($borrar != 1){
+$buscador_rapido=$_POST["buscador_rapido"];
+$palabra=$_POST["busca"];
+}
+
+$palabra=$_REQUEST["palabra"];
+
+
+$hoy = date("d/m/y");
+
+
+
+$B = 1;
+
+
+  $sql="select * from cobradores ";
+ $result = $db->Execute($sql);
+
+	
+?>
+<table width="391" border="0" cellspacing="0">
+  <!--DWLayoutTable-->
+  
+  <tr bordercolor="#FFFFCC" bgcolor="#CCCCCC">
+  
+    <td width="94"><div align="center"><strong><font color="#000000" size="2" face="Trebuchet MS">COD </font></strong></div></td>
+    <td width="293"><div align="center"><strong><font color="#000000" size="2" face="Trebuchet MS"> NOMBRE COBRADOR </font></strong></div></td>
+    <?php 
+
+
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+	
+$cod_cobrador=$result->fields["cod_cobrador"];
+$nombre_cobrador=$result->fields["nombre_cobrador"];
+$plan=strtoupper($result->fields["plan"]); 
+	
+
+$sql1="select * from plan_cobrador where cod_plan = $plan ";
+ $result1 = $db->Execute($sql1);
+$a1_10=strtoupper($result1->fields["1_10"]); 
+$a11_20=strtoupper($result1->fields["11_20"]);
+$a21_31=strtoupper($result1->fields["21_31"]);
+$deuda=strtoupper($result1->fields["deuda"]);
+
+
+    ?>  
+  <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+	<td bordercolor="#E8DCFC" bgcolor="#FFFF99"><div align="center"><strong><font size="2" face="Trebuchet MS"><?php print("$cod_cobrador");?></font></strong></div></td>
+  
+    <td bordercolor="#E8DCFC" bgcolor="#FFFF99"><div align="center"><strong><font size="2" face="Trebuchet MS"> <?php echo $nombre_cobrador;?></font></strong></div></td>
+  </tr>
+
+
+ 
+
+
+ 
+<?php
+
+$result->MoveNext();
+	}
+
+ 
+
+?>
+</table>
+

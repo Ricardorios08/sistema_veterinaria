@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documento sin t&iacute;tulo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+
+	
+
+.Estilo1 {
+	font-family: "Arial Black";
+	font-size: 24px;
+}
+.Estilo2 {font-family: "Arial Black"}
+.Estilo3 {font-size: 16px}
+.Estilo4 {font-family: "Arial Black"; font-size: 16px; }
+.Estilo5 {color: #000099}
+-->
+</style>
+<script language="javascript">
+function on_load()
+{
+document.getElementById("matricula").focus();
+}
+
+function pagina2()
+{
+document.getElementById("titulo").focus();
+}
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				case "matricula":
+				document.getElementById("apellido").focus();
+				
+				break;
+				case "apellido":
+				document.getElementById("apellido_materno").focus();
+				break;
+			
+		}
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+
+</head>
+<BODY  background="IMAGENES/BOTONES/BARRA/fondo3.jpg" >
+<div align="center" class="Estilo1">
+  <p class="Estilo5">ASOCIACION BIOQUIMICA DE MENDOZA </p>
+</div>
+<TR><TD>  
+<FORM ACTION="validar/validar.php" method="post" TARGET = "central">
+
+  <div align="left"><font size="1"> </font>
+  </div>
+  <table width="103%" height="221" border="0">
+    <tr>
+      <th width="57%" scope="col"><img src="imagenes/botones/barra/institucional.jpg" width="363" height="204"></th>
+      <th width="43%" scope="col"><table width="32%" height="85" border="0">
+        <tr>
+          <td height="25" valign="bottom"><div align="right"><span class="Estilo2 Estilo3">USUARIO</span></div></td>
+          <td valign="bottom"><input type="text" name="usuario" size = "6"></td>
+        </tr>
+        <tr>
+          <td width="28%" height="24"><div align="right"><span class="Estilo4">CONTRASE&Ntilde;A</span></div></td>
+          <td width="30%">
+            <div align="left">
+              <input type="password" name="password" size = "6">
+          </div></td>
+        </tr>
+        <tr>
+          <td height="24"><div align="right">
+              <input type="Submit" name="bLogin" value="Entrar">
+          </div></td>
+          <td>
+            <div align="left">
+              <input type="button" name="logout" value="Salir">
+          </div></td>
+        </tr>
+      </table></th>
+    </tr>
+  </table>
+  
+</form>
+
+
+</body>
+</html>

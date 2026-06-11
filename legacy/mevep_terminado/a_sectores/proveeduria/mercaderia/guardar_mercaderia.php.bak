@@ -1,0 +1,92 @@
+<?php
+include ("../../../conexiones/config_pro.php");
+
+//tabla mercaderia
+$cod_merca=$_POST["cod_merca"];
+
+if ($cod_merca == ""){
+ 
+ $sql="select * from cod_barra_propio GROUP BY cod_barra ORDER BY cod_barra DESC";
+$result = $db->Execute($sql);
+$cod_merca=($result->fields["cod_barra"] + 1);
+}
+
+
+$nombre=$_POST["nombre"];
+$proveedo=$_POST["proveedor"];
+	for ($i=0;$i<count($proveedo);$i++)    
+	{     
+	$proveedor = $proveedo[$i];  
+			}
+
+
+$categori=$_POST["categoria"];
+	for ($i=0;$i<count($categori);$i++)    
+	{     
+$categoria = $categori[$i];  
+			}
+
+$marc=$_POST["marca"];
+	for ($i=0;$i<count($marc);$i++)    
+	{     
+$marca = $marc[$i];  
+			}
+
+$pla=$_POST["plan"];
+	for ($i=0;$i<count($pla);$i++)    
+	{     
+$plan = $pla[$i];  
+			}
+
+if ($plan == ""){
+$plan = 1;
+}
+
+
+$precio_actualizado=$_POST["precio_actualizado"];
+$tipo_moneda=$_POST["tipo_moneda"];
+
+ 
+ $nueva_categoria=$_POST["nueva_categoria"];
+ $nueva_marca=$_POST["nueva_marca"];
+ $nuevo_proveedor=$_POST["nuevo_proveedor"];
+ $descripcion=$_POST["descripcion"];
+
+if ($nueva_categoria != ""){
+ $sql = "INSERT INTO `categoria` ( `cod_categoria` , `categoria`) VALUES( '' ,'$nueva_categoria' )";
+ mysql_query($sql);
+ $idgenerado = mysql_insert_id();
+$categoria = $idgenerado;
+ }
+
+
+if ($nueva_marca != ""){
+  $sql = "INSERT INTO `marca1` ( `cod_marca` , `marca`) VALUES( '' ,'$nueva_marca' )";
+ mysql_query($sql);
+  $idgenerado = mysql_insert_id();
+$marca = $idgenerado;
+ }
+
+
+if ($nuevo_proveedor != ""){
+ $sql = "INSERT INTO `proveedores` (`cuenta`, `denominacion`, `contacto`, `domicilio`, `puerta`, `referencia`, `cod_postal`, `localidad`, `caracteristica_1`, `telefono_1`, `caracteristica_2`, `telefono_2`, `caracteristica_3`, `telefono_3`, `email`, `cuit`, `tipo_iva`, `ing_bruto`, `nro_ib`, `pago_orden`, `observaciones`) VALUES ('', '$nuevo_proveedor', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')";
+ mysql_query($sql);
+$idgenerado = mysql_insert_id();
+$proveedor = $idgenerado;
+ }
+
+
+
+if ($cod_barra > 10000){
+$sql = "INSERT INTO `cod_barra_propio` ( `cod_barra` , `nombre` ) VALUES( '$cod_merca' ,'$nombre')";
+ mysql_query($sql);
+}
+
+
+
+ echo $sql = "INSERT INTO `mercaderia` ( `cod_merca` , `nombre` , `proveedor` , `precio_actualizado`  , `tipo_moneda`  , `cod_tasa` , `cod_categoria` , `cod_marca` , `descripcion`) VALUES( '$cod_merca' ,'$nombre' , '$proveedor' , '$precio_actualizado' , '$tipo_moneda' , '$plan' , '$categoria' , '$marca' , '$descripcion')";
+ mysql_query($sql);
+include ("../../proveeduria/mercaderia/entrada_mercaderia.php");
+
+?>
+

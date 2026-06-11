@@ -1,0 +1,112 @@
+<script language="javascript">
+function on_load()
+
+{
+document.getElementById("nro_os").focus();
+}
+
+
+
+</script>
+
+<style type="text/css">
+<!--
+.Estilo3 {font-family: Arial, Helvetica, sans-serif}
+.Estilo42 {font-size: 12px}
+.Estilo44 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo45 {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+-->
+</style>
+
+
+<?php include ("../conexiones/config_grabacion.php");
+
+
+$mes1=$_POST["mes"];
+	for ($i=0;$i<count($mes1);$i++)    
+	{     
+	$mes= $mes1[$i];    
+	}
+
+$anio_a_fact = $_REQUEST['anio_a_fact'];
+$nro_os = $_REQUEST['nro_os'];
+$lote = $_REQUEST['lote'];
+$lote2 = $_REQUEST['lote2'];
+
+$lote2 = $_REQUEST['lote2'];
+
+$dia_d= $_REQUEST['dia_d'];
+$mes_d= $_REQUEST['mes_d'];
+$anio_d= $_REQUEST['anio_d'];
+$fecha_desde = "20".$anio_d."-".$mes_d."-".$dia_d;
+
+$dia_h= $_REQUEST['dia_h'];
+$mes_h= $_REQUEST['mes_h'];
+$anio_h= $_REQUEST['anio_h'];
+$fecha_hasta = "20".$anio_h."-".$mes_h."-".$dia_h;
+
+$sql3="select * from datos_os where nro_os like '$nro_os'";
+$result3 = $db_os->Execute($sql3);
+$sigla=strtoupper($result3->fields["sigla"]);
+$nombre_os = $sigla." - ".$palabra;
+
+?>
+<table width="571" border="0">
+  <tr bgcolor="#000099">
+    <td height="25" colspan="7"><div align="center" class="Estilo3 Estilo42"><blinK><span class="Estilo45">SE  CAMBIO EL LOTE DE ORDENES </span></blink></div></td>
+  </tr>
+  <tr bgcolor="#E1F2EF">
+    <td width="128"><div align="center" class="Estilo44">Obra Social </div></td>
+    <td><div align="center" class="Estilo44">Periodo</div></td>
+    <td><div align="center" class="Estilo44">Lote Actual </div></td>
+    <td width="145" colspan="4"><div align="center" class="Estilo44">Lote Nuevo </div></td>
+  </tr>
+  <tr bgcolor="#E6E6E6">
+    <td><div align="center"><span class="Estilo44"><?php  echo $nro_os;?> <?php  echo $nombre_os;?></span></div></td>
+    <td width="85"><div align="center" class="Estilo44"><?php  echo $mes;?> - <?php  echo $anio_a_fact;?></div></td>
+    <td width="183"><div align="center" class="Estilo44"><?php  echo $lote;?></div></td>
+    <td colspan="4"><div align="center" class="Estilo44"><?php  echo $lote2;?></div></td>
+  </tr>
+  <tr bgcolor="#E6E6E6">
+    <td><div align="center" class="Estilo44">Desde</div></td>
+    <td><div align="center"><span class="Estilo44"><?php  echo $fecha_desde;?></span></div></td>
+    <td>&nbsp;</td>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+  <tr bgcolor="#E6E6E6">
+    <td><div align="center">
+      <div align="center" class="Estilo44">Hasta</div>
+    </div></td>
+    <td><div align="center"><span class="Estilo44"><?php  echo $fecha_hasta;?></span></div></td>
+    <td>&nbsp;</td>
+    <td colspan="4">&nbsp;</td>
+  </tr>
+</table>
+
+<?php 
+
+$sql9 = "UPDATE `ordenes` SET `lote` = '$lote2' WHERE nro_os = $nro_os and periodo = $mes and ano = $anio_a_fact and lote like '$lote' and fecha BETWEEN '$fecha_desde' and '$fecha_hasta'";
+$result9 = $db_gb->Execute($sql9);
+
+$sql3="select cod_grabacion, lote from ordenes where  nro_os = $nro_os and periodo = $mes and ano = $anio_a_fact";
+$result_gb = $db_gb->Execute($sql3);
+
+
+ if (!$result_gb) die("fallo".$db_gb->ErrorMsg());
+  while (!$result_gb->EOF) {
+
+$cod_grabacion=strtoupper($result_gb->fields["cod_grabacion"]);
+$lote_detalle=strtoupper($result_gb->fields["lote"]);
+
+$sql9 = "UPDATE `detalle` SET `lote` = '$lote_detalle' WHERE cod_grabacion like '$cod_grabacion'";
+$result9 = $db_gb->Execute($sql9);
+$cont = $cont + 1;
+$result_gb->MoveNext();
+	}
+
+echo "PRACTICAS: ".$cont;
+
+?>

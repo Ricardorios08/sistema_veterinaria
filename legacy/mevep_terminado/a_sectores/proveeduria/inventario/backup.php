@@ -1,0 +1,143 @@
+<script language="javascript">
+function on_load()
+
+{
+document.getElementById("nro_factura").focus();
+}
+
+
+
+</script>
+
+<style type="text/css">
+<!--
+.Estilo3 {font-family: Arial, Helvetica, sans-serif}
+.Estilo4 {font-size: 10px}
+.Estilo35 {font-family: Arial, Helvetica, sans-serif; color: #FFFFFF; font-weight: bold; }
+-->
+</style>
+
+<style type="text/css">
+<!--
+.Estilo1 {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+-->
+</style>
+
+<?
+include ("../../../conexiones/config_grabacion.php");
+
+$hoy = date("d-m-Y");
+$mes = date("m");
+$anio_actual = date ("y");
+
+switch ($mes)
+	{
+		case "1":{$periodo= "ENE";}break;
+		case "2":{$periodo= "FEB";}break;
+		case "3":{$periodo= "MAR";}break;
+		case "4":{$periodo= "ABR";}break;
+		case "5":{$periodo= "MAY";}break;
+		case "6":{$periodo= "JUN";}break;
+		case "7":{$periodo= "JUL";}break;
+		case "8":{$periodo= "AGO";}break;
+		case "9":{$periodo= "SET";}break;
+		case "10":{$periodo="OCT";}break;
+		case "11":{$periodo="NOV";}break;
+		case "12":{$periodo="DIC";}break;
+				}
+
+
+?>
+
+
+<BODY onload = "on_load ()" >
+
+<form action ="realizar_backup.php" method="post">
+
+
+  <div align="left"></div>
+  <table width="103%" border="0">
+    <tr bgcolor="#FF0000">
+      <td height="29" colspan="2"><div align="center"><span class="Estilo35 Estilo1"> BACKUP DE EXISTENCIA Y FICHA DE STOCK </span><br>
+      </div></td>
+    </tr>
+    <tr bgcolor="#DAFAFC" >
+      <td colspan="2" bgcolor="#E6E6E6" class="Estilo3"><hr noshade></td>
+    </tr>
+    <tr bgcolor="#DAFAFC" >
+      <td width="276" height="37" bgcolor="#FFBC79" class="Estilo3"> <div align="right">Periodo:
+          </div>
+      </div></td>
+      <td bgcolor="#F2FACB" class="Estilo4">
+	  
+		  <span class="Estilo3">
+		<select name="mes[]" id="mes">
+	      <option value="<?echo $mes;?>"><font size="01"><?echo $periodo;?></font><font size="01"></font></option>
+	      <option value="01"><font size="01">ENE</font><font size="01"></font></option>
+          <option value="02"><font size="02">FEB</font><font size="02"></font></option>
+          <option value="03"><font size="03">MAR</font><font size="03"></font></option>
+          <option value="04"><font size="04">ABR</font><font size="04"></font></option>
+          <option value="05"><font size="05">MAY</font><font size="05"></font></option>
+          <option value="06"><font size="06">JUN</font><font size="06"></font></option>
+          <option value="07"><font size="07">JUL</font><font size="07"></font></option>
+          <option value="08"><font size="08">AGO</font><font size="08"></font></option>
+          <option value="09"><font size="09">SET</font><font size="09"></font></option>
+	      <option value="10"><font size="10">OCT</font><font size="10"></font></option>
+          <option value="11"><font size="11">NOV</font><font size="11"></font></option>
+	      <option value="12"><font size="12">DIC</font><font size="12"></font></option>
+        </select>
+		<input type="text" name="anio_actual" value= "<?echo $anio_actual;?>" size ="4">   <input name="boton" type="submit" value="Realizar Backup">
+		  </span></td>
+    </tr>
+    <tr bgcolor="#DAFAFC" >
+      <td height="45" colspan="2" bgcolor="#E6E6E6" class="Estilo3"><div align="center"><em>Respaldo automatico de ficha de stock y existencia realizada el: <?echo $hoy;?></em></div></td>
+    </tr>
+		    <tr bgcolor="#DAFAFC">
+              <!-- <td bgcolor="#FFBC79"><div align="right" class="Estilo10">Rengl&oacute;n 4</span></div></td>
+              <td bgcolor="#F2FACB"><span class="Estilo4"><span class="Estilo3">
+                <input name="renglon4" type="text" id= "renglon4" size ="40" maxlength="40"> -->
+              
+              </span></span></td>
+    </tr>
+  </table>
+</form>
+
+<?
+
+include ("../../../conexiones/config_grabacion.php");
+
+?>
+<table width="790" border="0">
+  <tr>
+    <td width="371"><div align="left"><strong>TABLAS EXISTENCIAS</strong></div></td>
+    <td width="409"><div align="left"><strong>TABLAS DE FICHAS DE STOCK </strong></div></td>
+  </tr>
+  <tr>
+    <td valign="top"><em><?$sql = "SHOW TABLES like 'exist%'";
+$result1 = $db_pro->Execute($sql);
+
+if (!$result1) die("fallo".$db_pro->ErrorMsg());
+while (!$result1->EOF) {
+$tabla=strtoupper($result1->fields["Tables_in_proveeduria (exist%)"]);
+echo $tabla;
+ECHO "<br>";
+$result1->MoveNext();
+	}?></em></td>
+    <td valign="top"><em><?$sql3 = "SHOW TABLES like 'sto%'";
+$result3 = $db_pro->Execute($sql3);
+
+if (!$result3) die("fallo".$db_pro->ErrorMsg());
+while (!$result3->EOF) {
+$tabla1=strtoupper($result3->fields["Tables_in_proveeduria (sto%)"]);
+echo $tabla1;
+ECHO "<br>";
+$result3->MoveNext();
+	}?></em></td>
+  </tr>
+</table>
+
+	
+	

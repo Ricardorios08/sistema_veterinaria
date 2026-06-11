@@ -1,0 +1,116 @@
+<!-- <body onUnload="window.opener.openedImprimir=0;" onLoad="window.print(); window.close();"> -->
+<style type="text/css">
+<!--
+.Estilo3 {font-family: "Trebuchet MS"}
+.Estilo4 {font-size: 12px}
+.Estilo5 {font-family: "Trebuchet MS"; font-size: 12px; }
+-->
+</style>
+
+
+<?php
+
+include ("../../conexiones/config.inc.php");
+$hoy = date("d/m/y");
+
+  $sql11="select *  from cobradores where cod_cobrador = $cobrador";
+$result11 = $db->Execute($sql11);
+
+$nombre_cobrador=strtoupper($result11->fields["nombre_cobrador"]);
+
+$cobrador = $cobrador." - ".$nombre_cobrador;
+
+
+?>
+<table width="800" border="0" cellspacing="0">
+  <!--DWLayoutTable-->
+  <tr bordercolor="#FFFFCC" bgcolor="#E6E6E6">
+    <td><div align="center"><font color="#FFFFFF" size="2" face="Trebuchet MS"><font color="#000000">LISTADO DE SOCIOS. Emitido el <?php echo $hoy;?></font></font></div></td>
+  </tr>
+   
+      <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+    <td bordercolor="#E8DCFC" bgcolor="#FFFF99"><table width="850" border="0" cellspacing="0">
+      <tr bgcolor="#CCCCCC">
+        <td width="401"><div align="center"><span class="Estilo3 Estilo4">SOCIO</span></div></td>
+        <td width="153"><span class="Estilo5">COBRADOR</span></td>
+        <td width="52"><div align="center" class="Estilo5">MES/A&Ntilde;O</div></td>
+        <td width="60"><div align="center" class="Estilo5">IMPORTE</div></td>
+        <td width="92"><div align="center" class="Estilo5">DEUDA</div></td>
+        <td width="80"><div align="center" class="Estilo5">TOTAL</div></td>
+      </tr>
+
+<?php 
+
+
+$sql1="select * from pagos  group by cod_socio order by cobrador, cod_socio";
+$result1 = $db->Execute($sql1);
+
+ 
+  if (!$result1) die("fallo".$db->ErrorMsg());
+  while (!$result1->EOF) {
+
+$cod_socio=strtoupper($result1->fields["cod_socio"]);
+
+
+ $sql11="select SUM(importe) as deuda from pagos where  estado = 'PENDIENTE'  and cobrador != 0 and cod_socio = $cod_socio order by cobrador, cod_socio";
+$result11 = $db->Execute($sql11);
+
+$deuda=strtoupper($result11->fields["deuda"]);
+
+
+
+ $sql11="select * from pagos where  estado = 'PENDIENTE'  and cod_socio = $cod_socio order by anio, mes desc";
+$result11 = $db->Execute($sql11);
+
+$importe=strtoupper($result11->fields["importe"]);
+ 
+ if ($deuda > 0){
+
+$deuda = $deuda - $importe;
+ }
+
+$cobrador=strtoupper($result1->fields["cobrador"]);
+$estado=strtoupper($result1->fields["estado"]);
+$observaciones=strtoupper($result1->fields["observaciones"]);
+$fecha_pago=strtoupper($result1->fields["fecha_pago"]);
+$socio=strtoupper($result1->fields["socio"]);
+
+  $sql11="select *  from cobradores where cod_cobrador = $cobrador";
+$result11 = $db->Execute($sql11);
+
+$nombre_cobrador=strtoupper($result11->fields["nombre_cobrador"]);
+
+$cobrador = $cobrador." ".$nombre_cobrador;
+
+ 
+$total_importe = $total_importe + $importe;
+
+
+
+$total = $deuda + $importe;
+	  ?>
+      <tr>
+        <td><div align="left" class="Estilo4"><strong><font face="Trebuchet MS"><?echo $cod_socio;?></font></strong>-<strong><font face="Trebuchet MS"><?echo $socio;?> </font></strong></div></td>
+        <td><span class="Estilo4"><strong><font face="Trebuchet MS"><?echo $cobrador;?></font></strong></span></td>
+        <td><div align="center" class="Estilo4"><strong><font face="Trebuchet MS"><?echo $mes;?></font></strong>-<strong><font face="Trebuchet MS"><?echo $anio;?></font></strong></div></td>
+        <td><div align="right" class="Estilo4"><strong><font face="Trebuchet MS"><?echo $importe;?></font></strong></div></td>
+        <td><div align="center" class="Estilo4"><strong><font face="Trebuchet MS"><?echo number_format($deuda,2);?></font></strong></div></td>
+        <td><div align="center" class="Estilo4"><strong><font face="Trebuchet MS"><?echo number_format($total,2);?></font></strong></div></td>
+      </tr>
+    
+
+      <?
+	$result1->MoveNext();
+	}
+	
+
+?>
+
+<tr>
+        <td colspan="3"><div align="right" class="Estilo5">Total</div></td>
+        <td><div align="right"><strong><font size="2" face="Trebuchet MS"><?echo $total_importe;?></font></strong></div></td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+
+</table>

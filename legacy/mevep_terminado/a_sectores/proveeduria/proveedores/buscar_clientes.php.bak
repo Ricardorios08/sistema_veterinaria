@@ -1,0 +1,153 @@
+<?php
+global $buscador_rapido;
+$buscador_rapido=$_POST["buscador_rapido"];
+
+ include("adodb.inc.php");
+ $db = NewADOConnection('mysql');
+ $db->Connect("localhost", "root", "", "proveeduria");
+
+$B = 1;
+$palabra=$_POST["busca"];
+
+$sql="select * from clientes where cuenta like '%$palabra%' or estado like '%$palabra%' or denominacion like '%$palabra%' or domicilio like '%$palabra%' order by cuenta asc ";
+
+	$result = $db->Execute($sql);
+?>
+<table width="83%" height="58" border="0">
+  <tr bordercolor="#FFFFCC" bgcolor="#993300">
+    <td colspan="11"><div align="center"><strong><font color="#FFFFCC">LISTADO DE CLIENTES NO ASOCIADOS </font></strong></div></td>
+  </tr>
+  <tr bordercolor="#FFFFCC" bgcolor="#993300">
+    <?
+
+switch ($buscador_rapido)
+{
+	case "1"://mostrar sin modificar
+	{ 
+		?>
+    <td width="5%" bgcolor="#FFFF99"><div align="center"><font color="#006633"><strong><font size="2">CUENTA</font></strong></font></div></td>
+    <td width="11%" bgcolor="#FFFF99"><div align="center"><font color="#006633"><strong><font size="2">RAZON SOCIAL O APELLIDO</font></strong></font></div></td>
+    <td width="12%" bgcolor="#FFFF99"><div align="center"><font color="#006633"><strong><font size="2">ESTADO</font></strong></font></div></td>
+    <?
+
+
+
+
+	break;
+}
+
+
+	case "2": //mostrar con modificar
+	{
+		?>
+    <td width="5%" bgcolor="#FFFF99"><div align="center"><font color="#006633"><strong><font size="2">CUENTA</font></strong></font></div></td>
+    <td width="11%" bgcolor="#FFFF99"><div align="center"><font color="#006633"><strong><font size="2">RAZON SOCIAL O APELLIDO</font></strong></font></div></td>
+    <td width="10%" bgcolor="#FFFF99"><div align="center"><font color="#006633"><strong><font size="2">ESTADO</font></strong></font></div></td>
+    <td width="12%" bgcolor="#FFFF99"><div align="center"><font color="#006633"><strong><font size="2">MODIFICAR </font></strong></font></div></td>
+    <td width="12%" bgcolor="#FFFF99"><div align="center"><font color="#006633"><strong><font size="2">ELIMINAR </font></strong></font></div></td>
+    <td width="12%" bgcolor="#FFFF99"><div align="center"><font color="#006633"><strong><font size="2">FICHA </font></strong></font></div></td>
+  </tr>
+  <?
+
+
+	break;
+}	
+
+
+
+
+
+
+}
+ 
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+	
+$cuenta=strtoupper($result->fields["cuenta"]);
+$denominacion=strtoupper($result->fields["denominacion"]);
+$estado=strtoupper($result->fields["estado"]);
+
+switch ($estado)
+						  {
+	case "1": //activo
+					{
+$estad_o="ACTIVO";
+				  }
+		break;
+
+
+	case "2": //suspendido
+		  {
+$estad_o="SUSPENDIDO";
+		  }
+break;
+
+	case "3": //baja
+		  {
+$estad_o="BAJA";
+		  }
+break;
+
+						  }
+
+
+
+	if ($B == 1) {
+
+?>
+  <tr bordercolor="#FFFFFF" bgcolor="#FFFFFF">
+    <?
+$B = 0;
+				}
+	ELSE	{
+	$B=1;
+		 	
+?>
+  <tr bordercolor="#FFFFCC" bgcolor="#FFFFCC">
+    <?
+
+			}
+
+
+
+
+
+switch ($buscador_rapido)
+{
+	case "2": //mostrar sin modificar
+	{
+		?>
+    <td><div align="center"><font size="2"><?print("$cuenta");?></font></div></td>
+    <td><div align="center"><font size="2"><?print("$denominacion");?></font></div></td>
+    <td><div align="center"><font size="2"><?print("$estad_o");?></font></div></td>
+    <td><div align="center"><font size="2"><a href="modificar.php?id=<?print("$cuenta");?>" target = "central">[Modificar]</a></font></div></td>
+    <td><div align="center"><font size="2"> <a href="borra.php?id=<?print("$cuenta");?>">[Eliminar]</a> </font></div></td>
+    <td><div align="center"><font size="2"> <a href="ficha.php?id=<?print("$id");?>">[Ficha]</a></font></div></td>
+  </tr>
+  <?
+
+
+
+break;
+}
+
+
+case "1":
+	  {
+	?>
+  <td><div align="center"><font size="2"><?print("$cuenta");?></font></div></td>
+      <td><div align="center"><font size="2"><?print("$denominacion");?></font></div></td>
+      <td><div align="center"><font size="2"><?print("$estad_o");?></font></div></td>
+  </tr>
+  <?
+
+	break;
+	  }
+	  }
+
+$result->MoveNext();
+	}
+
+?>
+</table>

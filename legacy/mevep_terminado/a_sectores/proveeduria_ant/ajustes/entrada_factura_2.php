@@ -1,0 +1,313 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<script language="javascript">
+function on_load()
+{
+document.getElementById("cod_mercaderia").focus();
+document.getElementById("cod_mercaderia").style.backgroundColor =  "#CCFFCC";
+}
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				case "forma_pago":
+document.getElementById("cod_mercaderia").style.backgroundColor =  "#CCFFCC";
+document.getElementById("cod_mercaderia").focus();
+				break;
+
+				case "cod_mercaderia":
+document.getElementById("cod_mercaderia").style.backgroundColor = "#ffffff";	document.getElementById("cantidad").style.backgroundColor =  "#CCFFCC";
+				document.getElementById("cantidad").focus();
+				break;
+				
+				case "cantidad":
+document.getElementById("cod_mercaderia").style.backgroundColor = "#CCFFFF";	document.getElementById("cantidad").style.backgroundColor =  "#CCFFFF";
+
+				document.getElementById("OK").focus();
+				break;
+				
+				
+		}
+		return false;
+	}
+	return true;
+}
+
+function abrirVentan() {
+	var cod_detalle = <?echo $cod_detalle;?> 
+    open("buscador_rapido.php","miVentana", "width=300,height=600,toolbar=no,directories=no,menubar=no,status=no, scrollbars=01, location = 01, top = 35");
+}
+
+</script>
+
+
+</script>
+
+<html>
+<head>
+<title>Documento sin t&iacute;tulo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+.Estilo4 {
+	color: #006633;
+	font-size: 10px;
+	font-weight: bold;
+}
+.Estilo6 {font-size: 12}
+.Estilo16 {font-family: Arial, Helvetica, sans-serif}
+.Estilo21 {font-size: 10px; color: #006633; }
+.Estilo22 {color: #006633; font-size: 10px; font-weight: bold; font-family: Arial, Helvetica, sans-serif; }
+.Estilo26 {
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+-->
+
+
+<!--
+.Estilo67 {color: #FFFFFF; font-size: 12px; font-family: Arial, Helvetica, sans-serif;}
+.Estilo70 {color: #FFFFFF}
+.Estilo71 {font-size: 10px}
+.Estilo72 {font-size: 12px; color: #FFFFFF; }
+-->
+
+<!--
+.Estilo83 {color: #FFFF00}
+.Estilo84 {font-size: 10px; font-family: Arial, Helvetica, sans-serif;}
+-->
+
+
+
+</style>
+</head>
+
+<?
+include("../../../conexiones/config_grabacion.php");
+$nro_factura= $_REQUEST['nro_factura'];
+$fact= $_REQUEST['tipo_fact'];
+
+
+$dia= $_REQUEST['dia'];
+$mes= $_REQUEST['mes'];
+$anio= $_REQUEST['anio'];
+
+$fecha= $anio.$mes.$dia;
+$producto= $_REQUEST['producto'];
+$cod_merquita= $_REQUEST['cod_merquita'];
+$operador= $_REQUEST['operador'];
+$cantidad_existente= $_REQUEST['cantidad_existente'];
+
+
+
+
+
+
+Switch ($operador){
+	case "101":{
+		$nombre_operador = "Sergio Zavala";
+		break;
+	}
+
+	case "201":{
+$nombre_operador = "Juan Tomas";
+break;
+	}
+}
+
+
+
+
+
+
+
+
+$motivo_ajuste= $_REQUEST['motivo_ajuste'];
+ $cod_laboratorio= $_REQUEST['cod_laboratorio'];
+$pasada= $_REQUEST['pasada'];
+
+
+include("../../../conexiones/config_grabacion.php");
+
+ $sql="select * from ventas_encabezado GROUP BY nro_factura ORDER BY nro_factura DESC";
+$result = $db_aj->Execute($sql);
+
+ $nro_factura_anterior = $result->fields["nro_factura"];
+
+ if ($nro_factura_anterior == ""){
+	 $nro_factura_anterior= "No Existen Facturas en el Sistema";
+$nro_factura= 1;
+
+ }else{
+ $nro_factura=($result->fields["nro_factura"] + 1);
+ }
+
+
+
+$fact = I;
+if ($plan == 0){
+$plan = 1;
+}
+
+
+$denominacion = $motivo_ajuste;
+$sql = "INSERT INTO `ventas1_encab_temp` ( `tipo_fact` , `nro_factura` , `cod_operacion` , `tipo` , `nro_cliente` , `nro_cuenta` , `plan` , `operador` , `denominacion` , `fecha` , `forma_pago` , `porc_dto`) VALUES ( '$fact'  , '$nro_factura' , '7' , '$tipo_iva' , '$nro_cliente' , '$matricula1' , '$plan' , '$operador' , '$motivo_ajuste' , '$fecha' , '$forma_pago' , '$porc_dto' )";
+$result = $db_aj->Execute($sql);
+
+
+?>
+
+<script>
+
+function abrirVentana() {
+	var cod_detalle = <?echo $cod_detalle;?> 
+    open("factura_papel.php?cod_detalle=<?print($cod_detalle);?>&&nro_factura=<?print($nro_factura);?>&&nro_cliente=<?print($nro_cliente);?>&&matriculae=<?print($matricula);?>&&forma_pago=<?print($forma_pago);?>&&dia=<?print($dia);?>&&mes=<?print($mes);?>&&anio=<?print($anio);?>&&todo=<?print($todo);?>&&direccion=<?print($direccion);?>&&cuit=<?print($cuit);?>&&tipo_fact=<?print($tipo_fact);?>","MERCADERIA", "width=1000,height=1000,toolbar=no,directories=no,menubar=no,status=no");
+} 
+</script>
+
+<body onload = "on_load ()">
+<FORM name="form" ACTION="<?php echo $_SERVER["PHP_SELF"];?>" METHOD = "POST">
+
+<table width="103%" border="0">
+          <!--DWLayoutTable-->
+          <tr bgcolor="#333333">
+            <td height="31" colspan="5" bordercolor="#000000" class="Estilo67"><div align="left"><span class="Estilo26"><span class="Estilo70"><span class="Estilo4 Estilo6  Estilo16 Estilo70"><span class="Estilo4 Estilo16  Estilo6"><span class="Estilo71"><span class="Estilo72">&nbsp;&nbsp;</span></span></span></span></span>  &nbsp;<span class="Estilo70"><span class="Estilo4 Estilo6  Estilo16 Estilo70"><span class="Estilo4 Estilo16  Estilo6"><span class="Estilo71"><span class="Estilo72">&nbsp;&nbsp;&nbsp;MOTIVO DEL AJUSTE: <span class="Estilo83"><?echo strtoupper($motivo_ajuste);?>&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span></span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="Estilo72"> N&ordm; INFORME:</span> <span class="Estilo72"><span class="Estilo83"><?echo $nro_factura;?> </span>&nbsp;&nbsp;</span><span class="Estilo26">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="Estilo72">FECHA: <span class="Estilo83"><?echo $dia;?> / <?echo $mes;?> / <?echo $anio?></span></span><span class="Estilo26"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="Estilo72">&nbsp;&nbsp;</span></span></span>Op:</span> <span class="Estilo72"><span class="Estilo83"><?echo $operador;?></span><span class="Estilo26">&nbsp;&nbsp;&nbsp;</span><span class="Estilo4 Estilo6 Estilo16"><span class="Estilo21"><span class="Estilo22"><span class="Estilo26">  </span></span></span></span></span></div>              </td>
+    </tr>
+          <tr bordercolor="#C9FADF" bgcolor="#C9FADF">
+            <td height="26" colspan="4"><div align="left"><span class="Estilo4 Estilo6 Estilo16"><span class="Estilo21"><span class="Estilo22"><span class="Estilo26"> PRODUCTO: 
+                      </span></span></span></span><span class="Estilo4 Estilo6 Estilo16"><span class="Estilo21"><span class="Estilo22"></span></span></span>
+              <input name="cod_mercaderia" type="text" class="Estilo22" id="cod_mercaderia" onKeyPress="return verif_caracter(this,event)" value="<?php if (isset($_REQUEST['cod_merca']))   echo $_REQUEST['cod_merca'];?>" size = "5">
+                      <span class="Estilo4 Estilo6 Estilo16"><span class="Estilo21"><span class="Estilo22"><span class="Estilo26">
+                      CANTIDAD </span></span></span></span><span class="Estilo4 Estilo6 Estilo16"><span class="Estilo21"><span class="Estilo22"><span class="Estilo26">
+                      <input name="cantidad" type="text" class="Estilo22" id="cantidad" size = "5">
+                      </span></span></span></span><span class="Estilo4 Estilo6 Estilo16"><span class="Estilo21"><span class="Estilo22"><span class="Estilo26">
+                      <input name="Alta" type="submit" value= "OK" id = "Alta">
+                      </span></span></span></span> <strong><span class="Estilo44"><span class="Estilo43"><? $cod_merquita; ?></span></span></strong><strong><span class="Estilo44"><span class="Estilo43"><?  $producto; ?> <? $cantidad_existente;?><span class="Estilo62"><strong><span class="Estilo4 Estilo6 Estilo16"><span class="Estilo21"><span class="Estilo22"><span class="Estilo26">
+					  
+					                      <input name="matricula" type="hidden" value ="<?echo $matricula;?>">
+                      <input name="nro_cliente" type="hidden" value ="<?echo $nro_cliente;?>">
+                      <input name="dia" type="hidden" value ="<?echo $dia;?>">
+                      <input name="mes" type="hidden" value ="<?echo $mes;?>">
+                      <input name="anio" type="hidden" value ="<?echo $anio;?>">
+                      <input name="nro_factura" type="hidden" value ="<?echo $nro_factura;?>">
+                      <input name="tipo_iva" type="hidden" value ="<?echo $tipo_iva;?>">
+                      <input name="producto" type="hidden" value ="<?echo $producto;?>">
+                      <input name="denominacion" type="hidden" value ="<?echo $denominacion;?>">
+                      <input name="operador" type="hidden" value ="<?echo $operador;?>">
+					  <input name="porc_dto" type="hidden" value ="<?echo $porc_dto;?>">
+					  <input name="bandera_tipo" type="hidden" value ="<?echo $bandera_tipo;?>">
+					  <input name="motivo_ajuste" type="hidden" value ="<?echo $motivo_ajuste;?>">
+                      <input name="pasada" type="hidden" value ="1">
+
+
+                      <span class="Estilo4 Estilo6 Estilo16"><span class="Estilo21"><span class="Estilo22">
+                      <input name="Alta" type="image" id = "Alta7" value= "BUSCAR" src="../../../imagenes/botones/btn_buscar.gif" align="middle">                       
+                      </span></span></span>
+                      
+					  
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;</span><a href="control_nro_factura.php?&&nro_factura=<?print("$nro_factura");?>&&fact=<?print("$fact");?>&&tipo_fact=<?print("$tipo_fact");?>&&direccion=<?print("$direccion");?>&&cuit=<?print("$cuit");?>"> </a><span class="Estilo26"></span></div></td>
+            <td width="11%" height="26"><a href="control_nro_factura.php?&&nro_factura=<?print("$nro_factura");?>&&fact=<?print("$fact");?>&&tipo_fact=<?print("$tipo_fact");?>&&direccion=<?print("$direccion");?>&&cuit=<?print("$cuit");?>"><img src="../../../imagenes/botones/btn_confirmar.png" alt="Confirmar" border = "0"></a></td>
+    </tr>
+
+<?
+		
+
+
+		
+
+		if(isset($_REQUEST['Alta'])) {
+	
+	switch ($_REQUEST['Alta'])
+	{
+		case "OK":
+				{
+
+?>
+       
+	  
+	 <tr>
+       <th height="20" colspan="5" valign="top" scope="row"><div align="left">
+	   <?
+$bandera_tipo= $_REQUEST['bandera_tipo'];
+
+	 
+$tipo_fact = $_REQUEST['fact'];
+$porc_dto= $_REQUEST['porc_dto'];
+$motivo_ajuste= $_REQUEST['motivo_ajuste'];
+	
+	 include ("refrescar.php");
+	
+	 ?>
+
+       </div></th>
+
+  </tr>
+  <?
+			break;
+				}
+
+
+		case "BUSCAR":
+				{
+$motivo_ajuste= $_REQUEST['motivo_ajuste'];
+			$busca = "SI";
+$no_hacer_nada="OK";
+?>
+ 
+ <tr>
+    <th height="21" colspan="5" valign="top" scope="row"><div align="left"> <?include ("refrescar1.php");?>
+    </div></th>
+    </tr>
+ <tr>
+   <td width="7%" height="3"></td>
+   <td width="52%"></td>
+   <td width="18%"></td>
+   <td colspan="2"></td>
+ </tr>
+
+
+
+  <?
+			break;
+				}
+
+	case "VENCIDOS":{
+$motivo_ajuste= $_REQUEST['motivo_ajuste'];
+			$busca = "SI";
+$no_hacer_nada="OK";
+?>
+ 
+ <tr>
+    <th height="21" colspan="5" valign="top" scope="row"><div align="left"> <?include ("refrescar_vencido.php");?>
+    </div></th>
+    </tr>
+ <tr>
+   <td height="3"></td>
+   <td width="52%"></td>
+   <td></td>
+   <td colspan="2"></td>
+ </tr>
+
+
+
+  <?
+			break;
+				}
+
+
+
+	}
+ }
+?>
+  </table>
+</form>
+

@@ -1,0 +1,22 @@
+<?php
+
+$cuota_actual = $_REQUEST['cuota_actual'];
+$cuota_nueva = $_REQUEST['$cuota_nueva'];
+
+if ($cuota_actual == ""){
+$leyenda = "NO INGRESO CUOTA ACTUAL";
+include ("../../alertas/campo_informacion.php");
+exit;
+}
+
+if ($cuota_nueva == ""){
+$leyenda = "NO INGRESO CUOTA NUEVA";
+include ("../../alertas/campo_informacion.php");
+exit;
+}
+
+
+$sql = "UPDATE `socios` SET `importe_cuota` = '$cuota_nueva' WHERE `cuota_actual = $cuota_actual";MIT 1 ;'
+
+
+include ("cambiar_cuota.php");

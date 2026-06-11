@@ -1,0 +1,40 @@
+<?php
+echo "factura.php";
+ //dl("php_lxv4.dll");
+include ("lx300.php");
+	//$err = IF_SERIAL("27-0163848-435");
+echo "<br>";
+
+  $port = IF_OPEN("COM2",9600);
+
+  if ( $port == -1) 
+  {   echo "impresora ocupada";   return;  }
+
+$err = IF_WRITE("@PONEENCABEZADO|5|ÙEJEMPLO FACTURA A");
+
+  
+
+$err = IF_WRITE("@FACTABRE|F|C|A|1|P|12|I|I|JUAN PEREZ||CUIT|27141670641|N|BELGRANO 970|certificado 21/11/2000|sin fiscalizar|Remito 1||C");
+   
+  // item 1:  tasa 21%, imp. int 15% y precio total $2300
+  $err = IF_WRITE("@FACTITEM|Producto A|1.000|2300.00|0.2100|M|1|0.154412||||0.0000|0");
+   
+  // item 2: tasa 10,50% sin imp int  y precio total $350
+  $err = IF_WRITE("@FACTITEM|Producto B|1.000|350.00|0.1050|M|1|0||||0.0000|0");
+
+  // Item 3:  tasa 21% imp int fijo $20 precio total $100
+  $err = IF_WRITE("@FACTITEM|Producto C|1.000|100.00|0.2100|M|1|0||||0.0000|20");
+
+  //**   HAGO UN DESCUENTO
+  $err = IF_WRITE("@FACTPAGO|DESCUENTO 10%|275.00|D");
+  $err = IF_WRITE("@FACTPAGO|PAGO|3000.00|T");
+  $err = IF_WRITE("@FACTCIERRA|F|A|FINAL");
+  
+  //** si hay error cancelar la factura
+  $nfactura =  IF_READ(3);
+
+  $err =IF_CLOSE();
+
+
+
+

@@ -1,0 +1,134 @@
+<?php 
+include ("../../../conexiones/config_pro.php");
+
+//tabla clientes
+$cuenta=$_POST["cuenta"];
+$estado=$_POST["estado"];
+$denominacion=$_POST["denominacion"];
+$domicilio=$_POST["domicilio"];
+$puerta=$_POST["puerta"];
+$referencia=$_POST["referencia"];
+$cod_postal =$_POST["cod_postal"];
+
+
+$localida=$_POST["localidad"];
+	for ($i=0;$i<count($localida);$i++)    
+	{     
+	$localidad = $localida[$i];    
+	}
+
+if ($localidad == ""){
+$sql = "SELECT localidad FROM clientes where cuenta = '$cuenta'";
+$result = $db->Execute($sql);
+$localidad=strtoupper($result->fields["localidad"]);
+}
+
+
+$caracteristica_1=$_POST["caracteristica_1"];
+$telefono_1=$_POST["telefono_1"];
+$caracteristica_2=$_POST["caracteristica_2"];
+$telefono_2=$_POST["telefono_2"];
+$caracteristica_3=$_POST["caracteristica_3"];
+$telefono_3=$_POST["telefono_3"];
+$email=$_POST["email"];
+$cuit=$_POST["cuit"];
+
+
+$sql = "DELETE from `clientes` where cuenta = $cuenta";
+mysql_query($sql);
+
+$sql = "INSERT INTO `clientes` ( `cuenta` , `estado` , `denominacion` , `domicilio` , `puerta` , `referencia` , `cod_postal` , `localidad` , `caracteristica_1` , `telefono_1` , `caracteristica_2` , `telefono_2` , `caracteristica_3` , `telefono_3` , `email`, `cuit`) VALUES ('$cuenta' , '$estado' , '$denominacion' , '$domicilio' , '$puerta' , '$referencia' , '$cod_postal' , '$localidad' , '$caracteristica_1' , '$telefono_1' , '$caracteristica_2' , '$telefono_2' , '$caracteristica_3' , '$telefono_3' , '$email', '$cuit' )";
+mysql_query($sql);
+
+
+
+
+
+
+//tabla condiciones_clientes
+
+
+
+$ivas=$_POST["iva"];
+for ($i=0;$i<count($ivas);$i++)    
+{     
+$iva = $ivas[$i];    
+}
+
+
+if ($iva == ""){
+$sql = "SELECT iva FROM condiciones_clientes where cuenta = '$cuenta'";
+$result = $db->Execute($sql);
+$iva=strtoupper($result->fields["iva"]);
+}
+
+
+$ingresos_brutos=$_POST["ingresos_brutos"];
+
+
+$condicione=$_POST["condiciones"];
+for ($i=0;$i<count($condicione);$i++)    
+{     
+$condiciones= $condicione[$i];    
+}
+
+
+$credito=$_POST["credito"];
+
+$flet=$_POST["flete"];
+for ($i=0;$i<count($flet);$i++)    
+{     
+$flete= $flet[$i];    
+}
+
+if ($flete == ""){
+$sql = "SELECT flete FROM condiciones_clientes where cuenta = '$cuenta'";
+$result = $db->Execute($sql);
+$flete=strtoupper($result->fields["flete"]);
+}
+
+$plan=$_POST["plan"];
+
+
+ $sql = "Select * from tasas_planes where cod_plan = $plan";
+$result = $db->Execute($sql);
+
+$plan_guardado=strtoupper($result->fields["cod_plan"]);
+
+if ($plan_guardado == ""){
+$leyenda ="No existe ese plan";
+include ("../../../alertas/campo_vacio.php");
+exit;
+}
+
+$observaciones=$_POST["observaciones"];
+$descuento_mega=$_POST["descuento_mega"];
+
+//if ($denominacion == ""){
+//$leyenda = "NO INGRESO DENOMINACION O RAZON SOCIAL";
+//include ("../../../alertas/campo_vacio.php");
+//	exit;
+//}
+
+//if ($cuit == ""){
+//$leyenda = "NO INGRESO NUMERO DE CUIT";
+//include ("../../../alertas/campo_vacio.php");
+	//exit;
+//}
+
+
+include ("../../../conexiones/config_pro.php");
+
+$sql = "DELETE from condiciones_clientes where cuenta = $cuenta";
+mysql_query($sql);
+
+ $sql = "INSERT INTO `condiciones_clientes` ( `cuenta` , `iva` , `ingresos_brutos` , `plan` , `credito` , `flete` , `observaciones`) VALUES ( '$cuenta' , '$iva' , '$ingresos_brutos' , '$plan' ,'$credito' , '$flete' , '$observaciones' , '$descuento_mega')";
+
+mysql_query($sql);
+
+$leyenda = "LOS DATOS SE HAN GUARDADO CORRECTAMENTE ";
+//include ("../../../alertas/campo_vacio.php");
+include ("../../proveeduria/clientes/entrada_dato.php");
+
+?>
+

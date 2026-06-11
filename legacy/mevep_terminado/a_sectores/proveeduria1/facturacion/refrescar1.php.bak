@@ -1,0 +1,107 @@
+<style type="text/css">
+<!--
+.Estilo16 {font-family: Arial, Helvetica, sans-serif}
+.Estilo26 {
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+-->
+
+
+<!--
+.Estilo67 {color: #FFFFFF; font-size: 12px; font-family: Arial, Helvetica, sans-serif;}
+.Estilo69 {font-size: 12px}
+-->
+
+<!--
+.Estilo79 {color: #000099}
+.Estilo80 {color: #000099; font-size: 12px; }
+.Estilo81 {font-size: 12}
+-->
+
+
+
+</style>
+
+
+<table width="650" border="0">
+  <tr bgcolor="#E6E6E6">
+    <td width="15%" scope="col"><div align="center" class="Estilo1 Estilo39 Estilo42 Estilo45 Estilo16 Estilo60 Estilo67 Estilo69 Estilo79">Cod.</div></td>
+    <td width="51%" scope="col"><div align="center" class="Estilo1 Estilo45 Estilo39 Estilo42 Estilo16 Estilo60 Estilo67 Estilo69 Estilo79">Descripcion</div></td>
+    <td width="15%" scope="col"><div align="center" class="Estilo1 Estilo45 Estilo39 Estilo42 Estilo16 Estilo60 Estilo67 Estilo69 Estilo79"><span class="Estilo1 Estilo45 Estilo39 Estilo42 Estilo16 Estilo60">Proveedor</span></div></td>
+    <td width="19%" scope="col"><div align="center" class="Estilo80"><span class="Estilo1 Estilo45 Estilo39 Estilo42 Estilo16 Estilo60">Precio</span></div></td>
+  </tr>
+
+<?
+	
+
+
+$cod_mercaderia = $_REQUEST['cod_mercaderia'];
+$matricula= $_REQUEST['matricula'];
+$nro_cliente= $_REQUEST['nro_cliente'];
+$operador= $_REQUEST['operador'];
+
+
+
+
+
+$busca == "SI";
+
+include("../../../conexiones/config_pro.php");
+
+
+if ($cod_mercaderia == ""){
+
+echo$sql = "SELECT * FROM `mercaderia`  order by nombre";
+}
+else
+{
+$sql = "SELECT * FROM `mercaderia`  WHERE  `cod_merca` like '$cod_mercaderia%'";
+}
+
+$result1 = $db->Execute($sql);
+if (!$result1) die("fallo".$db->ErrorMsg());
+ while (!$result1->EOF) {
+
+
+$cod_mercaderia=strtoupper($result1->fields["cod_merca"]);
+$nombre=strtoupper($result1->fields["nombre"]);
+$precio_actualizado=strtoupper($result1->fields["precio_actualizado"]);
+$proveedor=strtoupper($result1->fields["proveedor"]);
+
+$precio_actualizado = number_format($precio_actualizado,2);
+$contar = $contar + 1;
+if ($contr == 20){
+$contar=0;
+?>
+    <td width="15%" scope="col"><div align="center" class="Estilo1 Estilo39 Estilo42 Estilo45 Estilo16 Estilo60 Estilo69">Cod.</div></td>
+    <td width="51%" scope="col"><div align="center" class="Estilo1 Estilo45 Estilo39 Estilo42 Estilo16 Estilo60 Estilo69">Descripción</div></td>
+    <td width="15%" scope="col"><div align="center" class="Estilo69"><span class="Estilo1 Estilo45 Estilo39 Estilo42 Estilo60 Estilo16">Proveedor</span></div></td>
+    <td width="19%" scope="col"><div align="center" class="Estilo69"><span class="Estilo1 Estilo45 Estilo39 Estilo42 Estilo60 Estilo16">Precio</span></div></td>
+ 
+<?
+
+}
+
+?>
+  <tr bordercolor="#FFFFCC" bgcolor="#E1F2EF" class="Estilo26">
+   <td height="20" class="Estilo61 Estilo81" scope="col"><div align="center"><a href="entrada_factura_2.php?nro_cliente=<?print("$nro_cliente");?>&&forma_pago=<?print("$forma_pago");?>&&operador=<?print("$operador");?>&&matricula=<?print("$matricula");?>&&matricula1=<?print("$matricula");?>&&nro_factura=<?print("$nro_factura");?>&&dia=<?print("$dia");?>&&mes=<?print("$mes");?>&&anio=<?print("$anio");?>&&producto=<?print("$descripcion");?>&&cod_merquita=<?print("$cod_mercaderia");?>&&cantidad_existente=<?print("$cantidad_existente");?>&&cod_merca=<?print("$cod_mercaderia");?>&&pasada=1&&no_hacer_nada=<?print("$no_hacer_nada");?>"><?print("$cod_mercaderia");?></a></div>
+      </div></td>
+    <td scope="col"><span class="Estilo60 Estilo81"><?echo $nombre;?></span></td>
+    <td scope="col"><div align="center" class="Estilo60 Estilo81"><?echo $proveedor;?></div></td>
+<td scope="col"><div align="center" class="Estilo60 Estilo81">
+  <div align="right"><?echo $precio_actualizado;?></div>
+</div></td>
+  </tr>
+
+<?
+   $result1->MoveNext();
+				}
+
+
+ 
+ 
+	?>	
+</table>
+

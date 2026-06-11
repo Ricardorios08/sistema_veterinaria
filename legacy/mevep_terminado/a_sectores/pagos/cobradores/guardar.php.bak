@@ -1,0 +1,22 @@
+ <?php
+include ("../../../conexiones/config.inc.php");
+
+echo "aca";
+$nombre=$_POST["nombre"];
+
+$pla=$_POST["plan"];
+	for ($i=0;$i<count($pla);$i++)    
+	{     
+	$plan = $pla[$i];    
+	}
+	
+echo $sql = "INSERT INTO cobradores ( `cod_cobrador` , `nombre_cobrador` , `destino` , `plan` ) VALUES ( '$cod_cobrador' , '$nombre' , '$destino' , '$plan')";
+mysql_query($sql);
+
+
+$leyenda = "LOS DATOS HAN SIDO GUARDADOS EN EL SISTEMA";
+include ("../../../alertas/campo_informacion.php");
+	
+
+?>
+

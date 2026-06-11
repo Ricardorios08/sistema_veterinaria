@@ -1,0 +1,178 @@
+<?php
+echo "fds";
+  include("adodb.inc.php");
+ $db = NewADOConnection('mysql');
+ $db->Connect("localhost", "root", "", "bioquimica");
+
+$B = 1;
+global $buscador_rapido;
+
+if ($band_fac == 1){
+$busqueda = "FACTURANTE";
+$buscador_rapido=3;
+}
+ELSE{
+
+$palabra=$_POST["busca"];
+}
+
+IF ($band_fac == 2)
+{
+$busqueda = "DATOS_AUSENTES";
+$buscador_rapido=6;
+}
+ELSE{
+
+$palabra=$_POST["busca"];
+}
+
+
+
+switch ($busqueda)
+	{
+case "FACTURANTE":
+		{
+	
+if ($palabra=="")
+{
+ $sql="select * from facturante where facturante = 'SI' order by nro_laboratorio asc";
+$buscador_rapido=3;
+}else{
+// echo $sql="select * from facturante where facturante = 'SI' and nro_laboratorio like '$palabra%' or nombre_laboratorio like '$palabra%' and facturante = 'SI' order by nro_laboratorio asc";
+
+
+$sql = 'SELECT bioquimica.facturante.facturante, bioquimica.facturante.nro_laboratorio, bioquimica.datos_laboratorio.nombre_laboratorio'
+        . ' FROM bioquimica.facturante'
+        . ' INNER JOIN bioquimica.datos_laboratorio ON bioquimica.facturante.nro_laboratorio = bioquimica.datos_laboratorio.nro_laboratorio'
+        . ' WHERE bioquimica.facturante.facturante = \'SI\' AND bioquimica.facturante.nro_laboratorio'
+        . ' LIKE \'RIOS%\' OR bioquimica.datos_laboratorio.nombre_laboratorio'
+        . ' LIKE \'RIOS%\' AND bioquimica.facturante.facturante = \'SI\' LIMIT 0, 30';
+
+$buscador_rapido=3;
+
+
+}
+	break;
+		}
+
+
+case "SOCIEDADES":
+		{
+	
+ $sql = "SELECT * FROM facturante WHERE  facturante = 'SI' AND nro_laboratorio > 7999";
+$buscador_rapido=5;
+	break;
+		}
+
+case "DATOS_AUSENTES":
+		{
+	
+ $sql = "SELECT * FROM facturante WHERE  facturante = 'SI'";
+$buscador_rapido=6;
+	break;
+		}
+
+	case "LABORATORIO":
+		{
+	if ($palabra=="")
+{
+$sql="select * from datos_laboratorio";
+}else{
+$sql="select * from datos_laboratorio where nro_laboratorio like '%$palabra%' or nombre_laboratorio like '%$palabra%' or matricula like '%$palabra%' ";
+}
+	break;
+		}
+
+
+	case "TODOS DEP.":
+		{
+if ($palabra=="")
+{
+$sql="select * from datos_laboratorio order by localidad";
+}else{
+$sql="select * from datos_laboratorio where nro_laboratorio like '%$palabra%' or nombre_laboratorio like '%$palabra%' or matricula like '%$palabra%'order by localidad ";
+}
+
+	break;
+		}
+
+
+
+
+
+
+
+
+
+case "ORIENTACION":
+		{
+	if ($palabra=="")
+{
+	$sql="select * from datos_laboratorio order by orientacion";
+}
+else
+			{
+	$sql="select * from datos_laboratorio where  orientacion like '%$palabra%' order by orientacion";
+		}
+	$buscador_rapido = 4;
+	break;
+		}
+
+case "ESPECIALIDAD":
+		{
+	if ($palabra=="")
+{
+	$sql="select * from datos_laboratorio order by orientacion";
+}
+else
+			{
+	$sql="select * from datos_laboratorio where  especialidad like '%$palabra%' order by especialidad";
+		}
+	$buscador_rapido = 5;
+	break;
+		}
+
+		}
+
+
+	$result = $db->Execute($sql);
+
+
+
+//**************************************************************
+
+switch ($buscador_rapido)
+{
+	case "3"://
+	{ 
+	include ("facturante.php");	
+	break;
+	}
+	
+		case "4"://
+	{ 
+	include ("orientacion.php");	
+		break;
+	}
+
+case "5"://
+	{ 
+	include ("sociedades.php");	
+		break;
+	}
+
+case "6"://
+	{ 
+	include ("datos_ausentes.php");	
+		break;
+	}
+	
+
+	
+}
+
+
+?>
+</table>
+
+

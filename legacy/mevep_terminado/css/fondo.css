@@ -1,0 +1,29 @@
+
+.Estilo1 {
+	font-family: "Arial Black";
+	font-size: 24px;
+}
+.Estilo5 {color: #000099}
+.Estilo15 {font-family: Arial, Helvetica, sans-serif}
+body {
+	background-color: #FFFFFF;
+	background-image: url(../imagenes/blanco.jpg);
+	background-repeat: no-repeat bottom right;
+	background-image: url(../imagenes/presentacion/fondo6.jpg);
+	background-repeat: repeat-y;
+
+
+	
+
+}
+.Estilo21 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo24 {font-size: 14px; font-family: Arial, Helvetica, sans-serif; }
+body,td,th {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+
+.estilotextarea {width:400px;height:100px;border: 2px solid #990000;} 
+.estilotextarea2 {width:300px;height:80px;border: 1px dotted #000099;} 
+.estilotextarea3 {font-family: Garamond,verdana;font-size: 18pt;font-weight: bold;letter-spacing: 5px;} 

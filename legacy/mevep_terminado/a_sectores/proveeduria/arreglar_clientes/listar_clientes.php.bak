@@ -1,0 +1,94 @@
+<?php
+global $buscador_rapido;
+
+if ($borrar != 1){
+$buscador_rapido=$_POST["buscador_rapido"];
+$palabra=$_POST["busca"];
+}
+
+
+$hoy = date("d/m/y");
+
+ include("adodb.inc.php");
+ $db = NewADOConnection('mysql');
+ $db->Connect("localhost", "root", "", "proveeduria");
+
+$B = 1;
+
+
+$sql="select * from clientes order by cuenta, denominacion";
+
+	$result = $db->Execute($sql);
+?>
+<FORM name="form" ACTION="guarda.php" METHOD = "POST">
+<table width="93%" border="0">
+  <!--DWLayoutTable-->
+  <tr bordercolor="#FFFFCC" bgcolor="#FFFFFF">
+    <td height="26" colspan="3" valign="top"><div align="center"><font color="#FFFFFF" size="2"><font color="#000000" face="Arial, Helvetica, sans-serif">LISTADO DE CLIENTES EXTERNOS. Emitido el <?echo $hoy;?></font></font></div></td>
+    <td width="78" valign="top">    <div align="center">
+          <input type="Submit" name="guardar" id= "guardar" value="CAMBIAR" target = "arriba">
+    </div></td>
+  </tr>    
+  <tr bordercolor="#FFFFCC" bgcolor="#FFFFFF">
+    <td height="22" colspan="4"><hr noshade></td>
+  </tr>
+  <tr bordercolor="#FFFFCC" bgcolor="#FFFFFF">
+    <td width="443" height="20"><div align="center"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">RAZON SOCIAL O APELLIDO</font></div></td>
+
+		<td width="102"><div align="center"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif"> ACTUAL</font></div></td>
+    <td><div align="center"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">NUEVA</font></div></td>
+    <td><div align="center"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">CAMBIAR </font></div></td>
+  </tr>
+
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFFF">
+    <td height="22" colspan="4"><hr noshade></td>
+    </tr>
+
+  <?
+ 
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+$cuenta=strtoupper($result->fields["cuenta"]);
+$denominacion=strtoupper($result->fields["denominacion"]);
+$estado=strtoupper($result->fields["estado"]);
+$telefono=strtoupper($result->fields["telefono"]);
+$localidad=strtoupper($result->fields["localidad"]);
+
+ $sql3="select * from cambio_cuenta where cuenta_actual = $cuenta";
+$result3 = $db->Execute($sql3);
+$cuenta_nueva=$result3->fields["cuenta_nueva"];
+
+
+?>
+
+
+  <tr bordercolor="#FFFFFF" bgcolor="#FFFFFF">
+
+    <td height="24"><div align="left"><font size="2" face="Arial, Helvetica, sans-serif"><?print("$denominacion");?></font></div></td>
+  <td><div align="center"><font size="2" face="Arial, Helvetica, sans-serif">
+  <?echo $cuenta;?> </font></div></td>
+    <td width="78"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><?echo $cuenta_nueva;?></font></div></td>
+    <td><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"> <input type="text" name="<?echo nueva_cuenta.$cuenta;?>" id="nueva_cuenta" VALUE = "<?echo $cuenta_nueva;?>" onKeyPress="return verif_caracter(this,event)" size="5" >
+
+</font></div>      <div align="center"></div></td>
+    </tr>
+ 
+  <?
+
+	$cont = $cont + 1;
+
+$result->MoveNext();
+	}
+
+?>
+
+ <tr bordercolor="#FFFFFF" bgcolor="#FFFFFF">
+    <td height="22" colspan="4"><hr noshade></td>
+    </tr>
+  <tr bordercolor="#FFFFFF" bgcolor="#FFFFFF">
+    <td height="20" colspan="4"><div align="center"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">CANTIDAD DE CLIENTES EXTERNOS </font><font size="2" face="Arial, Helvetica, sans-serif"><?print("$cont");?></font></div></td>
+    </tr>
+
+</table>
+</form>

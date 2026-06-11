@@ -1,0 +1,88 @@
+<?
+include ("../../../conexiones/config_grabacion.php");
+
+$sql2="select * from recibos1_encab_temp_pro";
+$result2 = $db_cont->Execute($sql2);
+$nro_recibo=strtoupper($result2->fields["nro_recibo"]);
+$fecha_pago=strtoupper($result2->fields["fecha_pago"]);
+$cuenta=strtoupper($result2->fields["cuenta"]);
+$tipo_cuenta=strtoupper($result2->fields["tipo_cuenta"]);
+$cant_fact=strtoupper($result2->fields["cant_fact"]);
+//$importe_pagado=strtoupper($result2->fields["fecha_pago"]);
+$periodo=strtoupper($result2->fields["periodo"]);
+$anio=strtoupper($result2->fields["anio"]);
+$operador=strtoupper($result2->fields["operador"]);
+
+$sql="select * from recibos where nro_recibo = $nro_recibo";
+$result = $db_cont->Execute($sql);
+$nro_rec=$result->fields["nro_recibo"];
+
+if ($nro_rec != ""){
+	$leyenda  ="YA EXISTE ESE NUMERO DE RECIBO CARGADO";
+	include ("../../../alertas/campo_informacion2.php");
+	exit;
+}
+
+
+$sql="select * from recibos1_deta_temp_pro where nro_recibo = '$nro_recibo'";
+$result = $db_cont->Execute($sql);
+
+if (!$result) die("fallo".$db->ErrorMsg());
+while (!$result->EOF) {
+
+$nro_factura=strtoupper($result->fields["nro_factura_afectado"]);
+$importe_pagado=strtoupper($result->fields["importe_pagado"]);
+$debito=strtoupper($result->fields["debito"]);
+$nro_deta_recibo=strtoupper($result->fields["nro_deta_recibo"]);
+$tipo_fact=strtoupper($result->fields["tipo_fact"]);
+
+//$sql_pr = "select  * from composicion_saldos where  comprobante = '$nro_factura' and tipo_fact = '$tipo_fact' order by fecha_emision, tipo_fact, comprobante";
+$sql_pr = "select  * from composicion_saldos where  comprobante = '$nro_factura' order by fecha_emision, tipo_fact, comprobante";
+$result_pr = $db_pro->Execute($sql_pr);
+
+$saldo= $result_pr->fields["saldo"];
+
+
+//////////////// preguntar alfredo
+
+$saldo_a_guardar = $saldo - $importe_pagado;
+
+
+
+$sql1 = "INSERT INTO `resumen_cta_vta` ( `cuenta` , `tipo_cuenta` , `fecha` , `tipo_fact` , `comprobante` , `cod_movimiento` , `importe` , `vencimiento` , `referencia` , `afectacion` ) VALUES ( '$cuenta' , '$tipo_cuenta' ,'$fecha_pago' , 'X' , '$nro_recibo' , '4' , '$importe_pagado' , '' , '' , '$nro_factura')";
+$result1 = $db_pro->Execute($sql1);
+
+//$sql4 = "UPDATE `composicion_saldos` SET `saldo` = '$saldo_a_guardar' , `fecha_pago` = '$fecha_pago' WHERE `tipo_fact` = '$tipo_fact' AND `comprobante` = '$nro_factura'";
+$sql4 = "UPDATE `composicion_saldos` SET `saldo` = '$saldo_a_guardar' , `fecha_pago` = '$fecha_pago' WHERE `comprobante` = '$nro_factura'";
+$result4 = $db_pro->Execute($sql4);
+///////////////
+
+
+
+$total_importe = $total_importe + $monto;
+$saldo = $total_importe + $debito;
+
+
+ $sql6 = "INSERT INTO `detalle_recibo` ( `nro_recibo` , `tipo_fact` , `nro_factura_afectado` , `importe_pagado` , `debito` , `nro_deta_recibo`  )  VALUES ('$nro_recibo' , '$tipo_fact' ,'$nro_factura' , '$importe_pagado' , '$debito' , '')";
+$result6 = $db_cont->Execute($sql6);
+
+$total = $importe_pagado + $total;
+
+$result->MoveNext();
+}
+
+$sql5 = "INSERT INTO `recibos` ( `nro_recibo` , `fecha_pago` , `cuenta` , `tipo_cuenta` , `cant_fact` , `importe_pagado` , `periodo` , `anio` , `operador` )  VALUES ('$nro_recibo' , '$fecha_pago' , '$cuenta' , '$tipo_cuenta' , '$cant_fact' , '$total' , '$periodo' , '$anio' , '$operador')";
+$result5 = $db_cont->Execute($sql5);
+
+$sql="truncate table recibos1_encab_temp_pro ";
+$result9 = $db_cont->Execute($sql);
+$sql="truncate table recibos1_deta_temp_pro ";
+$result9 = $db_cont->Execute($sql);
+
+include_once ("cobrar_factura_1.php");
+
+
+?>
+
+
+

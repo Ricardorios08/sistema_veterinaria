@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Documento sin t&iacute;tulo</title>
+
+<style type="text/css">
+<!--
+.Estilo3 {
+	font-family: "Trebuchet MS";
+	color: #FFFFFF;
+}
+-->
+</style>
+<link href="../../menus.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+<!--
+.Estilo13 {font-size: 12px; font-family: Arial, Helvetica, sans-serif; }
+.Estilo6 {color: #0000FF}
+.Estilo14 {font-family: "Trebuchet MS"}
+.Estilo16 {font-family: "Trebuchet MS"; font-size: 12px; }
+.Estilo5 {font-size: 12px}
+-->
+</style>
+</head>
+
+<body>
+<table width="152"  border="0">
+  <tr bgcolor="#990033"> </tr>
+  <tr>
+    <td bgcolor="#666666"><div align="center" class="Estilo3">MODULOS</div></td>
+  </tr>
+</table>
+ 
+  
+<form action="prueba.php" method="post"  target ="central">
+
+<table width="152"  border="0">
+  <tr bgcolor="#990033"> </tr>
+  
+  <tr>
+    <td bgcolor="#FFFFFF"><div align="center">Tit
+          <input name = "nom" type = "text" id="nom" size = "10" />
+    </div></td>
+  </tr>
+  <tr>
+    <td bgcolor="#FFFFFF"><div align="center">cant
+          <input name = "cant" type = "text" id="cant" size = "10" />
+    </div></td>
+  </tr>
+  <tr>
+    <td bgcolor="#666666"><div align="center" class="Estilo3">GENERAR</div></td>
+  </tr>
+<tr>
+    <td bgcolor="#EDEDED"><div align="left" class="Estilo16">
+      <div align="center">Matriz</div>
+    </div></td>
+  </tr>
+  <tr>
+    <td><div align="center"><span class="Estilo16">Desde</span>
+        <input name = "desde" type = "text" id="desde" size = "10" />
+    </div></td>
+  </tr>
+  
+  <tr>
+    <td><div align="center">
+      <span class="Estilo16">Hasta</span>
+      <input name = "hasta" type = "text" id="hasta" size = "10" />
+    </div></td>
+  </tr>
+  
+  <tr>
+    <td><div align="center"><span class="Estilo5">
+      <input type = "hidden" name = "usuario" value = "<?php echo $usuario;?>" />
+      <input type = "submit" name = "buscar" value = "GENERAR">
+    </span></div></td>
+  </tr>
+</table>
+</form>
+
+<form action="prueba2.php" method="post"  target ="central">
+
+<table width="152"  border="0">
+  <tr bgcolor="#990033"> </tr>
+  
+  <tr>
+    <td bgcolor="#666666"><div align="center" class="Estilo3">GENERAR</div></td>
+  </tr>
+<tr>
+    <td bgcolor="#EDEDED"><div align="left" class="Estilo16">
+      <div align="center">Matriz</div>
+    </div></td>
+  </tr>
+  <tr>
+    <td><div align="center"><span class="Estilo16">Desde</span>
+        <input name = "desde" type = "text" id="desde" size = "10" />
+    </div></td>
+  </tr>
+  
+  <tr>
+    <td><div align="center">
+      <span class="Estilo16">Hasta</span>
+      <input name = "hasta" type = "text" id="hasta" size = "10" />
+    </div></td>
+  </tr>
+  
+  <tr>
+    <td><div align="center"><span class="Estilo5">
+      <input type = "hidden" name = "usuario" value = "<?php echo $usuario;?>" />
+      <input type = "submit" name = "buscar" value = "GENERAR">
+    </span></div></td>
+  </tr>
+</table>
+</form>
+
+
+</body>
+</html>

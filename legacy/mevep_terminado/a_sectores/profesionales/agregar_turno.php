@@ -1,0 +1,392 @@
+
+
+
+<script language="javascript">
+function on_load()
+{
+document.getElementById("apellido").focus();
+}
+
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				case "nro_paciente":
+				document.getElementById("nro_afiliado").focus();
+				break;
+				case "nro_afiliado":
+				document.getElementById("apellido").focus();
+				break;
+					case "apellido":
+				document.getElementById("nombre").focus();
+				break;
+
+				case "nombre":
+				document.getElementById("nro_documento").focus();
+				break;
+				case "nro_documento":
+				document.getElementById("domicilio").focus();
+				break;
+			
+
+				case "domicilio":
+				document.getElementById("telefono").focus();
+				break;
+				case "telefono":
+				document.getElementById("celular").focus();
+				break;
+				case "celular":
+				document.getElementById("dia").focus();
+				break;
+				case "dia":
+				document.getElementById("mes").focus();
+				break;
+				case "mes":
+				document.getElementById("anio").focus();
+				break;
+				case "anio":
+				document.getElementById("GUARDAR").focus();
+				break;
+
+				
+
+
+				
+		}
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+
+<style type="text/css">
+<!--
+.Estilo25 {font-family: "Trebuchet MS"}
+.Estilo46 {font-family: "Trebuchet MS"; font-size: 12px; }
+.Estilo47 {font-size: 12px}
+-->
+</style>
+<BODY onload = "on_load()">
+
+
+<?php
+
+function date_fix($formato, $tiempo)
+{
+/*
+$formato es el formato de la funcion date () de php, 
+puedo usar cualquier formato válido por ejemplo:
+Formato de fecha comun:  "d/m/Y H:i:s"
+formato mysql:   "Y-m-d H:i:s"
+
+$tiempo es el tiempo que quiero agregar o restar 
+en mi propio formato.. 
++H:i:s
+-H:i:s
+*/
+
+list($horasigno,$minutos,$segundos) = explode(":",$tiempo);
+$horas = abs($horasigno);
+
+$cadena = 'now ';
+if (substr_count($horasigno,"-")==1) $cadena.= "-"; else $cadena.= "+"; 
+if ($horas > 0 ) $cadena.= $horas. " hours ";
+if ($minutos > 0 ) $cadena.= $minutos. " minutes ";
+if ($segundos > 0 ) $cadena.= $segundos. " seconds ";
+
+return date($formato, strtotime($cadena));
+} 
+
+
+
+ $cod_socio=$_REQUEST['cod_socio'];
+
+
+$dia=$_REQUEST["dia"];
+$mes1=$_REQUEST["mes1"];
+$anio1="20".$_REQUEST["anio1"];
+
+$fec = $anio1."-".$mes1."-".$dia;
+
+$profesionales=$_REQUEST["profesionales"];
+
+include ("../../conexiones/config.inc.php");
+
+
+
+ $sql="select * from socios where cod_socio = $cod_socio";
+ $result = $db->Execute($sql);
+
+	
+$cod_socio=$result->fields["cod_socio"];
+$apellido1=strtoupper($result->fields["apellido"]);
+$nombre1=strtoupper($result->fields["nombre"]);
+
+
+$nombre_socio = $apellido1." ".$nombre1;
+
+$sql1="select * from animal where cod_socio = $cod_socio";
+$result1 = $db->Execute($sql1);
+
+$nombre_mascota=strtoupper($result1->fields["nombre"]);
+$especie=strtoupper($result1->fields["especie"]);
+$raza=strtoupper($result1->fields["raza"]);
+$pelaje=strtoupper($result1->fields["pelaje"]);
+$tamanio=strtoupper($result1->fields["tamanio"]);
+$color=strtoupper($result1->fields["color"]);
+$sexo_mascota=strtoupper($result1->fields["sexo"]);
+$fecha_nac=strtoupper($result1->fields["fecha_nac"]);
+$cod_animal=strtoupper($result1->fields["cod_animal"]);
+
+
+
+
+
+  $sql2="select * from profesionales where nro_profesional = '$profesionales'";
+$result2 = $db->Execute($sql2);
+
+$apellido=$result2->fields["apellido"];
+$nombre=$result2->fields["nombre"];
+$especialidad=$result2->fields["especialidad"];
+$sexo=$result2->fields["sexo"];
+$fecha_nacimiento=$result2->fields["fecha_nacimiento"];
+$domicilio=$result2->fields["domicilio"];
+$localidad=$result2->fields["localidad"];
+$telefono=$result2->fields["telefono"];
+$celular=$result2->fields["celular"];
+$mail=$result2->fields["mail"];
+$lunes=$result2->fields["lunes"];
+$martes=$result2->fields["martes"];
+$miercoles=$result2->fields["miercoles"];
+$jueves=$result2->fields["jueves"];
+$viernes=$result2->fields["viernes"];
+$sabado=$result2->fields["sabado"];
+$duracion_consulta=$result2->fields["duracion_consulta"];
+$espacio_entre_turnos=$result2->fields["espacio_entre_turnos"];
+$cantidad_turnos_diarios=$result2->fields["cantidad_turnos_diarios"]+1;
+$turno=$result2->fields["turno"];
+ $horario_turno_manana=$result2->fields["horario_turno_manana"];
+$horario_turno_tarde=$result2->fields["horario_turno_tarde"];
+
+
+/*
+ $horaInicial=$result2->fields["horario_turno_manana"];
+
+$segundos_horaInicial=strtotime($horaInicial);
+$horaInicial=date("h:i",$segundos_horaInicial);
+$minutoAnadir=$result2->fields["horario_turno_manana"];
+echo $segundos_minutoAnadir=$minutoAnadir*600;
+echo  $nuevaHora=date("h:i",$segundos_horaInicial+$segundos_minutoAnadir);
+
+//10 turnos
+// duran 60
+
+
+
+
+$hora=date("h:i",$hora);*/
+
+
+    function parteHora( $hora ){
+        $horaSplit = explode(":", $hora);
+            if( count($horaSplit) < 3 ){
+                $horaSplit[2] = 0;
+            }
+        return $horaSplit;
+    }
+     
+     
+    function SumaHoras( $time1, $time2 ){
+        list($hour1, $min1, $sec1) = parteHora($time1);
+        list($hour2, $min2, $sec2) = parteHora($time2);
+        return date('H:i', mktime( $hour1 + $hour2, $min1 + $min2, $sec1 + $sec2));
+    }
+     
+
+    $hora = date("H:i");
+    $min = "01:30:00";
+     
+     $tiempo_total = SumaHoras($horario_turno_manana,$min);
+
+
+
+
+
+
+
+
+$sql2="select * from turno where fecha_turno = '$fec'";
+$result2 = $db->Execute($sql2);
+$fech=$result2->fields["fecha_turno"];
+
+if ($lunes == 1){$lunes = "Lunes";}else{$lunes = "";}
+if ($martes == 1){$martes = "Martes";}else{$martes = "";}
+if ($miercoles == 1){$miercoles = "Miercoles";}else{$miercoles = "";}
+if ($jueves == 1){$jueves = "Jueves";}else{$jueves = "";}
+if ($viernes == 1){$viernes = "Viernes";}else{$viernes = "";}
+if ($sabado == 1){$sabado = "Sabado";}else{$sabado = "";}
+
+
+?>
+
+<form action="guardar_turno.php" method="post">
+<table width="850" border="0" cellspacing="0">
+    <!--DWLayoutTable-->
+    <tr bordercolor="#FFFFFF" bgcolor="#E6E6E6">
+      <td colspan="2" bgcolor="#B8B8B8"><div align="center"><font color="#000000" face="Arial, Helvetica, sans-serif">AGREGAR TURNO PARA EL DIA <?php echo $dia;?>/<?php echo
+
+	  $mes1;?>/<?php echo
+	  $anio1;?></font></div></td>
+    </tr>
+    <tr bordercolor="#FFFFFF">
+      <td height="24" bgcolor="#FFFFFF"><div align="center" class="Estilo25"><font color="#000000" size="2">PROFESIONAL</font></div></td>
+      <td bgcolor="#FFFFFF"><?php echo $apellido." ".$nombre;?></td>
+    <tr bordercolor="#FFFFFF">
+      <td height="24" bgcolor="#FFFFFF"><div align="center"><span class="Estilo45 Estilo25 Estilo47">ATIENDE LOS DIAS </span></div></td>
+      <td bgcolor="#FFFFFF"><?php echo $lunes?> <?php echo $martes?> <?php echo $miercoles?> <?php echo $jueves?> <?php echo $viernes?> <?php echo $sabado?></td>
+    <tr bordercolor="#FFFFFF">
+      <td height="24"><div align="center">
+          <div align="center" class="Estilo46"><span class="Estilo45">SOCIO</span>:</div>
+      </div></td>
+      <td><?php echo $cod_socio;?> <?php echo $nombre_socio;?> &nbsp;</td>
+    <tr bordercolor="#FFFFFF">
+      <td height="24"><div align="center"><font color="#000000" size="2"> <span class="Estilo25"><font color="#000000" size="2">MASCOTA</font><font color="#000000" size="2"></font></span><font color="#000000" size="2"><strong>:</strong></font></font></div></td>
+      <td><?php echo $nombre_mascota;?></td>    
+</table>
+
+	
+	
+<table width="850" border="0" cellpadding="0">
+  <tr>
+    <td bgcolor="#B8B8B8">&nbsp;</td>
+    <td bgcolor="#B8B8B8">&nbsp;</td>
+    <td colspan="5" bgcolor="#B8B8B8"><div align="center" class="Estilo46">TURNO</div></td>
+    <td bgcolor="#B8B8B8"><div align="center" class="Estilo46">SOBRE TURNO </div></td>
+    <td bgcolor="#B8B8B8">&nbsp;</td>
+    </tr>
+  <tr>
+    <td width="27" bgcolor="#B8B8B8"><div align="center" class="Estilo46"></div></td>
+    <td width="62" bgcolor="#B8B8B8"><div align="center" class="Estilo46"><span class="Estilo25">HORA:</span></div></td>
+    <td width="72" bgcolor="#B8B8B8"><div align="center" class="Estilo46">
+      <div align="center"><span class="Estilo25">N&deg; SOC </span></div>
+    </div></td>
+    <td width="83" bgcolor="#B8B8B8"><div align="center" class="Estilo46">
+      <div align="center">APELLIDO</div>
+    </div></td>
+    <td width="131" bgcolor="#B8B8B8"><div align="center"><span class="Estilo46">TRABAJO</span></div></td>
+    <td width="114" bgcolor="#B8B8B8"><div align="center"><span class="Estilo46">TRANS.</span></div></td>
+    <td width="154" bgcolor="#B8B8B8"><div align="center"><span class="Estilo46">MASCOTA</span></div></td>
+    <td width="114" bgcolor="#B8B8B8"><div align="center"><span class="Estilo46">RAZA</span></div></td>
+    <td width="73" bgcolor="#B8B8B8"><div align="center"><span class="Estilo46">IMPORTE</span></div></td>
+    </tr>
+
+
+
+
+	
+<?php
+for($j = 1 ;$j < $cantidad_turnos_diarios ;$j++){
+
+$agregar_min = SumaHoras($horario_turno_manana,$min);
+
+$col1 = "col1_".$j;
+$col2 = "col2_".$j;
+$col3 = "col3_".$j;
+$col4 = "col4_".$j;
+$col5 = "col5_".$j;
+$col6 = "col6_".$j;
+
+$col7 = "col7_".$j;
+$col8 = "col8_".$j;
+$col9 = "col9_".$j;
+$col10 = "col10_".$j;
+$col11 = "col11_".$j;
+$col12 = "col12_".$j;
+$col13 = "col13_".$j;
+$col14 = "col14_".$j;
+$col15 = "col15_".$j;
+
+
+  $sql2="select * from turno where nro_profesional = '$profesionales' and fecha_turno = '$fec' and nro_turno = $j";
+$result2 = $db->Execute($sql2);
+$acol1=$result2->fields["col1"];
+$acol2=$result2->fields["col2"];
+$acol3=$result2->fields["col3"];
+$acol4=$result2->fields["col4"];
+$acol5=$result2->fields["col5"];
+$acol6=$result2->fields["col6"];
+
+
+$acol7=$result2->fields["col7"];
+$acol8=$result2->fields["col8"];
+$acol9=$result2->fields["col9"];
+$acol10=$result2->fields["col10"];
+$acol11=$result2->fields["col11"];
+$acol12=$result2->fields["col12"];
+$acol13=$result2->fields["col13"];
+$acol14=$result2->fields["col14"];
+$acol15=$result2->fields["col15"];
+
+
+
+if (($acol1 == "") and ($j == 1)){
+$acol1 = $horario_turno_manana;
+}
+
+if (($acol1 == "") and ($j > 1)){
+
+    $acol1 = SumaHoras($horario_turno_manana,$min);
+	$horario_turno_manana = SumaHoras($horario_turno_manana,$min);
+
+ 
+
+}
+  ?><tr>
+    <td><div align="center"><?php echo $j;?></div></td>
+    <td><input name="<?php echo $col1;?>" type="text" size="10" value = "<?php echo $acol1;?>"></td>
+    <td><input name="<?php echo $col2;?>" type="text" size="10" value = "<?php echo $acol2;?>"></td>
+   <td><input name="<?php echo $col3;?>" type="text" size="10" value = "<?php echo $acol3;?>" ></td>
+<td><input name="<?php echo $col4;?>" type="text" size="10" value = "<?php echo $acol4;?>"></td>
+   <td><input name="<?php echo $col5;?>" type="text" size="10" value = "<?php echo $acol5;?>"></td>
+<td><input name="<?php echo $col6;?>" type="text" size="10" value = "<?php echo $acol6;?>"></td>
+  <td><input name="<?php echo $col7;?>2" type="text" size="10" value = "<?php echo $acol7;?>"></td>
+  <td><input name="<?php echo $col8;?>3" type="text" size="10" value = "<?php echo $acol8;?>"></td>
+  </tr>
+<tr>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td><input name="<?php echo $col9;?>33" type="text" size="10" value = "<?php echo $acol9;?>"></td>
+  <td><input name="<?php echo $col10;?>34" type="text" size="10" value = "<?php echo $acol10;?>"></td>
+  <td><input name="<?php echo $col11;?>35" type="text" size="10" value = "<?php echo $acol11;?>"></td>
+  <td><input name="<?php echo $col12;?>36" type="text" size="10" value = "<?php echo $acol12;?>"></td>
+  <td><input name="<?php echo $col13;?>37" type="text" size="10" value = "<?php echo $acol13;?>"></td>
+  <td><input name="<?php echo $col14;?>372" type="text" size="10" value = "<?php echo $acol14;?>"></td>
+  <td><input name="<?php echo $col15;?>373" type="text" size="10" value = "<?php echo $acol15;?>"></td>
+  </tr>
+
+<?php
+}
+?>
+
+<tr>
+  <td colspan="9"><div align="center">
+  <input type="hidden" name="profesionales" value="<?php echo $profesionales;?>">
+    <input type="hidden" name="dia" value="<?php echo $dia;?>">
+	    <input type="hidden" name="mes1" value="<?php echo $mes1;?>">
+		    <input type="hidden" name="anio1" value="<?php echo $anio1;?>">
+
+    <input type="submit" name="Submit" value="Enviar">
+  </div></td>
+  </tr>
+</table>
+ 
+</form>

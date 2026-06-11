@@ -1,0 +1,169 @@
+<style type="text/css">
+<!--
+.Estilo1 {
+	color: #FFFFFF;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.Estilo2 {font-family: Arial, Helvetica, sans-serif}
+.Estilo5 {font-size: 12px}
+.Estilo6 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+body {
+	background-image: url(../../../imagenes/logito.png);
+}
+.Estilo98 {color: #FFFFFF}
+
+-->
+</style>
+<!-- <A HREF="imp_pendientes.php?a='imprimir'&&buscar_por=<?print("$buscar_por");?>&&nro_factura=<?print("$nro_factura");?>&&mes=<?print("$mes");?>&&anio=<?print("$anio");?>"><IMG SRC="../../../imagenes/botones//btn_imprimir.gif" alt="Imprimir" border = "0"></A>  -->
+
+<!-- 
+<a href="imp_pendientes.php?a='excel'&&buscar_por=<?print("$buscar_por");?>"><IMG SRC="../../imagenes/botones//btn_exportar.gif" alt="Exportar" border = "0"></a> -->
+
+
+
+
+
+<?
+
+$nro_factura;
+$hoy = date("d/m/y");
+
+
+?>
+
+
+
+<table width="686" border="0">
+  <!--DWLayoutTable-->
+<tr bgcolor="#000099">
+    <td height="29" colspan="8"><div align="center"><span class="Estilo5"><span class="Estilo1">Listado de Facturas de Compras. Emitidas al : <?ECHO $hoy;?></span> </span></div></td>
+  </tr>
+   <tr bgcolor="#DAFAFC">
+     <td colspan="8"><div align="center"><span class="Estilo6"></span></div>       <div align="center"></div>       <div align="center"><span class="Estilo6"></span></div></td>
+   </tr>
+   <tr bgcolor="#DAFAFC">
+     <td width="6%"><div align="center"><span class="Estilo6 Estilo2  Estilo5">
+       <div align="center"><span class="Estilo6">Tipo</span>     
+       </div>
+     <td width="10%"><div align="center"><span class="Estilo6 Estilo2  Estilo5">N&ordm; Fact.</span></div></td>
+     <td width="10%"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Fecha</span></div></td>
+     <td width="30%"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Proveedor</span></div></td>
+     <!-- <td width="5%"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Proveedor</span></div></td> -->
+<td width="13%"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Sub Total </span></div></td>
+<td width="9%"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Descuento</span></div></td>
+     <td width="10%"><div align="center"><span class="Estilo6 Estilo2  Estilo5">IVA</span></div></td>
+          <td width="12%"><div align="center"><span class="Estilo6 Estilo2  Estilo5">TOTAL</span></div></td>
+   </tr>
+
+	 <?
+$anio = 2009;
+include ("../../../conexiones/config_pro.php");
+
+if (($mes == 13) && ($nro_factura == "") && ($cliente_proveedor == "")){
+$sql="select * from compras_encabezado ORDER by nro_factura, fecha desc";
+}elseif (($mes == 13) && ($nro_factura != "") && ($cliente_proveedor == "")){
+$sql="select * from compras_encabezado where nro_factura like '$nro_factura'  ORDER by nro_factura, fecha desc";
+}elseif (($mes != 13) && ($nro_factura == "") && ($cliente_proveedor == "")){
+$sql="select * from compras_encabezado ORDER by fecha, nro_factura";
+}elseif (($mes != 13) && ($nro_factura != "") && ($cliente_proveedor == "")){
+$sql="select * from compras_encabezado where nro_factura like '$nro_factura%'  ORDER by nro_factura, fecha desc";
+}elseif (($mes != 13) && ($nro_factura != "") && ($cliente_proveedor != "")){
+if (is_numeric($cliente_proveedor)==true) {
+$sql="select * from compras_encabezado where (nro_factura = '$nro_factura' or nro_factura = '$nro_factura' or fecha = '$nro_factura')  and nro_proveedor = $cliente_proveedor ORDER by nro_factura, fecha desc";
+}else{
+$sql="select * from compras_encabezado where (nro_factura = '$nro_factura' or nro_factura = '$nro_factura' or fecha = '$nro_factura') and  denominacion like '$cliente_proveedor%'  ORDER by nro_factura, fecha desc";}
+}
+elseif (($mes != 13) && ($nro_factura == "") && ($cliente_proveedor != "")){
+if (is_numeric($cliente_proveedor)==true) {
+$sql="select * from compras_encabezado where (nro_proveedor = $cliente_proveedor) ORDER by nro_factura, fecha desc";
+}else{
+$sql="select * from compras_encabezado where (denominacion like '$cliente_proveedor%') ORDER by nro_factura, fecha desc";
+}
+	}
+	 
+$result = $db->Execute($sql);
+
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+$nro_proveedo = $nro_proveedor;
+$tipo_fact=strtoupper($result->fields["tipo_fact"]);
+$nro_factura=strtoupper($result->fields["nro_factura"]);
+$nro_proveedor=strtoupper($result->fields["nro_proveedor"]);
+$denominacion=strtoupper($result->fields["denominacion"]);
+$fecha=strtoupper($result->fields["fecha"]);
+
+$subtotal=strtoupper($result->fields["subtotal"]);
+$descuento=strtoupper($result->fields["descuento"]);
+$neto_gravado=strtoupper($result->fields["neto_gravado"]);
+$iva=strtoupper($result->fields["iva"]);
+$total=strtoupper($result->fields["total"]);
+
+if ($descuento = "0.00"){
+	$descuento = "-";
+}
+
+
+$dia = substr($fecha,8,2);
+$mes = substr($fecha,5,2);
+$anio = substr($fecha,0,4);
+$fecha2 = $dia."/".$mes."/".$anio;
+
+$suma_neto = $suma_neto + $neto_gravado;
+$suma_iva = $suma_iva + $iva;
+$suma_total = $suma_total + $total;
+
+
+?>
+<tr bgcolor="#FFFFFF">
+<td><div align="center" class="Estilo6" ><?print("$tipo_fact");?></strong></div></td>
+<td><div align="center" class="Estilo6" ><?print("$nro_factura");?></strong></div></td>
+<td><div align="left" > <div align="center" class="Estilo6"><?print("$fecha2");?></div></td>
+    <td><span class="Estilo6"><?print("$nro_proveedor");?> - <?print("$denominacion");?></span></td>
+    <!-- <td><div align="center" class="Estilo6"><span class="Estilo4 Estilo5"><?print("$proveedor");?></span></div></td> -->
+<td><div align="center" class="Estilo6" >     
+  <div align="right"><?echo number_format($neto_gravado,2);?></div>
+</div>     </td>
+<td><div align="center" class="Estilo6" >     
+  <div align="right"><?echo $descuento;?></div>
+</div> </td>
+<td><div align="center" class="Estilo6" > 
+  <div align="right"><?echo number_format($iva,2);?></div>
+</div></td>
+<td><div align="center" class="Estilo6 Estilo5 Estilo2">
+  <div align="right"><?echo number_format($total,2);?></div>
+</div></td>
+</tr>
+
+
+
+
+
+
+<?
+	$result->MoveNext();
+	}
+
+
+	?>
+
+	<tr bgcolor="#FFFFFF">
+  <td colspan="4"><div align="right"><span class="Estilo6">TOTALES</span></div></td>
+  <td><hr noshade></td>
+  <td><hr noshade></td>
+  <td><hr noshade></td>
+  <td><hr noshade></td>
+</tr>
+<tr bgcolor="#000099">
+  <td colspan="4"><div align="right" class="Estilo6"><span class="Estilo98"></span></div></td>
+  <td><div align="right" class="Estilo98"><?echo number_format($suma_neto,2);?></div></td>
+  <td><div align="right" class="Estilo98"><?echo $suma_descuento;?></div></td>
+  <td><div align="right" class="Estilo98"><?echo number_format($suma_iva,2);?></div></td>
+  <td><div align="right" class="Estilo98"><?echo number_format($suma_total,2);?></div></td>
+</tr>
+</table>
+
+
+
+
+

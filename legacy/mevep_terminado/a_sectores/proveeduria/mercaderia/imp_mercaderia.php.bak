@@ -1,0 +1,4 @@
+<?php 
+$cod_merca= $_REQUEST['cod_merca'];
+include ("variables.php");
+?>

@@ -1,0 +1,49 @@
+	<!--  
+	<?
+	include ("../../conexiones/config_or.php");
+$sql7="select * from detalle where nro_recibo = '$nro_recibo'";
+$result7 = $db->Execute($sql7);
+
+if (!$result7) die("fallo".$db->ErrorMsg());
+
+ while (!$result7->EOF) {
+$nro_os=ucwords($result7->fields["nro_os"]);
+$cantidad=ucwords($result7->fields["cantidad"]);
+
+if ($nro_os == 0){
+	if ($cantidad == 0){
+			$result7->MoveNext();
+	}}
+else
+	 {
+
+include ("../../conexiones/config_os.php");
+
+ $sql8="select * from datos_os where nro_os = '$nro_os'";
+$result8 = $db->Execute($sql8);
+$os=ucwords($result8->fields["sigla"]);
+
+
+	
+	?>
+
+	<tr bgcolor="#FFFFFF">
+      <td><div align="center"><?print $os." (".$nro_os.")";?>
+      </div></td>
+      <td colspan="2"><div align="center"><?print $cantidad;?>
+      </div></td>
+    </tr>
+
+
+    <?
+$total=$total + $cantidad;
+
+$result7->MoveNext();
+
+	}
+ }
+		?>
+	
+	
+	
+	-->

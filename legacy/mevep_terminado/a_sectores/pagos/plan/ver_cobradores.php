@@ -1,0 +1,94 @@
+<!-- <body onUnload="window.opener.openedImprimir=0;" onLoad="window.print(); window.close();"> -->
+<style type="text/css">
+<!--
+.Estilo4 {font-family: Geneva, Arial, Helvetica, sans-serif; font-size: 12px; }
+-->
+</style>
+
+
+<?php
+
+include ("../../../conexiones/config.inc.php");
+
+
+global $buscador_rapido;
+
+if ($borrar != 1){
+$buscador_rapido=$_POST["buscador_rapido"];
+$palabra=$_POST["busca"];
+}
+
+$palabra=$_REQUEST["palabra"];
+
+
+$hoy = date("d/m/y");
+
+
+
+$B = 1;
+
+
+$sql1="select * from plan_cobrador order by cod_plan";
+ $result = $db->Execute($sql1);
+
+	
+?>
+<table width="800" border="0" cellspacing="0">
+  <!--DWLayoutTable-->
+  <tr bordercolor="#FFFFCC" bgcolor="#E6E6E6">
+    <td colspan="10"><div align="center"><font color="#FFFFFF" size="2" face="Trebuchet MS"><font color="#000000">LISTADO DE PLANES DE COBRADORES. Emitido el <?php echo $hoy;?></font></font></div></td>
+  </tr>
+  <tr bordercolor="#FFFFCC" bgcolor="#CCCCCC">
+    <td width="57"><div align="center"><span class="Estilo4">COD PLAN</span></div></td>
+    <td width="57"><div align="center"><span class="Estilo4">1 - 10 </span></div></td>
+    <td width="57"><div align="center"><span class="Estilo4">11 - 20 </span></div></td>
+    <td width="57"><div align="center"><span class="Estilo4">21 - 31</span></div></td>
+    <td width="57"><div align="center"><span class="Estilo4">DEUDA</span></div></td>
+    <td width="57"><strong><font color="#000000" size="2" face="Trebuchet MS">MODIFICAR</font></strong></td>
+    <td width="57"><div align="center"><strong><font color="#000000" size="2" face="Trebuchet MS">BORRAR</font></strong></div></td>
+    <?php 
+
+
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+	
+ 
+	
+
+$cod_plan=strtoupper($result->fields["cod_plan"]); 
+$a1_10=strtoupper($result->fields["1_10"]); 
+$a11_20=strtoupper($result->fields["11_20"]);
+$a21_31=strtoupper($result->fields["21_31"]);
+$deuda=strtoupper($result->fields["deuda"]);
+
+
+    ?>  
+  <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+ 
+
+
+	<td bordercolor="#E8DCFC" bgcolor="#FFFF99"><div align="center"><span class="Estilo4"><strong><?php echo $cod_plan;?></strong>  </span></div></td>
+	<td bordercolor="#E8DCFC" bgcolor="#FFFF99"><div align="center"><span class="Estilo4"><strong><?php echo $a1_10;?></strong> % </span></div></td>
+    <td bordercolor="#E8DCFC" bgcolor="#FFFF99"><div align="center"><span class="Estilo4"><strong><?php echo $a11_20;?></strong> % </span></div></td>
+    <td bordercolor="#E8DCFC" bgcolor="#FFFF99"><div align="center"><span class="Estilo4"><strong><?php echo $a21_31;?></strong> % </span></div></td>
+    <td bordercolor="#E8DCFC" bgcolor="#FFFF99"><div align="center"><span class="Estilo4"><strong><?php echo $deuda;?></strong> %</span></div></td>
+    <td bordercolor="#E8DCFC" bgcolor="#FFFF99"><div align="center"><strong><font size="2" face="Trebuchet MS"><a href="mod_cobrador.php?cod_plan=<?php print("$cod_plan");?>" onClick="return confirm('&iquest;Est&aacute; seguro de Modificar el Plan?');"><img src="../../../imagenes/office//005.ico" alt="Modificar" border = "0"></a></font></strong></div></td>
+    <td bordercolor="#E8DCFC" bgcolor="#FFFF99"><div align="center"><strong><font size="2" face="Trebuchet MS"><a href="bor_cobrador.php?cod_plan=<?php print("$cod_plan");?>" onClick="return confirm('&iquest;Est&aacute; seguro de Borrar el Plan?');"><img src="../../../imagenes/office//1047.ico" alt="Borrar" border = "0"></a></font></strong></div></td>
+  </tr>
+
+
+ 
+
+
+ 
+<?php
+
+$result->MoveNext();
+	}
+
+ 
+
+?>
+</table>
+

@@ -1,0 +1,12 @@
+<?php 
+
+$busca = $_REQUEST['busca'];
+$buscador_rapido = $_REQUEST['buscador_rapido'];
+
+ $opciones=$_REQUEST["opciones"];
+$cod_fabricante=$_REQUEST["cod_fabricante"];
+
+include ("existencia.php");
+	 
+
+?>

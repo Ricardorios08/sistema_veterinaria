@@ -1,0 +1,100 @@
+     <?include ("../../../conexiones/config_grabacion.php");
+
+$nro_factura= $_REQUEST['nro_factura'];
+
+include("../../../conexiones/config_grabacion.php");
+ $sql2 = "SELECT * FROM `ventas_encabezado` where nro_factura = $nro_factura";
+$result2 = $db_aj->Execute($sql2);
+
+
+
+$cod_operacion=strtoupper($result2->fields["cod_operacion"]);
+$fact=strtoupper($result2->fields["tipo_fact"]);
+$tipo_iva=strtoupper($result2->fields["tipo"]);
+
+
+$operador=strtoupper($result2->fields["operador"]);
+$denominacion=strtoupper($result2->fields["denominacion"]);
+
+$fecha=strtoupper($result2->fields["fecha"]);
+$dia=substr($fecha,8,2);
+$mes=substr($fecha,5,2);
+$anio=substr($fecha,0,4);
+$fecha_a = $dia."/".$mes."/".$anio;
+
+$fact=strtoupper($result2->fields["tipo_fact"]);
+
+
+$sql = "SELECT * FROM `ventas_detalle`  WHERE  `nro_factura` = $nro_factura and tipo_fact = '$fact'";
+$result = $db_aj->Execute($sql);
+if (!$result) die("fallo".$db_aj->ErrorMsg());
+
+ while (!$result->EOF) {
+
+$cod_mercaderia=strtoupper($result->fields["cod_mercaderia"]);
+$cantidad=strtoupper($result->fields["cantidad"]);
+$lote=strtoupper($result->fields["lote"]);
+$mes_lote=strtoupper($result->fields["mes_lote"]);
+$anio_lote=strtoupper($result->fields["anio_lote"]);
+
+
+$sql3="select * from existencias where cod_mercaderia = $cod_mercaderia and lote = '$lote' and mes_lote = '$mes_lote' and anio_lote = '$anio_lote' ";
+$result3 = $db_pro->Execute($sql3);
+$nro_fact_compra=strtoupper($result3->fields["nro_factura"]);
+
+$cantidad_salida=strtoupper($result3->fields["cantidad_salida"]);
+
+$cantidad_recuperada = $cantidad_salida - $cantidad;
+
+
+$cont = $cont + 1;
+
+ $sql = "UPDATE `existencias` SET `cantidad_salida` = '$cantidad_recuperada' WHERE cod_mercaderia = $cod_mercaderia and mes_lote = '$mes_lote' and anio_lote = '$anio_lote' and lote = '$lote'";
+//$result3 = $db_pro->Execute($sql);
+
+ $sql = "DELETE FROM `stock` WHERE nro_comprobante = $nro_factura and cod_movimiento = 7 and tipo_fact = 'I'";
+//$result3 = $db_pro->Execute($sql);
+
+ 
+
+
+	 $result->MoveNext();
+		}
+
+
+$desc_fact = round(($subtotal * $porc_dto)/100,2);
+$neto_gravado = $subtotal - $desc_fact;
+$iva = round(($neto_gravado * $iva_normal) /100,2);
+$total_factura = $neto_gravado + $iva;
+
+
+ $sumatoria = $cont;
+		$cont = 0;
+
+
+$sumatoria = 0;
+
+
+
+ $sql = "DELETE FROM `ventas_detalle` WHERE nro_factura = $nro_factura and tipo_fact = 'I'";
+$result3 = $db_aj->Execute($sql);
+ $sql = "DELETE FROM `ventas_encabezado` WHERE nro_factura = $nro_factura and tipo_fact = 'I'";
+$result3 = $db_aj->Execute($sql);
+
+$total_factura = 0;
+$subtotal = 0;
+$neto_gravado = 0;
+$desc_fact= 0;
+$iva = 0;
+
+
+
+$leyenda = "Se elimino el informe y se reestablecieron las existencias y stock";
+include ("../../../alertas/campo_informacion.php");
+
+
+
+$total_factura = 0;
+$neto = 0;
+$iva = 0;
+?>

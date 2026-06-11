@@ -1,0 +1,89 @@
+<?include ("../../../conexiones/config_grabacion.php");
+
+
+$sql2 = "SELECT * FROM `compo_anterior`";
+$result2 = $db_bk->Execute($sql2);
+
+if (!$result2) die("fallo".$db->ErrorMsg());
+
+ while (!$result2->EOF) {
+
+
+$cuenta=strtoupper($result2->fields["cuenta"]);
+$tipo_cuenta=strtoupper($result2->fields["tipo_cuenta"]);
+$tipo_fact=strtoupper($result2->fields["tipo_fact"]);
+echo $comprobante=strtoupper($result2->fields["comprobante"]);
+echo $fecha_emision=strtoupper($result2->fields["fecha_emision"]);
+$importe_original=strtoupper($result2->fields["importe_original"]);
+echo $fecha_pago=strtoupper($result2->fields["fecha_pago"]);
+echo $saldo=strtoupper($result2->fields["saldo"]);
+echo $vencimiento=strtoupper($result2->fields["vencimiento"]);
+echo $cuotas=strtoupper($result2->fields["cuotas"]);
+echo $cuotas_pagadas=strtoupper($result2->fields["cuotas_pagadas"]);
+$cod_movimiento=strtoupper($result2->fields["cod_movimiento"]);
+
+
+
+echo " - ";
+
+echo " vs ";
+
+$sql3 = "SELECT * FROM `resum_fact_viejas` where tipo_cuenta = $tipo_cuenta and cuenta = $cuenta and comprobante = $comprobante and fecha = '$fecha_emision'";
+$result3 = $db_bk->Execute($sql3);
+
+$cuenta_res=strtoupper($result3->fields["cuenta"]);
+$tipo_cuenta_res=strtoupper($result3->fields["tipo_cuenta"]);
+echo $fecha_emision_res=strtoupper($result3->fields["fecha"]);
+$tipo_fact_res=strtoupper($result3->fields["tipo_fact"]);
+echo $comprobante_res=strtoupper($result3->fields["comprobante"]);
+echo $cod_movimiento_res=strtoupper($result3->fields["cod_movimiento"]);
+$importe=strtoupper($result3->fields["importe"]);
+echo $vencimiento_res=strtoupper($result3->fields["vencimiento"]);
+echo $referencia=strtoupper($result3->fields["referencia"]);
+echo $afectacion=strtoupper($result3->fields["afectacion"]);
+
+
+echo " - ";
+
+
+
+
+if ($saldo != $importe){
+	echo "ERROR";
+	ECHO $importe_original. " ---- ".$importe;
+
+$sql = "INSERT INTO `composicion_saldos` ( `cuenta` , `tipo_cuenta` , `tipo_fact` , `comprobante` , `fecha_emision` , `importe_original` , `fecha_pago` , `saldo` , `vencimiento` , `cuotas` , `cuotas_pagadas` , `cod_movimiento` ) VALUES ( '$cuenta' , '$tipo_cuenta' , '$tipo_fact' ,  '$comprobante' , '$fecha_emision' , '$importe_original' , '$fecha_pago' , '$saldo' , '$vencimiento' , '$cuotas' , '$cuotas_pagadas', '$cod_movimiento' )";
+$result6 = $db_pro->Execute($sql);
+
+
+	 $sql = "INSERT INTO `resumen_cta_vta` ( `cuenta` , `tipo_cuenta` , `fecha` , `tipo_fact` , `comprobante` , `cod_movimiento` , `importe` , `vencimiento` , `referencia` , `afectacion` ) VALUES ( '$cuenta_res' , '$tipo_cuenta_res' ,'$fecha_emision_res' , '$tipo_fact_res' , '$comprobante_res' , '$cod_movimiento_res' , '$importe' , '$vencimiento_res' , '$referencia' , '$afectacion')";
+$result7 = $db_pro->Execute($sql);
+
+
+
+echo "<br>";
+}ELSE
+	 {
+echo "<br>";
+	 }
+
+$importe_to = $importe_to + $importe;
+ $sql4 = "DELETE FROM `resumen_fact_viejas` where tipo_cuenta = $tipo_cuenta and cuenta = $cuenta and comprobante = $comprobante and fecha = '$fecha_emision'";
+//$result4 = $db_pro->Execute($sql4);
+
+$sql4 = "DELETE FROM `composicion_saldos` where tipo_cuenta = $tipo_cuenta and cuenta = $cuenta and comprobante = $comprobante and fecha_emision = '$fecha_emision'";
+//$result4 = $db_pro->Execute($sql4);
+
+
+$cont = $cont + 1;
+	 $result2->MoveNext();
+		}
+
+echo "<br>";
+echo $importe_to;
+echo "<br>";
+echo $cont;
+
+
+
+

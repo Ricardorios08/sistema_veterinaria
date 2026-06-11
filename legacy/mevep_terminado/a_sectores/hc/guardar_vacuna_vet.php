@@ -1,0 +1,79 @@
+<?php
+
+include ("../../conexiones/config.inc.php");
+
+ echo $usuario= $_REQUEST['usuario'];
+  $tipo= $_REQUEST['tipo'];
+ 
+  $dia_nac= $_REQUEST['dia_nac'];
+    $mes_nac= $_REQUEST['mes_nac'];
+	  $anio_nac= $_REQUEST['anio_nac'];
+
+	  $fecha_nac = $anio_nac."-".$mes_nac."-".$dia_nac;
+
+$sql="select * from  usuario  where id = $usuario";
+ $result = $db->Execute($sql);
+$nombre_vet=$result->fields["nombre"];
+
+ $cod_socio= $_REQUEST['cod_socio'];
+ $vacuna= $_REQUEST['vacuna'];
+
+ $vacuna2=$_POST["vacuna"];
+	for ($i=0;$i<count($vacuna2);$i++)    
+	{     
+	$vacuna = $vacuna2[$i];    
+	}
+
+ $peso= $_REQUEST['peso'];
+ $cod_operacion= $_REQUEST['cod_operacion'];
+
+$dia1  = $_REQUEST['dia_vac'];
+$mes1  = $_REQUEST['mes_vac'];
+$anio1  = $_REQUEST['anio_vac'];
+
+$hoy = $anio1."-".$mes1."-".$dia1;
+
+IF (($peso == '') AND ($vacuna == 'PUPY')){
+	$leyenda = "DEBE INGRESAR PESO";
+	include ("../../alertas/campo_informacion2.php");
+	exit;
+}
+
+
+
+IF (($peso < 1) AND ($vacuna == 'QUINTUPLE')){
+	$leyenda = "No puede utilizar QUINTUPLE porque pesa más de ".$peso." kg. Utilice QUINTUPLE";
+	include ("../../alertas/campo_informacion2.php");
+	exit;
+}
+
+IF ($vacuna == ""){
+	$leyenda = "DEBE INGRESAR VACUNA";
+	include ("../../alertas/campo_informacion2.php");
+	exit;
+
+	include ("vacuna_vet.php");
+
+
+}else{
+
+
+ //echo $sql = "UPDATE `lista_espera` SET `atendido` = 'S' , `orden` = '$orden' WHERE `cod_operacion` = '$cod_operacion'";
+//mysql_query($sql);
+
+if ($tipo == 'part'){
+ echo $sql = "UPDATE animal_particular SET `fecha_nac` = '$fecha_nac'  WHERE `cod_socio` = '$cod_socio'";
+//mysql_query($sql);
+}else{
+ echo $sql = "UPDATE animal SET `fecha_nac` = '$fecha_nac'  WHERE `cod_socio` = '$cod_socio'";
+//mysql_query($sql);
+}
+
+echo  $sql = "INSERT INTO vacunas (`cod_socio`, `fecha_vacuna`, `vacuna`, `cod_vacuna`, `cod_operacion`, `tipo`, `usuario`, `veterinario`, `peso` , `fecha_nac`) VALUES ('$cod_socio', '$hoy', '$vacuna', '$cod_vacuna', NULL, '$tipo' , '$usuario' , '$nombre_vet' , '$peso' , '$fecha_nac')";
+ mysql_query($sql);
+
+	$leyenda = "SE GUARDO LA VACUNA";
+	include ("lista_vet.php");
+
+}
+

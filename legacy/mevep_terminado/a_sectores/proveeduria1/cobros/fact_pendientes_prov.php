@@ -1,0 +1,127 @@
+<style type="text/css">
+<!--
+.Estilo17 {font-size: 10px}
+.Estilo18 {font-family: Arial, Helvetica, sans-serif}
+.Estilo19 {font-size: 10px; font-family: Arial, Helvetica, sans-serif; }
+.Estilo20 {color: #000000}
+.Estilo9 {font-size: 12px}
+.Estilo13 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+.Estilo14 {color: #FF0000}
+.Estilo15 {font-size: 12px; color: #000000; }
+.Estilo16 {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+-->
+</style>
+
+        <?
+$busca=$_REQUEST ['busca'];
+
+$nro_factura=$_REQUEST ['nro_factura'];
+$cuenta=$_REQUEST ['cuenta'];
+$tipo_cuenta=$_REQUEST ['tipo_cuenta'];
+
+$hoy = date("d/m/y");
+
+
+
+?> <table width="258" border="0">
+    <!-- <tr bgcolor="#000099">
+      <td height="27" colspan="4"><div align="center"><span class="Estilo1 Estilo16">
+        <font face="Arial, Helvetica, sans-serif">
+        ABM PROVEEDURIA </font></span></div></td>
+    </tr> -->
+
+<tr bgcolor="#E1F2EF">
+  <td width="77"><div align="center" class="Estilo17 Estilo18 Estilo20">Comp.</div></td>
+       <td><div align="center"><span class="Estilo19">Saldo</span></div></td>
+       <td><div align="center" class="Estilo19">Emisión</div></td>
+   </tr>
+	 <?
+include ("../../../conexiones/config_grabacion.php");
+
+$tipo_cuenta;
+	switch ($tipo_cuenta){
+		case "1":{
+ $sql="select * from composicion_saldos where tipo_cuenta = 1 and saldo > 0 and cuenta = $busca";
+break;
+		}
+
+case "2":{
+$sql="select * from composicion_saldos where tipo_cuenta = 2 and saldo > 0 and cuenta = $busca";
+break;
+		}
+
+	}
+
+
+$result = $db_pro->Execute($sql);
+
+  if (!$result) die("fallo".$db_pro->ErrorMsg());
+  while (!$result->EOF) {
+
+
+$tipo_fact=strtoupper($result->fields["tipo_fact"]);
+$nro_laboratorio=strtoupper($result->fields["cuenta"]);
+$comprobante=strtoupper($result->fields["comprobante"]);
+$vencimiento=strtoupper($result->fields["fecha_emision"]);
+$saldo=round($result->fields["saldo"],2);
+
+$total = $total + $saldo;
+$dia = substr($vencimiento,8,2);
+$mes= substr($vencimiento,5,2);
+$anio= substr($vencimiento,0,4);
+
+$vencimiento = $dia."/".$mes."/".$anio;
+
+if ($vencimiento == "00/00/0000"){
+$vencimiento = " - ";
+}
+
+if ($tipo_fact == "1"){
+$tipo_fact = "S/A";
+}
+
+$sql1="select * from datos_laboratorio where nro_laboratorio like '$nro_laboratorio'";
+$result1 = $db_bq->Execute($sql1);
+$nombre_laboratorio=strtoupper($result1->fields["nombre_laboratorio"]);
+$todo = $nombre_laboratorio." - ".$nro_laboratorio;
+
+
+?>
+  <tr bgcolor="#FFFFFF">
+    <td><div align="center" class="Estilo15"></div>      <div align="left" class="Estilo6 Estilo17 Estilo20">
+       <div align="left" class="Estilo9">
+         <div align="center"><font face="Arial, Helvetica, sans-serif"><span class="Estilo15"><font face="Arial, Helvetica, sans-serif"><?echo $tipo_fact;?></font></span> - <?echo $comprobante;?></font></div>
+       </div>
+      </div></td> 
+   <td width="90"><div align="center" class="Estilo20">
+     <div align="right"><span class="Estilo6  Estilo9"><font face="Arial, Helvetica, sans-serif">$ <?echo number_format($saldo,2);?></font></span></div>
+   </div></td>
+    <td width="65"><div align="center" class="Estilo20"><span class="Estilo6  Estilo17"><font face="Arial, Helvetica, sans-serif"><font face="Arial, Helvetica, sans-serif"><?echo $vencimiento;?></font></font></span></div></td>
+ </tr>
+  
+
+
+
+
+
+<?
+	$result->MoveNext();
+	}
+
+
+	?>
+  <tr bgcolor="#FFFFFF">
+    <td><div align="right" class="Estilo13">TOTAL</div></td>
+    <td><div align="right"><span class="Estilo13"><span class="Estilo6  Estilo14">$ <?echo number_format($total,2);?></span></span></div></td>
+    <td><div align="center" class="Estilo13">-</div></td>
+  </tr>
+</table>
+</td>
+  </tr>

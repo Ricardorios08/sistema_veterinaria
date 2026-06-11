@@ -1,0 +1,85 @@
+<?php
+
+include ("../../conexiones/config.inc.php");
+
+
+
+
+ $sql="select * from socios where cod_socio = $cod_socio";
+ $result = $db->Execute($sql);
+
+	
+$cod_socio=$result->fields["cod_socio"];
+$apellido=strtoupper($result->fields["apellido"]);
+$nombre=strtoupper($result->fields["nombre"]);
+$tipo_doc=strtoupper($result->fields["tipo_doc"]);
+$documento=strtoupper($result->fields["documento"]);
+$telefono=strtoupper($result->fields["telefono"]);
+$domicilio=strtoupper($result->fields["domicilio"]);
+$localidad=strtoupper($result->fields["localidad"]);
+$departamento=strtoupper($result->fields["departamento"]);
+$cod_postal=strtoupper($result->fields["cod_postal"]);
+$fecha_pago=strtoupper($result->fields["fecha_pago"]);
+$debito=strtoupper($result->fields["debito"]);
+$sexo=strtoupper($result->fields["sexo"]);
+$deuda=strtoupper($result->fields["deuda"]);
+$motivo=strtoupper($result->fields["motivo"]);
+$cobrador=strtoupper($result->fields["cobrador"]);
+
+  $sql11="select *  from cobradores where cod_cobrador = $cobrador";
+$result11 = $db->Execute($sql11);
+
+$nombre_cobrador=strtoupper($result11->fields["nombre_cobrador"]);
+
+$cobrador = $cobrador." - ".$nombre_cobrador;
+
+
+
+
+
+
+
+
+switch ($sexo){case "F":{$sexo_mostrar = "FEMENINO";BREAK;}case "M":{$sexo_mostrar = "MASCULINO";BREAK;}}
+
+
+
+$cantidad=strtoupper($result->fields["cantidad"]);
+$ruta=strtoupper($result->fields["ruta"]);
+$importe_deuda=strtoupper($result->fields["importe_deuda"]);
+$importe_cuota=strtoupper($result->fields["importe_cuota"]);
+$llamada=strtoupper($result->fields["llamada"]);
+$motivo=strtoupper($result->fields["motivo"]);
+$no_imprimir=strtoupper($result->fields["no_imprimir"]);
+
+switch ($no_imprimir){case "VERDADERO":{$tipo_pago_mostrar = "LOCAL";BREAK;}case "FALSO":{$tipo_pago_mostrar = "COBRADOR";BREAK;}}
+
+
+$celular=strtoupper($result->fields["celular"]);
+$mail=strtoupper($result->fields["mail"]);
+$fecha_ingreso=strtoupper($result->fields["fecha_ingreso"]);
+
+$dia_ingreso = substr($fecha_ingreso,8,2);
+$mes_ingreso = substr($fecha_ingreso,5,2);
+$anio_ingreso = substr($fecha_ingreso,0,4);
+
+
+
+$sql1="select * from animal where cod_socio = $cod_socio";
+$result1 = $db->Execute($sql1);
+
+	
+$nombre_mascota=strtoupper($result1->fields["nombre"]);
+$especie=strtoupper($result1->fields["especie"]);
+$raza=strtoupper($result1->fields["raza"]);
+$pelaje=strtoupper($result1->fields["pelaje"]);
+$tamanio=strtoupper($result1->fields["tamanio"]);
+$color=strtoupper($result1->fields["color"]);
+$sexo_mascota=strtoupper($result1->fields["sexo"]);
+$fecha_nac=strtoupper($result1->fields["fecha_nac"]);
+$cod_animal=strtoupper($result1->fields["cod_animal"]);
+
+
+$dia_nac = substr($fecha_nac,8,2);
+$mes_nac = substr($fecha_nac,5,2);
+$anio_nac = substr($fecha_nac,0,4);

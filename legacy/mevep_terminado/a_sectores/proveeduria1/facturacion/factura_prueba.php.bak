@@ -1,0 +1,24 @@
+<?php
+
+include ("lx300.php");
+
+echo "--";
+
+//$err = IF_SERIAL("27-0163848-435"); // aca me da este error cuando pongo la serial
+
+$port = IF_OPEN("COM2",9600);
+
+  if ( $port == -1) {   echo "impresorass ocupada";   return;  }
+
+ECHO $err = IF_WRITE("@ESTADO|N");
+echo "<br>";
+echo $prns = IF_ERROR1(0); 
+echo "<br>";
+echo $prns = IF_ERROR2(0); 
+echo "<br>";
+ $err =IF_CLOSE();
+
+
+
+
+   

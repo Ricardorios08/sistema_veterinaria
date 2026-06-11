@@ -1,0 +1,43 @@
+<?include ("../../../conexiones/config_pro.php");
+
+include("../../../conexiones/config_pro.php");
+$sql2 = "SELECT * FROM `compras_detalle`";
+$result2 = $db->Execute($sql2);
+
+if (!$result2) die("fallo".$db->ErrorMsg());
+
+ while (!$result2->EOF) {
+
+echo $nro_factura=strtoupper($result2->fields["nro_factura"]);
+echo " - ";
+$cod_mercaderia=strtoupper($result2->fields["cod_mercaderia"]);
+echo " - ";
+echo $lote=strtoupper($result2->fields["lote"]);
+echo " - ";
+echo $mes_lote=strtoupper($result2->fields["mes_lote"]);
+echo " - ";
+echo $anio_lote=strtoupper($result2->fields["anio_lote"]);
+echo " - ";
+echo $cantidad=strtoupper($result2->fields["cantidad"]);
+echo " - ";
+echo $precio_unitario=strtoupper($result2->fields["precio_unitario"]);
+echo " - ";
+echo $total=strtoupper($result2->fields["total"]);
+
+
+echo "<br>";
+
+
+
+
+
+ $sql = "UPDATE `ventas_encabezado` SET  `neto_gravado` = '$neto_gravado' , `iva` = '$iva' WHERE `tipo_fact` = 'B' AND `nro_factura` = '$nro_factura'";
+//mysql_query($sql);
+
+	 $result2->MoveNext();
+		}
+
+
+
+
+

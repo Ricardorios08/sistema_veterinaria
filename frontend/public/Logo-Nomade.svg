@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4facfe" />
+      <stop offset="100%" stop-color="#0052d4" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#00f2fe" stop-opacity="0.2"/>
+    </linearGradient>
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#00f2fe" flood-opacity="0.15" />
+    </filter>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#0d1117" />
+
+  <g transform="translate(40, 0)">
+    <g transform="translate(180, 130)" filter="url(#dropShadow)">
+      <path d="M40,40 Q90,-20 140,40 T240,40" fill="none" stroke="url(#cyanGrad)" stroke-width="12" stroke-linecap="round"/>
+      <path d="M40,120 Q90,180 140,120 T240,120" fill="none" stroke="url(#blueGrad)" stroke-width="12" stroke-linecap="round"/>
+      
+      <line x1="90" y1="22" x2="90" y2="138" stroke="url(#cyanGrad)" stroke-width="6" stroke-dasharray="2 6" />
+      <line x1="140" y1="40" x2="140" y2="120" stroke="#ffffff" stroke-width="8" stroke-linecap="round" />
+      <line x1="190" y1="22" x2="190" y2="138" stroke="url(#blueGrad)" stroke-width="6" stroke-dasharray="2 6" />
+      
+      <line x1="100" y1="80" x2="180" y2="80" stroke="#ffffff" stroke-width="8" stroke-linecap="round" />
+
+      <circle cx="90" cy="22" r="10" fill="#00f2fe" />
+      <circle cx="90" cy="138" r="14" fill="url(#blueGrad)" />
+      <circle cx="140" cy="40" r="9" fill="#ffffff" />
+      <circle cx="140" cy="120" r="9" fill="#ffffff" />
+      <circle cx="190" cy="22" r="14" fill="url(#cyanGrad)" />
+      <circle cx="190" cy="138" r="10" fill="#4facfe" />
+      
+      <circle cx="140" cy="80" r="5" fill="#00f2fe" />
+    </g>
+
+    <text x="390" y="265" font-family="'Montserrat', 'Segoe UI', 'Arial', sans-serif" font-size="76" font-weight="900" letter-spacing="6" fill="#ffffff">
+      SULB
+    </text>
+    
+    <circle cx="625" cy="225" r="8" fill="#00f2fe" />
+
+    <text x="395" y="305" font-family="'Segoe UI', 'Arial', sans-serif" font-size="15" font-weight="600" letter-spacing="4.5" fill="#8b949e">
+      BIOQUÍMICA <tspan fill="#00f2fe">•</tspan> ODONTOLOGÍA <tspan fill="#00f2fe">•</tspan> SALUD
+    </text>
+  </g>
+</svg>

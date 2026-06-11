@@ -1,0 +1,66 @@
+<BODY background="pescar.bmp"><CENTER><TABLE WIDTH="90%" BORDER=0><TR><TD>  
+
+<?php
+include ("../../../conexiones/config_pro.php");
+
+//tabla mercaderia
+$cod_merca=$_POST["cod_merca"];
+$descripcion=$_POST["descripcion"];
+$nombre=$_POST["nombre"];
+
+$tip=$_POST["tipo"];
+	for ($i=0;$i<count($tip);$i++)    
+	{     
+	$tipo = $tip[$i];  
+		
+		}
+
+
+$presentacion=$_POST["presentacion"];
+$factorconver=$_POST["factorconver"];
+
+$cadenafri=$_POST["cadenafrio"];
+	for ($i=0;$i<count($cadenafri);$i++)    
+	{     
+	$cadenafrio = $cadenafri[$i];  
+		
+		}
+
+
+$proveedo=$_POST["proveedor"];
+	for ($i=0;$i<count($proveedo);$i++)    
+	{     
+	$proveedor = $proveedo[$i];  
+		
+		}
+$fabricante=$_POST["fabricante"];
+$margendif=$_POST["margendif"];
+
+$tip=$_POST["tipo"];
+	for ($i=0;$i<count($tip);$i++)    
+	{     
+	$tipo = $tip[$i];  
+		
+		}
+
+		$cod_tas=$_POST["cod_tasa"];
+	for ($i=0;$i<count($cod_tas);$i++)    
+	{     
+	$cod_tasa = $cod_tas[$i];  
+		
+		}
+
+if ($cod_tasa == ""){
+	$cod_tasa = 1;
+}
+
+
+
+$sql = "INSERT INTO `mercaderia` ( `cod_merca` , `descripcion` , `nombre` , `tipo` , `presentacion` , `factorconver` , `cadenafrio` , `proveedor` , `fabricante` , `id_proveedor` , `id_tasa` , `margendif`)
+
+VALUES( '$cod_merca' ,'$descripcion' , '$nombre' , '$tipo' , '$presentacion' , '$factorconver', '$cadenafrio' ,'$proveedor', '$fabricante' , '$proveedor' ,  '$cod_tasa' ,'$margendif')";
+ mysql_query($sql);
+include ("../../proveeduria/mercaderia/entrada_mercaderia.php");
+
+?>
+

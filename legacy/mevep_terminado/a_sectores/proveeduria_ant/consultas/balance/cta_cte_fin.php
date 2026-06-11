@@ -1,0 +1,148 @@
+
+
+
+<?php
+global $buscador_rapido;
+include("../../../../conexiones/config_grabacion.php");
+if ($borrar != 1){
+$buscador_rapido=$_POST["buscador_rapido"];
+}
+
+$hoy = date("d/m/Y");
+ include("adodb.inc.php");
+ $db = NewADOConnection('mysql');
+ $db->Connect("localhost", "root", "", "proveeduria");
+
+$B = 1;
+
+?>
+<body onUnload="window.opener.openedImprimir=0;" onLoad="window.print(); window.close();">
+<table width="114%" height="58" border="0">
+  <tr bordercolor="#FFFFCC" bgcolor="#000099">
+    <td colspan="12"><div align="right"><font color="#FFFFFF" face="Arial, Helvetica, sans-serif"><strong>  BALANCE DE CTA/CTE PROVEEDURIA AL:</strong> <?echo $fecha_hasta;?> </font></div></td>
+  </tr>
+  <tr bordercolor="#FFFFFF" bgcolor="#E6E6E6">
+    <td colspan="8"><font face="Arial, Helvetica, sans-serif"><strong></strong></font></td>
+  </tr>
+  <tr bordercolor="#FFFFFF" bgcolor="#000099">
+
+	<td width="5%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">CUENTA</font></div></td>
+    <td width="31%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">DENOMINACION</font></div></td>
+    <td width="10%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">TIPO CUENTA </font></div></td>
+    <td width="13%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">SALDO INCIAL AL: <?print("$fecha_desde");?></font></div></td>
+
+
+	<td width="9%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">DEBITOS</font></div></td>
+    <td width="10%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">CREDITOS</font></div></td>
+<td width="9%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">SALDO</font></div></td>
+</tr>
+
+<?
+$palabra=$_POST["busca"];
+
+
+ $sql_pr = "SELECT DISTINCT (cuenta), tipo_cuenta FROM `resumen_cta_vta` ORDER BY `tipo_cuenta` , cuenta";
+$result_pr = $db_pro->Execute($sql_pr);
+
+
+ if (!$result_pr) die("fallo".$db_pro->ErrorMsg());
+  while (!$result_pr->EOF) {
+
+$tipo = $result_pr->fields["tipo_cuenta"];
+$palabra= $result_pr->fields["cuenta"];
+
+
+
+if ($tipo == '2'){
+$sql3="select * from clientes where cuenta like '$palabra'";
+$result3 = $db_pro->Execute($sql3);
+$denominacion=strtoupper($result3->fields["denominacion"]);
+$tipo_cuenta = "EXTERNO";
+}elseif ($tipo == "1"){
+$sql4="select * from datos_laboratorio where nro_laboratorio like '$palabra'";
+$result4=$db_bq->Execute($sql4);
+$denominacion=strtoupper($result4->fields["nombre_laboratorio"]);
+$tipo_cuenta = "ASOCIADO";
+}
+
+
+ $sql1="select SUM(importe) as debitos from resumen_cta_vta where cuenta like '$palabra' and tipo_cuenta = $tipo and fecha < '$fecha_desde' and ((cod_movimiento = 1 or cod_movimiento = 2)) ";
+$result1 = $db_pro->Execute($sql1);
+
+$debitos_inicial=$result1->fields["debitos"];
+
+ $sql1="select SUM(importe) as creditos from resumen_cta_vta where (cuenta like '$palabra' and tipo_cuenta = $tipo and fecha <= '$fecha_desde' and cod_movimiento = 3)  or (cuenta like '$palabra' and tipo_cuenta = $tipo and fecha <= '$fecha_desde' and cod_movimiento = 4) or (cuenta like '$palabra' and tipo_cuenta = $tipo and fecha <= '$fecha_desde' and cod_movimiento = 5)";
+
+//$sql1 = "SELECT SUM( importe ) AS creditos' FROM resumen_cta_vta' WHERE ( cuenta = $palabra AND cod_movimiento = 3 AND fecha <= '$fecha_desde' AND tipo_cuenta = 1 ) OR ( cuenta = 78 AND cod_movimiento = 4 AND fecha <= 'fecha_desde' AND tipo_cuenta = 1 ) OR ( cuenta = 78 AND cod_movimiento = 5 AND fecha <= 'fecha_desde' AND tipo_cuenta = 1 )";
+
+$result1 = $db_pro->Execute($sql1);
+
+$creditos_inicial=$result1->fields["creditos"];
+
+$saldo_inicial = $debitos_inicial - $creditos_inicial;
+
+$sql="select sum(importe) as entrada from resumen_cta_vta where cuenta like '$palabra' and tipo_cuenta = $tipo and fecha BETWEEN  '$fecha_desde' AND  '$fecha_hasta' and ((cod_movimiento = 1 or cod_movimiento = 2)) order by fecha";
+$result = $db_pro->Execute($sql);
+
+$entrada=$result->fields["entrada"];
+
+$sql="select sum(importe) as salida from resumen_cta_vta where cuenta like '$palabra' and tipo_cuenta = $tipo and fecha BETWEEN  '$fecha_desde' AND  '$fecha_hasta' and ((cod_movimiento = 3 or cod_movimiento = 4 or cod_movimiento = 5)) order by fecha";
+$result = $db_pro->Execute($sql);
+
+$salida=$result->fields["salida"];
+
+$acumula_saldo = $saldo_inicial + $entrada - $salida;
+
+
+ $sql="select sum(saldo) as composicion from composicion_saldos where cuenta like '$palabra' and tipo_cuenta = $tipo" ;
+$result = $db_pro->Execute($sql);
+$composicion=strtoupper($result->fields["composicion"]);
+
+
+
+if (number_format($acumula_saldo,2) != number_format($composicion,2)){
+$error = "X";
+}
+
+
+
+		  $suma_saldo_inicial = $suma_saldo_inicial + $saldo_inicial;
+		  $suma_entradas = $suma_entradas + $entrada;
+		  $suma_salidas = $suma_salidas + $salida;
+		  $suma_saldo = $suma_saldo + $acumula_saldo;
+		  $suma_composicion = $suma_composicion + $composicion;
+?>
+
+  <tr bordercolor="#FFFFCC" bgcolor="#E6E6E6">
+    <td><div align="center"><font size="1" face="Arial, Helvetica, sans-serif"><?print("$palabra");?></font></div></td>
+    <td><font face="Arial, Helvetica, sans-serif"><strong><font size="1"><?print("$denominacion");?></font></strong></font></td>
+    <td><div align="center"><font size="1" face="Arial, Helvetica, sans-serif"><?print("$tipo_cuenta");?></font></div></td>
+    <td><div align="right"><font size="1" face="Arial, Helvetica, sans-serif"><?echo number_format($saldo_inicial,2);?></font></div></td>
+    <td><div align="right"><font size="1" face="Arial, Helvetica, sans-serif"><?echo number_format($entrada,2);?></font></div></td>
+    <td><div align="right"><font size="1" face="Arial, Helvetica, sans-serif"><?echo number_format($salida,2);?></font></div></td>
+    <td><div align="right"><font size="1" face="Arial, Helvetica, sans-serif"><?echo number_format($acumula_saldo,2);?></font></div></td>
+  </tr>
+  
+
+<?
+	$error = "";
+	$result_pr->MoveNext();
+	}?> 
+  <tr bordercolor="#FFFFCC" bgcolor="#E6E6E6">
+    <td><hr noshade></td>
+    <td><hr noshade></td>
+    <td><hr noshade></td>
+    <td>&nbsp;</td>
+    <td><hr noshade></td>
+    <td><hr noshade></td>
+    <td><hr noshade></td>
+  </tr>
+  <tr bordercolor="#FFFFCC" bgcolor="#E6E6E6">
+    <td colspan="3"><div align="right"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">TOTALES</font></div></td>
+    <td><div align="center"><font size="1" face="Arial, Helvetica, sans-serif">$ <?echo number_format($suma_saldo_inicial,2);?></font></div></td>
+    <td><div align="center"><font size="1" face="Arial, Helvetica, sans-serif">$ <?echo number_format($suma_entradas,2);?></font></div></td>
+    <td><div align="center"><font size="1" face="Arial, Helvetica, sans-serif">$ <?echo number_format($suma_salidas,2);?></font></div></td>
+    <td><div align="center"><font size="1" face="Arial, Helvetica, sans-serif">$ <?echo number_format($suma_saldo,2);?></font></div></td>
+  </tr>
+</table>
+<hr noshade>

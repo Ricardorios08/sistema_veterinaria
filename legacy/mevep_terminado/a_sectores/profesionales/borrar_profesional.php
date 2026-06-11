@@ -1,0 +1,12 @@
+<?php 
+include ("../../conexiones/config.inc.php");
+
+ $nro_profesional=strtoupper($_REQUEST["nro_profesional"]);
+
+
+ECHO  $sql = "DELETE FROM profesionales where nro_profesional = $nro_profesional";
+mysql_query($sql);
+
+$leyenda = "SE ELIMINO EL PROFESIONAL";
+include ("../../alertas/campo_informacion.php");
+

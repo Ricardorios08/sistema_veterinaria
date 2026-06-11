@@ -1,0 +1,53 @@
+<?php
+
+include ("../../conexiones/config.inc.php");
+ 
+ $usuario= $_REQUEST['usuario'];
+  $tipo= $_REQUEST['tipo'];
+ 
+$sql="select * from  usuario  where id = $usuario";
+ $result = $db->Execute($sql);
+$nombre_vet=$result->fields["nombre"];
+
+ $cod_socio= $_REQUEST['cod_socio'];
+ $diagnostico_presuntivo= $_REQUEST['diagnostico_presuntivo'];
+ $diagnostico= $_REQUEST['diagnostico'];
+ $cod_operacion= $_REQUEST['cod_operacion'];
+
+ $hoy = date("Y-m-d");
+
+
+IF ($diagnostico == ""){
+	$leyenda = "DEBE INGRESAR HISTORIA DE LA MASCOTA";
+	include ("../../alertas/campo_informacion2.php");
+	exit;
+
+	include ("entrada_hc1.php");
+
+
+}else{
+
+
+$sql="select * from  `lista_espera`  where fecha_llegada = '$hoy' order by orden desc";
+ $result = $db->Execute($sql);
+$orden=$result->fields["orden"]+1;
+
+
+  $sql = "UPDATE `lista_espera` SET `atendido` = 'S' , `orden` = '$orden' WHERE `cod_operacion` = '$cod_operacion'";
+mysql_query($sql);
+
+  $time = time();
+$hora = date("h:i:s", $time);
+
+
+ $sql = "INSERT INTO `diagnostico` (`cod_socio`, `fecha_diagnostico`, `diagnostico_presuntivo`, `diagnostico`, `cod_operacion` , `tipo` , `usuario` , `veterinario` , `hora` ) VALUES ('$cod_socio', '$hoy', '$diagnostico_presuntivo', '$diagnostico', NULL, '$tipo' , '$usuario' , '$nombre_vet' , '$hora')";
+ mysql_query($sql);
+
+
+
+
+	$leyenda = "SE GUARDO HISTORIA CLINICA";
+	include ("lista.php");
+
+}
+

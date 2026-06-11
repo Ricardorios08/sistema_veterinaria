@@ -1,0 +1,110 @@
+<script language="javascript">
+function on_load()
+{
+document.getElementById("cod_merca").focus();
+document.getElementById("cod_merca").style.backgroundColor = "#CCFFCC";
+}
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				case "cod_merca":
+				document.getElementById("nombre").focus();
+				break;
+
+				case "nombre":
+				document.getElementById("proveedor").focus();
+				break;
+
+				case "proveedor":
+				document.getElementById("d").focus();
+				break;
+
+				case "d":
+				document.getElementById("p").focus();
+				break;
+
+				case "p":
+				document.getElementById("precio_actualizado").focus();
+				break;
+
+				case "precio_actualizado":
+				document.getElementById("cod_tasa").focus();
+				break;
+
+				
+				
+		}
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+
+<BODY background="../../../imagenes/logito.png" onload = "on_load ()">
+
+<FORM name="form" ACTION="modificar.php" METHOD = "POST">
+<table width="650" border="0">
+    <tr align="center" bordercolor="#FFFFFF" bgcolor="#666666"> 
+      <td height="34" colspan="2"><font color="#FFFFFF" face="Arial, Helvetica, sans-serif"><strong>
+        <?$hoy = date("d/m/y");
+
+include ("variables.php");
+?>
+      ALTA DE DEBITO AUTOMATICO NEVADA </strong></font></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#EEEEEE"> 
+      <td width="27%" bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">N&ordm; Mevep </font></div></td>
+      <td bgcolor="#9FE1BB"><font size="2" face="Arial, Helvetica, sans-serif">
+      <input name="cod_mevep" type="text" id="cod_mevep" onKeyPress="return verif_caracter(this,event)" value="<? echo $cod_mevep; ?>" size="5"> 
+      </font><font size="2" face="Arial, Helvetica, sans-serif">&nbsp; </font><font color="#006633" size="2" face="Arial, Helvetica, sans-serif">&nbsp;
+      
+      </font><font size="2" face="Arial, Helvetica, sans-serif">&nbsp;     </font>      
+      <div align="right"></div>      <div align="center"><font color="#006633" size="2" face="Arial, Helvetica, sans-serif">
+      </font></div></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC"> 
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Nombre</font></div></td>
+      <td bgcolor="#9FE1BB"><font size="2" face="Arial, Helvetica, sans-serif">
+        <input name="nombre" type="text"  id="nombre" onKeyPress="return verif_caracter(this,event)" value="<? echo $nombre; ?>"  size="35">
+</font></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC"> 
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Documento</font></div></td>
+      <td bgcolor="#9FE1BB"><font size="2" face="Arial, Helvetica, sans-serif">
+        <input name="documento" type="text"  id="documento" onKeyPress="return verif_caracter(this,event)" value="<?echo $documento; ?>"  size="8">
+      </font> </td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#A0A7F5"><div align="right"><font size="2" face="Arial, Helvetica, sans-serif">Nº Tarjeta</font></div></td>
+      <td bgcolor="#9FE1BB"><font size="2" face="Arial, Helvetica, sans-serif">
+        <input name="cbu" type="text"  id="cbu" onKeyPress="return verif_caracter(this,event)" value="<? echo $cbu; ?>"  size="20" maxlength="16"> 
+        16 digitos (obligatorios)
+      </font></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#A0A7F5"><div align="right"><font size="2" face="Arial, Helvetica, sans-serif">Fecha</font></div></td>
+      <td bgcolor="#9FE1BB"><input name="monto_descontar2" type="text" id ="monto_descontar3" onKeyPress="return verif_caracter(this,event)" value="<? echo $fecha_ingreso;?>" size="10" maxlength="10"></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#A0A7F5"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Monto a Descontar </font></div></td>
+      <td bgcolor="#9FE1BB">
+        <input name="monto_descontar" type="text" id ="monto_descontar" onKeyPress="return verif_caracter(this,event)" value="<? echo $monto_descontar; ?>" size="5"></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td colspan="2" bgcolor="#666666"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif">
+          <input type="Submit" name="guardar" id= "guardar4" value="GUARDAR SOCIO" target = "arriba">
+      </font></div></td>
+    </tr>
+</table>
+ 
+</form>

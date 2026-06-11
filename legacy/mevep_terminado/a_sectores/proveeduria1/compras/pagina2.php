@@ -1,0 +1,76 @@
+<?
+include ("../../../conexiones/config_pro.php");
+
+$nro_proveedor = $_REQUEST['nro_proveedor'];
+$dia= $_REQUEST['dia'];
+$mes= $_REQUEST['mes'];
+$anio= $_REQUEST['anio'];
+$fecha = $anio."-".$mes."-".$dia;
+$fecha1 =$dia."-".$mes."-".$anio;
+
+
+$sql="select * from proveedores where cuenta = $nro_proveedor";
+$result = $db->Execute($sql);
+$denominacion=strtoupper($result->fields["denominacion"]);
+$tipo_iva=strtoupper($result->fields["tipo_iva"]);
+
+
+if ($denominacion == ""){
+	$leyenda = "NO EXISTE PROVEEDOR CON ESE NUMERO";
+	INCLUDE ("../../../alertas/campo_vacio.php");
+	exit;
+}
+
+
+$operador= $_REQUEST['operador'];
+
+Switch ($operador){
+	case "1":{
+		$nombre_operador = "Francisco";
+		break;
+	}
+
+	case "2":{
+$nombre_operador = "Florencia";
+break;
+	}
+}
+
+$tipo_fact= $_REQUEST['tipo_fact'];
+
+if ($tipo_fact == ""){
+	$leyenda = "DEBE ELEGIR TIPO DE FACTURA";
+	INCLUDE ("../../../alertas/campo_vacio.php");
+	exit;
+}
+
+$nro_factura= $_REQUEST['nro_factura'];
+
+
+$sub_total= $_REQUEST['subtotal'];
+$descuento= $_REQUEST['descuento'];
+$neto_gravado= $_REQUEST['neto_gravado'];
+$iva= $_REQUEST['iva'];
+$total= $_REQUEST['total'];
+
+
+if ($nro_proveedor == ""){
+	$leyenda = "NO PUEDE DEJAR EL CAMPO NRO DE PROVEEDOR EN BLANCO";
+	INCLUDE ("../../../alertas/campo_vacio.php");
+	exit;
+}
+
+if ($nro_factura == ""){
+	$leyenda = "NO PUEDE DEJAR EL CAMPO NRO DE COMPROBANTE EN BLANCO";
+	INCLUDE ("../../../alertas/campo_vacio.php");
+	exit;
+}
+
+
+$sql = "INSERT INTO `compras_encabezado` ( `cod_operacion` , `tipo_fact` , `nro_factura` , `nro_proveedor` , `denominacion` , `fecha` , `subtotal` , `descuento` , `neto_gravado` , `iva` , `total` , `operador` , `tipo_iva` )  VALUES ( '' , '$tipo_fact' , '$nro_factura' , '$nro_proveedor' , '$denominacion' , '$fecha' , '$subtotal' , '$descuento' ,  '$neto_gravado' ,'$iva' , '$total' ,  '$operador' , '$tipo_iva')";
+mysql_query($sql);
+
+$leyenda = "SE GUARDO LA FACTURA DE COMPRA";
+	INCLUDE ("../../../alertas/campo_vacio.php");
+
+// $140 * 10 Moscatel

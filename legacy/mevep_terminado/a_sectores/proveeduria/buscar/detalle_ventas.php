@@ -1,0 +1,53 @@
+<?php
+
+require('../../../drivers/fpdf/fpdf.php');
+require ("../../../conexiones/config.inc.php");
+ $nro_factura=$_REQUEST["nro_factura"];
+
+
+$pdf = new FPDF();
+$pdf->AddPage();
+$pdf->SetFont('Arial','B',16);
+$pdf->Cell(40,10,'¡Hola, Mundo!');
+
+
+   $sql="select * from ventas_detalle where nro_factura = '$nro_factura'  order by cod_mercaderia";
+  $result = $db->Execute($sql);
+
+
+    if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+	$cod_merc = $cod_mercaderia;
+$cod_mercaderia=$result->fields["cod_mercaderia"];
+$descripcion=strtoupper($result->fields["descripcion"]);
+$presentacion=strtoupper($result->fields["presentacion"]);
+$cantidad=strtoupper($result->fields["cantidad"]);
+$precio_unitario=strtoupper($result->fields["precio_unitario"]);
+$total=strtoupper($result->fields["neto"]);
+$iva_renglon=strtoupper($result->fields["iva_renglon"]);
+$cod_detalle=strtoupper($result->fields["cod_detalle"]);
+
+
+
+ 
+
+$total_pagar = $total_pagar + $total;
+
+
+$result->MoveNext();
+
+	}
+
+$pdf->Output();
+?>
+
+
+
+
+
+
+ 
+
+ 
+

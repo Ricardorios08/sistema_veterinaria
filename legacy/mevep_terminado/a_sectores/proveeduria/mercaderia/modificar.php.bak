@@ -1,0 +1,121 @@
+<?php 
+
+include ("../../../conexiones/config_pro.php");
+$cod_merca=$_POST["cod_merca"];
+
+$cod_merca_nuevo=$_POST["cod_merca_nuevo"];
+
+$nombre=$_POST["nombre"];
+
+$precio_actualizado=$_POST["precio_actualizado"];
+
+
+
+$categori=$_POST["categoria"];
+	for ($i=0;$i<count($categori);$i++)    
+	{     
+$categoria = $categori[$i];  
+			}
+
+$marc=$_POST["marca"];
+	for ($i=0;$i<count($marc);$i++)    
+	{     
+$marca = $marc[$i];  
+			}
+
+$pla=$_POST["cod_tasa"];
+	for ($i=0;$i<count($pla);$i++)    
+	{     
+$plan = $pla[$i];  
+			}
+
+			 $plan; 
+
+$proveedo=$_POST["proveedor"];
+	for ($i=0;$i<count($proveedo);$i++)    
+	{     
+$proveedor = $proveedo[$i];  
+			}
+
+
+ $nueva_categoria=$_POST["nueva_categoria"];
+ $nueva_marca=$_POST["nueva_marca"];
+ $nuevo_proveedor=$_POST["nuevo_proveedor"];
+
+$descripcion=$_POST["descripcion"];
+if ($categoria == ""){
+$sql="select * from mercaderia where cod_merca = $cod_merca";
+$result = $db->Execute($sql);
+$categoria=$result->fields["cod_categoria"];
+}
+
+if ($marca == ""){
+$sql="select * from mercaderia where cod_merca = $cod_merca";
+$result = $db->Execute($sql);
+$marca=$result->fields["cod_marca"];
+}
+
+if ($plan == ""){
+$sql="select * from mercaderia where cod_merca = $cod_merca";
+$result = $db->Execute($sql);
+$plan=$result->fields["cod_tasa"];
+}
+
+if ($proveedor == ""){
+$sql="select * from mercaderia where cod_merca = $cod_merca";
+$result = $db->Execute($sql);
+$proveedor=$result->fields["proveedor"];
+}
+
+if ($nueva_categoria != ""){
+ $sql = "INSERT INTO `categoria` ( `cod_categoria` , `categoria`) VALUES( '' ,'$nueva_categoria' )";
+ mysql_query($sql);
+ $idgenerado = mysql_insert_id();
+$categoria = $idgenerado;
+ }
+
+
+if ($nueva_marca != ""){
+  $sql = "INSERT INTO `marca1` ( `cod_marca` , `marca`) VALUES( '' ,'$nueva_marca' )";
+ mysql_query($sql);
+  $idgenerado = mysql_insert_id();
+$marca = $idgenerado;
+ }
+
+
+if ($nuevo_proveedor != ""){
+ $sql = "INSERT INTO `proveedores` (`cuenta`, `denominacion`, `contacto`, `domicilio`, `puerta`, `referencia`, `cod_postal`, `localidad`, `caracteristica_1`, `telefono_1`, `caracteristica_2`, `telefono_2`, `caracteristica_3`, `telefono_3`, `email`, `cuit`, `tipo_iva`, `ing_bruto`, `nro_ib`, `pago_orden`, `observaciones`) VALUES ('', '$nuevo_proveedor', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')";
+ mysql_query($sql);
+$idgenerado = mysql_insert_id();
+$proveedor = $idgenerado;
+ }
+
+
+if ($cod_merca_nuevo > 0){
+$sql = "DELETE FROM mercaderia where cod_merca = $cod_merca";
+$result = $db->Execute($sql);
+
+$sql = "INSERT INTO `mercaderia` ( `cod_merca` , `nombre` , `proveedor` , `precio_actualizado`  , `tipo_moneda`  , `cod_tasa` , `cod_categoria` , `cod_marca` , `descripcion`) VALUES( '$cod_merca_nuevo' ,'$nombre' , '$proveedor' , '$precio_actualizado' , '$tipo_moneda' , '$plan' , '$categoria' , '$marca' , '$descripcion')";
+$result = $db->Execute($sql);
+}
+else{
+$sql = "DELETE FROM mercaderia where cod_merca = $cod_merca";
+$result = $db->Execute($sql);
+
+ $sql = "INSERT INTO `mercaderia` ( `cod_merca` , `nombre` , `proveedor` , `precio_actualizado`  , `tipo_moneda`  , `cod_tasa` , `cod_categoria` , `cod_marca` , `descripcion`) VALUES( '$cod_merca' ,'$nombre' , '$proveedor' , '$precio_actualizado' , '$tipo_moneda' , '$plan' , '$categoria' , '$marca' , '$descripcion')";
+$result = $db->Execute($sql);
+
+$sql = "UPDATE `cod_barra_propio` SET `cod_barra` ='$cod_merca_nuevo' WHERE `cod_barra` = '$cod_merca_nuevo' LIMIT 1";
+$result = $db->Execute($sql);
+}
+
+
+$sql="select * from mercaderia where cod_merca = $cod_merca";
+$result = $db->Execute($sql);
+$nombre=$result->fields["nombre"];
+
+
+$leyenda = "SE HA MODIFICADO EL PRODUCTO ".$cod_merca." ".$nombre;
+include ("../../../alertas/campo_informacion.php");
+?>
+

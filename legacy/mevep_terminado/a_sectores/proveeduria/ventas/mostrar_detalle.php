@@ -1,0 +1,274 @@
+<script language="javascript">
+function on_load()
+{
+document.getElementById("denominacion").focus();
+document.getElementById("denominacion").style.backgroundColor = "#CCFFCC";
+}
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				
+
+				case "denominacion":
+				document.getElementById("domicilio").focus();
+				document.getElementById("denominacion").style.backgroundColor = "#ffffff";
+				document.getElementById("domicilio").style.backgroundColor = "#CCFFCC";
+				break;
+
+				case "domicilio":
+				document.getElementById("puerta").focus();
+				document.getElementById("domicilio").style.backgroundColor = "#ffffff";
+				document.getElementById("puerta").style.backgroundColor = "#CCFFCC";
+				break;
+				case "puerta":
+				document.getElementById("localidad").focus();
+				document.getElementById("puerta").style.backgroundColor = "#ffffff";
+				document.getElementById("localidad").style.backgroundColor = "#CCFFCC";
+				break;
+				
+				case "localidad":
+				document.getElementById("caracteristica_1").focus();
+				document.getElementById("localidad").style.backgroundColor = "#ffffff";
+				document.getElementById("caracteristica_1").style.backgroundColor = "#CCFFCC";
+				break;
+
+				case "caracteristica_1":
+				document.getElementById("telefono_1").focus();			
+				document.getElementById("caracteristica_1").style.backgroundColor = "#ffffff";
+				document.getElementById("telefono_1").style.backgroundColor = "#CCFFCC";
+				break;
+				case "telefono_1":
+				document.getElementById("caracteristica_3").focus();
+				document.getElementById("telefono_1").style.backgroundColor = "#ffffff";
+				document.getElementById("caracteristica_3").style.backgroundColor = "#CCFFCC";
+				break;
+
+				
+				case "caracteristica_3":
+				document.getElementById("telefono_3").focus();
+				document.getElementById("caracteristica_3").style.backgroundColor = "#ffffff";
+				document.getElementById("telefono_3").style.backgroundColor = "#CCFFCC";
+				break;
+				case "telefono_3":
+				document.getElementById("email").focus();
+				document.getElementById("telefono_3").style.backgroundColor = "#ffffff";
+				document.getElementById("email").style.backgroundColor = "#CCFFCC";
+				break;
+
+				case "email":
+				document.getElementById("cuit").focus();
+				document.getElementById("email").style.backgroundColor = "#ffffff";
+				document.getElementById("cuit").style.backgroundColor = "#CCFFCC";
+				break;
+
+				case "cuit":
+				document.getElementById("iva").focus();
+				document.getElementById("cuit").style.backgroundColor = "#ffffff";
+				document.getElementById("iva").style.backgroundColor = "#CCFFCC";
+				break;
+
+				
+
+
+				case "plan":
+				document.getElementById("guardar").focus();
+				document.getElementById("plan").style.backgroundColor = "#ffffff";
+				break;
+		}
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+
+
+<?php
+
+$hoy = date("d/m/Y");
+include ("../../../conexiones/config.inc.php");
+
+ $id=$_REQUEST["id"];
+ 
+   // $sql="select * from `ventas1_deta_temp` where nro_factura = '$id' group by cod_mercaderia order by cod_mercaderia";
+
+	    $sql="select * from `ventas1_deta_temp` where nro_factura = '$id'   order by cod_mercaderia";
+
+  $result = $db->Execute($sql);
+
+
+
+?><body background="../imagenes/logito.png" onload = "on_load ()"> 
+
+
+
+
+<FORM name="form" ACTION="calcular_factura.php" METHOD = "POST">
+<table width="860" height="162" border="0" cellspacing="0">
+  
+  
+  
+  <tr bordercolor="#FFFFFF" bgcolor="#A0A7F5">
+    <td height="14" colspan="4" bgcolor="#666666"><div align="center"><strong><font color="#FFFFFF" face="Arial, Helvetica, sans-serif">DATOS FACTURA </font></strong></div></td>
+    <td height="14" colspan="3" bgcolor="#666666"><div align="center"><a href="../ventas/borrar_carrito.php?id=<?php print("$id");?>"><font color="#FFFFFF" face="Trebuchet MS">Borrar Carrito</font></a></div></td>
+
+  </tr>
+  <tr bordercolor="#FFFFFF" bgcolor="#A0A7F5">
+    <td height="14" colspan="2"><div align="center"><font size="2" face="Trebuchet MS">AGREGAR PRODUCTO INDIVIDUAL</font> </div></td>
+    <td colspan="2"><div align="center"><font color="#FFFFFF" size="4" face="Arial, Helvetica, sans-serif">
+      <input type="text" name="producto" id="descuento" size="50" onKeyPress="return verif_caracter(this,event)">
+    </font></div></td>
+    <td colspan="2"><div align="center"><font color="#FFFFFF" size="4" face="Arial, Helvetica, sans-serif">
+      <font color="#000000">$</font>
+      <input type="text" name="precio" id="descuento2" size="10" onKeyPress="return verif_caracter(this,event)">
+    </font></div></td>
+    <td><div align="center"><font size="2" face="Arial, Helvetica, sans-serif">
+      <input type="Submit" name="guardar" id= "guardar" value="AGREGAR" target = "arriba">
+    </font></div></td>
+  </tr>
+  <tr bordercolor="#FFFFFF" bgcolor="#A0A7F5">
+ 
+
+
+    <td width="6%" height="14"><div align="center"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">CODIGO</font></div></td>
+    <td width="25%"><div align="center"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">PRODUCTO</font> / <font color="#000000" size="2" face="Arial, Helvetica, sans-serif">DESCRIPCION</font></div></td>
+    <td width="11%"><div align="center"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">DESCRIPCION</font></div></td>
+    <td width="31%"><div align="center"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">CANTIDAD</font></div></td>
+    <td width="11%"><div align="center"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">PARTICULAR.</font></div></td>
+ 
+  <td width="8%"><div align="center"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">SOCIO</font></div></td> 
+  <td width="8%"><div align="center"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">BORRAR</font></div></td>
+  </tr>
+ 
+ 
+ <?php 
+
+ 
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+	$cod_merc = $cod_mercaderia;
+$cod_mercaderia=$result->fields["cod_mercaderia"];
+$descripcion=strtoupper($result->fields["descripcion"]);
+$presentacion=strtoupper($result->fields["presentacion"]);
+$cantidad=strtoupper($result->fields["cantidad"]);
+$precio_unitario=strtoupper($result->fields["precio_unitario"]);
+$total2=strtoupper($result->fields["total"]);
+$iva_renglon=strtoupper($result->fields["iva_renglon"]);
+$cod_detalle=strtoupper($result->fields["cod_detalle"]);
+
+
+
+ $sql1="select * from mercaderia where cod_merca = '$cod_mercaderia'";
+ $result1 = $db->Execute($sql1);
+
+$precio_actualizado=strtoupper($result1->fields["precio_actualizado"]);
+$proveedor=strtoupper($result1->fields["proveedor"]);
+$cod_tasa=strtoupper($result1->fields["cod_tasa"]);
+  
+  
+   $sql2="select * from tasas where cod_tasa = $cod_tasa";
+ $result2 = $db->Execute($sql2);
+
+   $tasa_socio=$result2->fields["iva_normal"];
+  $tasa_particulares=strtoupper($result2->fields["iva_recargo"]);
+
+
+
+$sql2="select * from marca1 where cod_marca = $cod_marca";
+$result2 = $db->Execute($sql2);
+$marca=$result2->fields["marca"];
+
+$sql2="select * from categoria where cod_categoria = $cod_categoria";
+$result2 = $db->Execute($sql2);
+$categoria=$result2->fields["categoria"];
+
+
+ $precio_particular = round(($precio_actualizado * $tasa_particulares)/100,2) + $precio_actualizado;
+ $precio_socio =round(($precio_particular * $tasa_socio/100),2);
+
+ $precio_socio1 = $precio_particular - $precio_socio;
+
+if ($presentacion == "CREADO"){
+$precio_particular = $total2;
+$precio_socio1 = $total2;
+
+}
+
+
+
+    $sql2="select sum(cantidad), sum( from `ventas1_deta_temp` where nro_factura = '$id' and cod_mercaderia = '$cod_mercaderia'";
+  $result2 = $db->Execute($sql2);
+$marca=$result2->fields["marca"];
+
+ $total_soc = $total_soc + $precio_socio1;
+$total_par = $total_par + $precio_particular;
+
+
+
+
+?>
+    <tr><td height="20" bgcolor="#9FE1BB"><div align="left"><font size="2" face="Arial, Helvetica, sans-serif"><?php print("$cod_mercaderia");?></font></div></td>
+    <td bgcolor="#9FE1BB"><div align="left"><font size="2" face="Arial, Helvetica, sans-serif"><?php ECHO $descripcion;?></font>/   <font size="2" face="Arial, Helvetica, sans-serif"><?php ECHO $nombre;?></font></div></td>
+
+
+    <td bgcolor="#9FE1BB"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><?php ECHO $presentacion;?></font></div></td>
+    <td bgcolor="#9FE1BB"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><?php ECHO $cantidad;?></font></div></td>
+    <td bgcolor="#9FE1BB"><div align="right"><font size="2" face="Arial, Helvetica, sans-serif"><?php echo $precio_particular;?></font></div></td>
+
+   <td bordercolor="#E8DCFC" bgcolor="#9FE1BB"><div align="right"><font size="2" face="Arial, Helvetica, sans-serif"><?php ECHO $precio_socio1;?></font></div></td> 
+   <td bordercolor="#E8DCFC" bgcolor="#9FE1BB"><div align="center"><a href="../ventas/borrar.php?cod_detalle=<?php print("$cod_detalle");?>&&id=<?php print("$id");?>&&cantidad=<?php print("$cantidad");?>"><img src="../../../imagenes/office/1047.ico" alt="Modificar" border = "0"></a></div></td>
+    </tr>
+   
+    
+<?PHP 
+
+
+$cont = $cont + 1;
+$total2 = "";
+$precio_socio1 = "";
+
+$result->MoveNext();
+	}
+
+
+?>
+
+<tr>
+  <td height="20" colspan="2" bgcolor="#CCCCCC">&nbsp;</td>
+  <td height="20" bgcolor="#CCCCCC">&nbsp;</td>
+  <td height="20" bgcolor="#CCCCCC">&nbsp;</td>
+  <td height="20" bgcolor="#CCCCCC"><div align="right"><font color="#0000FF" size="3" face="Arial, Helvetica, sans-serif"><strong><?php echo number_format($total_par,2);?></strong></font></div></td>
+  <td height="20" bgcolor="#CCCCCC"><div align="right"><font color="#0000FF" size="3" face="Arial, Helvetica, sans-serif"><strong><?php echo number_format($total_soc,2);?></strong></font></div></td>
+  <td height="20" bgcolor="#CCCCCC">&nbsp;</td>
+</tr>
+<tr>
+  <td height="20" colspan="3" bgcolor="#CCCCCC"><div align="left"><font color="#006600" size="4" face="Arial, Helvetica, sans-serif"><strong>DESCUENTO:%</strong></font><font color="#FFFFFF" size="4" face="Arial, Helvetica, sans-serif">
+      <input type="text" name="descuento" id="descuento5" size="10" onKeyPress="return verif_caracter(this,event)">
+</font><font size="2" face="Arial, Helvetica, sans-serif">
+<input type="Submit" name="guardar" id= "guardar" value="CALCULAR" target = "arriba">
+</font><font color="#FFFFFF" size="4" face="Arial, Helvetica, sans-serif">    </font></div></td>
+  <td height="20" colspan="4" bgcolor="#CCCCCC"><font size="2" face="Arial, Helvetica, sans-serif">
+    <input type="Submit" name="guardar" id= "guardar22" value="FACTURAR NO SOCIOS-NO PARTICULARES" target = "arriba">
+  </font></td>
+</tr>
+<tr>
+  <td height="20" colspan="3" bgcolor="#CCCCCC">&nbsp;</td>
+  <td height="20" colspan="4" bgcolor="#CCCCCC">&nbsp;</td>
+</tr>
+<tr>
+      <td height="20" colspan="3" bgcolor="#CCCCCC"><div align="left"><font color="#0000FF" size="6" face="Arial, Helvetica, sans-serif"><strong> PARTICULAR: $ <?php echo number_format($total_par,2);?></strong></font></div></td>
+      <td height="20" colspan="4" bgcolor="#CCCCCC"><div align="center"><font color="#0000FF" size="6" face="Arial, Helvetica, sans-serif"><strong> SOCIO: $ <?php echo number_format($total_soc,2);?></strong></font></div></td>
+    </tr>
+</table>
+
+</form>

@@ -1,0 +1,27 @@
+/* CSS Document */
+#barra{
+	display:table;
+	width:700px;
+	background-color:#CCFFCC;
+	border:1px solid #0066CC;
+}
+.c_fecha{
+	float:left;
+	width:200px;
+	text-align:center;
+}
+.c_usuario{	
+	float:left;
+	width:100px;
+	text-align:center;
+}
+.c_mensaje{	
+	float:left;
+	width:400px;
+}
+.caja{
+	display:table;
+	width:700px;
+	background-color:#CCFFFF;
+	border:1px solid #0066CC;
+}

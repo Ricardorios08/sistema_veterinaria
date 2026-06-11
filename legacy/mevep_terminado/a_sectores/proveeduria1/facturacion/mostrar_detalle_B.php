@@ -1,0 +1,176 @@
+<style type="text/css">
+<!--
+.Estilo6 {font-size: 12}
+.Estilo26 {
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+-->
+
+
+<!--
+-->
+
+<!--
+.Estilo76 {font-family: Arial, Helvetica, sans-serif}
+-->
+
+
+
+</style>
+
+
+<?include("../../../conexiones/config_pro.php");
+$sql6 = "SELECT * FROM `ventas1_encab_temp`  WHERE  `nro_factura` = $nro_factura";
+$result6 = $db->Execute($sql6);
+$forma_pago=strtoupper($result6->fields["forma_pago"]);
+$porc_dto=strtoupper($result6->fields["porc_dto"]);
+$plan=strtoupper($result6->fields["plan"]);
+$tipo_iva=strtoupper($result6->fields["tipo"]);
+
+$desc_fact = 0;
+
+$sql3 = "SELECT * FROM `ventas1_deta_temp`  WHERE  `nro_factura` = $nro_factura";
+$result3 = $db->Execute($sql3);
+?>
+<table width="650" border="0">
+  <tr bgcolor="#C4D7E6" class="Estilo26">
+    <td colspan="7" scope="col"><div align="center"><span class="Estilo6 Estilo2 Estilo1"><span class="Estilo46">Plan: <span class="Estilo47 Estilo48"><?echo $plan;?>  Forma Pago: <?echo $forma_pago;?></span></span></span></div></td>
+  </tr>
+  <tr bgcolor="#CFCFCF" class="Estilo26">
+    <td width="6%" scope="col"><div align="center" class="Estilo2 Estilo1">N&ordm;</div></td>
+    <td scope="col"><div align="center" class="Estilo6 Estilo2 Estilo1"><span class="Estilo46"></span></div>      <div align="center" class="Estilo3"><span class="Estilo6"><span class="Estilo46">Descripcion / Mercaderia</span></span></div></td>
+    <td width="8%" scope="col"><div align="center" class="Estilo6 Estilo2 Estilo1"><span class="Estilo46">Presentacion</span></div></td>
+    <td width="6%" scope="col"><div align="center" class="Estilo6 Estilo2 Estilo1"><span class="Estilo46">Cant</span></div></td>
+    <td width="9%" scope="col"><div align="center" class="Estilo6 Estilo2 Estilo1"><span class="Estilo46"> Pr. Unit,</span></div></td>
+    <td width="9%" scope="col"><div align="center" class="Estilo6 Estilo2 Estilo1"><span class="Estilo46">Total</span></div></td>
+    <td width="4%" scope="col"><div align="center"><span class="Estilo1">Borrar</span></div></td>
+  </tr><?
+
+if (!$result3) die("fallo".$db->ErrorMsg());
+
+ while (!$result3->EOF) {
+$renglon = $renglon + 1;
+
+$cod_mercaderia=strtoupper($result3->fields["cod_mercaderia"]);
+$cantidad=strtoupper($result3->fields["cantidad"]);
+$presentacion=strtoupper($result3->fields["presentacion"]);
+$descripcion=strtoupper($result3->fields["descripcion"]);
+$cod_detalle=strtoupper($result3->fields["cod_detalle"]);
+$precio_unitario=strtoupper($result3->fields["precio_unitario"]);
+
+
+
+ $total = round($precio_unitario * $cantidad,3); //subtotal
+
+$suma_total = $suma_total + $total;
+
+$desc_factura = ($suma_total * $porc_dto)/100;
+$subtotal = $suma_total - $desc_factura; // neto grabado
+$iva = round(($subtotal * $iva_normal) /100,3);
+
+$total_factura = $subtotal + $iva;
+
+$cont = $cont + 1;
+
+
+
+$cod_mercaderia=strtoupper($result3->fields["cod_mercaderia"]);
+$cantidad=strtoupper($result3->fields["cantidad"]);
+$presentacion=strtoupper($result3->fields["presentacion"]);
+$descripcion=strtoupper($result3->fields["descripcion"]);
+$cod_detalle=strtoupper($result3->fields["cod_detalle"]);
+$precio_unitario=strtoupper($result->fields["precio_unitario"]);
+
+
+
+/////desc por articulo //////////////
+
+$precio_bruto = round($precio_unitario * $cantidad,3);
+
+$tipo_iva;
+if ($tipo_iva != 4){ //exento
+$iva_articulo = round(($precio_unitario * $iva_normal)/100,3);
+
+$precio_actualizado = $precio_unitario + $iva_articulo;
+$iva_total = $iva_total + $iva_articulo;
+}
+
+$total = round($precio_unitario * $cantidad,2);
+$desc_articulo = round(($total * $porc_dto)/100,2); // descuento por articulo 
+$desc_factura1 = $desc_factura1 + $desc_articulo; // suma descuento total
+
+	
+
+//$sql_update = "UPDATE `ventas1_deta_temp` SET `total` = '$total' WHERE `cod_detalle` = '$cod_detalle'";
+//mysql_query($sal_update);
+
+$sql_ventas = "UPDATE `ventas1_encab_temp` SET `plan` = '$plan' WHERE nro_factura = $nro_factura ";
+mysql_query($sql_ventas);
+
+$subtotal = $subtotal + $total;
+$total_factura = $subtotal - $desc_factura1;
+
+
+
+//$iva = ($subtotal * 21) /100;
+//$total_factura = round($subtotal,2) + round($iva,2);
+$cont = $cont + 1;
+
+?>
+  <tr bordercolor="#FFFFCC" bgcolor="#E0EDF3">
+    <td scope="col"><div align="center"><span class="Estilo47 Estilo48"><span class="Estilo26"><?echo $renglon;?></span></span></div></td>
+    <?
+
+
+
+
+
+?>
+
+
+    <td height="27" scope="col"><div align="left" class="Estilo47 Estilo48"><span class="Estilo26"><?echo $cod_mercaderia. " - ".$descripcion." (".$cant_exis.")";?></span></div></td>
+    <td scope="col"><div align="center" class="Estilo46"><span class="Estilo26"><?echo $presentacion;?></span></div></td>
+    <td scope="col"><div align="center" class="Estilo46"><span class="Estilo26"><?echo $cantidad;?></span></div></td>
+    <td scope="col"><div align="right" class="Estilo46"><span class="Estilo26">$ <?echo number_format($precio_actualizado,3);?></span></div></td>
+    <td scope="col"><div align="right" class="Estilo46"><span class="Estilo26">$ <?echo number_format($total,3);?></span></div></td>
+   <td width="4%" bgcolor="#E0EDF3" class="Estilo6"><div align="center">
+   <a href="borrar_item.php?cod_detalle=<?print("$cod_detalle");?>&&nro_factura=<?print("$nro_factura");?>&&nro_cliente=<?print("$nro_cliente");?>&&matricula=<?print("$matricula");?>&&pasada=1&&forma_pago=<?print("$forma_pago");?>&&dia=<?print("$dia");?>&&mes=<?print("$mes");?>&&anio=<?print("$año");?>&&mes=<?print("$mes");?>&&band=<?print("$band");?>&&operador=<?print("$operador");?>" onclick="return confirm('¿Está seguro de borrar este producto?');"><IMG SRC="../../../imagenes/office/095.ico" alt="Anular"  border = "0"></a>
+   
+ 
+   </div></td>
+  </tr>
+<?
+
+	 $result3->MoveNext();
+				}
+
+
+ $sumatoria = $cont;
+// $desc_fact = 0;
+		$cont = 0;
+
+//include ("espacios_en_blancos_detalle.php");
+$sumatoria = 0;
+
+?>
+</table>
+<table width="650" border="0">
+		  <tr bgcolor="#A0A7F5" >
+    <td height="20" scope="col"><div align="center"><strong><span class="Estilo76">Subtotal     
+    </span></strong></div>      <div align="center"></div></td>
+    <td scope="col"><div align="center"><strong> <span class="Estilo76">Descuento  </span></strong></div>      <div align="center"> </div></td>
+    <td width="29%" colspan="4" scope="col"><strong><strong>
+      </strong>
+      <div align="center"><strong><span class="Estilo76">
+         TOTAL </span></strong></div></td>
+  </tr>
+		  <tr bgcolor="#CFCFCF" >
+		    <td height="20" scope="col"><div align="center"><strong><span class="Estilo76">$ <?echo round($subtotal,2);?></span></strong></div>		      <div align="center"></div></td>
+		    <td scope="col"><div align="center"><strong><span class="Estilo76">$ <?echo round($desc_factura1,2);?></span></strong></div>		      <div align="center"></div></td>
+		    <td colspan="4" scope="col"><div align="center"><strong><span class="Estilo76">$ <?echo round($total_factura,2);?></span></strong></div></td>
+  </tr>
+</table>
+
+

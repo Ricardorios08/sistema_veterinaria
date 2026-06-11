@@ -1,0 +1,72 @@
+  
+   
+	<tr bgcolor="#EBEBEB">
+          <td width="171" bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS">AGREGAR MASCOTA </font></div></td>
+          <td colspan="3"><div align="left"><font size="2" face="Trebuchet MS"><a href="agregar_mascota.php?cod_socio=<?php print("$cod_socio");?>"> <img src="../../imagenes/office//1274.ico" alt="Borrar" border = "0"></a></font></div>
+          <div align="center"></div></td>
+    </tr>
+  
+
+        <?php 
+
+ $sql1="select * from animal where cod_socio = $cod_socio order by  fecha_nac";
+$result1 = $db->Execute($sql1);
+
+  If (!$result1) die("fallo".$db->ErrorMsg());
+  while (!$result1->EOF) {
+
+	
+$nombre=strtoupper($result1->fields["nombre"]);
+$especie=strtoupper($result1->fields["especie"]);
+$raza=strtoupper($result1->fields["raza"]);
+$pelaje=strtoupper($result1->fields["pelaje"]);
+$tamanio=strtoupper($result1->fields["tamanio"]);
+$color=strtoupper($result1->fields["color"]);
+$sexo=strtoupper($result1->fields["sexo"]);
+$fecha_nac=strtoupper($result1->fields["fecha_nac"]);
+$cod_animal=strtoupper($result1->fields["cod_animal"]);
+
+
+
+?>
+       
+
+  
+      <tr bgcolor="#EBEBEB">
+          <td bgcolor="#CCCCCC">&nbsp;</td>
+          <td>&nbsp;</td>
+          <td bgcolor="#CCCCCC">&nbsp;</td>
+          <td>&nbsp;</td>
+    </tr>
+        <tr bgcolor="#EBEBEB">
+          <td width="171" bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS"><a href="borrar_masota.php?cod_socio=<?php print("$cod_socio");?>&&cod_animal=<?php print("$cod_animal");?>" onClick="return confirm('&iquest;Est&aacute; seguro de Borrar la mascota con toda su historia Clinica?');"><img src="../../imagenes/office//1047.ico" alt="Borrar" border = "0"></a> NOMBRE</font></div></td>
+          <td width="263"><div align="center"><font size="2" face="Trebuchet MS"><strong><a href="modificar_mascota.php?cod_animal=<?php print("$cod_animal");?>&&cod_socio=<?php print("$cod_socio");?>" class="Estilo2"><?php print("$nombre");?></a></strong></font></div>          <div align="center"></div></td>
+          <td width="97" bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS">TAMA&Ntilde;O</font></div></td>
+          <td width="280"><div align="center"><font size="2" face="Trebuchet MS"><?php print("$tamanio");?></font></div>          <div align="center"></div>          <div align="center"></div>          <div align="center"></div></td>
+        </tr>
+        <tr bgcolor="#EBEBEB">
+          <td bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS">ESPECIE</font></div></td>
+          <td><div align="center"><font size="2" face="Trebuchet MS"><?php print("$especie");?></font></div></td>
+          <td bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS">COLOR</font></div></td>
+          <td><div align="center"><font size="2" face="Trebuchet MS"><?php print("$color");?></font></div></td>
+        </tr>
+        <tr bgcolor="#EBEBEB">
+          <td bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS">RAZA</font></div></td>
+          <td><div align="center"><font size="2" face="Trebuchet MS"><?php print("$raza");?></font></div></td>
+          <td bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS">SEXO</font></div></td>
+          <td><div align="center"><font size="2" face="Trebuchet MS"><?php print("$sexo");?></font></div></td>
+        </tr>
+        <tr bgcolor="#EBEBEB">
+          <td bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS">PELAJE</font></div></td>
+          <td><div align="center"><font size="2" face="Trebuchet MS"><?php print("$pelaje");?></font></div></td>
+          <td bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS">FECHA NAC</font></div></td>
+          <td><div align="center"><font size="2" face="Trebuchet MS"><?php print("$fecha_nac");?></font></div></td>
+        </tr>
+        <?php 
+
+
+$result1->MoveNext();
+	}
+
+?>
+    <tr>  

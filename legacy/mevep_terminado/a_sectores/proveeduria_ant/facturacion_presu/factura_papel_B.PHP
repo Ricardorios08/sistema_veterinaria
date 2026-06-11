@@ -1,0 +1,1002 @@
+
+
+<style type="text/css">
+<!--
+.Estilo4 {font-family: "Courier New", Courier, mono; font-size: 10px; }
+.Estilo8 {font-family: "Courier New", Courier, mono; font-size: 12; font-weight: bold; }
+.Estilo11 {font-size: 11px}
+.Estilo14 {font-family: Arial, Helvetica, sans-serif}
+.Estilo15 {font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold; }
+.Estilo16 {font-size: 11px; font-family: Arial, Helvetica, sans-serif; }
+-->
+</style>
+
+<style type="text/css" media="print">
+div.page {
+writing-mode: tb-rl;
+height: 80%;
+margin: 10% 0%;
+}
+</style>
+
+<script language="JavaScript">
+
+function cerrar() {
+var ventana = window.self;
+ventana.opener = window.self;
+ventana.close();
+}
+
+</script> 
+
+<style type="text/css">
+<!--
+.Estilo17 {font-size: 10px}
+.Estilo18 {font-weight: bold}
+.Estilo19 {font-size: 10px; font-family: Arial, Helvetica, sans-serif; }
+.Estilo22 {font-size: 9px}
+.Estilo23 {font-weight: bold; font-family: Arial, Helvetica, sans-serif;}
+.Estilo24 {font-size: 9px; font-family: Arial, Helvetica, sans-serif; }
+.Estilo25 {font-size: 12px}
+.Estilo28 {font-size: 24px}
+-->
+</style>
+ <body onUnload="window.opener.openedImprimir=0;" onLoad="window.print(); window.close(); cerrar()"> 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<body>
+<table width="1089" border="0">
+  <tr>
+    <td width="596" scope="col"><table width="503" height="137" border="0">
+      <!--DWLayoutTable-->
+      <tr>
+        <td height="20" colspan="3"><div align="right"><span class="Estilo8 Estilo11 Estilo14">
+            <?include ("../../../conexiones/config_pro.php");
+
+$nro_factura= $_REQUEST['nro_factura'];
+$fact =$_REQUEST['fact'];
+$tipo_fact =$_REQUEST['tipo_fact'];
+$cuit= $_REQUEST['cuit'];
+$direccion= $_REQUEST['direccion'];
+$leyenda2 =  $_REQUEST['leyenda1'];
+$cantidad_cuotas=  $_REQUEST['cantidad_cuotas'];
+
+
+if ($cantidad_cuotas == ""){
+$cantidad_cuotas = 1;
+}
+
+if ($cantidad_cuotas == 0){
+$cantidad_cuotas = 1;
+}
+
+
+if (($cantidad_cuotas > 6) or ($cantidad_cuotas < 0) ) {
+$leyenda = "Máximo de Cuotas = 6";
+	include ("../../../alertas/campo_informacion2.php");
+	EXIT;
+}
+
+if (($cantidad_cuotas < 7) and ($cantidad_cuotas > 1)){
+	$mostrar_recuadro_cuotas = "SI";
+}
+
+//$leyenda1 = substr($leyenda_12, 0,30);
+//$leyenda2 = substr($leyenda_12,30,30);
+
+
+$nro_factura_nuevo= $_REQUEST['nro_factura_nuevo'];
+ $fact_nuevo= strtoupper($_REQUEST['fact_nuevo']);
+
+
+
+include("../../../conexiones/config_pro.php");
+$sql2 = "SELECT * FROM `ventas1_encab_temp`  WHERE  `nro_factura` = $nro_factura and tipo_fact = '$fact'";
+$result2 = $db->Execute($sql2);
+
+$nro_cliente=strtoupper($result2->fields["nro_cliente"]);
+$nro_cuenta=strtoupper($result2->fields["nro_cuenta"]);
+$cod_operacion=strtoupper($result2->fields["cod_operacion"]);
+
+$plan=strtoupper($result2->fields["plan"]);
+$operador=strtoupper($result2->fields["operador"]);
+$denominacion=strtoupper($result2->fields["denominacion"]);
+$tipo_iva=strtoupper($result2->fields["tipo"]);
+
+switch ($tipo_iva){
+	case "1":{
+$tipo_fact = "Responsable Inscripto";
+$fact = "A";
+		break;
+	}
+
+	case "4":{
+$tipo_fact = "Exento";
+$fact = "B";
+		break;
+	}
+
+		case "3":{
+$tipo_fact = "Monotributo";
+$fact = "B";
+		break;
+	}
+
+		
+}
+
+
+$fecha=strtoupper($result2->fields["fecha"]);
+$dia=substr($fecha,8,2);
+$mes=substr($fecha,5,2);
+$anio=substr($fecha,0,4);
+$fecha_a = $dia."/".$mes."/".$anio;
+
+$forma_pago=strtoupper($result2->fields["forma_pago"]);
+$fact=strtoupper($result2->fields["tipo_fact"]);
+$porc_dto=strtoupper($result2->fields["porc_dto"]);
+
+if ($nro_cliente != 0){
+$tipo_cuenta = "2"; //tipo 1 externo;
+$leyenda1 = "EXTERNO";
+$nro = $nro_cliente;
+}
+elseif ($nro_cuenta != 0){
+$tipo_cuenta = "1"; //tipo 1 asociado;
+$leyenda1 = "ABM";
+}
+
+
+if ($forma_pago == 'CTA/CTE'){
+if ($mostrar_recuadro_cuotas = "SI"){
+$leyenda3 = "AUTORIZO A DESCONTAR EN LA LIQUIDACION. FIRMA...................";
+}
+ELSE
+{
+$leyenda3 = "AUTORIZO A DESCONTAR DE MIS HONORARIOS EN LA LIQUIDACION CORRESPONDIENTE";
+$leyenda4 = "FIRMA:.........................";
+}
+$nro = $nro_cuenta;
+}
+
+/*$band= $_REQUEST['band'];
+$cod_detalle = $_REQUEST['cod_detalle'];
+$dia= $_REQUEST['dia'];
+$mes= $_REQUEST['mes'];
+
+
+$anio= $_REQUEST['anio'];
+$nro_cliente= $_REQUEST['nro_cliente'];
+$todo= $_REQUEST['todo'];
+
+
+$tipo_fact= $_REQUEST['tipo_fact'];
+
+$matricula= $_REQUEST['matricula'];
+$forma_pago= $_REQUEST['forma_pago'];
+$cantidad= $_REQUEST['cantidad'];
+$cod_mercaderia= $_REQUEST['cod_mercaderia'];
+
+$operador = "Sergio, Zavala";
+$condicion = "CONTADO";
+*/
+
+$nro_factura_temp = $nro_factura;
+$fact_temp= $fact;
+
+if (($nro_factura_nuevo != "") && ($fact_nuevo != "")) {
+$caso = 1;
+}
+if (($nro_factura_nuevo != "") && ($fact_nuevo == "")) {
+$caso = 2;
+}
+if (($nro_factura_nuevo == "") && ($fact_nuevo != "")) {
+$caso = 3;
+}
+if (($nro_factura_nuevo == "") && ($fact_nuevo == "")) {
+$caso = 4;
+}
+
+switch ($caso){
+
+	case "1":{
+$sql = "UPDATE `ventas1_encab_temp` SET `nro_factura` = '$nro_factura_nuevo' , `tipo_fact` = '$fact_nuevo'  WHERE `nro_factura` = '$nro_factura' and `tipo_fact` = '$fact' ";
+//mysql_query($sql);
+
+$sql = "UPDATE `ventas1_deta_temp` SET `nro_factura` = '$nro_factura_nuevo' , `tipo_fact` = '$fact_nuevo'  WHERE `nro_factura` = '$nro_factura' and `tipo_fact` = '$fact' ";
+//mysql_query($sql);
+
+$sql = "INSERT INTO `ventas_encabezado` ( `tipo_fact` , `nro_factura` , `cod_operacion` , `tipo` , `nro_cliente` , `nro_cuenta` , `plan` , `operador` , `denominacion` , `fecha` , `bruto` , `descuento` , `neto_gravado` ,`iva` , `retencion` , `neto` , `forma_pago` ) VALUES ( '$fact_nuevo' , '$nro_factura_nuevo' , '1' , '$tipo_iva' , '$nro_cliente' , '$nro_cuenta' , '$plan' , '$operador' , '$denominacion' , '$fecha' , '$bruto' ,  '$descuento' , '$neto_gravado' , '$iva' , '$retencion' , '$total_factura' , '$forma_pago' )";
+//mysql_query($sql);
+
+$fact = $fact_nuevo;
+$nro_factura = $nro_factura_nuevo;
+break;
+	}
+
+	case "2":{
+$sql = "UPDATE `ventas1_encab_temp` SET `nro_factura` = '$nro_factura_nuevo'   WHERE `nro_factura` = '$nro_factura' and `tipo_fact` = '$fact' ";
+//mysql_query($sql);
+
+$sql = "UPDATE `ventas1_deta_temp` SET `nro_factura` = '$nro_factura_nuevo'  WHERE `nro_factura` = '$nro_factura' and `tipo_fact` = '$fact' ";
+//mysql_query($sql);
+
+ $sql = "INSERT INTO `ventas_encabezado` ( `tipo_fact` , `nro_factura` , `cod_operacion` , `tipo` , `nro_cliente` , `nro_cuenta` , `plan` , `operador` , `denominacion` , `fecha` , `bruto` , `descuento` , `neto_gravado` ,`iva` , `retencion` , `neto` , `forma_pago` ) VALUES ( '$fact' , '$nro_factura_nuevo' , '1' , '$tipo_iva' , '$nro_cliente' , '$nro_cuenta' , '$plan' , '$operador' , '$denominacion' , '$fecha' , '$bruto' ,  '$descuento' , '$neto_gravado' , '$iva' , '$retencion' , '$total_factura' , '$forma_pago' )";
+//mysql_query($sql);
+$nro_factura = $nro_factura_nuevo;
+break;
+	}
+
+		case "3":{
+$sql = "UPDATE `ventas1_encab_temp` SET `tipo_fact` = '$fact_nuevo'  WHERE `nro_factura` = '$nro_factura' and `tipo_fact` = '$fact_nuevo' ";
+//mysql_query($sql);
+
+ $sql = "UPDATE `ventas1_deta_temp` SET `tipo_fact` = '$fact_nuevo'  WHERE `nro_factura` = '$nro_factura' and `tipo_fact` = '$fact' ";
+
+//mysql_query($sql);
+
+$sql = "INSERT INTO `ventas_encabezado` ( `tipo_fact` , `nro_factura` , `cod_operacion` , `tipo` , `nro_cliente` , `nro_cuenta` , `plan` , `operador` , `denominacion` , `fecha` , `bruto` , `descuento` , `neto_gravado` , `iva` , `retencion` , `neto` , `forma_pago` ) VALUES ( '$fact_nuevo' , '$nro_factura' , '1' , '$tipo_iva' , '$nro_cliente' , '$nro_cuenta' , '$plan' , '$operador' , '$denominacion' , '$fecha' , '$bruto' ,  '$descuento' , '$neto_gravado' , '$iva' , '$retencion' , '$total_factura' , '$forma_pago' )";
+  // mysql_query($sql);
+$fact = $fact_nuevo;
+break;
+	}
+
+		case "4":{
+			;
+
+$sql = "INSERT INTO `ventas_encabezado` ( `tipo_fact` , `nro_factura` , `cod_operacion` , `tipo` , `nro_cliente` , `nro_cuenta` , `plan` , `operador` , `denominacion` , `fecha` , `bruto` , `descuento` , `neto_gravado` , `iva` , `retencion` , `neto` , `forma_pago` ) VALUES ( '$fact' , '$nro_factura' , '1' , '$tipo_iva' , '$nro_cliente' , '$nro_cuenta' , '$plan' , '$operador' , '$denominacion' , '$fecha' , '$bruto' ,  '$descuento' , '$neto_gravado' , '$iva' , '$retencion' , '$total_factura' , '$forma_pago' )";
+//mysql_query($sql);
+break;
+	}
+
+
+}
+
+
+
+
+
+
+
+?>
+        </span></div></td>
+      </tr>
+      <tr>
+        <td height="20" colspan="3"><div align="right" class="Estilo8 Estilo11 Estilo14"></div>          
+          <div align="right"></div>          <div align="right"><span class="Estilo8 Estilo11 Estilo14">
+
+        </span></div></td>
+        </tr>
+      <tr>
+        <td height="28" colspan="2"><div align="left"><span class="Estilo8 Estilo11 Estilo14"><span class="Estilo16">Sres:</span> <span class="Estilo15"><span class="Estilo18  Estilo17"><?echo $denominacion." (".$nro.")";?></span></span></span></div></td>
+        <td width="171" height="28" valign="bottom"><div align="right"><span class="Estilo16"><span class="Estilo22"><span class="Estilo8 Estilo11 Estilo14"><span class="Estilo18"><span class="Estilo14 Estilo22">Fecha:</span> <?echo $fecha_a;?></span></span></span></span></div></td>
+      </tr>
+      <tr>
+        <td height="20" colspan="2"><div align="left"><span class="Estilo16">Domicilio:</span><span class="Estilo15"> <span class="Estilo15"><span class="Estilo18  Estilo17"><?echo $direccion;?></span></span></span></div>          </td>
+        <td height="20"><div align="right"><span class="Estilo16"><span class="Estilo22">Operador: <span class="Estilo23"><?echo $operador;?> Control: <?echo $fact?> - <?echo $nro_factura?></span></span></span></div></td>
+      </tr>
+      <tr>
+        <td width="320" height="24"><div align="left" class="Estilo15"></div>          <div align="left"></div>          
+          <span class="Estilo14  Estilo11">IVA</span><span class="Estilo19"><span class="Estilo15  Estilo17">:</span></span><span class="Estilo15 Estilo17"> <?print("$tipo_fact");?> - Cuit: <span class="Estilo22"><?echo $cuit;?> </span></span><span class="Estilo24"></span></span></span></td>
+        <td colspan="2" valign="top"><div align="right"><span class="Estilo15  Estilo17"><span class="Estilo11  Estilo14"><span class="Estilo17">COND.  VENTA: <?echo $forma_pago;?></span></span></span></div></td>
+        </tr>
+      
+      </table>
+
+<table width="512" border="0">
+  <!--DWLayoutTable-->
+        <tr><td width="22" height="21" valign="middle"><div align="center" class="Estilo16"></div>
+            <div align="right" class="Estilo4 Estilo11 Estilo14">
+              <div align="center"><span class="Estilo14 Estilo17">Cant</span></div>
+          </div>            </td>
+        <td colspan="4" valign="middle"><div align="center" class="Estilo11 Estilo14">Detalle - Presentaci&oacute;n -  Lote - Vto Lote </div></td>
+        <td width="62" valign="top"><div align="center"><span class="Estilo14 Estilo17">Pr. Unit.</span></div></td>
+        <td width="53" valign="top"><div align="center"><span class="Estilo14 Estilo17">Total</span></div></td>
+      </tr>
+
+
+<?
+
+include("../../../conexiones/config_pro.php");
+$sql = "SELECT * FROM `ventas1_deta_temp`  WHERE  `nro_factura` = $nro_factura_temp and tipo_fact = '$fact_temp'";
+$result3 = $db->Execute($sql);
+
+if (!$result3) die("fallo".$db->ErrorMsg());
+
+ while (!$result3->EOF) {
+$renglon = $renglon + 1;
+$cod_mercaderia=strtoupper($result3->fields["cod_mercaderia"]);
+$cantidad=strtoupper($result3->fields["cantidad"]);
+$presentacion=strtoupper($result3->fields["presentacion"]);
+$descripcion=strtoupper($result3->fields["descripcion"]);
+$cod_detalle=strtoupper($result3->fields["cod_detalle"]);
+$lote1=strtoupper($result3->fields["lote"]);
+$lote  = $lote1;
+$mes_lote=strtoupper($result3->fields["mes_lote"]);
+$anio_lote=strtoupper($result3->fields["anio_lote"]);
+$vto_lote = $mes_lote."/".$anio_lote;
+
+
+$sql = "SELECT * FROM `mercaderia`  WHERE  `cod_merca` = $cod_mercaderia";
+$result = $db->Execute($sql);
+
+$precio_actualizado=$result->fields["precio_actualizado"];
+$margendif=strtoupper($result->fields["margendif"]);
+$id_tasa=strtoupper($result->fields["id_tasa"]);
+
+$sql2="select * from tasas where cod_tasa = $id_tasa";
+$result2 = $db->Execute($sql2);
+
+$iva_normal=strtoupper($result2->fields["iva_normal"]);
+
+//if ($plan == 1){
+$margendif = 0;
+//}
+
+//$porce_margendif = (($precio_actualizado * $margendif) /100);
+//$precio_actualizado = $precio_actualizado + $porce_margendif;
+/*
+
+$sql1 = "SELECT * FROM existencias  WHERE  `cod_mercaderia` = $cod_mercaderia";
+$result1 = $db->Execute($sql1);
+$lote=strtoupper($result1->fields["lote"]);
+$mes_lote=strtoupper($result1->fields["mes_lote"]);
+$anio_lote=strtoupper($result1->fields["anio_lote"]);
+$cantidad_ingresada =$result1->fields["cantidad_ingresada"];
+$cantidad_salida =$result1->fields["cantidad_salida"];
+
+$sql18 = "SELECT SUM(cantidad_ingresada) as cant FROM existencias  WHERE  `cod_mercaderia` = '$cod_mercaderia' ";
+$result18 = $db->Execute($sql18);
+$cant_lotes=strtoupper($result18->fields["cant"]);
+
+$sql18 = "SELECT SUM(cantidad_salida) as salid FROM existencias  WHERE  `cod_mercaderia` = '$cod_mercaderia' ";
+$result18 = $db->Execute($sql18);
+$cant_salid_lotes=strtoupper($result18->fields["salid"]);
+
+$sql98 = "SELECT sum(cantidad) as cant_temp FROM `ventas1_deta_temp`  WHERE  `cod_mercaderia` = $cod_mercaderia";
+$result98 = $db->Execute($sql98);
+$cant_temp=$result98->fields["cant_temp"];
+
+$cant_exis = ($cant_lotes - $cantidad_salid_lotes) - $cant_temp;
+$cantidad_existente = ($cantidad_ingresada - $cantidad_salida) - $cant_temp;
+*/
+$sql6 = "SELECT * FROM `tasas_planes`  WHERE  `cod_plan` = $plan";
+$result6 = $db->Execute($sql6);
+
+$descuento_1=$result6->fields["descuento_1"];
+$porc_descuento_1= ($precio_actualizado * $descuento_1)/100;
+$precio_actualizado = $precio_actualizado - $porc_descuento_1;
+
+
+$descuento_2=$result6->fields["descuento_2"];
+$porc_descuento_2= ($precio_actualizado * $descuento_2)/100;
+$precio_actualizado = $precio_actualizado - $porc_descuento_2;
+
+$recargo_1=$result6->fields["recargo_1"];
+$porc_recargo_1= ($precio_actualizado * $recargo_1)/100;
+$precio_actualizado = $precio_actualizado + $porc_recargo_1;
+
+$recargo_2=$result6->fields["recargo_2"];
+$porc_recargo_2= ($precio_actualizado * $recargo_2)/100;
+$precio_actualizado = $precio_actualizado + $porc_recargo_2;
+
+$recargo_impuesto=$result6->fields["recargo_impuestos"];
+$porc_recargo_impuesto= ($precio_actualizado * $recargo_impuesto)/100;
+$precio_actualizado = $precio_actualizado + $porc_recargo_impuesto;
+
+
+
+/////desc por articulo //////////////
+
+$precio_actualizado;
+
+
+$precio_neto = $precio_actualizado - $desc_articulo;
+$precio_bruto = round($precio_neto * $cantidad,3);
+
+$tipo_iva;
+if ($tipo_iva != 4){ //exento
+$iva_articulo = round(($precio_actualizado * $iva_normal)/100,3);
+
+$precio_actualizado = round($precio_actualizado + $iva_articulo,3);
+ $iva_total = $iva_total + $iva_articulo;
+}
+ $precio_actualizado;
+ $total = round($precio_actualizado * $cantidad,3);
+$desc_articulo = ($total * $porc_dto)/100; // descuento por articulo 
+$desc_factura1 = $desc_factura1 + $desc_articulo; // suma descuento total
+
+	
+
+//$sql_update = "UPDATE `ventas1_deta_temp` SET `total` = '$total' WHERE `cod_detalle` = '$cod_detalle'";
+//mysql_query($sal_update);
+
+$sql_ventas = "UPDATE `ventas1_encab_temp` SET `plan` = '$plan' WHERE nro_factura = $nro_factura ";
+mysql_query($sql_ventas);
+
+$subtotal = $subtotal + $total;
+$total_factura = $subtotal - $desc_factura1;
+
+
+
+//$iva = ($subtotal * 21) /100;
+//$total_factura = round($subtotal,2) + round($iva,2);
+$cont = $cont + 1;
+
+if ($nro_factura_nuevo != ""){
+$nro_factura= $nro_factura_nuevo;
+}
+
+
+
+$sql = "UPDATE `existencias` SET `cantidad_salida` = '$cantidad_a_guardar' WHERE cod_mercaderia = $cod_mercaderia and mes_lote = '$mes_lote' and anio_lote = '$anio_lote' and lote = '$lote'";
+//mysql_query($sql);
+
+$sql = "INSERT INTO `stock` ( `cod_mercaderia` , `fecha` ,  `tipo_fact` , `cod_movimiento` , `nro_comprobante` , `cantidad` , `precio_unitario` , `lote` , `mes_lote` , `anio_lote` , `cuenta` ,  `tipo_cuenta` ) VALUES ('$cod_mercaderia' , '$fecha' , '$fact' , '5' , '$nro_factura' , '$cantidad' , '$precio_act_guardar' , '$lote' , '$mes_lote' , '$anio_lote' , '$nro' ,  '$tipo_cuenta')" ;
+//mysql_query($sql);
+
+
+$sql = "INSERT INTO `ventas_detalle` ( `nro_factura` , `cod_detalle` , `cod_mercaderia` , `descripcion` , `presentacion` , `lote` , `mes_lote` , `anio_lote` , `cantidad` , `precio_unitario` , `total` , `tipo_fact` )  VALUES ('$nro_factura' , '' ,'$cod_mercaderia' , '$descripcion', '$presentacion' , '$lote' , '$mes_lote' , '$anio_lote' , '$cantidad' , '$precio_actualizado' , '$total' , '$fact' )";
+//mysql_query($sql);
+
+?><tr bgcolor="#FFFFFF">
+    <td height="21" valign="top" class="Estilo25" scope="col"><div align="center" class="Estilo17"><span class="Estilo40 Estilo14 Estilo17"><?echo $cantidad;?></span></div>      </td>
+
+    <td colspan="4" valign="top" scope="col"><div align="center" class="Estilo40 Estilo14 Estilo17">
+          <div align="left"><span class="Estilo38 Estilo39 Estilo14 Estilo17"><?echo $cod_mercaderia. " - ".$descripcion." - ".$presentacion. " - ".$lote." - ".$mes_lote." - ".$anio_lote;?></span></div>
+    </div></td>
+    <td valign="top" scope="col"><div align="right" class="Estilo40 Estilo14 Estilo17">
+        <div align="center"><?echo number_format($precio_actualizado,3);?></div>
+    </div></td>
+    <td valign="top" scope="col"><div align="right" class="Estilo40 Estilo14 Estilo17">
+      <div align="center"><?echo number_format($total,2);?></div>
+    </div></td>
+   
+  </tr>
+<?
+
+	 $result3->MoveNext();
+		}
+
+
+$desc_iva= round(($iva_total * $porc_dto)/100,2);
+$iva_neto = $iva_total - $desc_iva;
+$neto_gravado = $total_factura - $iva_neto;
+
+
+
+$sql = "UPDATE `ventas_encabezado` SET `bruto` = '$subtotal', `descuento` = '$desc_factura1' , `neto_gravado` = '$neto_gravado' , `iva` = '$iva_neto' , `retencion` = '$retencion', `neto` = '$total_factura' WHERE `tipo_fact` = '$fact' AND `nro_factura` = '$nro_factura'";
+//mysql_query($sql);
+
+
+ $sumatoria = $cont;
+		$cont = 0;
+
+include ("espacios_en_blancos.php");
+$sumatoria = 0;
+?>
+      <tr>
+        <td height="21">&nbsp;</td>
+        <td width="83">&nbsp;</td>
+        <td width="95">&nbsp;</td>
+        <td width="95">&nbsp;</td>
+        <td width="72">&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+
+
+      <tr>
+        <td height="21" colspan="2"><div align="center"></div>          <div align="center" class="Estilo22 Estilo14">
+          <div align="left"></span></span></span></div>
+          </div>          
+          <div align="center" class="Estilo14 Estilo25"><?echo number_format($subtotal,2);?></div></td>
+        <td><div align="center" class="Estilo14 Estilo25"><?echo number_format($desc_factura1,2);?></span></span></span></div></td>
+        <td><div align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span></div></td>
+        <td colspan="2"><div align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span></strong></span></div></td>
+        <td><div align="center" class="Estilo14"><strong><span class="Estilo25"><?echo number_format($total_factura,2);?>
+
+              <?
+
+
+if ($mostrar_recuadro_cuotas == "SI"){
+$cuota = ($total_factura / $cantidad_cuotas);
+$fecha;
+$dia_vto = substr($fecha,8,2);
+$mes_1 = substr($fecha,5,2)+1;
+$anio_vto = substr($fecha,0,4);
+
+if ($mes_1 > 12){
+	$mes_1 = 1;
+	$anio_vto = $anio_vto + 1;
+}
+
+if (strlen($mes_1) == 1){
+	$mes_1 = "0".$mes_1;
+}
+
+$vencimiento1 = $dia_vto."/".$mes_1;
+
+
+
+$mes_2 = $mes_1+1;
+
+
+if ($mes_2 > 12){
+	$mes_2 = 1;
+	$anio_vto = $anio_vto + 1;
+}
+
+
+if (strlen($mes_2) == 1){
+	$mes_2 = "0".$mes_2;
+}
+
+$vencimiento2 = $dia_vto."/".$mes_2;
+
+$mes_3 = $mes_2+1;
+
+
+if ($mes_3 > 12){
+	$mes_3 = 1;
+	$anio_vto = $anio_vto + 1;
+}
+
+
+if (strlen($mes_3) == 1){
+	$mes_3 = "0".$mes_3;
+}
+
+$vencimiento3 = $dia_vto."/".$mes_3;
+
+$mes_4 = $mes_3+1;
+
+
+if ($mes_4 > 12){
+	$mes_4 = 1;
+	$anio_vto = $anio_vto + 1;
+}
+
+
+if (strlen($mes_4) == 1){
+	$mes_4 = "0".$mes_4;
+}
+
+$vencimiento4 = $dia_vto."/".$mes_4;
+
+/////////////////////////////
+
+$mes_5 = $mes_4+1;
+
+
+if ($mes_5 > 12){
+	$mes_5 = 1;
+	$anio_vto = $anio_vto + 1;
+}
+
+
+if (strlen($mes_5) == 1){
+	$mes_5 = "0".$mes_5;
+}
+
+$vencimiento5 = $dia_vto."/".$mes_5;
+
+
+$mes_6 = $mes_5+1;
+
+
+if ($mes_6 > 12){
+	$mes_6 = 1;
+	$anio_vto = $anio_vto + 1;
+}
+
+
+if (strlen($mes_6) == 1){
+	$mes_6 = "0".$mes_6;
+}
+
+$vencimiento6 = $dia_vto."/".$mes_6;
+
+
+
+switch ($cantidad_cuotas){
+	case "1":{
+
+$leyenda1 = "($ ".number_format($cuota,2)."-".$vencimiento1.")";
+		break;
+	}
+
+	case "2":{
+$leyenda1 = "($ ".number_format($cuota,2)."-".$vencimiento1.")";
+$leyenda1 = $leyenda1." ($ ".number_format($cuota,2)."-".$vencimiento2.")";
+		break;}
+
+			case "3":{
+$leyenda1 = "($ ".number_format($cuota,2)."-".$vencimiento1.")";
+$leyenda1 = $leyenda1." ($ ".number_format($cuota,2)."-".$vencimiento2.")";
+$leyenda1 = $leyenda1." ($ ".number_format($cuota,2)."-".$vencimiento3.")";
+		break;}
+
+			case "4":{
+$leyenda1 = "($ ".number_format($cuota,2)."-".$vencimiento1.")";
+$leyenda1 = $leyenda1." ($ ".number_format($cuota,2)."-".$vencimiento2.")";
+$leyenda1 = $leyenda1." ($ ".number_format($cuota,2)."-".$vencimiento3.")";
+$leyenda1 = $leyenda1." ($ ".number_format($cuota,2)."-".$vencimiento4.")";
+
+		break;}
+
+
+			case "5":{
+$leyenda1 = "($ ".number_format($cuota,2)."-".$vencimiento1.")";
+$leyenda1 = $leyenda1." ($ ".number_format($cuota,2)."-".$vencimiento2.")";
+$leyenda1 = $leyenda1." ($ ".number_format($cuota,2)."-".$vencimiento3.")";
+$leyenda1 = $leyenda1." ($ ".number_format($cuota,2)."-".$vencimiento4.")";
+$leyenda1 = $leyenda1." ($ ".number_format($cuota,2)."-".$vencimiento5.")";
+
+
+		break;}
+
+					case "6":{
+$leyenda1 = "($ ".number_format($cuota,2)."-".$vencimiento1.")";
+$leyenda1 = $leyenda1." ($ ".number_format($cuota,2)."-".$vencimiento2.")";
+$leyenda1 = $leyenda1." ($ ".number_format($cuota,2)."-".$vencimiento3.")";
+$leyenda1 = $leyenda1." ($ ".number_format($cuota,2)."-".$vencimiento4.")";
+$leyenda1 = $leyenda1." ($ ".number_format($cuota,2)."-".$vencimiento5.")";
+$leyenda1 = $leyenda1." ($ ".number_format($cuota,2)."-".$vencimiento6.")";
+		break;}
+
+}
+
+
+$leyenda4 = $leyenda1;
+
+}
+
+
+////////////termina cuotas
+
+
+if ($forma_pago == 'CTA/CTE'){
+$sql = "INSERT INTO `resumen_cta_vta` ( `cuenta` , `tipo_cuenta` , `fecha` , `tipo_fact` , `comprobante` , `cod_movimiento` , `importe` , `vencimiento` , `referencia` , `afectacion` ) VALUES ( '$nro' , '$tipo_cuenta' ,'$fecha' , '$fact' , '$nro_factura' , '1' , '$total_factura' , '$vencimiento' , '$referencia' , '$afectacion')";
+//mysql_query($sql);
+}
+
+if ($forma_pago == 'CTA/CTE'){
+ $sql = "INSERT INTO `composicion_saldos` ( `cuenta` , `tipo_cuenta` , `tipo_fact` , `comprobante` , `fecha_emision` , `importe_original` , `fecha_pago` , `saldo` , `vencimiento` , `cuotas` , `cuotas_pagadas` , `cod_movimiento` ) VALUES ( '$nro' , '$tipo_cuenta' , '$fact' ,  '$nro_factura' , '$fecha' , '$total_factura' , '' , '$total_factura' , '$vencimiento' , '0' , '0', 'PROVEEDURIA' )";
+//mysql_query($sql);
+}
+
+
+//11 ventas
+//12 nota de debito
+
+//21 pago
+//22 nota de credito
+
+$desc_factura1= 0;
+$subtotal= 0;
+
+$total_factura = 0;
+$neto = 0;
+$iva = 0;
+	?>
+        </span>        </strong></span></strong></div></td>
+      </tr>
+      <tr>
+        <td height="21" colspan="6">&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="20" colspan="7"><div align="center" class="Estilo25"><span class="Estilo40 Estilo17  Estilo14"><?echo $leyenda1;?></span></div></td>
+        </tr>
+      <tr>
+        <td height="20" colspan="7"><div align="center" class="Estilo25"><span class="Estilo14"><span class="Estilo40 Estilo17  Estilo14"><?echo $leyenda2;?></span></span></div></td>
+        </tr>
+    </table>		</td>
+    <td width="483" scope="col"><table width="493" height="137" border="0">
+      <!--DWLayoutTable-->
+      <tr>
+        <td height="20" colspan="3"><div align="right"><span class="Estilo8 Estilo11 Estilo14">
+            <?include ("../../../conexiones/config_pro.php");
+
+
+include("../../../conexiones/config_pro.php");
+$sql2 = "SELECT * FROM `ventas1_encab_temp`  WHERE  `nro_factura` = $nro_factura and tipo_fact = '$fact'";
+$result2 = $db->Execute($sql2);
+
+$nro_cliente=strtoupper($result2->fields["nro_cliente"]);
+$nro_cuenta=strtoupper($result2->fields["nro_cuenta"]);
+$cod_operacion=strtoupper($result2->fields["cod_operacion"]);
+
+$plan=strtoupper($result2->fields["plan"]);
+$operador=strtoupper($result2->fields["operador"]);
+$denominacion=strtoupper($result2->fields["denominacion"]);
+$fecha=strtoupper($result2->fields["fecha"]);
+$dia=substr($fecha,8,2);
+$mes=substr($fecha,5,2);
+$anio=substr($fecha,0,4);
+$fecha_a = $dia."/".$mes."/".$anio;
+$forma_pago=strtoupper($result2->fields["forma_pago"]);
+$fact=strtoupper($result2->fields["tipo_fact"]);
+
+
+if ($nro_cliente != 0){
+$tipo_cuenta = "2"; //tipo 1 externo;
+$leyenda1 = "EXTERNO";
+$nro = $nro_cliente;
+}elseif ($nro_cuenta != 0) {
+$tipo_cuenta = "1"; //tipo 1 asociado;
+$leyenda1 = "ABM";
+}
+if ($forma_pago == 'CTA/CTE'){
+if ($mostrar_recuadro_cuotas = "SI"){
+$leyenda3 = "AUTORIZO A DESCONTAR EN LA LIQUIDACION. FIRMA...................";
+}
+ELSE
+{
+$leyenda3 = "AUTORIZO A DESCONTAR DE MIS HONORARIOS EN LA LIQUIDACION CORRESPONDIENTE";
+$leyenda4 = "FIRMA:.........................";
+}
+$nro = $nro_cuenta;
+}
+
+
+
+
+?>
+        </span></div></td>
+      </tr>
+      <tr>
+        <td height="20" colspan="3"><div align="right" class="Estilo8 Estilo11 Estilo14"></div>
+            <div align="right"></div>
+            <div align="right"><span class="Estilo8 Estilo11 Estilo14"> </span></div></td>
+      </tr>
+      <tr>
+        <td height="29" colspan="2"><div align="left"><span class="Estilo8 Estilo11 Estilo14"><span class="Estilo16">Sres:</span> <span class="Estilo15"><span class="Estilo18  Estilo17"><?echo $denominacion." (".$nro.")";?></span></span></span></div></td>
+        <td width="143" height="29" valign="bottom"><div align="right"><span class="Estilo16"><span class="Estilo22"><span class="Estilo8 Estilo11 Estilo14"><span class="Estilo18"><span class="Estilo14 Estilo22">Fecha:</span> <?echo $fecha_a;?></span></span></span></span></div></td>
+      </tr>
+      <tr>
+        <td height="20" colspan="2"><div align="left"><span class="Estilo16">Domicilio:</span><span class="Estilo15"> <span class="Estilo18  Estilo17"><?echo $direccion;?></span></span></div></td>
+        <td height="20"><div align="right"><span class="Estilo16"><span class="Estilo22">Operador: <span class="Estilo23"><?echo $operador;?> Control: <?echo $fact?> - <?echo $nro_factura?></span></span></span></div></td>
+      </tr>
+      <tr>
+        <td width="325" height="26"><div align="left" class="Estilo15"></div>
+            <div align="left"></div>
+          <span class="Estilo14  Estilo11">IVA</span><span class="Estilo19"><span class="Estilo15  Estilo17">:</span></span><span class="Estilo15 Estilo17"> <?print("$tipo_fact");?> - Cuit: <span class="Estilo22"><?echo $cuit;?> </span></span><span class="Estilo24"></span></td>
+        <td colspan="2" valign="top"><div align="right"><span class="Estilo15  Estilo17"><span class="Estilo11  Estilo14"><span class="Estilo17">COND. VENTA: <?echo $forma_pago;?></span></span></span></div></td>
+      </tr>
+    </table>
+      <table width="489" border="0">
+        <!--DWLayoutTable-->
+        <tr>
+          <td width="25" height="21" valign="middle"><div align="center" class="Estilo16"></div>
+              <div align="right" class="Estilo4 Estilo11 Estilo14">
+                <div align="center"><span class="Estilo14 Estilo17">Cant</span></div>
+            </div></td>
+          <td colspan="4" valign="middle"><div align="center" class="Estilo11 Estilo14">Detalle - Presentaci&oacute;n - Lote - Vto Lote </div></td>
+          <td width="59" valign="top"><div align="center"><span class="Estilo14 Estilo17">Pr. Unit.</span></div></td>
+          <td width="44" valign="top"><div align="center"><span class="Estilo14 Estilo17">Total</span></div></td>
+        </tr>
+        <?
+
+include("../../../conexiones/config_pro.php");
+$sql = "SELECT * FROM `ventas1_deta_temp`  WHERE  `nro_factura` = $nro_factura_temp and tipo_fact = '$fact_temp'";
+$result3 = $db->Execute($sql);
+
+if (!$result3) die("fallo".$db->ErrorMsg());
+
+ while (!$result3->EOF) {
+$renglon = $renglon + 1;
+$cod_mercaderia=strtoupper($result3->fields["cod_mercaderia"]);
+$cantidad=strtoupper($result3->fields["cantidad"]);
+$presentacion=strtoupper($result3->fields["presentacion"]);
+$descripcion=strtoupper($result3->fields["descripcion"]);
+$cod_detalle=strtoupper($result3->fields["cod_detalle"]);
+$lote1=strtoupper($result3->fields["lote"]);
+$lote = $lote1;
+$mes_lote=strtoupper($result3->fields["mes_lote"]);
+$anio_lote=strtoupper($result3->fields["anio_lote"]);
+$vto_lote = $mes_lote."/".$anio_lote;
+
+
+$sql = "SELECT * FROM `mercaderia`  WHERE  `cod_merca` = $cod_mercaderia";
+$result = $db->Execute($sql);
+
+$precio_actualizado=$result->fields["precio_actualizado"];
+$margendif=strtoupper($result->fields["margendif"]);
+$id_tasa=strtoupper($result->fields["id_tasa"]);
+
+$sql2="select * from tasas where cod_tasa = $id_tasa";
+$result2 = $db->Execute($sql2);
+
+$iva_normal=strtoupper($result2->fields["iva_normal"]);
+
+//if ($plan == 1){
+$margendif = 0;
+//}
+
+//$porce_margendif = (($precio_actualizado * $margendif) /100);
+//$precio_actualizado = $precio_actualizado + $porce_margendif;
+
+/*
+$sql1 = "SELECT * FROM existencias  WHERE  `cod_mercaderia` = $cod_mercaderia";
+$result1 = $db->Execute($sql1);
+$lote=strtoupper($result1->fields["lote"]);
+$mes_lote=strtoupper($result1->fields["mes_lote"]);
+$anio_lote=strtoupper($result1->fields["anio_lote"]);
+$cantidad_ingresada =$result1->fields["cantidad_ingresada"];
+$cantidad_salida =$result1->fields["cantidad_salida"];
+
+$sql18 = "SELECT SUM(cantidad_ingresada) as cant FROM existencias  WHERE  `cod_mercaderia` = '$cod_mercaderia' ";
+$result18 = $db->Execute($sql18);
+$cant_lotes=strtoupper($result18->fields["cant"]);
+
+$sql18 = "SELECT SUM(cantidad_salida) as salid FROM existencias  WHERE  `cod_mercaderia` = '$cod_mercaderia' ";
+$result18 = $db->Execute($sql18);
+$cant_salid_lotes=strtoupper($result18->fields["salid"]);
+
+$sql98 = "SELECT sum(cantidad) as cant_temp FROM `ventas1_deta_temp`  WHERE  `cod_mercaderia` = $cod_mercaderia";
+$result98 = $db->Execute($sql98);
+$cant_temp=$result98->fields["cant_temp"];
+
+$cant_exis = ($cant_lotes - $cantidad_salid_lotes) - $cant_temp;
+$cantidad_existente = ($cantidad_ingresada - $cantidad_salida) - $cant_temp;
+*/
+$sql6 = "SELECT * FROM `tasas_planes`  WHERE  `cod_plan` = $plan";
+$result6 = $db->Execute($sql6);
+
+$descuento_1=$result6->fields["descuento_1"];
+$porc_descuento_1= ($precio_actualizado * $descuento_1)/100;
+$precio_actualizado = $precio_actualizado - $porc_descuento_1;
+
+
+$descuento_2=$result6->fields["descuento_2"];
+$porc_descuento_2= ($precio_actualizado * $descuento_2)/100;
+$precio_actualizado = $precio_actualizado - $porc_descuento_2;
+
+$recargo_1=$result6->fields["recargo_1"];
+$porc_recargo_1= ($precio_actualizado * $recargo_1)/100;
+$precio_actualizado = $precio_actualizado + $porc_recargo_1;
+
+$recargo_2=$result6->fields["recargo_2"];
+$porc_recargo_2= ($precio_actualizado * $recargo_2)/100;
+$precio_actualizado = $precio_actualizado + $porc_recargo_2;
+
+$recargo_impuesto=$result6->fields["recargo_impuestos"];
+$porc_recargo_impuesto= ($precio_actualizado * $recargo_impuesto)/100;
+$precio_actualizado = $precio_actualizado + $porc_recargo_impuesto;
+
+
+
+/////desc por articulo //////////////
+
+$precio_actualizado;
+
+
+$precio_neto = $precio_actualizado - $desc_articulo;
+$precio_bruto = round($precio_neto * $cantidad,3);
+
+$tipo_iva;
+if ($tipo_iva != 4){ //exento
+$iva_articulo = round(($precio_actualizado * $iva_normal)/100,3);
+
+$precio_actualizado = round($precio_actualizado + $iva_articulo,3);
+ $iva_total = $iva_total + $iva_articulo;
+}
+ $precio_actualizado;
+ $total = round($precio_actualizado * $cantidad,3);
+$desc_articulo = ($total * $porc_dto)/100; // descuento por articulo 
+$desc_factura1 = $desc_factura1 + $desc_articulo; // suma descuento total
+
+	
+
+//$sql_update = "UPDATE `ventas1_deta_temp` SET `total` = '$total' WHERE `cod_detalle` = '$cod_detalle'";
+//mysql_query($sal_update);
+
+$sql_ventas = "UPDATE `ventas1_encab_temp` SET `plan` = '$plan' WHERE nro_factura = $nro_factura ";
+//mysql_query($sql_ventas);
+
+$subtotal = $subtotal + $total;
+$total_factura = $subtotal - $desc_factura1;
+
+
+
+//$iva = ($subtotal * 21) /100;
+//$total_factura = round($subtotal,2) + round($iva,2);
+$cont = $cont + 1;
+
+if ($nro_factura_nuevo != ""){
+$nro_factura= $nro_factura_nuevo;
+}
+
+$cantidad_vendida = $cantidad_ingresada - $cantidad;
+
+
+
+?>
+        <tr bgcolor="#FFFFFF">
+          <td height="21" valign="top" scope="col"><div align="center" class="Estilo22"><span class="Estilo40 Estilo17  Estilo14"><?echo $cantidad;?></span></div></td>
+          <td colspan="4" valign="top" scope="col"><div align="center" class="Estilo40 Estilo14 Estilo22">
+              <div align="left"><span class="Estilo28"><span class="Estilo38 Estilo39 Estilo14 Estilo17"><?echo $cod_mercaderia. " - ".$descripcion." - ".$presentacion. " - ".$lote." - ".$mes_lote." - ".$anio_lote;?></span></span></div>
+          </div></td>
+          <td valign="top" scope="col"><div align="right" class="Estilo40 Estilo14 Estilo17">
+              <div align="center"><span class="Estilo17"><?echo number_format($precio_actualizado,3);?></span></div>
+          </div></td>
+          <td valign="top" scope="col"><div align="right" class="Estilo40 Estilo14 Estilo17">
+              <div align="center"><span class="Estilo17"><?echo number_format($total,2);?></span></div>
+          </div></td>
+        </tr>
+        <?
+
+	 $result3->MoveNext();
+		}
+
+
+
+ $sumatoria = $cont;
+		$cont = 0;
+
+include ("espacios_en_blancos.php");
+$sumatoria = 0;
+?>
+        <tr>
+          <td height="21">&nbsp;</td>
+          <td width="73">&nbsp;</td>
+          <td width="95">&nbsp;</td>
+          <td width="97">&nbsp;</td>
+          <td width="56">&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="21" colspan="2"><div align="center"></div>              <div align="left" class="Estilo14 Estilo25">
+                  <div align="center"><?echo number_format($subtotal,2);?></div>
+              </div></td>
+          <td><div align="center">&nbsp;&nbsp;<span class="Estilo14 Estilo25">&nbsp;<?echo number_format($desc_factura1,2);?></span></span></span></span></div></td>
+          <td><div align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span></div></td>
+          <td colspan="2"><div align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span></strong></span></div></td>
+          <td><div align="center"><span class="Estilo14 Estilo25"><strong><?echo number_format($total_factura,2);?>
+                      <?
+
+
+
+//11 ventas
+//12 nota de debito
+
+//21 pago
+//22 nota de credito
+
+$sql = "TRUNCATE TABLE `ventas1_deta_temp`";
+//mysql_query($sql);
+$sql = "TRUNCATE TABLE `ventas1_encab_temp`";
+//mysql_query($sql);
+
+$total_factura = 0;
+$neto = 0;
+$iva = 0;
+	?>
+          </strong></span></span></div></td>
+        </tr>
+        <tr>
+          <td height="21" colspan="5">&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="20" colspan="7"><div align="center" class="Estilo17"><span class="Estilo14"><span class="Estilo40 Estilo17  Estilo14"><?echo $leyenda3;?></span></span></div></td>
+        </tr>
+        <tr>
+          <td height="20" colspan="7"><div align="center" class="Estilo17"><span class="Estilo14"><span class="Estilo40 Estilo17  Estilo14"><?echo $leyenda4;?></span></span></div></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+</body>
+
+
+
+</html>
+
+
+

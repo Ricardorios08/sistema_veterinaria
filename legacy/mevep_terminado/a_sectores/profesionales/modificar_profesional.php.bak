@@ -1,0 +1,339 @@
+
+
+
+<script language="javascript">
+function on_load()
+{
+document.getElementById("apellido").focus();
+}
+
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				case "apellido":
+				document.getElementById("nombre").focus();
+				break;
+
+				case "nombre":
+				document.getElementById("nro_documento").focus();
+				break;
+				case "nro_documento":
+				document.getElementById("domicilio").focus();
+				break;
+			
+
+				case "domicilio":
+				document.getElementById("telefono").focus();
+				break;
+				case "telefono":
+				document.getElementById("celular").focus();
+				break;
+				case "celular":
+				document.getElementById("dia").focus();
+				break;
+				case "dia":
+				document.getElementById("mes").focus();
+				break;
+				case "mes":
+				document.getElementById("anio").focus();
+				break;
+				case "anio":
+				document.getElementById("GUARDAR").focus();
+				break;
+
+				
+
+
+				
+		}
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+
+<style type="text/css">
+<!--
+.Estilo25 {font-family: "Trebuchet MS"}
+.Estilo44 {	color: #FF0000;
+	font-family: "Trebuchet MS";
+}
+.Estilo48 {font-size: 14px}
+.Estilo49 {font-family: "Trebuchet MS"; font-size: 14px; }
+-->
+</style>
+<BODY onload = "on_load()">
+
+<?php
+
+include ("variables.php");
+
+?>
+
+
+<form action="guardar_modificacion.php" method="post">
+<table width="850" border="0" cellspacing="0">
+    <!--DWLayoutTable-->
+    <tr bordercolor="#FFFFFF" bgcolor="#E6E6E6">
+      <td height="37" colspan="2" bgcolor="#B8B8B8"><div align="center"><font color="#000000" face="Arial, Helvetica, sans-serif">AGREGAR PROFESIONAL </font></div></td>
+    </tr>
+    <tr align="center" bordercolor="#FFFFFF">
+      <td width="146" height="24">
+      <div align="right" class="Estilo25">
+        <div align="left"><font color="#000000" size="2"> N&ordm; PROFESIONAL </font></div>
+      </div></td>
+      <td><div align="left">
+          <font color="#000000" size="2">
+          <input name="nro_profesional" type="text" id="nro_profesional" onKeyPress="return verif_caracter(this,event)" size="8" maxlength="8" value = "<?php echo $nro_profesional;?>">
+      </font></div></td>
+  </tr>
+    
+    <tr bordercolor="#FFFFFF">
+      <td height="24"><div align="right" class="Estilo25">
+        <div align="left"><font color="#000000" size="2">APELLIDO</font></div>
+      </div></td>
+      <td>        <font color="#000000" size="2">
+      <input name="apellido" type="text" id="apellido"onKeyPress="return verif_caracter(this,event)" size="30" maxlength="30" value = "<?php echo $apellido;?>">      
+      </font><font size="2"><span class="Estilo44">* Obligatorio</span></font></td>
+  </tr>
+
+      <tr bordercolor="#FFFFFF">
+      <td height="24"><div align="right" class="Estilo25">
+        <div align="left"><font color="#000000" size="2">NOMBRE </font></div>
+      </div></td>
+      <td>        <font color="#000000" size="2">
+      <input name="nombre" type="text" id="nombre"onKeyPress="return verif_caracter(this,event)" size="30" maxlength="30" value = "<?php echo $nombre;?>">      
+      </font><font size="2"><span class="Estilo44">* Obligatorio</span></font></td>
+  </tr>
+
+
+    <tr bordercolor="#FFFFFF">
+      <td height="24"><div align="right" class="Estilo25">
+        <div align="left"><font color="#000000" size="2">ESPECIALIDAD</font></div>
+      </div></td>
+      <td>        <font color="#000000" size="2"><strong><font color="#000000" size="2">
+
+
+	    <?php 
+		include ("../../conexiones/config.inc.php");
+$sql = "SELECT * FROM especialidad order by especialidad";
+$result = $db->Execute($sql);
+echo "<select name=especialidad[] id =especialidad onKeyPress='return verif_caracter(this,event)'>";
+   ?> <option value selected = "<?php print("$especialidad");?>"><?php print("$especialidad");?></option><?php
+
+echo"<option value=''>Seleccione ESPECIALIDAD</option>";
+
+if (!$result) die("fallo".$db->ErrorMsg());
+while (!$result->EOF) {
+$cod_operacion=$result->fields["cod_operacion"];
+ $especialidad=strtoupper($result->fields["especialidad"]);
+
+echo"<option value='$especialidad'>$especialidad</option>";
+$result->MoveNext();
+	}
+echo"</select>";
+
+
+
+?>
+
+
+
+    
+      </font></strong>
+      </font></td>
+  <tr bordercolor="#FFFFFF">
+      <td height="24"><div align="right" class="Estilo25">
+        <div align="left"><font size="2">SEXO</font></div>
+      </div></td>
+      <td><font color="#000000" size="2">
+        <select name="sexo[]" id="select6" onkeypress="return verif_caracter(this,event)">
+
+	  <option value selected = "<?php print("$sexo");?>"><?php print("$sexo");?></option>
+
+          <option value="">Seleccione Sexo</option>
+          <option value="Masculino">Masculino</option>
+          <option value ="Femenino">Femenino</option>
+        </select>
+      </font></td>
+  <tr bordercolor="#FFFFFF">
+      <td height="26"><div align="right" class="Estilo25">
+        <div align="left"><font size="2">FECHA NACIMIENTO </font></div>
+      </div></td>
+      <td><font color="#000000" size="2">
+        <input type="text" name="dia" id="dia"onKeyPress="return verif_caracter(this,event)" size="2" maxlength="2" value = "<?php echo $dia;?>">
+/
+<input type="text" name="mes" id="mes"onKeyPress="return verif_caracter(this,event)" size="2" maxlength="2" value = "<?php echo $mes;?>">
+/
+<input type="text" name="anio" id="anio"onKeyPress="return verif_caracter(this,event)" size="3" maxlength="4" value = "<?php  echo $anio;?>">
+      </font></td>
+  <tr bordercolor="#FFFFFF">
+      <td height="26"><div align="right" class="Estilo25">
+        <div align="left"><font size="2">DOMICILIO</font></div>
+      </div></td>
+      <td><font size="2">
+        <input name="domicilio" type="text"  id="domicilio" onKeyPress="return verif_caracter(this,event)" size="40" maxlength="40" value = "<?php echo $domicilio;?>">
+      </font></td>
+  <tr bordercolor="#FFFFFF">
+      <td height="26"><div align="right" class="Estilo25">
+        <div align="left"><font size="2">LOCALIDAD</font></div>
+      </div></td>
+      <td><font size="2">
+        <input name="localidad" type="text"  id="localidad" onKeyPress="return verif_caracter(this,event)" size="40" maxlength="40" value = "<?php echo $localidad;?>">
+      </font></td>
+  <tr bordercolor="#FFFFFF">
+      <td height="26"><div align="right" class="Estilo25">
+        <div align="left"><font size="2">TEL. FIJO </font></div>
+      </div></td>
+      <td><strong><font color="#000000" size="2">
+        <input name="telefono" type="text" id="telefono"onKeyPress="return verif_caracter(this,event)"  size="12" maxlength="12" value = "<?php echo $telefono;?>">
+      </font></strong></td>
+  <tr bordercolor="#FFFFFF">
+      <td height="26"><div align="right" class="Estilo25">
+        <div align="left"><font size="2">CELULAR</font></div>
+      </div></td>
+      <td><font size="2">
+        <input name="celular" type="text" id="celular" onKeyPress="return verif_caracter(this,event)"size="12" maxlength="12" value = "<?php echo $celular;?>">
+      </font></td>
+  <tr bordercolor="#FFFFFF">
+    <td height="26"><font size="2">MAIL</font></td>
+    <td><font size="2">
+      <input name="mail" type="text" id="mail" onKeyPress="return verif_caracter(this,event)"size="70" value = "<?php echo $mail;?>"> 
+    </font></td>
+  <tr bordercolor="#FFFFFF">
+      <td height="26" colspan="2" bgcolor="#B8B8B8"><div align="right" class="Estilo25">
+        <div align="center"><font color="#000000" face="Arial, Helvetica, sans-serif">DATOS TURNOS </font></div>
+      </div>        </td>
+  <tr bordercolor="#FFFFFF">
+      <td height="24"><div align="right" class="Estilo49">
+        <div align="left">Dias que atiende </div>
+      </div></td>
+      <td><div align="center">
+        <div align="center" class="Estilo48">
+          <div align="left"><span class="Estilo25">
+		  
+		  
+<?php 
+
+if ($lunes == 1){?> 
+Lunes	<input name="lunes" type="checkbox" id="lunes" value="1" checked >
+<?php
+	}else{?>
+Lunes <input name="lunes" type="checkbox" id="lunes" value="1" >
+<?php
+	}
+
+
+if ($martes == 1){?> 
+Martes	<input name="martes" type="checkbox" id="martes" value="0" checked>
+<?php
+	}else{?>
+Martes <input name="martes" type="checkbox" id="martes" value="1">
+<?php
+	}
+
+	if ($miercoles == 1){?> 
+Miercoles	<input name="miercoles" type="checkbox" id="miercoles" value="0" checked>
+<?php
+	}else{?>
+Miercoles <input name="miercoles" type="checkbox" id="miercoles" value="1">
+<?php
+	}
+
+	if ($jueves == 1){?> 
+Jueves	<input name="jueves" type="checkbox" id="jueves" value="0" checked>
+<?php
+	}else{?>
+Jueves <input name="jueves" type="checkbox" id="jueves" value="1">
+<?php
+	}
+
+	if ($viernes == 1){?> 
+Viernes	<input name="viernes" type="checkbox" id="viernes" value="0" checked>
+<?php
+	}else{?>
+Viernes <input name="viernes" type="checkbox" id="viernes" value="1">
+<?php
+	}
+
+	if ($sabado == 1){?> 
+Sabado	<input name="sabado" type="checkbox" id="sabado" value="0" checked>
+<?php
+	}else{?>
+Sabado <input name="sabado" type="checkbox" id="sabado" value="1" >
+<?php
+	}?>
+
+
+
+
+          </label>
+            </span></div>
+    </div></td>
+
+
+
+
+  <tr bordercolor="#FFFFFF">
+    <td height="24"><span class="Estilo49">Duraci&oacute;n Consulta </span></td>
+    <td><span class="Estilo49"><strong><font color="#000000">
+      <input name="duracion_consulta" type="text" id="duracion_consulta"onKeyPress="return verif_caracter(this,event)"  size="12" maxlength="12" value = "<?php echo $duracion_consulta;?>">
+    </font></strong>Hora/min</span></td>
+  <tr bordercolor="#FFFFFF">
+    <td height="24"><span class="Estilo49">Espacio entre turnos </span></td>
+    <td><span class="Estilo49"><strong><font color="#000000">
+      <input name="espacio_entre_turnos" type="text" id="espacio_entre_turnos"onKeyPress="return verif_caracter(this,event)"  size="12" maxlength="12" value = "<?php echo $espacio_entre_turnos;?>">
+    </font></strong>Hora/min</span></td>
+  <tr bordercolor="#FFFFFF">
+    <td height="24"><span class="Estilo49">Cantidad de Turnos diarios </span></td>
+    <td><span class="Estilo49"><strong><font color="#000000">
+      <input name="cantidad_turnos_diarios" type="text" id="cantidad_turnos_diarios"onKeyPress="return verif_caracter(this,event)"  size="12" maxlength="12" value = "<?php echo $cantidad_turnos_diarios;?>">
+    </font></strong></span></td>
+  <tr bordercolor="#FFFFFF">
+    <td height="24"><span class="Estilo49">Turno</span></td>
+    <td><span class="Estilo49"><font color="#000000">
+      <select name="turno[]" id="turno" onkeypress="return verif_caracter(this,event)">
+	    <option value selected = "<?php print("$turno");?>"><?php print("$turno");?></option>
+        <option value="Ma&ntilde;ana">Ma&ntilde;ana</option>
+        <option value="Tarde">Tarde</option>
+        <option value="Ambos">Ambos</option>
+      </select>
+    </font></span></td>
+  <tr bordercolor="#FFFFFF">
+    <td height="24"><span class="Estilo49">Horario primer turno ma&ntilde;ana </span></td>
+    <td><span class="Estilo49"><strong><font color="#000000">
+      <input name="horario_turno_manana" type="text" id="horario_turno_manana"onKeyPress="return verif_caracter(this,event)"  size="12" maxlength="12" value = "<?php echo $horario_turno_manana;?>">
+    </font></strong></span></td>
+  <tr bordercolor="#FFFFFF">
+    <td height="24"><span class="Estilo49">Horario primer turno Tarde </span></td>
+    <td><span class="Estilo49"><strong><font color="#000000">
+      <input name="horario_turno_tarde" type="text" id="horario_turno_tarde"onKeyPress="return verif_caracter(this,event)"  size="12" maxlength="12" value = "<?php echo $horario_turno_tarde;?>">
+    </font></strong></span></td>
+  <tr bordercolor="#FFFFFF">
+    <td height="24"><span class="Estilo49">Tipo de Horario  </span></td>
+    <td><span class="Estilo49"><font color="#000000">
+      <select name="tipo_horario[]" id="tipo_horario" onkeypress="return verif_caracter(this,event)">
+	    <option value selected = "<?php print("$tipo_horario");?>"><?php print("$tipo_horario");?></option>
+        <option value="Cortado">Cortado</option>
+        <option value="Corrido">Corrido</option>
+      </select>
+    </font></span></td>
+  <tr bordercolor="#FFFFFF">
+    <td height="26" colspan="2" valign="top" bgcolor="#B8B8B8"><div align="center">
+      <input type="Submit" name="Submit" id ="GUARDAR" value="GUARDAR PACIENTE">
+    </div></td>
+  <tr>
+    <td height="0"></td>
+    <td width="442"></td>
+  </tr>  
+</table>

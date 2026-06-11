@@ -1,0 +1,58 @@
+<style type="text/css">
+<!--
+.Estilo5 {font-family: Arial, Helvetica, sans-serif}
+.Estilo6 {font-size: 12px}
+.Estilo7 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+-->
+</style>
+<table width="850" border="0" cellspacing="0">
+  <tr bgcolor="#CCCCCC">
+    <td height="36" colspan="5">LISTA DE ESPERA </td>
+  </tr>
+
+
+<?php
+
+
+include ("../../conexiones/config.inc.php");
+
+date_default_timezone_set("America/Santiago");
+date_default_timezone_set("America/Santiago");
+$fecha = date("Y-m-d");
+
+
+
+ $cod_socio= $_REQUEST['cod_socio'];
+  $tipo= $_REQUEST['tipo'];
+   $usuario= $_REQUEST['usuario'];
+$fecha_llegada = date("Y-m-d");
+$hora_llegada = 0;
+
+
+ $sql="select * from  `lista_espera`  where fecha_llegada = '$fecha_llegada' and cod_socio = '$cod_socio' and tipo = '$tipo'";
+ $result = $db->Execute($sql);
+$cod_socio55=$result->fields["cod_socio"];
+ECHO "***".$atendido=$result->fields["atendido"];
+
+
+if ($cod_socio55 == ""){
+  $sql1 = "INSERT INTO `lista_espera` (`fecha_llegada`, `hora_llegada`, `cod_socio`, `atendido`, `cod_operacion` , `tipo`) VALUES ('$fecha', '$hora_llegada', '$cod_socio', 'N', '$cod_operacion' , '$tipo');";
+$result1 = $db->Execute($sql1);
+}else{
+
+	if ($atendido == "S"){
+  $sql1 = "INSERT INTO `lista_espera` (`fecha_llegada`, `hora_llegada`, `cod_socio`, `atendido`, `cod_operacion` , `tipo`) VALUES ('$fecha', '$hora_llegada', '$cod_socio', 'N', '$cod_operacion' , '$tipo');";
+$result1 = $db->Execute($sql1);
+	}ELSE{
+$leyenda = "YA CARGO SOCIO/PARTICULAR";
+include ("../../alertas/campo_informacion2.php");
+exit;
+	}
+
+}
+
+   include ("lista.php");

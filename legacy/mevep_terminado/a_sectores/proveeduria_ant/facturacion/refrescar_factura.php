@@ -1,0 +1,144 @@
+<style type="text/css">
+<!--
+.Estilo6 {font-size: 12}
+.Estilo16 {font-family: Arial, Helvetica, sans-serif}
+.Estilo26 {
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+-->
+
+
+<!--
+.Estilo57 {font-size: 10px}
+.Estilo58 {font-family: Arial, Helvetica, sans-serif; font-size: 10px; }
+-->
+
+
+
+</style>
+	<?	
+
+	$nro_factura= $_REQUEST['nro_factura'];
+$dia= $_REQUEST['dia'];
+$mes= $_REQUEST['mes'];
+$año= $_REQUEST['anio'];
+$nro_cliente= $_REQUEST['nro_cliente'];
+$matricula= $_REQUEST['matricula'];
+$forma_pago= $_REQUEST['forma_pago'];
+$cantidad= $_REQUEST['cantidad'];
+$cod_mercaderia= $_REQUEST['cod_mercaderia'];
+$band= $_REQUEST['band'];
+
+$B = 1;
+
+include("../../../conexiones/config_pro.php");
+$sql = "SELECT * FROM `deta_fact`  WHERE  `nro_factura` = $nro_factura";
+$result = $db->Execute($sql);
+?><table width="103%" border="0">
+  <tr bgcolor="#FFBC79">
+    <td width="47%" scope="col"><div align="center" class="Estilo16 Estilo57"><span class="Estilo46">Descripcion / Mercaderia</span></div></td>
+    <td width="14%" scope="col"><div align="center" class="Estilo58"><span class="Estilo46">Presentacion</span></div></td>
+    <td width="8%" scope="col"><div align="center" class="Estilo58"><span class="Estilo46">Cantidad</span></div></td>
+	    <td width="5%" scope="col"><div align="center" class="Estilo58"><span class="Estilo46"> Lote</span></div></td>
+		    <td width="9%" scope="col"><div align="center" class="Estilo58"><span class="Estilo46">Vencimiento</span></div></td>
+    <td width="6%" scope="col"><div align="center" class="Estilo58"><span class="Estilo46"> C/U</span></div></td>
+    <td width="6%" scope="col"><div align="center" class="Estilo58"><span class="Estilo46">Total</span></div></td>
+    <td width="5%" scope="col"><div align="center" class="Estilo16"><span class="Estilo57"></span></div></td>
+  </tr><?
+
+if (!$result) die("fallo".$db->ErrorMsg());
+
+ while (!$result->EOF) {
+
+$cod_mercaderia=strtoupper($result->fields["cod_mercaderia"]);
+$cantidad=strtoupper($result->fields["cantidad"]);
+
+$total=strtoupper($result->fields["total"]);
+$cod_detalle=strtoupper($result->fields["cod_detalle"]);
+
+
+
+$sql2 = "SELECT * FROM `mercaderia`  WHERE  `cod_merca` = $cod_mercaderia";
+$result2 = $db->Execute($sql2);
+$descripcion=strtoupper($result2->fields["descripcion"]);
+$presentacion=strtoupper($result2->fields["presentacion"]);
+
+$sql3 = "SELECT * FROM existencias  WHERE  `cod_merca` = $cod_mercaderia";
+$result3 = $db->Execute($sql3);
+$cod_lote=strtoupper($result3->fields["cod_lote"]);
+$vencimiento_lote=strtoupper($result3->fields["vencimiento_lote"]);
+$precio_unitario=strtoupper($result3->fields["precio_unitario"]);
+
+
+$neto = $neto + $total;
+$iva = ($neto * 21) /100;
+$total_factura = round($neto,2) + round($iva,2);
+
+
+
+if ($B == 1) {
+
+?>
+  <tr bordercolor="#FFFFFF" bgcolor="#FFFFFF">
+    <?
+$B = 0;
+				}
+	ELSE	{
+	$B=1;
+		 	
+?>
+  <tr bgcolor="#F2FACB">
+    <?
+
+			}
+
+
+
+?>
+
+
+    <td height="27" scope="col"><div align="left" class="Estilo47 Estilo48"><span class="Estilo26"><?echo $cod_mercaderia. " - ".$descripcion;?></span></div></td>
+    <td scope="col"><div align="center" class="Estilo46"><span class="Estilo26"><?echo $presentacion;?></span></div></td>
+    <td scope="col"><div align="center" class="Estilo46"><span class="Estilo26"><?echo $cantidad;?></span></div></td>
+    <td scope="col"><div align="center" class="Estilo46"><span class="Estilo26"><?echo $cod_lote;?></span></div></td>
+    <td scope="col"><div align="center" class="Estilo46"><span class="Estilo26"><?echo $vencimiento_lote;?></span></div></td>
+
+    <td scope="col"><div align="right" class="Estilo46"><span class="Estilo26">$ <?echo $precio_unitario;?></span></div></td>
+    <td scope="col"><div align="right" class="Estilo46"><span class="Estilo26">$ <?echo $total;?></span></div></td>
+   <td width="5%" class="Estilo6"><div align="center"><a href="borrar_item.php?cod_detalle=<?print("$cod_detalle");?>&&nro_factura=<?print("$nro_factura");?>&&nro_cliente=<?print("$nro_cliente");?>&&matriculae=<?print("$matricula");?>&&pasada=1&&forma_pago=<?print("$forma_pago");?>&&dia=<?print("$dia");?>&&mes=<?print("$mes");?>&&anio=<?print("$año");?>&&mes=<?print("$mes");?>&&band=<?print("$band");?>"><IMG SRC="../../../imagenes/botones/btn_anular.gif" alt="Anular" width="22" height="19" border = "0"></a></div></td>
+  </tr>
+<?
+
+	 $result->MoveNext();
+				}
+
+?>
+</table>
+<table width="103%" border="0">
+		  <tr bgcolor="#FFFFFF" class="Estilo26">
+		    <td colspan="8" scope="col"><hr noshade></td>
+  </tr>
+		  <tr bgcolor="#E8DCFC" class="Estilo26">
+    <td width="13%" scope="col"><span class="Estilo55">
+     Neto Grabado 
+      </div>
+    </span></td>
+    <td width="13%" scope="col"><span class="Estilo55">$ <?echo round($neto,2);?>
+      </div>
+    </span></td>
+    <td width="12%" scope="col"><span class="Estilo55">IVA</span>
+      </div>
+    <span class="Estilo56"></span></span></td>
+    <td width="18%"  scope="col"><span class="Estilo55">$ <?echo round($iva,2);?></span></td>
+    <td width="7%" scope="col"><span class="Estilo55">Percepci&oacute;n</span></td>
+    <td width="5%" scope="col">&nbsp;</td>
+    <td scope="col"><div align="right" class="Estilo55">TOTAL</div></td>
+  <td colspan="4"><span class="Estilo56"> $<?echo $total_factura;?></span></td>     
+  </tr>
+<?
+
+?></table>
+
+

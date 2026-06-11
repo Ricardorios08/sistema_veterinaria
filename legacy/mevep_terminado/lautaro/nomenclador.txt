@@ -1,0 +1,671 @@
+0001;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.56;NO        ;ACETALDEHIDO, ENZIMATICO                          
+0002;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.62;NO        ;ACETONURIA                                        
+0003;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.16;NO        ;ACIDIMETRIA DIAGNEZ AZUL                          
+0004;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00008.25;NO        ;ACIDIMETRIA GASTRICA, CURVA DE                    
+0005;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00009.80;NO        ;ACIDO BASE (PH REAL, FCO2, E.B., B.B. Y BI        
+0006;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;ACTH, POR RADIOINMUNOENSAYO                       
+0007;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.86;NO        ;ADDIS, RECUENTO DE                                
+0008;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.71;NO        ;ADENOGRAMA                                        
+0009;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.89;NO        ;ADENOSIN MONOFOSFORICO, ACIDO                     
+0010;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.89;NO        ;ADENOSIN DIFOSFORICO, ACIDO                       
+0011;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.89;NO        ;ADENOSIN TROFOSFORICO, ACIDO                      
+0012;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00009.48;NO        ;AGAR ELECTROFORESIS EN                            
+0013;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.57;NO        ;ALUTININAS ANTI RH, SALINO ALBUMINOSO, COOMS     *
+0014;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.12;NO        ;AGLUTININAS ABO,MEDIO SALINO ALBUMINOSO CUANT.    
+0015;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00005.88;NO        ;ALANINA BETA (ORINA)                              
+0016;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.57;NO        ;ALCOHOL DEHIDROGENASA (ADH)                       
+0017;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.10;NO        ;ALCOHOLEMIA                                       
+0018;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.11;NO        ;ALDOLASA                                          
+0019;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00037.92;NO        ;ALDOSTERONA PLASMATICA,RADIOINMUNOENSAYO          
+0020;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;ALFA FETO PROTEINAS,RADIOINMUNOENSAYO             
+0021;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.41;NO        ;ALFA FETO PROTEINAS,CROSS ELECTROFORESIS          
+0022;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.68;NO        ;AMILASEMIA                                       *
+0023;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.68;NO        ;AMILASURIA                                       *
+0024;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.10;NO        ;AMINOAC.CUALI (O),(AZUR,BRAND,CAT,DNPH,MILL)      
+0025;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.69;NO        ;AMINOACIDEMIA FRACCIONADA POR CROMATOGRAFIA       
+0026;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.82;NO        ;AMINOACIDOS,SOBRECARGA                            
+0027;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00012.69;NO        ;AMINOACIDURIA FRACCIONADA POR CROMATOGRAFIA       
+0028;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.03;NO        ;AMNIOTICO,LIQUIDO,CELULAS NARANJAS                
+0029;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.27;NO        ;AMNIOTICO LIQ.ESPECTROFOTOM.(TEST DE LISLEY)      
+0030;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00006.30;NO        ;AMNIOTICO LIQ.RELACION LECITINA/ESFINGOMIELINA    
+0031;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.09;NO        ;AMONEMIA                                          
+0032;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00034.43;NO        ;AMP CICLICO,POR RADIOINMUNOENSAYO                 
+0033;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00034.43;NO        ;ANGIOTENSINA I O II,RADIOINMUNOENSAYO (C/UNA)     
+0034;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.34;NO        ;ANHIDRASA CARBONICA B ERITROCITARIA               
+0035;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00007.88;NO        ;ANTIBIOGRAMA                                      
+0036;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00017.36;NO        ;ANTIBIOGRAMA BACILO DE KOCH (7 ANTIBIOTICOS)      
+0037;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00012.66;NO        ;ANTIBIOGRAMA BACILO DE KOCH (3 ANTIBIOTICOS)      
+0038;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.26;NO        ;ANTICOAGULANTES (QUICK)                           
+0039;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.26;NO        ;ANTICOAGULANTES (BERGNA PAVLOVSKY)                
+0040;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.43;NO        ;ANTICUERPOS ANTIGLOMERULAR,(INMUNOFLUORESCENCIA)  
+0041;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.43;NO        ;ANTICUERPOS ANTIMEMBRANA BASAL,INMUNOFLUORESCENCIA
+0042;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.43;NO        ;ANTICUERPO ANTIMUSLO LISO,INMUNOFLUORESCENCIA     
+0043;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.81;NO        ;ANTICUERPOS,CONTRA CEPA BACTERIANA AISLADA        
+0044;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00011.63;NO        ;ANTIC.ANTIFRAC.MICROSOMAL TIROIDES (HEMOAGLUTIN.) 
+0045;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.43;NO        ;ANTIC.ANTIFRAC.MICROSOMAL TIROIDES (INMUNOFLUOR)  
+0046;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00011.63;NO        ;ANTICUERPOS, ANTITIROGLOBULINA, HEMOAGLUTINACION  
+0047;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.43;NO        ;ANTICUERPOS,ANTITIROGLUBULINA,INMUNOFLUORESCENCIA 
+0048;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.74;NO        ;ANTIDESOXIRRIBONUCLEICO,LATEX                     
+0049;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.37;NO        ;ANTIDESOXIRRIBONUCLEASA (ADNEASA)                 
+0050;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.47;NO        ;ANTIESTAFILOLISINA                                
+0051;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.39;NO        ;ANTIESTREPTOLISINAS "O"                           
+0052;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.47;NO        ;ANTIESTREPTOQUINASA                               
+0053;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00048.65;NO        ;ANTICARDIOLIPINAS IgG/IgM/IgA                     
+0054;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.94;NO        ;ANTIHIALURONIDASA                                 
+0055;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.43;NO        ;ANTIMITOCONDRIALES,ANTICUERPOS,INMUNOFLUORESCENCIA
+0056;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.43;NO        ;ANTINUCLEARES, ANTICUERPOS, INMUNOFLUORESCENCIA   
+0057;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.87;NO        ;ANTITRIPSINA INMUNODIFUSION CUANTITATIVA          
+0058;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.74;NO        ;ANTITROMBINA,TITULACION                           
+0059;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.43;NO        ;ARSENICO                                          
+0060;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;ASCORBICO ACIDO                                   
+0061;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00011.74;NO        ;AUTOVACUNA                                        
+0062;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00014.80;NO        ;AUTOVACUNA DE MATERIA FECAL                       
+0063;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00033.81;NO        ;ANTICUERPOS ANTIVIH (METODO DE ELISA)             
+0064;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00056.33;NO        ;ANTIGENO PROSTATICO LIBRE                         
+0065;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00076.88;NO        ;Antigeno Prost. Espec.                            
+0077;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00049.36;NO        ;ANTICOAGULANTE LUPICO                             
+0078;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00060.29;NO        ;Anti Fosfolipidos IgG/IgM                         
+0082;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00020.54;NO        ;ANAEROBIOS,AISLAMIENTO E IDENTIFICACION           
+0088;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00012.36;NO        ;CANDIDA ALBICANS, AG                              
+0094;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00043.92;NO        ;ANTI PEROXIDASA / ANTI TIROGLOBULINA              
+0096;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00133.26;NO        ;Anti Receptor de TSH                              
+0101;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.16;NO        ;BACILOSCOPIA DIRECTA (ZIEHL - NIELSEN)           *
+0102;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00008.26;NO        ;BACILOSCOPIA DIRECTA Y CULTIVO                    
+0103;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.43;NO        ;BACILOSCOPIA POR INMUNOFLUORESCENCIA              
+0104;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.18;NO        ;BACTERIOLOGIA DIRECTA ( GRAM )                   *
+0105;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00010.71;NO        ;BACTERIOLOGIA DIREC.Y CULT.CON IDENT.BIOQ.GERMEN. 
+0106;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00006.10;NO        ;BACTERIOLOGIA DIREC.Y CULT.SIN IDENT.DE GERMEN    
+0107;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00005.14;NO        ;BARBITURICOS EN ORINA                             
+0108;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.64;NO        ;BENCE JONES, PROTEINAS DE                         
+0109;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.29;NO        ;BICARBONATO                                      *
+0110;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.60;NO        ;BILIRUBINEMIA TOTAL, DIRECTA e INDIRECTA         *
+0111;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.60;NO        ;BILIRUBINURIA                                     
+0112;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.91;NO        ;BILIS MICROSCOPIA DE                              
+0113;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.14;NO        ;BROMOFTALEINA, PRUEBA DE LA                       
+0114;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00013.43;NO        ;BROMOFTALEINA, DEPURACION (K1 Y K2)               
+0131;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00016.26;NO        ;CADENA LIVIANA, KAPPA Y LAMBDA                    
+0132;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.67;NO        ;CADMIO, TOXICO EN ORINA                           
+0133;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.60;NO        ;CALCEMIA TOTAL                                   *
+0134;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.68;NO        ;CALCIO IONICO                                     
+0135;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.69;NO        ;CALCIO, PRUEBA DE LA SOBRECARGA DE                
+0136;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.60;NO        ;CALCIURIA                                         
+0137;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;CALCITONINA PLASMATICA, RADIOINMUNOENSAYO         
+0138;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.74;NO        ;CALCULO URINARIO EXAMEN FISICOQUIMICO             
+0139;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.29;NO        ;CARBONICO ANHIDRO (PCO2)                          
+0140;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00021.93;NO        ;CARIOTIPO, MAPA CROMOSONICO                       
+0141;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.44;NO        ;CAROTENO BETA, EN SANGRE                          
+0142;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.41;NO        ;CASONI INTRADERMORREACCION                        
+0143;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00014.93;NO        ;CATECOLAMINAS, LIBRES FRACCIONADAS                
+0144;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00040.99;NO        ;CEA (CARCINOEMBRIOGENICO) POR RADIOINMUNOENSAYO   
+0145;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;CELULAS DE MILANI                                 
+0146;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.26;NO        ;CELULAS L.E.(MEDULA)                              
+0147;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.26;NO        ;CELULAS L.E.(SANGRE)                              
+0148;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.25;NO        ;CELULAS NEOPLASICAS (LIQ.EXUDADOS, TRASUDADOS)    
+0149;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.62;NO        ;CELULAS TITILANTES                                
+0150;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00015.26;NO        ;CEREBROSIDOS, CROMATOGRAFIA                       
+0151;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00011.27;NO        ;CERULOPLASMINA                                    
+0152;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00009.81;NO        ;CETOGENOESTEROIDES URINARIOS                      
+0153;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.10;NO        ;CETOGLUTARICO, ACIDO(ALFA)                        
+0154;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;CETONEMIA                                         
+0155;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00035.04;NO        ;CETOESTEROIDES- 17 FRACCIONADOS(CROMATOGRAFIA)    
+0156;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00015.34;NO        ;CETOESTEROIDES- 17 FRACC.(11 OXI.-11 DESOXI.)     
+0157;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00007.87;NO        ;CETOESTEROIDES- 17 NEUTROS URINARIOS TOTALES      
+0158;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00010.16;NO        ;CETOESTEROIDES- 17 ESTIMULACION CON ACTH          
+0159;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00010.16;NO        ;CETOESTEROIDES- 17 INHIBICION CON DEXAMETASONA    
+0160;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00012.88;NO        ;CETOESTEROIDES- 17 INHIB.CON DEX. ESTIMUL. GONAD. 
+0161;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00015.34;NO        ;CETO-17 Y 17 HIDROXI, ESTIMULACION CON ACTH       
+0162;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.41;NO        ;CISTINA AMINOPEPTIDASA (CAP)                      
+0163;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00012.43;NO        ;CITOLOGIA EXFOLIATIVA (INMUNOFLUORESCENCIA)       
+0164;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.65;NO        ;CITOLOGIA VAGINAL HORMONAL, UNA MUESTRA           
+0165;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00006.21;NO        ;CITOLOGIA VAGINAL HORMONAL, CUATRO MUESTRAS       
+0166;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00008.47;NO        ;CITOLOGIA VAGINAL HORMONAL, UN CICLO              
+0167;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.68;NO        ;CITRICO, ACIDO                                    
+0168;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.48;NO        ;CLORO PLASMATICO                                 *
+0169;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.03;NO        ;COAGULACION EN SANGRIA, TIEMPO DE                *
+0170;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;COAGULO, RETRACCION DEL                           
+0171;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.72;NO        ;COAGULOGRAMA BASICO(COD.170,887,746,169,771,769) *
+0172;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.67;NO        ;COBRE EN SANGRE                                   
+0173;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.88;NO        ;COCAINA                                           
+0174;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.82;NO        ;COLESTEROL TOTAL                                  
+0175;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;COLESTEROL TOTAL, LIBRE Y ESTERIFICADO            
+0176;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.95;NO        ;COLONIAS RECUENTO DE                              
+0177;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.95;NO        ;COMPATIBILIDAD RH, SANGRE MATERNA(DU Y COOMBS IND)
+0178;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00016.54;NO        ;COMPATIBILIDAD SANG.MATRIMONIAL(2ABO 2RH 2GENOT)  
+0179;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00011.94;NO        ;COMPLEMENTO ACTIVIDAD TOTAL                       
+0180;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.87;NO        ;COMPLEMENTO,INMINOQ.(CIQ,CLS,C3,C4,C5,C7,C8 C/U)  
+0181;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.74;NO        ;CONCENTRACION DE LIQUIDOS BIOLOGICOS              
+0182;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.83;NO        ;CONCENTRACION PRUEBA DE LA (FUNCION RENAL)        
+0183;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.26;NO        ;CONN Y FAJANS, PRUEBA DE                          
+0184;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.73;NO        ;COOMS DIRECTA, PRUEBA                            *
+0185;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.00;NO        ;COOMBS INDIRECTA, CUALITATIVA                    *
+0186;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.80;NO        ;COOMBS INDIRECTA, CUANTITATIVA                    
+0187;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00016.13;NO        ;COPROCULTIVO                                      
+0188;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.48;NO        ;COPROPORFIRINAS                                   
+0189;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;CORTISOL PLASMATICO, RADIOINMUNONSAYO             
+0190;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.23;NO        ;CREATINQUINASA ( CPK )                           *
+0191;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.81;NO        ;CREATINA, SANGRE U ORINA                          
+0192;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.27;NO        ;CREATININA, ORINA o SANGRE                       *
+0193;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.77;NO        ;CREATININA, CLEARENCE DE DEPURACION               
+0194;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.73;NO        ;CRIOAGLUTININA                                    
+0195;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;CRIOGLOBULINAS                                    
+0196;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.29;NO        ;CROMATINA SEXUAL                                  
+0197;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.27;NO        ;CURVA COLOIDALES, CADA UNA                        
+0200;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00070.55;NO        ;Hepatitis C AC.TOTALES X ELISA                    
+0202;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00029.42;NO        ;RUBEOLA AC.IgG X Elisa                            
+0203;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00128.33;NO        ;CA 15/3 IRMA (Mama)                               
+0204;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00168.06;NO        ;HIV-Western Blot                                  
+0205;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00064.21;NO        ;HEPATITIS Ac. IgG x Elisa                         
+0206;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00111.47;NO        ;TESTOSTERONA BIODISP.                             
+0207;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00017.25;NO        ;IgA Secretoria                                    
+0208;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00109.83;NO        ;HERPES SIMPLEX I-II Antigeno x IFI                
+0209;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00053.15;NO        ;CHLAMYDIA TRACHOMATIS Antigeno x Elisa            
+0210;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00054.81;NO        ;HEPATITIS B Ac.Anti-Core x ELISA                  
+0211;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00045.41;NO        ;HEPATITIS B Antigeno E x Elisa                    
+0212;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00070.55;NO        ;HEPATITIS A Ac. IgM x Elisa                       
+0213;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00059.41;NO        ;HERPES SIMPLEX I-II Ac. Totales x F.C.            
+0217;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00070.55;NO        ;RUBEOLA Ac. IgM x Elisa                           
+0218;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00026.77;NO        ;ADENOVIRUS AC.TOTALES x FC.                       
+0219;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00041.89;NO        ;ADENOVIRUS ANTIGENO                               
+0220;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00054.81;NO        ;CITOMEGALOVIRUS AC.TOTALES x FC.                  
+0221;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00054.81;NO        ;CITOMEGALOVIRUS AC.TOTALES x ELISA                
+0222;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00070.44;NO        ;CITOMEGALOVIRUS AC.IgG x IFI                      
+0223;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00070.55;NO        ;CITOMEGALOVIRUS AC.IgM x IFI MC.                  
+0224;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00090.90;NO        ;CITOMEGALOVIRUS ANTIGENO x IFI MC.                
+0225;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00037.08;NO        ;COXSAKIE B1-B6 AC.TOTALES x FC.                   
+0226;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00059.41;NO        ;EPSTEIN-Barr-Virus AC.ANTI VCA-IgG x IFI          
+0227;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00070.55;NO        ;EPSTEIN-Barr-Virus AC.ANTI IgM x IFI              
+0228;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00070.55;NO        ;EPSTEIN-Barr-Virus AC.EA IgM x IFI                
+0229;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00045.41;NO        ;HEPATITIS B AC.ANTI E x ELISA                     
+0230;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00076.88;NO        ;HEPATITIS B AC.ANTI CORE M x ELISA                
+0231;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00054.81;NO        ;HEPATITIS B ANT.SUP x ELISA                       
+0232;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00059.41;NO        ;HERPES SIMPLEX I-II AC IgG x IFI                  
+0233;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00059.41;NO        ;HERPES SIMPLEX I-II AC IgM X IFI                  
+0234;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00027.89;NO        ;INFLUENZA A AC.TOTALES x FC                       
+0235;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00038.82;NO        ;INFLUENZA A ANTIGENO X IFI MC                     
+0236;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00027.89;NO        ;INFLUENZA B AC.TOTALES x FC                       
+0237;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00038.82;NO        ;INFLUENZA B ANTIGENO X IFI Mc.                    
+0238;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00027.89;NO        ;Mycoplasma Pneumonae AC. TOTALES x FC             
+0239;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00291.78;NO        ;PAPILOMA VIRUS HIBRIDIZACION DE DNA               
+0240;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00027.89;NO        ;PARAINFLUENZA I-II-III AC.TOTAL. x FC             
+0241;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.35;NO        ;CHAGAS, AGLUTINACION DIRECTA                      
+0242;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.81;NO        ;CHAGAS, FIJACION DE COMPLEMENTO                   
+0243;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.43;NO        ;CHAGAS, INMUNOFLUORESCENCIA                       
+0244;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.14;NO        ;CHAGAS, REACCION DEL LATEX                        
+0245;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;CHEDIAK, REACCION DE                              
+0246;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00126.80;NO        ;CA 19/9 IRMA (pancreas y colorectal)              
+0248;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00037.97;NO        ;ESTREPTOCOCO HEMOLITICO                           
+0261;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.53;NO        ;DAVIDSON DIFERENCIAL, PRUEBA DE                   
+0262;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00030.08;NO        ;DEHIDROEPIANDROSTERONA EN ORINA                   
+0263;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.40;NO        ;DERMATOFITOS, INTRADERMORREACCION                 
+0264;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.14;NO        ;DE TAKETS, (RESISTENCIA A LA HEPARINA IN VIVO)    
+0265;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;DICK, INTRADERMORREACCION (ESTREPTOCOCOS)         
+0266;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.83;NO        ;DILUCION, PRUEBA DE LA FUNCION RENAL              
+0267;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;DIGITOXIN (POR RADIOINMUNOENSAYO)                 
+0268;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;DIGOXIN POR RADIOINMUNOENSAYO                     
+0269;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00015.01;NO        ;DISACARIDASAS                                     
+0270;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.71;NO        ;DONATH-LANDSTEINER CUANTITATIVA PRUEBA DE         
+0271;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.83;NO        ;DREPONACITOS, ANAEROBIOSIS                        
+0272;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00001.25;NO        ;DOMICILIO, EXTRACCION A                           
+0273;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00000.02;NO        ;DOMICILIO,POR KM. RECORRIDO FUERA DE RADIO URBANO 
+0274;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00038.82;NO        ;PARAINFLUENZA I-II-III ANTIGENO X IFI Mc          
+0275;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00027.89;NO        ;PAROTIDITIS AC.TOTALES x FC                       
+0276;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00054.81;NO        ;PAROTIDITIS AC.IgG x IFI                          
+0277;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00064.21;NO        ;PAROTIDITIS AC IgM x IFI                          
+0278;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00054.81;NO        ;PICONAVIRUS-AC.TOTALES x FC                       
+0279;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00094.41;NO        ;PNEUMOSISTIS CARINII-ANTIGENO x IFI MC            
+0280;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00038.82;NO        ;V. SINCIC. RESPIR.ANTIGENO x IFI Mc               
+0281;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00054.81;NO        ;ROTARIVUS ANTIGENO x ELISA                        
+0282;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00108.50;NO        ;ROTAVIRUS RNA X PAGE                              
+0283;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00029.42;NO        ;SARAMPION-AC.TOTALES x FC                         
+0284;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00029.42;NO        ;SARAMPION AC.IgG X IFI                            
+0285;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00035.76;NO        ;SARAMPION AC IgM x IFI                            
+0286;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00070.55;NO        ;SARAMPION ANTIGENO x IFI Mc                       
+0287;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00202.15;NO        ;TORCH-M TOXO-HSV-RUBEOLA CMV                      
+0288;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00029.42;NO        ;VARICELA ZOSTER VIRUS AC.TOTALES x FC             
+0289;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00070.55;NO        ;VARICELA AC.IgG x IFI                             
+0290;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00070.55;NO        ;VARICELA-AC.IgM x IFI                             
+0291;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.63;NO        ;ELECTROFORESIS POLIACRILAMIDA CUALITATIVA         
+0292;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.63;NO        ;ELECTROFORESIS POLIACRILAMIDA CUANTITATIVA        
+0293;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00006.72;NO        ;EMBARAZO                                         *
+0294;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.31;NO        ;EOSINOFILOS, CON INYECCION DE ACTH                
+0295;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.00;NO        ;EOSINOFILOS, RECUENTO DE                          
+0296;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.83;NO        ;ERITROBLASTOS, PORCENTAJE DE                      
+0297;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;ERITROSEDIMENTACION                              *
+0298;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00005.81;NO        ;ESPERMOGRAMA                                      
+0299;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.29;NO        ;ESTRICNINA, EN LIQUIDOS BIOLOGICOS                
+0300;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;ESTRADIOL PLASMATICO, POR RADIOINMUNOENSAYO       
+0301;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00007.76;NO        ;ESTRIOL URINARIO                                 *
+0302;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;ESTRIOL PLASMATICO, POR RADIOINMUNOENSAYO         
+0303;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00038.13;NO        ;ESTRGENOS FRAC.ESTRONA,ESTRIOL,ESTRADIOL CROMAT.  
+0304;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;ESTROGENOS TOTALES, POR RADIOINMUNOENSAYO         
+0305;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;ESTRONA PLASMATICA, POR RADIOINMUNOENSAYO         
+0306;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.10;NO        ;ETANOL, TEST TOTAL DE                             
+0307;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.10;NO        ;ETANOL, TOXICO EN SANGRE                          
+0308;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.60;NO        ;EUGLOBULINAS, TEST DE                            *
+0309;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.00;NO        ;EXUDADO NASOFARINGEO, INVESTIGACION DE LOEFLER    
+0310;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00108.50;NO        ;VARICELA ZOSLER VIRUS-ANTIGENO x IFI MC.          
+0311;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00025.23;NO        ;ALFA NAFTIL ACET.ESTERASA(MEDULA OSEA)            
+0312;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00016.54;NO        ;ALFA NAFTIL ACET.ESTERASA(SANGRE PERIFERICA)      
+0313;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00040.56;NO        ;DIMERO D                                          
+0314;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00025.23;NO        ;FAc. TARTRATO Ac.RESIST.(MEDULA OSEA)             
+0315;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00025.23;NO        ;FAc.TARTRATO Ac.RESIST.(SANGRE PERIFERICA)        
+0316;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00008.06;NO        ;FACTOR XIII                                       
+0317;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00016.54;NO        ;FACTORES VII-X                                    
+0318;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00046.91;NO        ;FERRITINA                                         
+0319;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00016.54;NO        ;FOSFATASA ACID.PERIFERICA                         
+0320;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00008.06;NO        ;PEROXIDASA LEUCOCITARIA(MEDULA OSEA)              
+0321;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00005.89;NO        ;TIEMPO SANGRIA (MET.IVY)                          
+0322;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00013.07;NO        ;TIEMPO SANGRIA (SIMPLATE)                         
+0323;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00064.21;NO        ;ANDROSTENDIONA                                    
+0324;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00038.82;NO        ;B-HCg IRMA CUALIT.                                
+0325;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00048.47;NO        ;B-HCg IRMA CUANT. x ELISA                         
+0326;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00126.80;NO        ;CA 125 IRMA (OVARIO)                              
+0327;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00040.56;NO        ;CORTISOL LIBRE URINARIO                           
+0328;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00159.07;NO        ;Estradiol Biodisp.                                
+0329;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00056.14;NO        ;ESTRADIOL EN EL DIA                               
+0331;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.57;NO        ;FACTOR DE COAGULACION V                           
+0332;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.57;NO        ;FACTOR DE COAGULACION VII                         
+0333;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.68;NO        ;FACTOR DE COAGULACION VIII                        
+0334;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.68;NO        ;FACTOR DE COAGULACION IX                          
+0335;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.34;NO        ;FACTOR DE COAGULACION X                           
+0336;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00013.89;NO        ;FACTOR DE MIGRACION LINFOCITARIA (MIF)            
+0337;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.73;NO        ;FENIL- ALANINA                                    
+0338;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.73;NO        ;FENIL- CETONURIA                                  
+0339;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.73;NO        ;FENILPIRUVICO, ACIDO CUALITATIVO EN ORINA         
+0340;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.00;NO        ;FENILPIRUBICO, ACIDO CUANTITATIVO EN ORINA        
+0341;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.10;NO        ;FENOLSULFONFTALEINA PRUEBA (FUNCION RENAL)        
+0342;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.82;NO        ;FENOTIAZINAS                                      
+0343;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.59;NO        ;FERREMIA                                          
+0344;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.67;NO        ;FIBRINA, PRODUCTO DE DEGRADACION (PDF)            
+0345;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.81;NO        ;FIBRINOGENO EN SANGRE                            *
+0346;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.63;NO        ;FIBRINOGENEMIA HIPO, LATEX CUANTITATIVO           
+0347;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.81;NO        ;FIBROLISINA (BIGGS MC FARLANE O SIMILAR)          
+0348;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.81;NO        ;FIJACION DE COMPLEMENTO PARA BRUCELAS             
+0349;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00006.46;NO        ;FISICO- QUIMICO EXAMEN(ASP.CL.PROT.RIVOLTA GLUC.) 
+0350;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.14;NO        ;FLUOREMIA                                         
+0351;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00007.14;NO        ;FLUORURIA                                         
+0352;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.35;NO        ;FOLICO ACIDO, MICROBIOLOGICO                      
+0353;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.06;NO        ;FONDO OSCURO                                      
+0354;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.83;NO        ;FORMULA LEUCOCITARIA                             *
+0355;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.73;NO        ;FOSFATASA ACIDA PROSTATICA                        
+0356;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.60;NO        ;FOSFATASA ACIDA TOTAL                             
+0357;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.60;NO        ;FOSFATASA ALCALINA                               *
+0358;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.01;NO        ;FOSFATASA ALCALINA CITOQUIMICA (GOMORI)           
+0359;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.01;NO        ;FOSFATASA ALCALINA CITOQUIMICA (KAPLOW)           
+0360;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.01;NO        ;FOSFATASA ALCALINA (TERMOESTABLE)                 
+0361;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.23;NO        ;FOSFATASA ALCALINA (ISOENZIMAS)                   
+0362;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.60;NO        ;FOSFATEMIA                                        
+0363;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.60;NO        ;FOSFATURIA                                        
+0364;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00011.01;NO        ;FOSFO-EXOSA-ISOMERASA                             
+0365;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.88;NO        ;FOSFOLIPIDOS                                      
+0366;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.56;NO        ;FOSFORO,CLEARENCE,DEPURACION DE                   
+0367;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.56;NO        ;FOSFORO,REABSORCION TUBULAR DE                    
+0368;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.10;NO        ;FRAGMENTO FAB FC                                  
+0369;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.27;NO        ;FREI, INTRADERMORREACCION DE                      
+0370;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;FSH, POR RADIOINMUNOENSAYO                        
+0371;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.43;NO        ;FTA/ABS, INMUNOFLUORESCENCIA                      
+0372;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.43;NO        ;FTA/200, INMUNOFLUORESCENCIA                      
+0373;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00007.22;NO        ;FUNCIONAL, EXAMEN (MATERIA FECAL)                 
+0374;1076;          ;02;0000.00;0000.00;NO                  ;          ;NO          ;00045.91;NO        ;Fructosamina                                      
+0376;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00048.47;NO        ;17 HIDROXIPROGESTERONA                            
+0377;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00056.14;NO        ;LH EN EL DIA                                      
+0378;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00064.21;NO        ;PEPTIDO - C                                       
+0379;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00173.97;NO        ;PRO-INSULINA                                      
+0380;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00060.94;NO        ;PROGESTERONA EN EL DIA                            
+0381;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00159.07;NO        ;SOMATOMEDINA C                                    
+0382;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00045.16;NO        ;SULFATO DE DHEA EN SUERO                          
+0383;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00081.70;NO        ;TBG                                               
+0384;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00095.99;NO        ;TEST DE TRH                                       
+0385;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00064.21;NO        ;TESTOSTERONA LIBRE                                
+0386;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00092.75;NO        ;TIROGLOBULINA                                     
+0387;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00029.42;NO        ;TIROXINA LIBRE                                    
+0389;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00018.28;NO        ;ANTIC.ANTI CELULAS PARIET                         
+0399;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00141.96;NO        ;TRD PRUEBA DE.                                    
+0400;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00048.47;NO        ;ANTIC.ANTI CENTROMERO                             
+0401;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.63;NO        ;GALACTOSA, PRUEBA DE LA                           
+0402;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.49;NO        ;GALACTOSEMIA                                      
+0403;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00010.49;NO        ;GALACTOSURIA                                      
+0404;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00011.20;NO        ;GASES EN SANGRE, PCO2,PO2                         
+0405;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;GASTRINA PLASMATICA, RADIOINMUNOENSAYO            
+0406;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00009.29;NO        ;GASTROIONOGRAMA, INCLUYE EXTRACCION               
+0407;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.35;NO        ;GLISEROL EN SANGRE                                
+0408;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.41;NO        ;GLUBULINA GAMMA EN SUERO                          
+0409;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;GLOBULOS BLANCOS,RECUENTO DE                     *
+0410;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;GLOBULOS ROJOS, RECUENTO DE                       
+0411;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.09;NO        ;GLUCAGON TEST DEL                                 
+0412;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.83;NO        ;GLUCEMIA                                         *
+0413;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.67;NO        ;GLUCEMIA, CURVA DE                                
+0414;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00011.87;NO        ;GLUCIDOS, (ORINA) CROMATOGRAFIA BIDIMENSIONAL     
+0415;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.06;NO        ;GLUCOGENO, CITOQUIMICO                            
+0416;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.56;NO        ;GLUCOPROTEINOGRAMA                                
+0417;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.73;NO        ;GLUCOSA 6-FOSFATODEHIDROGENASA, EN GLOBULOS       
+0418;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.10;NO        ;GLUCOSA 6-FOSFATODEHIDROGENASA, EN SUERO          
+0419;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.95;NO        ;GLUTAMATO DEHIDROGENASA                           
+0420;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.63;NO        ;GLUTAMIL TRANSPEPTIDASA, GAMMA                   *
+0421;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.41;NO        ;GLUCORONIDASA BETA                                
+0422;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.66;NO        ;GLUTATION REDUCTASA                               
+0423;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.46;NO        ;GONADOTROFINAS CORIONICAS, INMUNOLOGICO CUALIT.  *
+0424;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00008.47;NO        ;GONADOTROFINAS CORIONICAS, INMUNOLOGICO CUANTIT.  
+0425;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00014.01;NO        ;GONADOTROFINAS CORIONICAS MET.BIOL.CUANTITATIVA   
+0426;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00017.62;NO        ;GONADOTROFINAS HIPOFISIARIAS, UNO Y DOS NIVELES   
+0427;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00006.73;NO        ;GONADOTROFINAS HIPOFISIARIAS, CADA NIVEL ADICIONAL
+0428;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00012.43;NO        ;GONOCOCOS, POR INMUNOFLUORESCENCIA                
+0429;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.10;NO        ;GOTA GRUESA                                       
+0430;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.36;NO        ;GRAHAN, TEST DE(SERIADO 7 DIAS CONSECUTIVOS)      
+0431;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.62;NO        ;GRASAS, MATERIA FECAL, CUALITATIVO                
+0432;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00007.22;NO        ;GRASAS, MATERIA FECAL, CUANTITATIVO(VAN DE KAMER) 
+0433;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.60;NO        ;GRUPO SANGUINEO                                  *
+0434;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00014.60;NO        ;ANTIC.ANTI CHAGA EN IgM                           
+0436;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00037.29;NO        ;ANTIC.ANTI ENDOMISIO                              
+0437;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00044.05;NO        ;ANTIC.ANTI ESPERMA ESPERM-CHEEK                   
+0438;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00044.05;NO        ;ANTIC.ANTI ESPERMA - INMUNOBEED                   
+0439;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00037.29;NO        ;ANTIC.ANTI ESPERMA - TES DIRECTO                  
+0440;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00038.82;NO        ;ANTIC.ANTI ESPERMA - TEST INDIRECTO               
+0441;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00079.54;NO        ;Antic.Anti Insulina                               
+0444;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00038.82;NO        ;ANTIC.ANTI MIOCARDIO                              
+0445;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00048.65;NO        ;ANTIC.ANTI NUCLEOLO                               
+0446;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00048.47;NO        ;ANTIC.ANTI RETICULINA                             
+0448;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00018.28;NO        ;ANTIC.ANTI SALMONELLA P/INMUNOF.                  
+0449;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00016.54;NO        ;ANTIC.ANTI SIFILIS EN IgM                         
+0452;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00016.34;NO        ;ANTIC.ANTI TOXOPL.EN IgM                          
+0455;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00032.48;NO        ;CK-MB                                             
+0456;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00239.13;NO        ;CULTIVO MIXTO DE LINFOCITOS                       
+0459;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00024.13;NO        ;HIDATIDOSIS INMUNOFLUOR.                          
+0461;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.91;NO        ;HAMBURGER, RECUENTO DE                            
+0462;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;HANGER, REACCION DE                               
+0463;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.21;NO        ;HAPTOGLOBINA, INMUNODIFUSION CUANTITATIVA         
+0464;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.83;NO        ;HEINS, CUERPOS DE                                 
+0465;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.93;NO        ;HEMATIES, RESISTENCIA GLOBULAR OSMOTICA           
+0466;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;HEMATOCRITO                                      *
+0467;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;HEMOAGLUTINOGENOS, A2, DU, ETC.C/DETERMINACION   *
+0468;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.62;NO        ;HEMOCULTIVOS, AEROBIOS y ANAEROBIOS              *
+0469;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.41;NO        ;HEMOFILIA, CLASIFICACION                          
+0470;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;HEMOGLOBINA, DOSAJE DE                           *
+0471;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.41;NO        ;HEMOGLOBINA, ELECTROFORESIS                       
+0472;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.77;NO        ;HEMOGLOBINA EN PLASMA                             
+0473;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.77;NO        ;HEMOGLOBINA, SOLUBILIDAD                          
+0474;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.12;NO        ;HEMOGLOBINA ALCALI RESISTENTE                     
+0475;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.12;NO        ;HEMOGRAMA                                        *
+0476;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.01;NO        ;HEMOLISINAS EN CALIENTE, TITULACION               
+0477;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.01;NO        ;HEMOLINIAS EN FRIO, SIN ANTIC.DONATH-LANDSTEINER  
+0478;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.87;NO        ;HEMOPEXINA, INMUNODIFUSION CUANTITATIVA           
+0479;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.01;NO        ;HEMOSIDERINA, INVESTIGACION CITOQUIMICA           
+0480;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.60;NO        ;HEPARINA, RESISTENCIA A LA INVITRO                
+0481;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00015.52;NO        ;HEPATOGRAMA o HEPATOGRAMA COMPLETO               *
+0482;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.92;NO        ;HIDATIDOSIS, INTRADERMORREACCION                  
+0483;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.49;NO        ;HIDATIDOSIS, HEMOAGLUTINACION                     
+0484;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.14;NO        ;HIDATIDOSIS, TEST DEL LATEX                       
+0485;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00013.40;NO        ;HIDRATOS DE CARBONOS, CROMAT.BIDIMENT.PAP(ORINA)  
+0486;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00009.09;NO        ;17- HIDROCORTICOIDES EN ORINA                     
+0487;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.88;NO        ;HIDROXINDOLACETICO, ACIDO                         
+0488;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.70;NO        ;HIDROXIPROLINURIA                                 
+0489;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;HIPERHEPARINEMIA                                  
+0490;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.40;NO        ;HISTOPLASMINA                                     
+0491;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.70;NO        ;HOFFMAN, REACCION DE (CUALITATIVA)                
+0492;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.60;NO        ;HEMOGENTISICO, ACIDO (ORINA)                      
+0493;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.77;NO        ;HUWBENER, TEST DE                                 
+0494;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.46;NO        ;HUDLESSON, REACCION DE                            
+0495;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00035.68;NO        ;HEPATITIS B HBs/Ag (Sup) x Elisa                  
+0496;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00038.82;NO        ;Hemoglobina Glicosilada                           
+0498;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00399.71;NO        ;HEPATITIS C CARGA VIRAL                           
+0503;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00035.76;NO        ;MICROALBUMINURIA                                  
+0504;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00025.03;NO        ;MIGRACION ESPERMATICA                             
+0506;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00038.82;NO        ;ROSETAS E/E AC.                                   
+0507;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00048.47;NO        ;SUB-UNIDAD BETA EN SANGRE (Cuant.) (Elisa)        
+0508;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00029.42;NO        ;TRIQUINOSIS INMUNOFLUOR.                          
+0510;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00080.17;NO        ;INVESTIG.VIBRION COLERICO CON ID.SEROL.           
+0511;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00065.05;NO        ;MONITOREO DE DROGAS FENOBARBITAL                  
+0512;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00065.05;NO        ;MONITOREO DE DROGAS CARBAMAZEPINA                 
+0513;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00065.05;NO        ;MONITOREO DE DROGAS PRIMIDONA                     
+0514;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00065.05;NO        ;MONITOREO DE DROGAS VALPROICO                     
+0515;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00065.05;NO        ;MONITOREO DE DROGAS FENITOINA                     
+0516;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00065.05;NO        ;MONITOREO DE DROGAS AMITRITILINA                  
+0517;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00065.05;NO        ;MONITOREO DE DROGAS NORTRIPTILINA                 
+0518;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00065.05;NO        ;MONITOREO DE DROGAS IMIPRAMINA                    
+0519;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00065.05;NO        ;MONITOREO DE DROGAS DESIPRAMINA                   
+0520;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00065.05;NO        ;MONITOREO DE DROGAS CLORIMIPRAMINA                
+0521;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00065.05;NO        ;MONITOREO DE DROGAS TEOFILINA                     
+0522;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00079.74;NO        ;MONITOREO DE DROGAS CICLOSPORINA                  
+0523;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00060.86;NO        ;Anticuerpo Helycobacter pylori con IgG            
+0524;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00040.99;NO        ;ANTIGLIADINA, ANTIC. IgG                          
+0525;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00040.99;NO        ;ANTIGLIADINA, ANTIC. IgA                          
+0526;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00024.62;NO        ;Tiempo de Sangria (SIMPLATE)                      
+0531;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00005.44;NO        ;IDENTIFICACION DE MYCOBACTERIUN                   
+0532;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00016.16;NO        ;IDENTIFICACION SEROLOGICA DE GERMENES             
+0533;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.81;NO        ;YMAZ-LORENTZ-GHEDINI REACCION DE                  
+0534;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;INDOXILEMIA                                       
+0535;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00011.33;NO        ;INMUNOELECTROFORESIS                              
+0536;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00012.31;NO        ;INMUNOELECTROFORESIS DE LIQ.BIOL.NO INCLUYE CONC. 
+0537;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.87;NO        ;INMUNOGLUBULINA A(IGA) CADENA ALFA CUANTIFIC.     
+0538;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.87;NO        ;INMUNOGLOBULINA D(IGD) CADENA DELTA CUANTIFIC.    
+0539;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;INMUNOGLOBULINA E(IGE) CUANTIFIC. POR RIA         
+0540;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.87;NO        ;INMUNOGLOBULINA G(IGG CADENA GAMMA, CUANTIFIC.    
+0541;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.87;NO        ;INMUNOGLOBULINA M(IGM) CADENA MU, CUANTIFACACION  
+0542;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.43;NO        ;INULINA CLEARENCE                                 
+0543;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;INSULINA, POR RIA, CADA DETERMINACION             
+0544;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00237.60;NO        ;SUB-CLASES DE IgG                                 
+0545;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.70;NO        ;IODO PROTEICO                                     
+0546;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.17;NO        ;IONOGRAMA PLASMATICO                             *
+0547;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.88;NO        ;IONOGRAMA URINARIO                               *
+0548;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.95;NO        ;ISOCITRICO DEHIDROGENASA                          
+0549;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00080.94;NO        ;HOMOCISTEINA                                      
+0562;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00006.53;NO        ;FOSFATASA ALCALINA                                
+0563;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00027.89;NO        ;Streptozyme                                       
+0564;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00038.82;NO        ;IgE Rast.Especifica c/alergeno                    
+0565;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00053.15;NO        ;Parainfluenza I-II-III-Ac.Totales x IFI           
+0566;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00076.06;NO        ;Varicela Zoster Virus Antig.x ELISA               
+0567;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00079.95;NO        ;(Molecula intacta)(PTH-IM)(IRMA)                  
+0568;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00079.95;NO        ;Beta 2-Microglobulina RIA                         
+0569;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00053.15;NO        ;Catecolaminas tot. x Cromat.                      
+0570;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00092.64;NO        ;NOR - ADRENALINA                                  
+0571;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.71;NO        ;KAHN CUANTITATIVA                                 
+0572;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.83;NO        ;KAHN PRESUNTIVA Y STANDARD                        
+0573;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.83;NO        ;KLINE, DIAGNOSTICO O EXCLUSION                    
+0574;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;KUNKEL, REACCION DE                               
+0575;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00047.12;NO        ;PVK - FENILCETONEMIA                              
+0576;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00048.47;NO        ;SOMATOTROFINA (Pba. de estimulo o inhib.)c/u      
+0577;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00040.56;NO        ;Ac.Antimicrosomal - ELISA                         
+0578;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00026.35;NO        ;Sub-Unidad Beta (cualit.) ELISA en orina          
+0591;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.60;NO        ;LACTAMINICO, ACIDO                                
+0592;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.81;NO        ;LACTICO ACIDO (ENZIMATICO)                        
+0593;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00006.41;NO        ;LACTICO ACIDO, EN MATERIA FECAL                   
+0594;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.56;NO        ;LACTICO, DEHIDROGENASA ( LDH )                   *
+0595;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.41;NO        ;LACTICO DEHIDROGENASA ISOENZIMAS (LH1 Y LH5)      
+0596;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.82;NO        ;LACTICO DEHIDROGENASA ISOENZIMAS POR ELECTROF.    
+0597;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;LACTOGENO PLACENTARIO, HORMONA POR RIA            
+0598;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.59;NO        ;LATEX, ARTRITIS REUMATOIDEA                       
+0599;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.89;NO        ;LATEX L.E.                                        
+0600;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.89;NO        ;LATEX, LEPTOSPIRAS                                
+0601;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.89;NO        ;LATEX, TIROGLOBULINA                              
+0602;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.89;NO        ;LATEX, TRICHINOSIS                                
+0603;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.62;NO        ;LAZO, PRUEBA DE                                   
+0604;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.13;NO        ;LECHE MATERNA, EXAMEN DE                          
+0605;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.40;NO        ;LEISHMANIASIS, INTRADERMORREACCION                
+0606;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.57;NO        ;LEUCINAMINOPEPTIDASA                              
+0607;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.08;NO        ;LEUCOAGLUTINACION, INHIBICION DE                  
+0608;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.01;NO        ;LEUCOGLUTININAS METODO DIRECTO                    
+0609;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.01;NO        ;LEUCOPRECIPITINAS                                 
+0610;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.70;NO        ;LEVULINICO DELTA, AMINOACIDO                      
+0611;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.63;NO        ;LEVULINICO DELTA, AMINO, DEHIDRATASA              
+0612;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;LH POR RADIOINMUNOENSAYO                          
+0613;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.10;NO        ;LIPASA EN SANGRE                                  
+0614;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.93;NO        ;LIPEMIA O LIPIDOS TOTALES EN SANGRE               
+0615;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.50;NO        ;LIPIDOGRAMA ELECTROFORETICO                       
+0616;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.30;NO        ;LIPIDOS CROMATOGRAFIA EN LA CAPA DELGADA          
+0617;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.16;NO        ;LIPOPROTEINAS BETA                                
+0618;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.23;NO        ;LIPOPROTEINLIPASA                                 
+0619;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00005.81;NO        ;LIQ.CEFALORAQUIDEO, FIS., QIM., CITOL., y BACT.  *
+0620;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00006.59;NO        ;LIQ.DE PUNCION, FISICO, QUIM., CITOL., y BACT.   *
+0621;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.23;NO        ;LISINA-VASOPRESINA TEST.                          
+0622;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00009.29;NO        ;LISTERIAS, POR INMUNOFLUORESCENCIA                
+0623;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00011.33;NO        ;LITIO PLASMATICO                                  
+0651;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;MAC LAGAN, REACCION DE                            
+0652;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.81;NO        ;MACROGLOBULINA ALFA 2, INMUNODIFUSION CUANT.      
+0653;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.81;NO        ;MAGNESIO EN SANGRE                                
+0654;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.81;NO        ;MAGNESIO EN ORINA                                 
+0655;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.12;NO        ;MALICO DEHIDROGENASA                              
+0656;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.40;NO        ;MANTOUX INTRADERMORREACCION (TUBERCULINA O PPD)   
+0657;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.29;NO        ;MEDULOGRAMA                                       
+0658;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.81;NO        ;MELANINA EN ORINA                                 
+0659;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.40;NO        ;MELITINA, INTRADERMORREACCION                     
+0660;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00011.53;NO        ;MERCURIO TOXICO, EN ORINA                         
+0661;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.01;NO        ;METABOLISMO BASAL                                 
+0662;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00013.40;NO        ;METANEFRINAS                                      
+0663;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00006.10;NO        ;METANOL EN ORINA                                  
+0664;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.81;NO        ;MICOLOGIA, DIRECTA O COLORACION                   
+0665;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00005.55;NO        ;MICOLOGIA, CULTIVO E IDENTIFICACION               
+0666;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00005.55;NO        ;MICOPLASMA, (PPLO) INVESTIGACION DE               
+0667;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.83;NO        ;MOCO VERVICAL CRISTALIZACION DE                   
+0668;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.83;NO        ;MOCO NASAL, PH Y CITOLOGICO                       
+0669;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.08;NO        ;MONUCLEOSIS, TEST DEL LATEX O MONOTEST            
+0670;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.77;NO        ;MONONUCLEOSIS, HEMOGLUTINACION(PAUL-BUNNELL)      
+0671;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.77;NO        ;MONONUCLEOSIS, HEMOLITICO(PETERSON)               
+0672;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.20;NO        ;MONOXIDO DE CARBONO                               
+0673;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.88;NO        ;MORFINA O DERIVADOS EN LIQUIDOS BIOLOGICOS        
+0674;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.50;NO        ;MUNOPOLISACARIDOS, CROMATOGRAFIA                  
+0675;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.57;NO        ;MUCOPROTEINAS                                     
+0676;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.81;NO        ;MUCOSEMEN CRUZADO                                 
+0677;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.31;NO        ;MAT.DESCARTABLE P/EXTRACC.DE SANGRE               
+0678;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00040.99;NO        ;MYCOPLASMA HOMINIS EN SUERO                       
+0700;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00049.82;NO        ;NBT                                               
+0701;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.81;NO        ;NEFA (ACIDO GRASOS NO ESTERIFICADOS)              
+0702;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.73;NO        ;NUCLEOTIDASA                                      
+0711;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.77;NO        ;ORINA COMPLETA                                   *
+0712;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.63;NO        ;ORNITIL CARBAMIL TRANSFERASA                      
+0713;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.68;NO        ;OROSOMUCOIDE, INMUNODIFUSION CUANTITATIVA         
+0714;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00008.17;NO        ;OSMOLAL, CLEARENCE                                
+0715;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.81;NO        ;OSMOLARIDAD, SUERO                                
+0716;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.90;NO        ;OXIGENO, SANGRE ( PO2 )                          *
+0717;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00080.79;NO        ;OSTEOCALCINA POR RIA                              
+0733;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00013.22;NO        ;PANCREATICO, LIQ.FISICO QUIM.CON EXTRACCION       
+0734;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00005.20;NO        ;PAPANICOLAU, ENDO Y EXOCERVICAL                   
+0735;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.68;NO        ;PARASITOLOGICO DE MATERIA FECAL, DOS MUESTRAS     
+0736;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.77;NO        ;PARASITOLOGICO DE MATERIA FECAL, SERIADO          
+0737;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.03;NO        ;PARASITOS HEMATICOS                               
+0738;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.62;NO        ;PARASITOS SUPERIORES, MATERIA FECAL               
+0739;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00034.85;NO        ;PARATHORMONA PLASMATICA POR RADIOINMUNOENSAYO     
+0740;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.83;NO        ;PEROXIDASAS                                       
+0741;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.62;NO        ;PH                                                
+0742;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.26;NO        ;PH EN SANGRE, TITULACION POTENCIOMETRICA          
+0743;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.41;NO        ;PIRUVATO QUINASA                                  
+0744;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.41;NO        ;PIRUVICO, ACIDO ENZIMATICO                        
+0745;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.88;NO        ;PLAQUETARIOS, FACTORES                            
+0746;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;PLAQUETAS, RECUENTO DE                           *
+0747;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;PLASMA RECALCIFICADO, TIEMPO DE                  *
+0748;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.37;NO        ;PLAMINOGENOS, INMUNODIFUSION CUANTITATIVA         
+0749;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00008.26;NO        ;PLOMO, EN ORINA                                   
+0750;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.13;NO        ;POLIAK, PRUEBA DE                                 
+0751;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00005.89;NO        ;PORFIRINAS EN ORINA                               
+0752;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00005.89;NO        ;PORFOBILINOGENO EN ORINA                          
+0753;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;POTASEMIA                                        *
+0754;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.36;NO        ;POTASIURIA                                       *
+0755;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00011.34;NO        ;PREGNANODIOL                                      
+0756;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00011.34;NO        ;PREGNANOTRIOL                                     
+0757;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;PRO-INSULINA PLASMATICA POR RADIOINMUNOENSAYO     
+0758;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00040.56;NO        ;PROGENTERONA PLASMATICA POR RADIOINMUNOENSAYO     
+0759;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;PROLACTINA PLASMATICA POR RADIOINMUNOENSAYO       
+0760;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00033.02;NO        ;PROTEICO, CLEARENCE                               
+0761;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.69;NO        ;PROTEINA C. REACTIVA                             *
+0762;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.60;NO        ;PROTEINAS FRACCIONADAS, ALBUMINAS GLOBULINAS     *
+0763;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.40;NO        ;PROTEINAS TOTALES                                *
+0764;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.42;NO        ;PROTEINOGRAMA EN ACETATO DE CELULOSA              
+0765;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.35;NO        ;PROTEINOGRAMA EN GEL DE ALMIDON                   
+0766;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.35;NO        ;PROTEINOGRAMA, LIQUIDOS BIOL.(NO INCLUYE CONCET)  
+0767;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.62;NO        ;PROTEINURIA                                       
+0768;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.57;NO        ;PROTOPORFIRINAS                                   
+0769;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.47;NO        ;PROTOMBINA, CONSUMO DE                           *
+0770;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.60;NO        ;PROTOMBINA (OWREN O DUCKERT)                      
+0771;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;PROTOMBINA, TIEMPO DE                            *
+0772;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;PSEUDOCOLINESTERASA                               
+0801;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.99;NO        ;QUIMIOTRIPSINA                                    
+0811;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.73;NO        ;REITER, TEST DE                                   
+0812;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;RENINA-ANGIOTENSINA PLASMATICA POR RIA            
+0813;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.81;NO        ;RH                                               *
+0814;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;RH FACTOR C SANGRE                                
+0815;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;RH FACTOR C CHICA                                 
+0816;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;RH FACTOR E GRANDE                                
+0817;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.60;NO        ;RH FACTOR E CHICA                                 
+0818;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;RETICULOCITOS, RECUENTO DE                        
+0819;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.55;NO        ;ROJO- CONGO PRUEBA DE (ORINA SANGRE)              
+0820;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.99;NO        ;ROSSE-REGAN, PRUEBA DE                            
+0831;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.77;NO        ;SALICILATOS                                       
+0832;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.43;NO        ;SALMONELLA ANTICUERPOS, INMUNOFLUORESCENCIA       
+0833;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.62;NO        ;SANGRE OCULTA, MATERIA FECAL                     *
+0834;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.88;NO        ;SECRETINA, TEST DE LA                             
+0835;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;SEROTONINA PLASMATICA, POR RADIOINMUNOENSAYO      
+0836;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00002.62;NO        ;SIA, TEST DE                                      
+0837;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.88;NO        ;SIDEROFILINA, CAPACIDAD DE SATURACION             
+0838;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.01;NO        ;SIMS- HUBBNER, TEST DE                            
+0839;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;SODIO, SANGRE u ORINA C/DETERMINACION            *
+0840;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;SOMATOMAMOTROFINA POR RIA                         
+0841;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;SOMATOTROFINA PLASMATICA POR RADIOINMUNOENSAYO    
+0842;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00011.69;NO        ;SONDEO DUODENAL MINUTADO                          
+0843;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00008.09;NO        ;SONDEO DUODENAL TERAPEUTICO                       
+0844;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00005.40;NO        ;SONDEO GASTRICO, LAVADO                           
+0845;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.53;NO        ;SORBITOL DEHIDROGENASA                            
+0846;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;SUBTIPO A2, DETERMINACION                         
+0847;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00007.55;NO        ;SUDOR, TEST DE (ELECTROLITOS)                     
+0848;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.60;NO        ;SULFAS EN SANGRE                                  
+0849;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00053.15;NO        ;Sub-Unidad Beta x RIA rapida                      
+0851;1076;          ;02;0000.00;0000.00;NO                  ;          ;NO          ;00082.57;NO        ;ANTI TRANSGLUTAMINASA                             
+0861;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.62;NO        ;TAKATA-ARA, REACCION DE                           
+0862;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00008.26;NO        ;TALIO EN ORINA                                    
+0863;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00041.60;NO        ;TESTOSTERONA PLASMATICA O URINARIA POR RIA        
+0864;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.57;NO        ;THORN, PRUEBA DE                                  
+0865;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.36;NO        ;TIROTROFINA, PLASMATICA POR RADIOINMUNOENSAYO     
+0866;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00024.62;NO        ;TIROXINA TOTAL (T4) POR RADIOINMUNOENSAYO         
+0867;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00024.62;NO        ;TORIXINA EFECTIVA (ETR) POR RADIOINMUNOENSAYO     
+0868;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00009.37;NO        ;TOLBUTAMIDA, PRUEBA DE                            
+0869;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.62;NO        ;TOXOPLASMOSIS, FIJACION DE COMPLEMENTO            
+0870;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.88;NO        ;TOXOPLASMOSIS, HEMOAGLUTINACION                   
+0871;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00012.43;NO        ;TOXOPLASMOSIS, INMUNOF.(GAMMA ESPECIFICA)         
+0872;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00016.26;NO        ;TOXOPLASMOSIS, REACCION DE SABIN-FELDMAN          
+0873;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.18;NO        ;TRANSAMINASA, GLUTAMICO OXALACETICA              *
+0874;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.18;NO        ;TRANSAMINASA, GLUTAMICO PIRUVICA                 *
+0875;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00010.87;NO        ;TRANSFERRINA, INMUNODIFUSION CUANTITATIVA         
+0876;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00007.63;NO        ;TRIGLICERIDOS                                     
+0877;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00024.62;NO        ;TRIIODOTERONINA (T3) UPTAKE POR RIA               
+0878;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00024.62;NO        ;TRIIODOTIRONINA TOTAL (TT3) POR RIA               
+0879;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.77;NO        ;TROMBINA, PRUEBA DE LA GENERACION DE              
+0880;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.81;NO        ;TROMBINA, TIEMPO DE                               
+0881;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.81;NO        ;TROMBOAGLUTININAS, INHIBICION DE                  
+0882;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.26;NO        ;TROMBOELASTOGRAMA                                 
+0883;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.26;NO        ;TROMBOPLASTINA, GENERACION DE LA (BIGGS Y DOUGLAS)
+0884;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00013.48;NO        ;TROMBOPLASTINA, GENER.DE (SUSTIT.C/REACT.)        
+0885;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00008.26;NO        ;TROMBOPLASTINA, GENER.DE LA (HICKS-PITNEY)        
+0886;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.57;NO        ;TROMBO TEST DE OWREN                              
+0887;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.57;NO        ;TTPC.TIEMPO DE TROMBOPLAST.PARC.C/CAOLIN (KPTT)  *
+0901;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.77;NO        ;UREA, CLEARENCE                                   
+0902;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.13;NO        ;UREMIA                                           *
+0903;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.81;NO        ;URETRAL, EXUDADO O FLUJO                          
+0904;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.82;NO        ;URICEMIA                                          
+0905;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.36;NO        ;URICO, ACIDO EN ORINA                             
+0906;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.62;NO        ;UROBILINA CUANTITATIVA EN ORINA                   
+0907;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.13;NO        ;UROCITOGRAMA, UNA MUESTRA                         
+0908;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00006.21;NO        ;UROCITOGRAMA, CUATRO MUESTRAS                     
+0909;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00008.47;NO        ;UROCITOGRAMA, UN CICLO                            
+0910;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;UROPEPSINOGENO                                    
+0911;1076;          ;02;0000.00;0000.00;NO                  ;          ;SI          ;00040.99;NO        ;UREASA UREALITICUM EN SUERO                       
+0931;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00004.77;NO        ;VAGINAL, EXUDADO O FLUJO                          
+0932;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00013.40;NO        ;VAINILLIN MANDELICO, ACIDO EN ORINA               
+0933;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;V.D.R.L. CUALITATIVA                              
+0934;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00005.89;NO        ;V.D.R.L. CUANTITATIVA                             
+0935;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00011.94;NO        ;VARIANTE  BACTERIANA                              
+0936;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00003.81;NO        ;VERONAL, PRUEBA DE                                
+0937;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.81;NO        ;VITAMINA A                                        
+0938;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00027.19;NO        ;VITAMINA B12                                      
+0939;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00031.79;NO        ;VITAMINA E                                        
+0940;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00014.73;NO        ;VOLEMIA, REDIOQUIMICO                             
+0951;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.99;NO        ;WASSERMAN, REACCION DE                            
+0952;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.77;NO        ;WERNEER, PRUEBA DE                                
+0953;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00004.36;NO        ;WIDAL, REACCION DE                                
+0954;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00003.60;NO        ;WINGLAN, PRUEBA DE                                
+0971;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00015.01;NO        ;XILOSA-D, PRUEBA DE LA                            
+0981;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.94;NO        ;ZINC ERITROCITARIO                                
+0982;1076;          ;01;0000.00;0000.00;SI                  ;          ;SI          ;00006.94;NO        ;ZINC SERICO                                       
+0994;1076;          ;02;0000.00;0000.00;NO                  ;          ;NO          ;00029.21;NO        ;AJUSTE REDONDEO                                   
+0995;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00042.14;NO        ;AJUSTE REDONDEO                                   
+0996;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00002.86;NO        ;AJUSTE REDONDEO                                   
+0997;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00000.00;NO        ;AJUSTE REDONDEDO                                  
+0998;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00000.88;NO        ;TOMA Y MUESTRA                                    
+0999;1076;          ;01;0000.00;0000.00;SI                  ;          ;NO          ;00001.85;NO        ;URGENCIA                                          

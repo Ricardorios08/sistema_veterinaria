@@ -1,0 +1,68 @@
+<style type="text/css">
+<!--
+.Estilo24 {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.Estilo25 {font-family: Arial, Helvetica, sans-serif}
+.Estilo27 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo28 {font-size: 12px}
+.Estilo30 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FF0000;
+}
+-->
+</style>
+
+<?
+$nro_factura = $_REQUEST['nro_factura'];
+$cuenta= $_REQUEST['cuenta'];
+$denominacion= $_REQUEST['denominacion'];
+$neto= $_REQUEST['neto'];
+echo  $cheque1= $_REQUEST['cheque1'];
+echo $contado1= $_REQUEST['contado1'];
+ $tipo_fact= $_REQUEST['tipo_fact'];
+ $fecha= $_REQUEST['fecha'];
+
+if (($cheque1 == "0.00") && ($contado1 == "0.00")){
+$cheque = $neto;
+}
+?>
+
+
+
+<FORM ACTION="guardar_cheque.php" method="post" TARGET = "central">
+<table width="571" border="0">
+  <tr bgcolor="#000099">
+    <td><div align="center" class="Estilo24">CARGAR CHEQUES DE PROVEEDURIA </div></td>
+  </tr>
+  <tr bgcolor="#D0F9FB">
+    <td><div align="center"><span class="Estilo30">Denominaci&oacute;n: <?echo $cuenta;?> - <?echo $denominacion;?> <span class="Estilo27">&nbsp;&nbsp;&nbsp;</span><span class="Estilo27">&nbsp;&nbsp;&nbsp;Factura N&ordm; <?echo $tipo_fact;?> - <?echo $nro_factura;?>&nbsp;&nbsp;&nbsp;&nbsp; $ <?echo $neto;?></span></span></div></td>
+  </tr>
+  <tr bgcolor="#D0F9FB">
+    <td><div align="center"><span class="Estilo25">Importe Cheque <span class="Estilo28">
+      <input name="importe_cheque" type="text" id="importe_cheque2" value="<?echo $cheque1;?>" size="4">
+      <input name="cuenta" type="hidden" id="cuenta3" value="<?echo $cuenta;?>" size="4">
+      <input name="nro_factura" type="hidden" id="nro_factura3" value="<?echo $nro_factura;?>" size="4">
+      <input name="tipo_fact" type="hidden" id="tipo_fact3" value="<?echo $tipo_fact;?>" size="4">
+      <input name="fecha" type="hidden" id="fecha3" value="<?echo $fecha;?>" size="4">
+	  <input name="neto" type="hidden" id="fecha3" value="<?echo $neto;?>" size="4">
+    </span></span></div></td>
+  </tr>
+  <tr bgcolor="#D0F9FB">
+    <td><div align="center"><span class="Estilo25">Importe Contado <span class="Estilo28">
+      <input name="importe_caja" type="text" id="importe_cheque" value="<?echo $contado1;?>" size="4">
+    </span></span></div></td>
+  </tr>
+  <tr bgcolor="#D0F9FB">
+    <td bgcolor="#999999"><div align="right" class="Estilo25 Estilo28">
+      <div align="center"><span class="Estilo27">
+          <input type="submit" name="Submit" value="Cargar Cheque"  onclick="return confirm('¿Confirma Ingreso de Cheque?');">
+      </span></div>
+    </div>      </td>
+    </tr>
+</table>
+</form>

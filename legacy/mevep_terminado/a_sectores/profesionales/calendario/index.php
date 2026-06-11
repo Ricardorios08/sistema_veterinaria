@@ -1,0 +1,321 @@
+<?php 
+	/*incluimos nuestras banderas y configuraciones*/
+	define( '_VALID_PAG', 1 );
+	include_once ('../configuracion.php'); //Variables de Sitio
+	include_once ('../conexion.php');//Conecta a la BDD
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<title>Eventos</title>
+        <link rel="stylesheet" type="text/css" href="css/master.css" media="screen" charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="css/ical.css"/>
+		<script src="js/jquery-1.3.min.js" type="text/javascript"></script>
+		<script src="js/coda.js" type="text/javascript"></script>
+        <script>
+		$(document).ready(function(e) {
+			centerPopup("#flotante");   
+		});
+		function centerPopup(id){  
+			//request data for centering  
+			var windowWidth = document.documentElement.clientWidth;  
+			var windowHeight = document.documentElement.clientHeight;  
+			var popupHeight = $(id).height();  
+			var popupWidth = $(id).width();  
+			//centering  
+			$(id).css({  
+				"position": "fixed",  
+				"top": windowHeight/2-popupHeight/2,  
+				"left": windowWidth/2-popupWidth/2  
+			});  
+			//only need force for IE6  
+			$("#backgroundPopup").css({  "height": windowHeight  });  
+		}
+				
+		function mostrar(fecha){
+			div = document.getElementById('flotante');
+			div.style.display='block';	
+		}
+		function cerrar() {
+			div = document.getElementById('flotante');
+			div.style.display='none';
+		}
+		</script>
+    </head>
+	<body> 
+<?php
+
+$tipo_semana = 1;
+$tipo_mes = 1;
+$MESCOMPLETO[1] = 'Enero';
+$MESCOMPLETO[2] = 'Febrero';
+$MESCOMPLETO[3] = 'Marzo';
+$MESCOMPLETO[4] = 'Abril';
+$MESCOMPLETO[5] = 'Mayo';
+$MESCOMPLETO[6] = 'Junio';
+$MESCOMPLETO[7] = 'Julio';
+$MESCOMPLETO[8] = 'Agosto';
+$MESCOMPLETO[9] = 'Septiembre';
+$MESCOMPLETO[10] = 'Octubre';
+$MESCOMPLETO[11] = 'Noviembre';
+$MESCOMPLETO[12] = 'Diciembre';
+
+$MESABREVIADO[1] = 'Ene';
+$MESABREVIADO[2] = 'Feb';
+$MESABREVIADO[3] = 'Mar';
+$MESABREVIADO[4] = 'Abr';
+$MESABREVIADO[5] = 'May';
+$MESABREVIADO[6] = 'Jun';
+$MESABREVIADO[7] = 'Jul';
+$MESABREVIADO[8] = 'Ago';
+$MESABREVIADO[9] = 'Sep';
+$MESABREVIADO[10] = 'Oct';
+$MESABREVIADO[11] = 'Nov';
+$MESABREVIADO[12] = 'Dic';
+
+$SEMANACOMPLETA[0] = 'Domingo';
+$SEMANACOMPLETA[1] = 'Lunes';
+$SEMANACOMPLETA[2] = 'Martes';
+$SEMANACOMPLETA[3] = 'Miércoles';
+$SEMANACOMPLETA[4] = 'Jueves';
+$SEMANACOMPLETA[5] = 'Viernes';
+$SEMANACOMPLETA[6] = 'S&aacute;bado';
+
+$SEMANAABREVIADA[0] = 'Dom';
+$SEMANAABREVIADA[1] = 'Lun';
+$SEMANAABREVIADA[2] = 'Mar';
+$SEMANAABREVIADA[3] = 'Mie';
+$SEMANAABREVIADA[4] = 'Jue';
+$SEMANAABREVIADA[5] = 'Vie';
+$SEMANAABREVIADA[6] = 'S&aacute;b';
+
+////////////////////////////////////
+
+	if($tipo_semana == 0){
+		$ARRDIASSEMANA = $SEMANACOMPLETA;
+	}elseif($tipo_semana == 1){
+		$ARRDIASSEMANA = $SEMANAABREVIADA;
+	}
+	if($tipo_mes == 0){
+		$ARRMES = $MESCOMPLETO;
+	}elseif($tipo_mes == 1){
+		$ARRMES = $MESABREVIADO;
+	}
+
+	if(!isset($_GET['dia'])){
+		$dia = date("d");
+	}
+	else{
+		$dia=$_GET['dia'];
+	}
+	
+	if(!isset($_GET['mes'])){
+		$mes = date("n");
+	}
+	else{
+		$mes=$_GET['mes'];	
+	}
+	
+	if(isset($_GET['ano'])){ 
+		$ano=$_GET['ano'];			
+	}
+	else{
+		$ano = date("Y");
+
+	}
+
+	$TotalDiasMes = date("t",mktime(0,0,0,$mes,$dia,$ano));
+	$DiaSemanaEmpiezaMes = date("w",mktime(0,0,0,$mes,1,$ano));
+	$DiaSemanaTerminaMes = date("w",mktime(0,0,0,$mes,$TotalDiasMes,$ano));
+	$EmpiezaMesCalOffset = $DiaSemanaEmpiezaMes;
+	$TerminaMesCalOffset = 6 - $DiaSemanaTerminaMes;
+	$TotalDeCeldas = $TotalDiasMes + $DiaSemanaEmpiezaMes + $TerminaMesCalOffset;
+
+
+	if($mes == 1){
+		$MesAnterior = 12;
+		$MesSiguiente = $mes + 1;
+		$AnoAnterior = $ano - 1;
+		$AnoSiguiente = $ano;
+	}elseif($mes == 12){
+		$MesAnterior = $mes - 1;
+		$MesSiguiente = 1;
+		$AnoAnterior = $ano;
+		$AnoSiguiente = $ano + 1;
+		$AnoAnteriorAno = $ano - 1;
+		$AnoSiguienteAno = $ano + 1;
+	}else{
+		$MesAnterior = $mes - 1;
+		$MesSiguiente = $mes + 1;
+		$AnoAnterior = $ano;
+		$AnoSiguiente = $ano;
+		$AnoAnteriorAno = $ano - 1;
+		$AnoSiguienteAno = $ano + 1;
+	}
+	?>
+    <div id="flotante">
+        <div style="float: right; z-index:5; margin-top:-30px;">
+            <a href="javascript: cerrar();"><img src="img/close_div.png" width="100px;" height="30px;"/></a>
+        </div>
+        <div id="mensaje" style="padding:3px; height:98%; overflow-y:auto; background-color:#FFF;" class="imagetable">
+       		registro de enventos
+        </div>    
+    </div>
+    <?php 
+	echo "<div style='border:0px solid #FF0000; width:1000px; height:auto; margin:0 auto;'>
+			<div style='border:0px solid #036; width:1000px; height:auto; margin:0 auto; float:left;'>
+				<br />Calendario de operaciones<br />&nbsp;<br />
+			</div>
+		<div style='clear:both'></div>
+				  <div class='curved' style='border:2px solid #c3c3c3; box-shadow:#036 0px 0px 15px; background-color:#f2f2f2; color:#000; padding:5px; width:500px; height:auto; margin:0 auto; float:left;'>
+				  	<div style='float:left; '>
+			<a href=\"".$_SERVER['PHP_SELF']."?mes=$mes&ano=$AnoAnteriorAno\" class='typogris1'><img src='img/anho-menos.png' width='43.875' height='21.9375'/></a>
+			<a href=\"".$_SERVER['PHP_SELF']."?mes=$MesAnterior&ano=$AnoAnterior \"><img src='img/mes-menos.png' width='43.875' height='21.9375'/></a>
+					</div>
+					<div style='float:left; padding-left:5px; padding-right:5px;'>".$ARRMES[$mes]." - $ano</div>
+					<div style='float:left;'>
+			<a href=\"".$_SERVER['PHP_SELF']."?mes=$MesSiguiente&ano=$AnoSiguiente\"><img src='img/mes-mas.png' width='43.875' height='21.9375'/></a>
+			<a href=\"".$_SERVER['PHP_SELF']."?mes=$mes&ano=$AnoSiguienteAno\"><img src='img/anho-mas.png' width='43.875' height='21.9375'/></a></div>";
+			echo "<table align='center' cellspacing='0' border='0px'>
+						<tbody>
+						<tr>";
+						foreach($ARRDIASSEMANA as $key){
+							print "<td bgcolor='#ccccff' class='typogris1' ><b>$key</b></td>";
+						}
+						echo "</tr>";
+						
+					$eventos=mysql_query("select fecha_inicio from sala_solicitud",$link)or die("Error al obtener las fechas:<p>".mysql_error());
+					$f=array();/*creamos el array*/
+					while($e=mysql_fetch_array($eventos)){
+						//agregamos las fechas al array
+						array_push($f,$e['fecha_inicio']);
+					}
+					//print_r ($a);
+					for($a=1;$a <= $TotalDeCeldas;$a++){ 
+						$fecha=$ano;
+						$cadenas="";
+						if(!isset($b)) $b = 0;
+						if($b == 7) $b = 0;
+						if($b == 0) echo '<tr>';
+						if(!isset($c)) $c = 1;
+							if($a > $EmpiezaMesCalOffset and $c <= $TotalDiasMes){
+								if($mes<10){ $fecha.="-0".$mes; } else{ $fecha.="-".$mes; }
+								if($c<10){ $fecha.="-0".$c; } else{ $fecha.="-".$c; }
+								
+								//$f -> ES UN ARRAY DE LA CONSULTA
+								if(in_array($fecha,$f)){
+									//SE CAMBIA ESTA CONSULTA DEACUERDO A LO QUE SE NECESITE, LA DEJO COMO EJEMPLO
+									$evento_dias=mysql_query("select 
+																sj.nombre_sala as sala,
+																sj.color,
+																s.*
+															from sala_solicitud as s
+																inner join sala_juntas as sj on sj.id=s.id_sala
+																where s.fecha_inicio='".$fecha."' order by fecha_inicio asc, hora_inicio asc",$link);
+									
+									echo "<td bgcolor=\"#ffcc99\" class='date_has_event'>";
+											if($c>=date('d') and $mes>=date("m") or $ano>date("Y")){
+									echo "<a onclick=\"mostrar('$fecha');\"  style=\"cursor:pointer; width:25px; height:9px; margin:0 auto;\" class='h3'>Agregar</a><br />";			
+											}
+									echo "$c<br />";
+									
+											while($eds=mysql_fetch_array($evento_dias)){
+				echo "<div style=\"width:10px; height:10px; background-color: ".$eds['color']."; float:left; margin-left:3px; border-radius:250px;\"></div>";
+											}
+											echo "<div class='events'><ul><center>$fecha</center>";
+											$evento_dia=mysql_query("select 
+																		sj.nombre_sala as sala,
+																		sj.color,
+																		s.*
+																	from sala_solicitud as s
+																		inner join sala_juntas as sj on sj.id=s.id_sala
+																		where s.fecha_inicio='".$fecha."' order by fecha_inicio asc, hora_inicio asc",$link);
+											$cant=mysql_num_rows($evento_dia);
+											while($ed=mysql_fetch_array($evento_dia)){
+												
+											  //<li>".$ed['titulo']."<br />".$ed['descripcion']."<br />
+											  echo "<li>".$ed['titulo']."<br />
+														<span style='color:#666666'>
+														".$eds['etiqueta']."
+															<b>Horario</b> ".$ed['hora_inicio']." <b>a</b> ".$ed['hora_fin']." <b>hrs. | ".$ed['sala']."</b>
+														</span>
+												    </li>";
+											}
+									echo "</ul></div></td>";
+								}
+								else{
+														
+									if($c == date("d") and $mes==date("m") and $ano==date("Y")){
+										echo "<td bgcolor=\"#ffcc99\" class=\"padding\">$c <br /> ";
+										
+						echo "<a onclick=\"mostrar('$fecha');\"  style=\"cursor:pointer; width:25px; height:9px; margin:0 auto;\" class='h3'>Agregar&nbsp;</a>";
+											echo " </td>"; // el dia de hoy
+									}
+									elseif($b == 0){
+										//domingos
+										echo "<td bgcolor=\"#F2F2F2\"> ";
+										if($mes > date("m") or $ano > date("Y")){
+											echo "$c <br /><a onclick=\"mostrar('$fecha');\"  style=\"cursor:pointer; width:25px; height:9px; margin:0 auto;\" class='h3'>Agregar&nbsp;</a>";
+										}
+										elseif($c >= date("d") and $mes >= date("m") or  $ano > date("Y")){
+											echo "$c <br /><a onclick=\"mostrar('$fecha');\"  style=\"cursor:pointer; width:25px; height:9px; margin:0 auto;\" class='h3'>Agregar&nbsp;</a>";
+										}
+										else{
+											echo "$c <br />";	
+										}
+										echo "</td>";
+									}
+									elseif($b == 6){
+										echo "<td bgcolor=\"#F2F2F2\"> ";
+										if($mes > date("m")){
+											echo "$c <br /><a onclick=\"mostrar('$fecha');\"  style=\"cursor:pointer; width:25px; height:9px; margin:0 auto;\" class='h3'>Agregar&nbsp;</a>";
+										}
+										elseif($c >= date("d") and $mes >= date("m") or  $ano > date("Y")){
+											echo "$c <br /><a onclick=\"mostrar('$fecha');\"  style=\"cursor:pointer; width:25px; height:9px; margin:0 auto;\" class='h3'>Agregar&nbsp;</a>";
+										}
+										else{
+											echo "$c <br />";	
+										}
+										echo "</td>";
+									}
+									else{	
+										$cadenas=$fecha;	
+										//imprimimos dia normal con la opcion de agregar si y solo si es el dia y mes mayor e igual a la fecha actual 
+										//sin domingos
+										echo "<td bgcolor=\"#F2F2F2\"> ";
+										if($mes > date("m")){
+											echo "$c <br /><a onclick=\"mostrar('$fecha');\"  style=\"cursor:pointer; width:25px; height:9px; margin:0 auto;\" class='h3'>Agregar&nbsp;</a>";
+										}
+										elseif($c >= date("d") and $mes >= date("m") or  $ano > date("Y")){
+											echo "$c <br /><a onclick=\"mostrar('$fecha');\"  style=\"cursor:pointer; width:25px; height:9px; margin:0 auto;\" class='h3'>Agregar&nbsp;</a>";
+										}
+										else{
+											echo "$c <br />";	
+										}
+										echo "</td>";
+									}
+								}
+							$c++;
+							}
+							else{
+								echo "<td class=\"padding\"'>&nbsp;</td>";
+							}
+						if($b == 6) echo '</tr>';
+						$b++;
+					}
+				echo "</tbody>
+				</table>
+			  </div>
+			  ";
+			  ?>
+              <div style="margin:0 0 0 15px; width:455px; height:945px; float:left">
+              			<span style="font-family:'Arial Black', Gadget, sans-serif; color:#336699; font-size:12px;">
+                        	Lista de Eventos
+                        </span>
+               </div>
+              <?php
+		echo "</div>";
+?>	
+</body>
+</html>

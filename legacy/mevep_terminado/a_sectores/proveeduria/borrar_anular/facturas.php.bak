@@ -1,0 +1,222 @@
+<style type="text/css">
+<!--
+.Estilo1 {
+	color: #000099;
+	font-weight: bold;
+	font-size: 16px;
+}
+.Estilo4 {font-size: 9px}
+.Estilo5 {font-family: Arial, Helvetica, sans-serif}
+.Estilo6 {font-size: 9px; font-family: Arial, Helvetica, sans-serif; }
+.Estilo17 {
+	color: #FFFFFF;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+}
+.Estilo21 {color: #000000}
+.Estilo24 {font-size: 12px; font-family: Arial, Helvetica, sans-serif; }
+.Estilo25 {
+	font-size: 12px;
+	font-weight: bold;
+}
+.Estilo27 {font-size: 12px}
+.Estilo28 {
+	color: #000099;
+	font-weight: bold;
+}
+.Estilo29 {
+	font-size: 14px;
+	font-weight: bold;
+}
+.Estilo30 {color: #FF0000}
+-->
+</style>
+
+<?
+$nro_os=$_REQUEST ['nro_os'];
+$anio=$_REQUEST ['anio'];
+if ($band != 1){
+$nro_factura=$_REQUEST ['nro_factura'];
+$medi=$_POST["medio"];
+	for ($i=0;$i<count($medi);$i++)    
+	{     
+	$medio = $medi[$i];    
+	}
+}
+
+$hoy = date("d/m/y");
+
+$B=1;
+
+
+
+
+if ($medio == "impresora"){
+?>
+
+<body onUnload="window.opener.openedImprimir=0;" onLoad="window.print(); window.close();"><?
+}
+
+if ($medio == "excel"){
+$a=$anio."-".$nro_factura;
+	header("Content-type: application/vnd.ms-excel");
+header("Content-Disposition: attachment; filename=$a.xls");
+}
+
+?>
+
+
+
+
+
+<div align="left">
+
+ <table width="103%" height="128" border="0">
+   <tr bgcolor="#000099">
+    <td colspan="12"><div align="center"><span class="Estilo16 Estilo17">Listado de Facturas. Pendientes Emitido el : <?ECHO $hoy;?></span> </div></td>
+  <tr bgcolor="#CCCCCC">
+    <td><div align="center" class="Estilo24"><strong><span class="Estilo21">Tipo</span></strong></div></td>
+    <td><div align="center" class="Estilo6 Estilo14 Estilo5  Estilo25">
+       <div align="center">Nº Fact</div>
+    </div></td>
+    <td width="12%"><div align="center" class="Estilo24"><strong><span class="Estilo21">Periodo</span></strong></div>      <div align="center" class="Estilo24"><strong></strong></div></td>
+    <td><div align="center" class="Estilo24"><strong><span class="Estilo21">Marca</span></strong></div></td>
+    <td><div align="center" class="Estilo24"><strong><span class="Estilo21">Lote</span></strong></div></td>
+    <td><div align="center" class="Estilo24"><strong><span class="Estilo21">Fecha</span></strong></div></td>
+    <td><div align="center"><span class="Estilo24"><strong>IVA</strong></span></div></td>
+    <td><div align="center" class="Estilo24"><strong><span class="Estilo21">Total</span></strong></div></td>
+    <td><div align="center" class="Estilo24"><strong><span class="Estilo21">Estado</span></strong></div></td>
+   <!--  <td class="Estilo8"><div align="center">Eliminar</div></td> -->
+    <!-- <td class="Estilo8"><div align="center" class="Estilo24"><strong>Anular</strong></div></td>
+    <td><div align="center" class="Estilo24"><strong><span class="Estilo21">Imprimir   </span></strong></div>
+  
+      <span class="Estilo27"> -->
+ <?
+include ("../../../conexiones/config_fa.php");
+
+if ($anio == ""){
+	$anio = date ("y");
+}
+
+	 if ($nro_factura == "")
+	 {
+$sql="select * from factura where estado like 'PENDIENTE' ORDER by nro_os , fecha desc, periodo, anio";
+	 }
+	 else
+	 {
+
+$sql="select * from factura where (nro_factura like '$nro_factura' and  estado like 'PENDIENTE' and anio = '$anio') or (nro_os like '$nro_factura' and  estado like 'PENDIENTE' and anio = '$anio') or (periodo like '$nro_factura' and  estado like 'PENDIENTE' and anio = '$anio')  ORDER by nro_os , fecha desc, periodo, anio";
+	 }
+
+$result = $db->Execute($sql);
+
+
+
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+$nro_os1 = $nro_os;
+$nro_os=strtoupper($result->fields["nro_os"]);
+
+
+
+
+$nro_factura=strtoupper($result->fields["nro_factura"]);
+$tipo_fact=strtoupper($result->fields["tipo_fact"]);
+$iva=strtoupper($result->fields["iva"]);
+$fecha=strtoupper($result->fields["fecha"]);
+$mes=strtoupper($result->fields["periodo"]);
+$anio=strtoupper($result->fields["anio"]);
+$marca=strtoupper($result->fields["marca"]);
+$lote=strtoupper($result->fields["lote"]);
+$leyenda=strtoupper($result->fields["leyenda"]);
+
+
+$total=strtoupper($result->fields["total"]);
+$cant_bioq=strtoupper($result->fields["cant_bioquimicos"]);
+$cant_ordenes=strtoupper($result->fields["cant_ordenes"]);
+$estado=strtoupper($result->fields["estado"]);
+
+switch ($mes)
+	{
+		case "1":{$periodo= "ENERO";}break;
+		case "2":{$periodo= "FEBRERO";}break;
+		case "3":{$periodo= "MARZO";}break;
+		case "4":{$periodo= "ABRIL";}break;
+		case "5":{$periodo= "MAYO";}break;
+		case "6":{$periodo= "JUNIO";}break;
+		case "7":{$periodo= "JULIO";}break;
+		case "8":{$periodo= "AGOSTO";}break;
+		case "9":{$periodo= "SETIEMBRE";}break;
+		case "10":{$periodo="OCTUBRE";}break;
+		case "11":{$periodo="NOVIEMBRE";}break;
+		case "12":{$periodo="DICIEMBRE";}break;
+				}
+
+
+include ("../../../conexiones/config_os.php");
+$sql1="select * from datos_os where nro_os like '$nro_os'";
+$result1 = $db->Execute($sql1);
+$sigla=strtoupper($result1->fields["sigla"]);
+
+
+
+
+ if ($nro_os1 != $nro_os){?>
+      </span>
+   <tr>
+     <td colspan="12"><hr noshade></td>
+   </tr>
+   <tr>
+     <td colspan="12"><span class="Estilo1"><?print("$nro_os");?> - <?print("$sigla");?></span>     </td>
+   </tr>
+  
+<?}
+
+  if ($B == 1) {
+
+?><tr bordercolor="#FFFFFF" bgcolor="#FFFFFF"> <?
+
+			}
+  ?>
+  <td width="4%"><div align="center" class="Estilo4 Estilo5"><span class="Estilo24"><?print("$tipo_fact");?></span></strong></div></td>
+   <td width="11%"><div align="center" class="Estilo4 Estilo5">
+     <div align="left" class="Estilo2">
+       <div align="center" class="Estilo29"><span class="Estilo5"><a href="../../facturacion/borrar_anular/cambiar_numero.php?nro_factura=<?print("$nro_factura");?>&&tipo_fact=<?print("$tipo_fact");?>" target = "central" title = "Presione Aqui si quiere cambiar el numero de Factura" ><font color="#0000FF"><?print("$nro_factura");?></font></a></span></strong></div>
+     </div>
+   </div></td>
+    <td><div align="center" class="Estilo6"><span class="Estilo5 Estilo27"><?print("$periodo");?> -<?print("$anio");?> </span></div>      <div align="center" class="Estilo6"></div></td>
+	<td width="12%"><div align="center" class="Estilo6"><span class="Estilo5 Estilo27"><?print("$marca");?></span></div></td>
+    <td width="11%"><div align="center"><span class="Estilo6"><span class="Estilo5 Estilo27"><?print("$lote");?></span></span></div></td>
+    <td width="10%"><div align="center"><span class="Estilo6"><span class="Estilo5 Estilo27"><?print("$fecha");?></span></span></div></td>
+    <?IF ($iva == "0.00"){?>
+	<td width="14%"><div align="right" class="Estilo6 Estilo27"><span class="Estilo27 Estilo28 Estilo30">-</span></div></td>
+	<?}else{?>
+	<td width="14%"><div align="right" class="Estilo6 Estilo27"><span class="Estilo27 Estilo28 Estilo30"><?echo "$ ".number_format($iva,2);?></span></div></td>
+	<?}?>
+    <td width="11%"><div align="center" class="Estilo6">
+      <div align="right" class="Estilo27 Estilo28"><?echo "$ ".number_format($total,2);?></div>
+    </div>
+    <div align="right"></div></td>
+    <td width="9%"> <div align="center" class="Estilo24"><?print("$estado");?> </div></td>
+
+<?if ($medio == "pantalla"){?>
+	<td width="6%" class="Estilo6"><div align="center"><a href="borrar.php?nro_factura=<?print("$nro_factura");?>"><IMG SRC="../../../imagenes/office//1047.ico" alt="Borrar" border = "0"></a></div></td>
+  <!--   <td width="15%" class="Estilo6"><div align="center"><a href="anular.php?nro_factura=<?print("$nro_factura");?>"><IMG SRC="../../../imagenes/botones/btn_anular.gif" alt="Anular" border = "0"></a></div></td> -->
+	<!-- <td width="80"> <div align="center"><font color="#000000" size="2"><a href="../papel/factura_papel.php?nro_os=<?print("$nro_os");?>&&nro_factura=<?print("$nro_factura");?>&&sigla=<?print("$sigla");?>&&cant_bioq=<?print("$cant_bioq");?>&&cant_ordenes=<?print("$cant_ordenes");?>&&fecha=<?print("$fecha");?>&&total=<?print("$total");?>&&iva=<?print("$iva");?>"><IMG SRC="../../../imagenes/office//004.ico" alt="Imprimir" border = "0" TARGET= "_top"> --> 
+	<?}?>
+  </tr>
+
+
+<?
+	$result->MoveNext();
+	}
+
+
+	?>
+</table>
+
+
+
+
+<body>

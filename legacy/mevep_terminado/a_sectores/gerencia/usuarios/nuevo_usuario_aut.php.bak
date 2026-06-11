@@ -1,0 +1,40 @@
+<?PHP
+include ("../../../conexiones/config.inc.php");
+
+$id=$_REQUEST['id'];
+
+$contra_actual=$_REQUEST['contra_actual'];
+$contra_nueva=$_REQUEST['contra_nueva'];
+$contra_repita=$_REQUEST['contra_repita'];
+
+
+ $sql="select * from usuario where id = '$id' and contrasena = '$contra_actual'";
+$result = $db->Execute($sql);
+
+$contra_ac=$result->fields["contrasena"];
+$id=$result->fields["id"];
+ 
+ if ($contra_ac != $contra_actual){
+$leyenda = "INGRESO UNA CONTRASEÑA INCORRECTA";
+include ("../../../alertas/campo_informacion2.php");
+exit;
+}
+
+
+
+if ($contra_nueva != $contra_repita){
+$leyenda = "LAS CONTRASEÑAS PARECEN NO SER IGUALES";
+include ("../../../alertas/campo_informacion2.php");
+exit;
+}
+
+  $sql = "UPDATE `usuario` SET `contrasena` = '$contra_nueva' WHERE `id` = '$id'";
+$result = $db->Execute($sql);
+ 
+ 
+
+
+
+
+$leyenda = "SE AGREGO UN USUARIO";
+include ("../../../alertas/campo_informacion.php");

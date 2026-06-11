@@ -1,0 +1,278 @@
+<?php
+include ("../../../conexiones/config.inc.php");
+$cod_merca = $_REQUEST['cod_merca'];
+
+$sql2="select * from mercaderia where cod_merca = $cod_merca";
+$result2 = $db->Execute($sql2);
+$nombre=$result2->fields["nombre"];
+
+
+require('code128.php');
+
+
+function TextWithRotation($x, $y, $txt, $txt_angle, $font_angle=0)
+    {
+        $font_angle+=90+$txt_angle;
+        $txt_angle*=M_PI/180;
+        $font_angle*=M_PI/180;
+    
+        $txt_dx=cos($txt_angle);
+        $txt_dy=sin($txt_angle);
+        $font_dx=cos($font_angle);
+        $font_dy=sin($font_angle);
+    
+        $s=sprintf('BT %.2F %.2F %.2F %.2F %.2F %.2F Tm (%s) Tj ET',$txt_dx,$txt_dy,$font_dx,$font_dy,$x*$this->k,($this->h-$y)*$this->k,$this->_escape($txt));
+        if ($this->ColorFlag)
+            $s='q '.$this->TextColor.' '.$s.' Q';
+        $this->_out($s);
+    }
+
+
+
+$pdf=new PDF_Code128('P','mm','A4');
+$pdf->SetDisplayMode(80,'default'); 
+ 
+ 
+
+
+$pdf->AddPage();
+
+
+
+$pdf->SetFont('Arial','',8);
+
+ 
+
+$pdf->SetDrawColor(100);
+ $pdf->Cell(60,30,"",1);  
+ $pdf->Cell(60,30,"",1);
+ $pdf->Cell(60,30,"",1);
+
+///////// linea 1 
+ $pdf->SetXY(20,12);
+$pdf->Write(5,$nombre);
+$pdf->Code128(20,20,$cod_merca,40,10);
+$pdf->SetXY(20,20);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(80,12);
+$pdf->Write(5,$nombre);
+$pdf->Code128(80,20,$cod_merca,40,10);
+$pdf->SetXY(80,20);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(140,12);
+$pdf->Write(5,$nombre);
+$pdf->Code128(140,20,$cod_merca,40,10);
+$pdf->SetXY(140,20);
+$pdf->Write(25,$cod_merca); 
+
+
+///////// linea 2 
+$pdf->SetXY(10,40);
+$pdf->SetDrawColor(100);
+ $pdf->Cell(60,30,"",1);  
+ $pdf->Cell(60,30,"",1);
+ $pdf->Cell(60,30,"",1);
+
+$pdf->SetXY(20,42);
+$pdf->Write(5,$nombre);
+$pdf->Code128(20,48,$cod_merca,40,10);
+$pdf->SetXY(20,48);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(80,42);
+$pdf->Write(5,$nombre);
+$pdf->Code128(80,48,$cod_merca,40,10);
+$pdf->SetXY(80,48);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(140,42);
+$pdf->Write(5,$nombre);
+$pdf->Code128(140,48,$cod_merca,40,10);
+$pdf->SetXY(140,48);
+$pdf->Write(25,$cod_merca);
+
+///////// linea 3 
+$pdf->SetXY(10,70);
+$pdf->SetDrawColor(100);
+ $pdf->Cell(60,30,"",1);  
+ $pdf->Cell(60,30,"",1);
+ $pdf->Cell(60,30,"",1);
+
+$pdf->SetXY(20,72);
+$pdf->Write(5,$nombre);
+$pdf->Code128(20,78,$cod_merca,40,10);
+$pdf->SetXY(20,78);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(80,72);
+$pdf->Write(5,$nombre);
+$pdf->Code128(80,78,$cod_merca,40,10);
+$pdf->SetXY(80,78);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(140,72);
+$pdf->Write(5,$nombre);
+$pdf->Code128(140,78,$cod_merca,40,10);
+$pdf->SetXY(140,78);
+$pdf->Write(25,$cod_merca);
+
+///////// linea 4 
+$pdf->SetXY(10,100);
+$pdf->SetDrawColor(100);
+ $pdf->Cell(60,30,"",1);  
+ $pdf->Cell(60,30,"",1);
+ $pdf->Cell(60,30,"",1);
+
+$pdf->SetXY(20,102);
+$pdf->Write(5,$nombre);
+$pdf->Code128(20,108,$cod_merca,40,10);
+$pdf->SetXY(20,108);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(80,102);
+$pdf->Write(5,$nombre);
+$pdf->Code128(80,108,$cod_merca,40,10);
+$pdf->SetXY(80,108);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(140,102);
+$pdf->Write(5,$nombre);
+$pdf->Code128(140,108,$cod_merca,40,10);
+$pdf->SetXY(140,108);
+$pdf->Write(25,$cod_merca);
+
+///////// linea 5 
+$pdf->SetXY(10,130);
+$pdf->SetDrawColor(100);
+ $pdf->Cell(60,30,"",1);  
+ $pdf->Cell(60,30,"",1);
+ $pdf->Cell(60,30,"",1);
+
+$pdf->SetXY(20,132);
+$pdf->Write(5,$nombre);
+$pdf->Code128(20,138,$cod_merca,40,10);
+$pdf->SetXY(20,138);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(80,132);
+$pdf->Write(5,$nombre);
+$pdf->Code128(80,138,$cod_merca,40,10);
+$pdf->SetXY(80,138);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(140,132);
+$pdf->Write(5,$nombre);
+$pdf->Code128(140,138,$cod_merca,40,10);
+$pdf->SetXY(140,138);
+$pdf->Write(25,$cod_merca);
+
+
+///////// linea 6 
+$pdf->SetXY(10,160);
+$pdf->SetDrawColor(100);
+ $pdf->Cell(60,30,"",1);  
+ $pdf->Cell(60,30,"",1);
+ $pdf->Cell(60,30,"",1);
+
+$pdf->SetXY(20,162);
+$pdf->Write(5,$nombre);
+$pdf->Code128(20,168,$cod_merca,40,10);
+$pdf->SetXY(20,168);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(80,162);
+$pdf->Write(5,$nombre);
+$pdf->Code128(80,168,$cod_merca,40,10);
+$pdf->SetXY(80,168);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(140,162);
+$pdf->Write(5,$nombre);
+$pdf->Code128(140,168,$cod_merca,40,10);
+$pdf->SetXY(140,168);
+$pdf->Write(25,$cod_merca);
+
+///////// linea 7 
+$pdf->SetXY(10,190);
+$pdf->SetDrawColor(100);
+ $pdf->Cell(60,30,"",1);  
+ $pdf->Cell(60,30,"",1);
+ $pdf->Cell(60,30,"",1);
+
+$pdf->SetXY(20,192);
+$pdf->Write(5,$nombre);
+$pdf->Code128(20,198,$cod_merca,40,10);
+$pdf->SetXY(20,198);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(80,192);
+$pdf->Write(5,$nombre);
+$pdf->Code128(80,198,$cod_merca,40,10);
+$pdf->SetXY(80,198);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(140,192);
+$pdf->Write(5,$nombre);
+$pdf->Code128(140,198,$cod_merca,40,10);
+$pdf->SetXY(140,198);
+$pdf->Write(25,$cod_merca);
+
+///////// linea 8 
+$pdf->SetXY(10,220);
+$pdf->SetDrawColor(100);
+ $pdf->Cell(60,30,"",1);  
+ $pdf->Cell(60,30,"",1);
+ $pdf->Cell(60,30,"",1);
+
+$pdf->SetXY(20,222);
+$pdf->Write(5,$nombre);
+$pdf->Code128(20,228,$cod_merca,40,10);
+$pdf->SetXY(20,228);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(80,222);
+$pdf->Write(5,$nombre);
+$pdf->Code128(80,228,$cod_merca,40,10);
+$pdf->SetXY(80,228);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(140,222);
+$pdf->Write(5,$nombre);
+$pdf->Code128(140,228,$cod_merca,40,10);
+$pdf->SetXY(140,228);
+$pdf->Write(25,$cod_merca);
+
+///////// linea 8 
+$pdf->SetXY(10,250);
+$pdf->SetDrawColor(100);
+ $pdf->Cell(60,30,"",1);  
+ $pdf->Cell(60,30,"",1);
+ $pdf->Cell(60,30,"",1);
+
+$pdf->SetXY(20,222);
+$pdf->Write(5,$nombre);
+$pdf->Code128(20,228,$cod_merca,40,10);
+$pdf->SetXY(20,228);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(80,222);
+$pdf->Write(5,$nombre);
+$pdf->Code128(80,228,$cod_merca,40,10);
+$pdf->SetXY(80,228);
+$pdf->Write(25,$cod_merca);
+
+$pdf->SetXY(140,222);
+$pdf->Write(5,$nombre);
+$pdf->Code128(140,228,$cod_merca,40,10);
+$pdf->SetXY(140,228);
+$pdf->Write(25,$cod_merca);
+
+
+$pdf->Output();
+ 
+
+?>
+
+

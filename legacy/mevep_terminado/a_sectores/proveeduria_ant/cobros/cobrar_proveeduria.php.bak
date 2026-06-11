@@ -1,0 +1,268 @@
+<style type="text/css">
+<!--
+.Estilo1 {
+	color: #000000;
+	font-weight: bold;
+}
+.Estilo5 {font-size: 10px}
+.Estilo8 {font-family: Arial, Helvetica, sans-serif}
+.Estilo17 {color: #FFFFFF; font-weight: bold; font-family: Arial, Helvetica, sans-serif; }
+.Estilo20 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo21 {font-size: 14px}
+-->
+</style>
+
+<script language="javascript">
+function on_load()
+{
+document.getElementById("nro_factura").focus();
+document.getElementById("nro_factura").style.backgroundColor = "#F7A4B3";
+}
+
+
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				
+				case "nro_factura":
+				document.getElementById("monto").focus();
+				document.getElementById("nro_factura").style.backgroundColor = "#ffffff";
+				document.getElementById("monto").style.backgroundColor = "#FFFF99";
+
+				break;
+
+				case "monto":
+				document.getElementById("debito").focus();
+				document.getElementById("monto").style.backgroundColor = "#ffffff";
+				document.getElementById("debito").style.backgroundColor = "#66FF00";
+				break;
+
+
+				
+		}
+		return false;
+	}
+	return true;
+}
+
+function abrirVentan() {
+	var busca = <?echo $busca;?> 
+    open("fact_pendientes_prov.php?busca='<?echo $busca;?>'","SALDOS DEUDORES", "width=450,height=450,toolbar=no,directories=no,menubar=no,status=no, scrollbars=01, top = 35");
+}
+</script>
+
+<?php
+
+
+
+
+
+
+if ($band != "segunda_vuelta"){
+$nro_recibo=$_REQUEST['nro_recibo'];
+}
+
+
+include ("../../../conexiones/config_grabacion.php");
+
+$sql="truncate table recibos1_encab_temp_pro";
+$result = $db_cont->Execute($sql);
+$sql="truncate table recibos1_deta_temp_pro ";
+$result = $db_cont->Execute($sql);
+
+
+$sql="select * from recibos where nro_recibo = $nro_recibo";
+$result = $db_cont->Execute($sql);
+$nro_rec=$result->fields["nro_recibo"];
+
+if ($nro_rec != ""){
+	$leyenda  ="YA EXISTE ESE NUMERO DE RECIBO CARGADO";
+	include ("../../../alertas/campo_informacion2.php");
+	exit;
+}
+
+
+
+switch ($tipo_cuenta){
+	case "1":{
+$sql1="select * from datos_laboratorio where nro_laboratorio like '$busca'";
+$result1 = $db_bq->Execute($sql1);
+$nombre_laboratorio=strtoupper($result1->fields["nombre_laboratorio"]);
+$sigla = $nombre_laboratorio." - ".$busca;
+break;}
+
+case "2":{
+
+$sql="select * from clientes where cuenta like '$busca'";
+$result = $db_pro->Execute($sql);
+$denominacion=strtoupper($result->fields["denominacion"]);
+$sigla = $denominacion;
+	break;
+}
+}
+
+
+ $sql = "INSERT INTO recibos1_encab_temp_pro ( `nro_recibo` , `fecha_pago` , `cuenta` , `tipo_cuenta` , `cant_fact` , `importe_pagado` , `periodo` , `anio` , `operador`  ) values ( '$nro_recibo' , '$fecha_guardar' , '$busca' , '$tipo_cuenta' , '$cant_fact' , '$importe_pagado' , '$mes' , '$anio' , '$operador')";
+mysql_query($sql);
+
+$result = $db_cont->Execute($sql);
+
+?>
+
+
+
+<BODY onload = "on_load ()">
+ 
+<FORM name="form" ACTION="cobrar_proveeduria1.php" METHOD = "POST">
+
+<!-- <FORM name="form" ACTION="cobros/a.php" METHOD = "POST"> -->
+<table width="682" border="0">
+         <tr bgcolor="#999999">
+           <td width="408" valign="top"><table width="100%" border="0">
+             <!--DWLayoutTable-->
+             <tr bgcolor="#000099">
+               <td height="32" colspan="2"><div align="left"><span class="Estilo17"><span class="Estilo21"> COBROS PROVEEDURIA </span><span class="Estilo20">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fecha: <?ECHO $fecha;?></span></span></div></td>
+             </tr>
+             <tr bgcolor="#E1F2EF">
+               <td height="28" colspan="2"><div align="center"><span class="Estilo20">Laboratorio: <?echo $sigla." (".$busca.")";?><br>
+               Recibo N&ordm;: <?echo $nro_recibo;?></span></div></td>
+             </tr>
+             <tr bgcolor="#E1F2EF">
+               <td width="50%" bgcolor="#E6E6E6"><div align="right"><span class="Estilo20">Factura:</span></div></td>
+               <td width="50%" valign="top" bgcolor="#E6E6E6"><span class="Estilo20"><span class="Estilo5">
+                 <input name="nro_factura" type="text" size="8" tabindex = "1" id = "nro_factura" onKeyPress="return verif_caracter(this,event)">
+               </span></span></td>
+
+             </tr>
+             <tr bgcolor="#E1F2EF">
+               <td bgcolor="#E6E6E6"><div align="right"><span class="Estilo20"><span class="Estilo8">Importe $</span></span></div></td>
+               <td valign="top" bgcolor="#E6E6E6"><span class="Estilo20"><span class="Estilo5"><span class="Estilo8">
+                 <input name="monto" id= "monto" type="text" size="8" tabindex ="2" onKeyPress="return verif_caracter(this,event)">
+                 <span class="Estilo1">
+                 <input name="importe" type="hidden" value = "<?echo $importe;?>">
+                 <input name="nro_os" type="hidden" value = "<?echo $nro_os;?>">
+                 <input name="nro_recibo" type="hidden" value = "<?echo $nro_recibo;?>">
+                 <input name="tipo_cuenta" type="hidden" value = "<?echo $tipo_cuenta;?>">
+               </span> </span></span></span></td>
+             </tr>
+             <tr bgcolor="#E1F2EF">
+               <td colspan="2" bgcolor="#E6E6E6"><div align="center"><span class="Estilo20"><span class="Estilo5"><span class="Estilo8"><span class="Estilo1">
+                <input name="Alta" type="submit" value= "OK" id = "Alta">
+                <input name="Alta" type="submit" value= "VER" id = "Alta">
+               </span></span></span></span></div></td>
+             </tr>
+           </table></td>
+           <td width="264" valign="middle">
+		   
+	<iframe src="fact_pendientes_prov.php?busca=<?print("$busca");?>&&tipo_cuenta=<?print("$tipo_cuenta");?>" width="302" height="122" align="center"></iframe>
+	</td>
+         </tr>
+  </table>
+	   </th>
+     </tr>
+
+   <?
+   include_once ("mostrar_detalle.php");
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+/*
+
+		if(isset($_REQUEST['Alta'])) {
+	
+	switch ($_REQUEST['Alta'])
+									
+		case "OK":
+				{
+
+		echo "dfsfsdfsdfsd-2";
+ECHO "FDS".$nro_factura=$_REQUEST['nro_factura'];
+ECHO $fecha=$_REQUEST['fecha'];
+ECHO $tipo_pago="COMPLETA";
+ECHO $nro_recibo=$_REQUEST['nro_recibo'];
+ECHO $nro_os=$_REQUEST['nro_os'];
+ECHO $cant_fact=$_REQUEST['cant_fact'];
+ECHO $monto=$_REQUEST['monto'];
+ECHO $debito=$_REQUEST['debito'];
+
+
+break;
+			    }
+
+				
+						}
+
+*/
+/*
+include ("../../conexiones/config_cont.php");
+ $sql = "INSERT INTO `recibos` ( `nro_recibo` , `fecha_pago` , `cant_fact` , `importe_pagado` )  VALUES ('$nro_recibo' , '$fecha' , '$cant_fact' , '$importe')";
+mysql_query($sql);
+
+
+include ("../../conexiones/config_fa.php");
+$sql1="select * from factura where nro_factura like '$nro_factura' and nro_os like '$nro_os' ";
+$result1 = $db->Execute($sql1);
+
+ $fecha_facturado=ucwords($result1->fields["fecha"]);
+$fact=ucwords($result1->fields["nro_factura"]);
+$estado=ucwords($result1->fields["estado"]);
+
+if ($fact == ""){
+	$leyenda =  "Factura Inexistente o Factura de otra Obra Social";
+include ("../../alertas/campo_vacio.php");
+	exit;
+}
+
+switch ($estado){
+	case "COBRADA":{
+$leyenda = "Esta Factura ya fue recepcionada y pagada por Obra Social";
+include ("../../alertas/campo_vacio.php");
+	exit;
+break;
+}
+
+	case "LIQUIDADA":{
+$leyenda = "Esta Factura ya fue Liquidada a sus respectivos Laboratorios";
+include ("../../alertas/campo_vacio.php");
+	exit;
+break;
+}
+}
+
+
+ $periodo=ucwords($result1->fields["periodo"]);
+$total=ucwords($result1->fields["total"]);
+
+ $nro_os;
+ */
+//	include ("guardar_completa.php");
+
+
+
+?>
+
+</table>
+   
+</FORM>

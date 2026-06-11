@@ -1,0 +1,212 @@
+<style type="text/css">
+<!--
+.Estilo1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 18px;
+}
+.Estilo2 {font-family: Arial, Helvetica, sans-serif}
+.Estilo3 {font-size: 12px}
+.Estilo4 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo5 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+}
+.Estilo6 {color: #FFFFFF}
+.Estilo7 {font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 18px; color: #FFFFFF; }
+.Estilo9 {
+	font-size: 16px;
+	font-weight: bold;
+}
+-->
+</style>
+
+<?php 
+
+
+include ("../../conexiones/config.inc.php");
+
+
+  $cod_socio= $_REQUEST['cod_socio'];
+  $cod_operacion= $_REQUEST['cod_operacion'];
+
+$usuario= $_REQUEST['usuario'];
+$tipo= $_REQUEST['tipo'];
+
+
+ $sql="select * from  usuario  where id = $usuario";
+ $result = $db->Execute($sql);
+$nombre_vet=$result->fields["nombre"];
+
+
+
+if ($tipo == "part"){
+$sql="select * from particulares where cod_socio = $cod_socio";
+}else{
+$sql="select * from socios where cod_socio = $cod_socio";
+}
+
+ $result = $db->Execute($sql);
+
+	
+$cod_socio=$result->fields["cod_socio"];
+$apellido=strtoupper($result->fields["apellido"]);
+$nombre=strtoupper($result->fields["nombre"]);
+$tipo_doc=strtoupper($result->fields["tipo_doc"]);
+$documento=strtoupper($result->fields["documento"]);
+$telefono=strtoupper($result->fields["telefono"]);
+$domicilio=strtoupper($result->fields["domicilio"]);
+$localidad=strtoupper($result->fields["localidad"]);
+$departamento=strtoupper($result->fields["departamento"]);
+$cod_postal=strtoupper($result->fields["cod_postal"]);
+$fecha_pago=strtoupper($result->fields["fecha_pago"]);
+$debito=strtoupper($result->fields["debito"]);
+$sexo=strtoupper($result->fields["sexo"]);
+$deuda=strtoupper($result->fields["deuda"]);
+$motivo=strtoupper($result->fields["motivo"]);
+$cobrador=strtoupper($result->fields["cobrador"]);
+
+
+if ($tipo == "part"){
+$sql1="select * from animal_particular where cod_socio = $cod_socio";
+}else{
+$sql1="select * from animal where cod_socio = $cod_socio";
+}
+
+
+
+$result1 = $db->Execute($sql1);
+
+	
+$nombre_mascota=strtoupper($result1->fields["nombre"]);
+$especie=strtoupper($result1->fields["especie"]);
+$raza=strtoupper($result1->fields["raza"]);
+$pelaje=strtoupper($result1->fields["pelaje"]);
+$tamanio=strtoupper($result1->fields["tamanio"]);
+$color=strtoupper($result1->fields["color"]);
+$sexo_mascota=strtoupper($result1->fields["sexo"]);
+$fecha_nac=strtoupper($result1->fields["fecha_nac"]);
+$cod_animal=strtoupper($result1->fields["cod_animal"]);
+
+
+$dia_nac = substr($fecha_nac,8,2);
+$mes_nac = substr($fecha_nac,5,2);
+$anio_nac = substr($fecha_nac,0,4);
+
+ 
+
+
+
+?>
+
+<form action="guardar_hc1.php" method="post">
+<table width="850" border="0" cellspacing="0">
+  <tr bgcolor="#FFFFFF">
+    <td height="36" colspan="4"><div align="right"><span class="Estilo4">NOMBRE VETERINARIO: <span class="Estilo2"><?php echo $nombre_vet;?></span></span></div></td>
+  </tr>
+  <tr bgcolor="#FF0000">
+    <td height="36" colspan="4"><div align="center" class="Estilo1 Estilo6">HISTORIA CLINICA DE <span class="Estilo1">SOCIO: <?php echo $cod_socio;?> - <?php echo $apellido;?>, <?php echo $nombre;?></span></div></td>
+  </tr>
+
+   <tr bgcolor="#EBEBEB">
+          <td bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS"> <span class="Estilo4">MASCOTA</span></font></div></td>
+          <td width="202" bgcolor="#FFFFFF"><div align="left" class="Estilo9"> <font face="Trebuchet MS"><?php print("$nombre_mascota");?></font></div></td>
+          <td width="191" bgcolor="#CCCCCC"><font size="2" face="Trebuchet MS">TAMA&Ntilde;O</font></td>
+          <td width="340" bgcolor="#FFFFFF"><font size="2" face="Trebuchet MS"><?php print("$tamanio");?></font></td>
+  </tr>
+        <tr bgcolor="#EBEBEB">
+          <td bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS">ESPECIE</font></div></td>
+          <td bgcolor="#FFFFFF"><div align="left"><font size="2" face="Trebuchet MS"><?php print("$especie");?></font></div></td>
+          <td bgcolor="#CCCCCC"><font size="2" face="Trebuchet MS">COLOR</font></td>
+          <td bgcolor="#FFFFFF"><font size="2" face="Trebuchet MS"><?php print("$color");?></font></td>
+        </tr>
+        <tr bgcolor="#EBEBEB">
+          <td bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS">RAZA</font></div></td>
+          <td bgcolor="#FFFFFF"><div align="left"><font size="2" face="Trebuchet MS"><?php print("$raza");?></font></div></td>
+          <td bgcolor="#CCCCCC"><font size="2" face="Trebuchet MS">SEXO</font></td>
+          <td bgcolor="#FFFFFF"><font size="2" face="Trebuchet MS"><?php print("$sexo");?></font></td>
+        </tr>
+        <tr bgcolor="#EBEBEB">
+          <td bgcolor="#CCCCCC"><div align="right"><font size="2" face="Trebuchet MS">PELAJE</font></div></td>
+          <td bgcolor="#FFFFFF"><div align="left"><font size="2" face="Trebuchet MS"><?php print("$pelaje");?></font></div></td>
+          <td bgcolor="#CCCCCC"><font size="2" face="Trebuchet MS">FECHA NAC</font></td>
+          <td bgcolor="#FFFFFF"><font size="2" face="Trebuchet MS"><?php print("$fecha_nac");?></font></td>
+        </tr>
+  <tr bgcolor="#FF0000">
+    <td height="36" colspan="4"><div align="center"><span class="Estilo7">DIAGNOSTICOS ANTERIORES</span></div></td>
+  </tr>
+
+
+<?php
+  $sql1="select * from diagnostico where cod_socio = $cod_socio and tipo = '$tipo' order by  fecha_diagnostico";
+$result1 = $db->Execute($sql1);
+
+  If (!$result1) die("fallo".$db->ErrorMsg());
+  while (!$result1->EOF) {
+
+
+	  $fecha_diagnostico=strtoupper($result1->fields["fecha_diagnostico"]);
+
+
+
+$diagnostico=strtoupper($result1->fields["diagnostico"]);
+$diagnostico_presuntivo=strtoupper($result1->fields["diagnostico_presuntivo"]);
+
+
+$dia = substr($fecha_diagnostico,8,2);
+$mes = substr($fecha_diagnostico,5,2);
+$anio = substr($fecha_diagnostico,0,4);
+
+$fecha_diagnostico = $dia."/".$mes."/".$anio;
+
+?>
+  <tr bgcolor="#EBEBEB">
+    <td width="109" bgcolor="#CCCCCC"><div align="center" class="Estilo2 Estilo3"><strong>FECHA:</strong> </div></td>
+    <td bgcolor="#FFFFFF"><div align="center" class="Estilo4">
+      <div align="center"><span class="Estilo2 Estilo3"><?php echo $fecha_diagnostico;?></span></div>
+    </div></td>
+    <td><span class="Estilo5">DIAGNOSTICO PRESUNTIVO: </span></td>
+    <td bgcolor="#FFFFFF"><strong><?php echo $diagnostico_presuntivo;?></strong></td>
+  </tr>
+  <tr bgcolor="#FFFFFF">
+    <td height="20" colspan="4"><span class="Estilo4">&nbsp;&nbsp;<?php echo $diagnostico;?></span></td>
+  </tr>
+ 
+<?php
+
+
+$result1->MoveNext();
+	}
+
+?>
+</table>
+<table width="850" border="0" cellspacing="0">
+  <tr bgcolor="#FF0000">
+    <td height="36" colspan="2"><div align="center" class="Estilo7">NUEVO DIAGNOSTICO</div></td>
+  </tr>
+  <tr>
+    <td width="109" bgcolor="#EBEBEB"><div align="center" class="Estilo2 Estilo3"><strong>FECHA:</strong> <?php echo $hoy;?></div></td>
+    <td width="737" bgcolor="#EBEBEB"><div align="center" class="Estilo4">
+      <div align="left"><strong>DIAGNOSTICO PRESUNTIVO: </strong>
+          <input name="diagnostico_presuntivo" type="text" id="diagnostico_presuntivo" size="80">
+      </div>
+    </div></td>
+  </tr>
+  <tr bgcolor="#EBEBEB">
+    <td colspan="2"><div align="center"><span class="Estilo4">&nbsp;&nbsp;
+          <textarea name="diagnostico" cols="120" rows="5" id="textarea"></textarea>
+    </span></div></td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td colspan="2"><div align="center">
+
+<input name="cod_socio" type="hidden" value = "<?php echo $cod_socio;?>" size="40">
+<input name="usuario" type="hidden" value = "<?php echo $usuario;?>" size="40">
+<input name="tipo" type="hidden" value = "<?php echo $tipo;?>" size="40">
+
+<input name="cod_operacion" type="hidden" value = "<?php echo $cod_operacion;?>" size="40">
+      <input type="submit" name="Submit" value="GUARDAR DIAGNOSTICO">
+    </div></td>
+  </tr>
+</table>

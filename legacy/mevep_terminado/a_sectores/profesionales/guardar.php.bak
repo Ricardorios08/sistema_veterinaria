@@ -1,0 +1,95 @@
+<?php
+include ("../../conexiones/config.inc.php");
+
+
+$nro_profesional=$_POST["nro_profesional"];
+$apellido=$_POST["apellido"];
+$nombre=$_POST["nombre"];
+
+$especialida=$_POST["especialidad"];
+	for ($i=0;$i<count($especialida);$i++)    
+	{     
+	$especialidad = $especialida[$i];    
+	}
+
+
+$sex=$_POST["sexo"];
+	for ($i=0;$i<count($sex);$i++)    
+	{     
+	$sexo = $sex[$i];    
+	}
+
+
+$dia=$_POST["dia"];
+$mes=$_POST["mes"];
+$anio=$_POST["anio"];
+$fecha_nacimiento=$anio."-".$mes."-".$dia;
+
+
+
+$domicilio=$_POST["domicilio"];
+$localidad=$_POST["localidad"];
+$telefono=$_POST["telefono"];
+$celular=$_POST["celular"];
+$mail=$_POST["mail"];
+$lunes=$_POST["lunes"];
+$martes=$_POST["martes"];
+$miercoles=$_POST["miercoles"];
+$jueves=$_POST["jueves"];
+$viernes=$_POST["viernes"];
+$sabado=$_POST["sabado"];
+$duracion_consulta=$_POST["duracion_consulta"];
+$espacio_entre_turnos=$_POST["espacio_entre_turnos"];
+$cantidad_turnos_diarios=$_POST["cantidad_turnos_diarios"];
+
+$turn=$_POST["turno"];
+	for ($i=0;$i<count($turn);$i++)    
+	{     
+	$turno = $turn[$i];    
+	}
+
+
+$horario_turno_manana=$_POST["horario_turno_manana"];
+$horario_turno_tarde=$_POST["horario_turno_tarde"];
+ 
+$tipo_horari=$_POST["tipo_horario"];
+	for ($i=0;$i<count($tipo_horari);$i++)    
+	{     
+	$tipo_horario = $tipo_horari[$i];    
+	}
+
+
+
+
+
+
+
+
+if ($nombre == ""){
+$leyenda = "NO INGRESO NOMBRE";
+include ("../../alertas/campo_informacion2.php");
+EXIT;
+}
+
+
+if ($apellido == ""){
+$leyenda = "NO INGRESO APELLIDO";
+include ("../../alertas/campo_informacion2.php");
+EXIT;
+}
+
+
+
+
+
+ECHO $sql = "INSERT INTO `profesionales` (`nro_profesional`, `apellido`, `nombre`, `especialidad`, `sexo`, `fecha_nacimiento`, `domicilio`, `localidad`, `telefono`, `celular`, `mail`, `lunes`, `martes`, `miercoles`, `jueves`, `viernes`, `sabado`, `duracion_consulta`, `espacio_entre_turnos`, `cantidad_turnos_diarios`, `turno`, `horario_turno_manana`, `horario_turno_tarde`, `tipo_horario`) VALUES ('', '$apellido', '$nombre', '$especialidad', '$sexo', '$fecha_nacimiento', '$domicilio', '$localidad', '$telefono', '$celular', '$mail', '$lunes', '$martes', '$miercoles', '$jueves', '$viernes', '$sabado', '$duracion_consulta', '$espacio_entre_turnos', '$cantidad_turnos_diarios', '$turno', '$horario_turno_manana', '$horario_turno_tarde', '$tipo_horario')";
+  mysql_query($sql);
+
+
+$bande_nuevo = 1;
+$palabra = $nro_paciente;
+$bande = 2;
+include ("entrada_dato.php");	
+
+?>
+

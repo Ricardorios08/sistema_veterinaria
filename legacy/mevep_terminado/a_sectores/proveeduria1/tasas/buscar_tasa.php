@@ -1,0 +1,82 @@
+ <?
+ 
+
+
+
+ $sql="select * from tasas order by cod_tasa";
+ $result = $db_pro->Execute($sql);
+
+
+
+ ?>
+
+
+
+<table width="611" border="0">
+      <tr>
+        <th width="67" scope="col">&nbsp;</th>
+        <th colspan="3" bgcolor="#000099" scope="col"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">IVA</font></th>
+        <th colspan="2" bgcolor="#000099" scope="col"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">DGR</font></th>
+        <th width="101" bgcolor="#000099" scope="col"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">ING. BRUTOS </font></th>
+        <th width="70" scope="col">&nbsp;</th>
+        <th width="68" scope="col">&nbsp;</th>
+      </tr>
+      <tr bgcolor="#000099">
+        <th scope="row"><div align="center"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">Tasa</font></div></th>
+        <th width="46"><div align="center"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">Normal</font></div></th>
+        <th width="59"><div align="center"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">Recargo</font></div></th>
+        <th width="53"><div align="center"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">Especial</font></div></th>
+        <th width="77"><div align="center"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">Percepci&oacute;n</font></div></th>
+        <th width="46"><div align="center"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">Multa</font></div></th>
+        <th><div align="center"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">Tasa</font></div></th>
+        <th><div align="center"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">Modificar</font></div></th>
+        <th><div align="center"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">Borrar</font></div></th>
+      </tr>
+
+<?
+	  if (!$result) die("fallo".$db_pro->ErrorMsg());
+  while (!$result->EOF) {
+
+	
+$cod_tasa=strtoupper($result->fields["cod_tasa"]);
+$iva_normal=strtoupper($result->fields["iva_normal"]);
+$iva_recargo=strtoupper($result->fields["iva_recargo"]);
+$iva_especial=strtoupper($result->fields["iva_especial"]);
+$percepcion_dgr=strtoupper($result->fields["percepcion_dgr"]);
+$multa_dgr=strtoupper($result->fields["multa_dgr"]);
+$tasa_ig=strtoupper($result->fields["tasa_ig"]);
+
+
+if ($iva_normal == 0.00){$iva_normal = "-";}
+if ($iva_recargo == 0.00){$iva_recargo = "-";}
+if ($iva_especial == 0.00){$iva_especial = "-";}
+if ($percepcion_dgr == 0.00){$percepcion_dgr = "-";}
+if ($multa_dgr == 0.00){$multa_dgr = "-";}
+if ($tasa_ig == 0.00){$tasa_ig = "-";}
+
+
+
+?>
+      <tr bgcolor="#E8DCFC">
+        <td scope="row"><div align="center"><?print("$cod_tasa");?>
+          </div>
+        <div align="center"></div></td>
+        <td><div align="center"><?print("$iva_normal");?>
+        </div></td>
+        <td><div align="center"><?print("$iva_recargo");?></div></td>
+        <td><div align="center"><?print("$iva_especial");?>
+        </div></td>
+        <td><div align="center"><?print("$percepcion_dgr");?>
+        </div></td>
+        <td><div align="center"><?print("$multa_dgr");?>
+        </div></td>
+        <td><div align="center"><?print("$tasa_ig");?></div></td>
+        <td><div align="center"><a href="modificar.php?id=<?print("$cod_tasa");?>"><IMG SRC="../../../imagenes/office/027.ico" alt="Modificar" border = "0"></a></div></td>
+        <td><div align="center"><a href="borra.php?id=<?print("$cod_tasa");?>"><IMG SRC="../../../imagenes/office/1047.ico" alt="Eliminar" border = "0"></a></div></td>
+      </tr>
+
+
+	  <?$result->MoveNext();}?>
+
+    </table>
+	

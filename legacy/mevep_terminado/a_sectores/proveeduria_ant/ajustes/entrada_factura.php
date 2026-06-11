@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<script language="javascript">
+function on_load()
+{
+document.getElementById("operador").focus();
+document.getElementById("operador").style.backgroundColor = "#CCFFCC";
+}
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+
+
+				case "operador":
+				document.getElementById("dia").focus();
+
+document.getElementById("operador").style.backgroundColor = "#FFFFFF";
+document.getElementById("dia").style.backgroundColor = "#CCFFCC";
+				break;
+				
+			
+				
+				
+				case "dia":
+				document.getElementById("mes").focus();
+document.getElementById("dia").style.backgroundColor = "#FFFFFF";
+document.getElementById("mes").style.backgroundColor = "#CCFFCC";
+
+
+				break;
+				case "mes":
+				document.getElementById("anio").focus();
+document.getElementById("mes").style.backgroundColor = "#FFFFFF";
+document.getElementById("anio").style.backgroundColor = "#CCFFCC";
+				break;
+
+				case "anio":
+document.getElementById("motivo_ajuste").focus();
+document.getElementById("anio").style.backgroundColor = "#FFFFFF";
+document.getElementById("motivo_ajuste").style.backgroundColor = "#CCFFCC";
+				break;
+
+				
+				case "motivo_ajuste":
+				document.getElementById("ok").focus();
+				break;
+
+				
+		}
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+
+
+<html>
+<head>
+<title>Documento sin t&iacute;tulo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+.Estilo4 {
+	color: #006633;
+	font-size: 10px;
+	font-weight: bold;
+}
+.Estilo6 {font-size: 12}
+.Estilo16 {font-family: Arial, Helvetica, sans-serif}
+.Estilo21 {font-size: 10px; color: #006633; }
+.Estilo22 {color: #006633; font-size: 10px; font-weight: bold; font-family: Arial, Helvetica, sans-serif; }
+.Estilo26 {
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+.Estilo3 {font-size: 10px}
+.Estilo5 {color: #006633}
+.Estilo8 {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.Estilo9 {color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; }
+-->
+
+
+<!--
+.Estilo53 {font-size: 12px; color: #000000; }
+.Estilo32 {font-size: 12px; color: #000000; font-family: Arial, Helvetica, sans-serif; }
+.Estilo54 {color: #FF0000}
+-->
+
+
+
+</style>
+</head>
+
+
+<?
+include ("../../../conexiones/config_grabacion.php");
+
+
+$sql = "TRUNCATE TABLE `ventas1_deta_temp`";
+$result3 = $db_aj->Execute($sql);
+$sql = "TRUNCATE TABLE `ventas1_encab_temp`";
+$result3 = $db_aj->Execute($sql);
+
+
+
+
+$dia = date("d");
+$mes = date("m");
+$anio = date("Y");
+$forma_pago = "contado";
+
+?>
+
+
+
+<body onload = "on_load ()">
+<FORM ACTION="entrada_factura_2.php" METHOD = "POST" enctype="multipart/form-data" name="form">
+
+
+
+  <table width="103%" border="0">
+        <tr bgcolor="#000099">
+          <td height="35" colspan="3"><div align="center" class="Estilo16 Estilo8">SISTEMA DE AJUSTES </div></td>
+        </tr>
+        <tr bgcolor="#E6E6E6">
+          <td width="30%" bgcolor="#FFBC79"><div align="right"><span class="Estilo32">OPERADOR</span></div></td>
+          <td width="70%" colspan="2" bgcolor="#C9FADF"><span class="Estilo4 Estilo6 Estilo16"><span class="Estilo21"><span class="Estilo22"><span class="Estilo26"><span class="Estilo53"><span class="Estilo16"><span class="Estilo3"><span class="Estilo4 Estilo16 Estilo6"><span class="Estilo5">
+            <input name="operador" type="text" id="operador" onKeyPress="return verif_caracter(this,event)" value="" size = "5">
+            <span class="Estilo54">101 - Sergio / 201 - Juan </span> </span></span></span></span></span></span></span></span></span></td>
+        </tr>
+        <tr bgcolor="#E8DCFC">
+          <td bgcolor="#FFBC79"><div align="right" class="Estilo53"><span class="Estilo16">FECHA</span></div></td>
+          <td colspan="2" bgcolor="#C9FADF"><div align="left"><span class="Estilo4 Estilo6 Estilo16"><span class="Estilo21"><span class="Estilo22">
+              <input name="dia" type="text" id="dia" onKeyPress="return verif_caracter(this,event)" value = <?echo $dia;?> size = "1" maxlength="2">
+          /
+          <input name="mes" type="text" id="mes" onKeyPress="return verif_caracter(this,event)" value = <?echo $mes;?> size = "1" maxlength="2">
+          /
+          <input name="anio" type="text" id="anio" onKeyPress="return verif_caracter(this,event)" value = <?echo $anio;?> size = "3" maxlength="4">
+          </span></span></span></div></td>
+        </tr>
+        <tr bgcolor="#E8DCFC">
+          <td bgcolor="#FFBC79"><div align="right" class="Estilo32">MOTIVO DEL AJUSTE </span></span></span></div></td>
+          <td colspan="2" bgcolor="#C9FADF"><div align="left"><span class="Estilo4 Estilo6 Estilo16"><span class="Estilo21"><span class="Estilo22"><span class="Estilo26">
+              <!-- <input name="nro_cliente" type="text" id="nro_cliente" size = "4" onKeyPress="return verif_caracter(this,event)"> -->
+              <span class="Estilo53"><span class="Estilo16"><span class="Estilo3"><span class="Estilo4 Estilo16 Estilo6"><span class="Estilo5">
+              <input name="motivo_ajuste" type="text" id="motivo_ajuste" onKeyPress="return verif_caracter(this,event)" size = "50" maxlength="50">
+</span></span></span></span></span></span></span></span></span></div></td>
+        </tr>
+        <tr bgcolor="#E8DCFC">
+          <td bgcolor="#E6E6E6">&nbsp;</td>
+          <td colspan="2" bgcolor="#E6E6E6"><span class="Estilo4 Estilo6 Estilo16"><span class="Estilo21"><span class="Estilo22"><span class="Estilo26"><span class="Estilo9">
+          <input name="Alta" type="submit" value= "Siguiente" id = "ok">
+</span></span></span></span></span></td>
+        </tr>
+  </table>
+</form><?//INCLUDE ("buscar_cliente.php");?>
+</table>
+</body>
+
+
+</html>

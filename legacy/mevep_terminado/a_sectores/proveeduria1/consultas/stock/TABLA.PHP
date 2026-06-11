@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documento sin t&iacute;tulo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+.Estilo1 {font-family: Arial, Helvetica, sans-serif}
+.Estilo2 {font-size: 12px}
+.Estilo3 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+-->
+body {
+	background-image: url(../../../../imagenes/logito.png);
+}
+</style>
+</head>
+
+<body>
+<table width="650" border="0">
+  <tr bgcolor="#E6E6E6">
+    <td colspan="2"><div align="center" class="Estilo1"><strong>FACTURACION</strong></div></td>
+    <td width="174"><div align="center" class="Estilo1"><strong>ENTRADAS</strong></div></td>
+    <td colspan="2"><div align="center" class="Estilo1"><strong>SALIDAS</strong></div></td>
+  </tr>
+  <tr>
+    <td bgcolor="#FFBC79"><div align="center" class="Estilo1 Estilo2">DEBE</div></td>
+    <td bgcolor="#F2FACB"><div align="center" class="Estilo3">HABER</div></td>
+    <td bgcolor="#FFBC79"><span class="Estilo3">1. INV. INICIAL </span></td>
+    <td colspan="2" bgcolor="#F2FACB"><span class="Estilo3">5. VENTAS </span></td>
+  </tr>
+  <tr>
+    <td width="129" bgcolor="#FFBC79"><span class="Estilo3">1. FACTURA </span></td>
+    <td width="135" bgcolor="#F2FACB"><span class="Estilo3">4. PAGO X CAJA </span></td>
+    <td bgcolor="#FFBC79"><span class="Estilo3">2. COMPRAS </span></td>
+    <td colspan="2" bgcolor="#F2FACB"><span class="Estilo3">6. N/DEBITO PROVEEDOR</span></td>
+  </tr>
+  <tr>
+    <td bgcolor="#FFBC79"><span class="Estilo3">2. NOTA DEBITO </span></td>
+    <td bgcolor="#F2FACB"><span class="Estilo3">5 DESC. X </span></td>
+    <td bgcolor="#FFBC79"><span class="Estilo3">3. N/CREDITO X DEVOLUCION</span></td>
+    <td colspan="2" bgcolor="#F2FACB"><span class="Estilo3">7. AJUSTES NEGATIVOS</span></td>
+  </tr>
+  <tr>
+    <td bgcolor="#FFBC79"><span class="Estilo3">3. NOTA CREDITO </span></td>
+    <td bgcolor="#F2FACB">&nbsp;</td>
+    <td bgcolor="#FFBC79"><span class="Estilo3">4. AJUSTES POSITIVOS </span></td>
+    <td colspan="2" bgcolor="#F2FACB"><span class="Estilo3">8. LOTE VENCIDO</span></td>
+  </tr>
+  <tr>
+    <td bgcolor="#FFBC79">&nbsp;</td>
+    <td bgcolor="#F2FACB">&nbsp;</td>
+    <td bgcolor="#FFBC79">&nbsp;</td>
+    <td colspan="2" bgcolor="#F2FACB"><span class="Estilo3">9. MERMAS Y ROTURAS </span></td>
+  </tr>
+  <tr>
+    <td colspan="5" bgcolor="#E6E6E6"><div align="center"><span class="Estilo1"><strong>TIPOS DE IVA </strong></span></div>      <div align="center"></div></td>
+  </tr>
+  <tr>
+    <td bgcolor="#E8DCFC"><div align="center"><span class="Estilo3">1. RESP. INSCRIPTO </span> </div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><span class="Estilo3">2. NO EXISTE </span></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><span class="Estilo3">3. MONOTRIBUTO </span></div></td>
+    <td width="92" bgcolor="#E8DCFC"><div align="center"><span class="Estilo3">4. EXENTO </span></div></td>
+    <td width="98" bgcolor="#E8DCFC"><div align="center"><span class="Estilo3">5. CONS. FINAL </span></div></td>
+  </tr>
+</table>
+</body>
+</html>

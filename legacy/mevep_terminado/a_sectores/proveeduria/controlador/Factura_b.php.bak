@@ -1,0 +1,31 @@
+<?php
+
+//phpinfo();
+// include ("php_TM20v52ts.dLL");
+
+//  INCLUDE ("Tm20PhpApi.php");
+
+
+
+  $port = IF_OPEN("COM8",9600);
+
+  if ( $port == -1) 
+  { 
+   echo "impresora ocupada";   
+   return;  
+  }
+
+  $nError = IF_WRITE("@PONEENCABEZADO|1|MEVEP");
+  $nError = IF_WRITE("@TIQUEABRE|B|");
+  $nError = IF_WRITE("@TIQUEITEM|PREDNISOLONA|    1.000|      0.01|21.00|M|1|0|0|");
+  $nError = IF_WRITE("@TIQUEPAGO|Su Pago......|00000.121|T|");
+  $nError = IF_WRITE("@TIQUECIERRA|T|");
+
+ $nDoc  =  IF_READ(3);
+
+
+  $nError = IF_CLOSE();
+
+
+
+?>

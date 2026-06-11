@@ -1,0 +1,229 @@
+@charset "utf-8";
+/* COLOR DE ETIQUETAS */
+.rojo{
+	background:#FF0000;
+	border:0px solid #F00;
+	border-radius:250px;
+	width:20px;
+	height:20px;
+	margin:0 auto;
+	cursor:pointer;
+}
+.azul{
+	background:#336699;
+	border:0px solid #F00;
+	border-radius:250px;
+	width:20px;
+	height:20px;
+	margin:0 auto;
+	cursor:pointer;
+}
+.verde{
+	background: #0C0;
+	border:0px solid #F00;
+	border-radius:250px;
+	width:20px;
+	height:20px;
+	margin:0 auto;
+	cursor:pointer;
+}
+.morado{
+	background: #309;
+	border:0px solid #F00;
+	border-radius:250px;
+	width:20px;
+	height:20px;
+	margin:0 auto;
+	cursor:pointer;
+}
+.cafe{
+	background: #630;
+	border:0px solid #F00;
+	border-radius:250px;
+	width:20px;
+	height:20px;
+	margin:0 auto;
+	cursor:pointer;
+}
+
+
+/* CSS Document */
+/*HOJA DE ESTILO PARA SISTEMA SOLUTECK*/
+/*BORDES EN CURVA PARA CAPAS DIV*/
+#flotante{
+	height: 600px; width: 800px;
+	display: none;
+	z-index:5; 
+	position: absolute; 
+	background-color:#336699; 
+	color:#000000; 
+	box-shadow: 0px 0px 12px #000; 
+}
+ /*AGREGA LA CURVA A LAS ETIQUETAS DIVS*/
+.curved {
+	border:1px solid #003366;
+	border-radius:10 px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	behavior:url(border-radius.htc);
+}
+
+.redondear{ 
+	height:auto; 
+	/*margin:auto;*/
+	padding:3px;
+	border: 1px solid #006699;
+	border-radius:10 px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+
+/*ESTILO PARA BOTONES ESTATICOS*/
+.btn {
+	background-image:url(images/text_bg.jpg);
+	background-repeat:repeat-x;
+	border:1px solid #d1c7ac;
+	width: auto;
+	color:#333333;
+	padding:3px;
+	margin-right:4px;
+	margin-bottom:8px;
+	font-family:tahoma, arial, sans-serif;
+	font-size:11px;
+}
+
+/*ESTILO PARA BOTONES ACTIVOS*/
+.btn:hover{
+	background-color: #006688;
+	opacity: 0.6;
+	filter:alpha(opacity=90);
+	color:#FFFFFF;
+	border:1px double #003366;
+	width: auto;
+	padding:3px;
+	margin-right:4px;
+	margin-bottom:8px;
+	font-family:tahoma, arial, sans-serif;
+	font-size:11px;
+}
+
+/*ESTILO PARA TABLAS DE HTML*/
+.imagetable {
+	font-family: tahoma, arial, sans-serif;
+	border-width: 1px;
+	font-size:13px;
+	border-color: #999999;
+	border-collapse: collapse;
+	background-image:url('../images/Sobre.gif');
+	background-position:bottom right;
+	background-repeat:no-repeat;
+}
+
+.imagetable th {
+	background:#006393; /*#b5cfd2 url('cell-blue.jpg')*/
+	font-family: tahoma, arial, sans-serif;
+	font-size:13px;
+	border-width: 1px;
+	color:#FFF;
+	padding: 1px;
+	border-style: solid;
+	border-color: #999999;
+	font-size:12px;
+}
+
+.imagetable td {
+	/*background: #C1E0FF;*/ /*#dcddc0 url('cell-grey.jpg')*/
+	font-family: tahoma, arial, sans-serif;
+	font-size:13px;
+	border-width: 0px;
+	color:#333;
+	padding: 3px;
+	border-style: solid;
+	border-color: #999999;
+	font-size:14px;
+}
+
+.h3 {
+	margin: 0px;
+	padding: 0px;
+	font-family:tahoma, arial, sans-serif;
+	font-size:11px;
+	color: #336699;
+	/*text-shadow: 0.1em 0.1em #000;*/
+	text-decoration: none;
+	cursor:pointer;
+}
+
+.h3:hover{
+	margin: 0px;
+	padding: 0px;
+	font-family:tahoma, arial, sans-serif;
+	font-size:11px;
+	color:#f2f2f2;
+	text-decoration: none;
+	/*text-shadow: 0.1em 0.1em #fff;*/
+	cursor:pointer;
+}
+
+.suggestionsBox {
+	position: relative;
+	left: 110px;
+	margin: 0px 0px 0px 0px;
+	width: 400px;
+	background-color: #F8F8F8;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	border: 1px solid #336699;		
+	color: #336699;
+	padding:0 3px;
+	font-size:11px;
+}
+
+.suggestionList {
+	margin: 0px;
+	padding: 3px;
+}
+
+.suggestionList li {
+	margin: 0px 0px 3px 0px;
+	padding: 3px;
+	cursor: pointer;
+	text-wrap:none;
+	list-style:none;
+}
+
+.suggestionList li:hover {
+	background-color: #659CD8;
+	color:#FFFFFF;
+}
+.txt {
+	width: 221px;
+	background: url('../images/bg.jpg') no-repeat;
+	color : #747862;
+	height: 20px;
+	border: none;
+	padding:4px 8px;
+	margin-bottom:0px;
+}
+
+/*estilo de cajas de texto html*/
+.txtbox {
+	background-image:url(images/text_bg.jpg);
+	background-repeat:repeat-x;
+	border:1px solid #336699;
+	width: auto;
+	color:#333333;
+	padding:3px;
+	margin-right:4px;
+	margin-bottom:8px;
+	font-family:tahoma, arial, sans-serif;
+	font-size:14px;
+}
+
+.styled-select select {
+   background: transparent;
+   width: 110px;
+   padding: 3px;
+   font-size: 14px;
+   border: 1px solid #336699;
+}

@@ -1,0 +1,32 @@
+<?				
+$band = "SI";
+ include("../../../../conexiones/config_pro.php");
+$mes_lote= $_REQUEST['mes_lote'];
+$anio_lote= $_REQUEST['anio_lote'];
+$lote= $_REQUEST['lote'];
+$cantidad= $_REQUEST['cantidad'];
+$cod_mercaderia= $_REQUEST['cod_mercaderia1'];
+
+$dia = 01;
+$mes = 09;
+$anio= date("Y");
+$fecha_ultimo_mov =$anio."-".$mes."-".$dia;
+
+
+ 
+
+
+ $sql = "UPDATE `existencias_nuevo` SET `cantidad_ingresada` = '$cantidad',  `fecha_ultimo_mov` = '$fecha_ultimo_mov' WHERE cod_mercaderia = '$cod_mercaderia' and lote = '$lote' and mes_lote = '$mes_lote' and anio_lote= '$anio_lote'";
+mysql_query($sql);
+
+echo  $sql = "UPDATE `stock_nuevo` SET `cantidad` = '$cantidad',  `fecha` = '$fecha_ultimo_mov' WHERE cod_mercaderia = '$cod_mercaderia' and lote = '$lote' and mes_lote = '$mes_lote' and anio_lote= '$anio_lote'";
+mysql_query($sql);
+
+
+$leyenda = "MERCADERIA MODIFICADA EN EXISTENCIA ".$descripcion;
+include ("../../../../alertas/campo_informacion.php");
+
+$cod_mercaderia = "";
+$bandera = 1;
+include ("../separar_busqueda.php");
+exit;

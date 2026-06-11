@@ -1,0 +1,21 @@
+<?php
+
+include ("../../conexiones/config.inc.php");
+
+
+ $cod_socio= $_REQUEST['cod_socio'];
+ $tipo= $_REQUEST['tipo'];
+ $usuario= $_REQUEST['usuario'];
+$cod_operacion= $_REQUEST['cod_operacion'];
+
+
+$sql="delete from  diagnostico  where cod_operacion = $cod_operacion";
+ $result = $db->Execute($sql);
+
+
+
+	$leyenda = "SE ELIMINO RENGLON DE HISTORIA CLINICA";
+	include ("../../alertas/campo_informacion.php");
+
+}
+

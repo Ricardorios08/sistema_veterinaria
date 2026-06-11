@@ -1,0 +1,137 @@
+<?php
+
+include("../../../conexiones/config_pro.php");
+
+switch ($previa){
+	case "si":{
+		$pre = "SIN ACTUALIZAR";
+		BREAK;
+	}
+
+case "no":{
+		$pre = "BASE DE DATOS ACTUALIZADA";
+		BREAK;
+	}
+}
+
+$hoy = date("d/m/y");
+ $sql="select * from mercaderia where cod_merca between '$desde' and '$hasta'";
+$result = $db->Execute($sql);
+
+?>
+<table width="103%" height="141" border="0">
+  <tr bordercolor="#FFFFCC" bgcolor="#993300">
+    <td height="33" colspan="12
+	" bgcolor="#E1F2EF"><div align="center"><font color="#000000" size="5" face="Arial, Helvetica, sans-serif"><strong><?print("$pre");?></strong></font></div></td>
+  </tr>
+  <tr bordercolor="#FFFFCC" bgcolor="#993300">
+    <td colspan="12
+	" bgcolor="#E1F2EF"><div align="center"><font color="#000000" face="Arial, Helvetica, sans-serif">ACTUALIZACION DE PRECIOS . Emitido el <?echo $hoy;?> </font></div></td>
+  </tr>
+
+<tr bordercolor="#FFFFCC" bgcolor="#993300">
+    <td colspan="12
+	" bgcolor="#E1F2EF"><div align="center"><font color="#000000" face="Arial, Helvetica, sans-serif">  <?print("$modalidad");?> - <?print("$alicuota");?> - <?print("$operacion");?> </font></div></td>
+  </tr>
+
+
+    <tr bordercolor="#FFFFFF" bgcolor="#000099">
+    <td width="5%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">CODIGO</font></div></td>
+    <td width="11%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">DESCRIPCION</font></div></td>
+    <td width="12%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">PRESENTACION</font></div></td>
+    <td width="12%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">PRECIO ACTUALIZADO</font></div></td>
+<td width="12%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">AJUSTE</font></div></td>
+	<td width="12%"><div align="center"><font color="#FFFFFF" size="1" face="Arial, Helvetica, sans-serif">PRECIO NUEVO</font></div></td>
+</tr>
+  <?
+
+
+
+ 
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+	
+$cod_merca=strtoupper($result->fields["cod_merca"]);
+$nombre=strtoupper($result->fields["nombre"]);
+$precio_actualizado=number_format($result->fields["precio_actualizado"],2);
+$presentacion=strtoupper($result->fields["presentacion"]);
+
+$operacion;
+
+
+switch ($modalidad){
+
+case "VAL":{
+
+
+INCLUDE ("individual_valor.php");
+
+
+break;
+}
+
+
+case "PORC":{
+$porc = ($precio_actualizado * $alicuota)/100;
+$porc = number_format($porc,2);
+
+
+	switch ($operacion){
+		case "SUMA":{
+		$precio_nuevo = $precio_actualizado + $porc;
+		$precio_nuevo = number_format($precio_nuevo,2);
+
+?> <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$cod_merca");?></font></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$nombre");?></font></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$presentacion");?></font></div></td>
+	<td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$precio_actualizado");?></font></div></td>
+<td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$porc");?></font></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$precio_nuevo");?></font></div></td>
+		</tr>
+		<?
+if ($previa == "no"){
+ $sql = "UPDATE `mercaderia` SET `precio_actualizado` = '$precio_nuevo' WHERE `cod_merca` = '$cod_merca'";
+mysql_query($sql);
+}
+
+		break;
+		}
+
+		case "RESTA":{
+		$precio_nuevo = $precio_actualizado - $porc;
+$precio_nuevo = number_format($precio_nuevo,2);
+		?> <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$cod_merca");?></font></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$nombre");?></font></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$presentacion");?></font></div></td>
+	<td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$precio_actualizado");?></font></div></td>
+<td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$porc");?></font></div></td>
+    <td bgcolor="#E8DCFC"><div align="center"><font size="2"><?print("$precio_nuevo");?></font></div></td>
+	</tr>
+	<?
+			if ($previa == "no"){
+ $sql = "UPDATE `mercaderia` SET `precio_actualizado` = '$precio_nuevo' WHERE `cod_merca` = '$cod_merca'";
+mysql_query($sql);
+		}
+		break;
+		}
+					
+					
+					} //CIERRA OPERACION
+
+
+
+
+// CIERRA MODALIDAD
+		break;
+			}
+				}
+
+
+
+
+$result->MoveNext();
+	}
+
+?>
+</table>

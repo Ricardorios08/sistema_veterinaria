@@ -1,0 +1,56 @@
+<?
+
+include ("../../../conexiones/config_grabacion.php");
+
+$nro_factura = $_REQUEST['nro_factura'];
+$nro_factura_nuevo = $_REQUEST['nro_factura_nuevo'];
+$tipo_fact = $_REQUEST['tipo_fact'];
+$tipo_fact_nuevo = $_REQUEST['tipo_fact_nuevo'];
+$forma_pago= $_REQUEST['forma_pago'];
+
+if ($nro_factura == ""){
+	$leyenda = "NO INGRESO NUMERO DE FACTURA ANTERIOR";
+	include ("../../../alertas/campo_vacio.php");
+	exit;
+}
+
+if ($nro_factura_nuevo == ""){
+	$leyenda = "NO INGRESO NUMERO DE FACTURA ANTERIOR";
+	include ("../../../alertas/campo_vacio.php");
+	exit;
+}
+
+
+$sql1="select * from ventas_encabezado where nro_factura like '$nro_factura_nuevo' and tipo_fact = '$tipo_fact'";
+$result1 = $db_pro->Execute($sql1);
+
+$nro_factura_viejo=$result1->fields["nro_factura"];
+
+if ($nro_factura_viejo != ""){
+	$leyenda = "YA EXISTE UNA FACTURA CON ESE NUMERO";
+	include ("../../../alertas/campo_vacio.php");
+	exit;
+}
+else
+{
+
+echo $sql = "UPDATE `ventas_encabezado` SET `nro_factura` = $nro_factura_nuevo WHERE `nro_factura` = $nro_factura and tipo_fact = '$tipo_fact'";
+//$result1 = $db_pro->Execute($sql);
+echo $sql = "UPDATE `ventas_detalle` SET `nro_factura` = $nro_factura_nuevo WHERE `nro_factura` = $nro_factura and tipo_fact = '$tipo_fact'";
+//$result1 = $db_pro->Execute($sql);
+
+if ($forma_pago == 'CTA/CTE'){
+echo $sql = "UPDATE `composicion_saldos` SET `comprobante` = $nro_factura_nuevo WHERE `nro_factura` = $nro_factura and tipo_fact = '$tipo_fact'";
+//$result1 = $db_pro->Execute($sql);
+echo $sql = "UPDATE `resumen_cta_cte` SET `comprobante` = $nro_factura_nuevo WHERE `nro_factura` = $nro_factura and tipo_fact = '$tipo_fact'" ;
+//$result1 = $db_pro->Execute($sql);
+}
+
+
+$leyenda = "SE CAMBIO EL NUMERO DE FACTURA: ". $nro_factura." POR: ".$nro_factura_nuevo;
+include ("../../../alertas/campo_informacion.php");
+
+}
+
+
+?>

@@ -1,0 +1,86 @@
+<BODY background="pescar.bmp"><CENTER><TABLE WIDTH="90%" BORDER=0><TR><TD>  
+
+<?php
+include ("../../../conexiones/config_pro.php");
+
+$cod_merca=$_POST["cod_merca"];
+
+$sql="select * from mercaderia where cod_merca = $cod_merca";
+$result = $db->Execute($sql);
+
+$tipo1=$result->fields["tipo"];
+$cadenafrio1=$result->fields["cadenafrio"];
+$ing_bruto1=$result->fields["ing_bruto"];
+$proveedor1=$result->fields["proveedor"];
+$cod_tasa1=$result->fields["id_tasa"];
+
+
+//tabla mercaderia
+
+$descripcion=$_POST["descripcion"];
+$nombre=$_POST["nombre"];
+
+$tip=$_POST["tipo"];
+	for ($i=0;$i<count($tip);$i++)    
+	{     
+	$tipo = $tip[$i];  
+		
+		}
+
+
+$presentacion=$_POST["presentacion"];
+$factorconver=$_POST["factorconver"];
+
+$cadenafri=$_POST["cadenafrio"];
+	for ($i=0;$i<count($cadenafri);$i++)    
+	{     
+	$cadenafrio = $cadenafri[$i];  
+		
+		}
+
+
+$proveedo=$_POST["proveedor"];
+	for ($i=0;$i<count($proveedo);$i++)    
+	{     
+	$proveedor = $proveedo[$i];  
+		
+		}
+$fabricante=$_POST["fabricante"];
+$margendif=$_POST["margendif"];
+
+		$cod_tas=$_POST["cod_tasa"];
+	for ($i=0;$i<count($cod_tas);$i++)    
+	{     
+	$cod_tasa = $cod_tas[$i];  
+		
+		}
+
+$cod_tasa;
+if ($tipo == ""){
+
+$tipo = $tipo1;}
+
+if ($cadenafrio == ""){
+		
+$cadenafrio = $cadenafrio1;
+}
+
+if ($proveedor == ""){
+	
+$proveedor = $proveedor1;}
+
+if ($cod_tasa == ""){
+	
+$cod_tasa = $cod_tasa1;}
+
+
+echo $sql = "UPDATE `mercaderia` SET `descripcion` = '$descripcion' , `nombre` = '$nombre' , `tipo` = '$`tipo`' , `factorconver` = '$factorconver' ,  `cadenafrio` = '$cadenafrio' ,  `proveedor` = '$proveedor' ,   `fabricante` = '$fabricante'   , `presentacion` = '$presentacion' ,   `margendif` = '$margendif'  , `id_proveedor` = '$proveedor' ,   `id_tasa` = '$cod_tasa'  WHERE `cod_merca` = '$cod_merca'";
+ mysql_query($sql);
+
+$leyenda = "SE HA MODIFICADO EL PRODUCTO ".$cod_merca." ".$descripcion;
+include ("../../../alertas/campo_informacion.php");
+
+//include ("../../proveeduria/mercaderia/entrada_mercaderia.php");
+
+?>
+

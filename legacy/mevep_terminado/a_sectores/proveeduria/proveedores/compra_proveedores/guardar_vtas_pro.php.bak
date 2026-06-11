@@ -1,0 +1,128 @@
+<script language="javascript">
+function on_load()
+{
+document.getElementById("nro_bioquimico").focus();
+}
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				case "codigo":
+				document.getElementById("descripcion").focus();
+				break;
+				case "descripcion":
+				document.getElementById("nombre").focus();
+				break;
+				case "nombre":
+				document.getElementById("tipo").focus();
+				break;
+				case "tipo":
+				document.getElementById("presentacion").focus();
+				break;
+				case "presentacion":
+				document.getElementById("proveedor").focus();
+				break;
+				
+				
+		}
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+
+<BODY onload = "on_load ()">
+<form action="guardar_mercaderia.php" method="post">
+  <p><strong></strong></p>
+  <table width="535" border="0">
+    <tr align="center" bordercolor="#FFFFFF" bgcolor="#993300"> 
+      <td height="34" colspan="4"><font color="#FFFFCC"><strong>MERCADERIAS</strong></font></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#EEEEEE"> 
+      <td width="132" bgcolor="#FFFF99"><div align="right"><font color="#006633">Codigo</font>
+      </div></td>
+      <td colspan="3" bgcolor="#FFFFCC"><input type="text" name="codigo" id="codigo" onKeyPress="return verif_caracter(this,event)" size="15" > 
+        (Codigo del articulo)
+          <div align="right"></div></td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#EEEEEE">
+      <td bgcolor="#FFFF99"><div align="right"><font color="#006633">Descripci&oacute;n</font> </div></td>
+      <td colspan="3" bgcolor="#FFFFCC"><input type="text" name="descripcion" id="descripcion"  size="25" onKeyPress="return verif_caracter(this,event)"> 
+        (Descripci&oacute;n del articulo) </td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC"> 
+      <td bgcolor="#FFFF99"><div align="right"><font color="#006633">Nombre</font></div></td>
+      <td colspan="3" bgcolor="#FFFFCC"><input type="text" name="nombre"  id="nombre"  size="25" onKeyPress="return verif_caracter(this,event)"> 
+      (Nombre comercial)                 </td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#FFFF99"><font color="#006633">Tipo</font></td>
+      <td colspan="3" bgcolor="#FFFFCC"><select name="tipo[]" id="select2" onkeypress="return verif_caracter(this,event)">
+        <option value="Reactivos">Reactivos</option>
+        <option value ="Materiales">Materiales</option>
+        <option value ="Equipamiento">Equipamiento</option>
+      </select>
+(Tipo de producto)</td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC"> 
+      <td bgcolor="#FFFF99"><div align="right"><font color="#006633">Presentaci&oacute;n</font></div></td>
+      <td colspan="3" bgcolor="#FFFFCC"><input type="text" name="presentacion" id="presentacion2"  size="25"onKeyPress="return verif_caracter(this,event)">
+(unidades y magnitud) </td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#FFFF99"><div align="right"><font color="#006633">Factor de Conversión </font></div></td>
+      <td colspan="3" bgcolor="#FFFFCC"><input type="text" name="factorconver" id ="factorconver" size="20" onKeyPress="return verif_caracter(this,event)">    
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#DCBB76">
+      <td><div align="right"><font color="#006633">Cadena de frio </font></div></td>
+      <td colspan="3"><strong>
+      </strong>
+        <input type="radio" name="cadenafrio" value="SI"tabindex="26" >
+SI
+<input type="radio" name="cadenafrio" value="NO" tabindex="27"checked="TRUE">
+NO 
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#FFFF99"><div align="right"><font color="#006633">Proveedor</font></div></td>
+      <td width="178" bgcolor="#FFFFCC"><input type="text" name="proveedor" id ="proveedor" size="20" onKeyPress="return verif_caracter(this,event)">    
+      <td width="87" bgcolor="#FFFFCC"><div align="right"><font color="#006633">C&oacute;digo</font>      
+      </div>
+      <td width="120" bgcolor="#FFFFCC"><input type="text" name="proveedor2" id ="proveedor2" size="20" onKeyPress="return verif_caracter(this,event)">      
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#FFFF99"><div align="right"><font color="#006633">Fabricante</font></div></td>
+      <td colspan="3" bgcolor="#FFFFCC"><input type="text" name="fabricante" id ="fabricante" size="20" onKeyPress="return verif_caracter(this,event)">    
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC"> 
+      <td bgcolor="#FFFF99"><div align="right"><font color="#006633">Alicuota I.V.A. </font></div></td>
+    <td colspan="3" bgcolor="#FFFFCC"><select name="select" id="select" onKeyPress="return verif_caracter(this,event)">
+      <option value="1">1</option>
+      <option value ="2">2</option>
+      <option value ="3">3</option>
+	        <option value ="4">4</option>
+
+    </select>
+      <input type="text" name="alicuota" id ="alicuota" size="20" onKeyPress="return verif_caracter(this,event)">      </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+      <td bgcolor="#FFFF99"><div align="right"><font color="#006633">Margen diferencial </font></div></td>
+      <td colspan="3" bgcolor="#FFFFCC"><input type="text" name="margendif" id ="margendif" size="20" onKeyPress="return verif_caracter(this,event)"> 
+        (Previo al precio de lista) 
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#CCCCCC">
+      <td colspan="4"><div align="center">
+        <input type="Submit" name="Submit34" value="GUARDAR" target = "arriba">
+        <input type="BUTTON" name="Submit322" value="IMPRIMIR" target = "arriba">
+        <input type="button" name="Submit332" value="LIMPIAR" target = "arriba">
+      </div></td>
+    </tr>
+  </table>
+  <br>

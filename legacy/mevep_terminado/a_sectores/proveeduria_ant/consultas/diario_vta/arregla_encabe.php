@@ -1,0 +1,26 @@
+<?
+
+include ("../../../../conexiones/config_pro.php");
+$sql = "SELECT * FROM `ventas_encabezado`  WHERE `cheque` = 0 AND `contado` = 0 AND forma_pago = 'contado' ";
+
+$result = $db->Execute($sql);
+
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+
+$neto=strtoupper($result->fields["neto"]);
+$nro_factura=strtoupper($result->fields["nro_factura"]);
+$tipo_fact=strtoupper($result->fields["tipo_fact"]);
+
+
+
+echo  $sql23 = "UPDATE `ventas_encabezado` SET  `contado` = '$neto' WHERE `tipo_fact` = '$tipo_fact' AND `nro_factura` = '$nro_factura'";
+mysql_query($sql23);
+
+echo "<br>";
+
+$result->MoveNext(); // CAMBIA ANALITICO
+	}
+
+

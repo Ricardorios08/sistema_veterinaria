@@ -1,0 +1,105 @@
+<?php
+
+echo $moneda;
+
+global $buscador_rapido;
+
+if ($borrar != 1){
+$buscador_rapido=$_POST["buscador_rapido"];
+}
+
+$hoy = date("d/m/Y");
+ include("../../conexiones/config_grabacion.php");
+
+
+$B = 1;
+$palabra=$_POST["busca"];
+
+$sql="select * from mercaderia where cod_merca like '%$palabra%' or  nombre like '%$palabra%' or proveedor like '%$palabra%'";
+
+	$result = $db_pro->Execute($sql);
+?><body background="../..//imagenes/logito.png">
+<table width="650" border="0">
+  <tr bordercolor="#FFFFCC" bgcolor="#666666">
+    <td colspan="14"><div align="center"><font color="#FFFFFF" face="Arial, Helvetica, sans-serif">LISTADO DE MERCADERIA . Emitido el <?php echo $hoy;?> </font></div></td>
+  </tr>
+  <tr bordercolor="#FFFFFF" bgcolor="#A0A7F5">
+ 
+
+
+    <td width="11%"><div align="center"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">CODIGO</font></div></td>
+    <td width="43%"><div align="center"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">PRODUCTO</font></div></td>
+
+<td width="5%"><div align="center"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">MON</font></div></td>
+<td width="10%"><div align="center"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">DOLAR</font></div></td>
+<td width="12%"><div align="center"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">PESOS</font></div></td>
+
+    <td width="6%"><div align="center"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">MOD </font></div></td>
+    <td width="7%"><div align="center"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">BORRAR </font></div></td>
+    <td width="6%"><div align="center"><font color="#000000" size="1" face="Arial, Helvetica, sans-serif">FICHA </font></div></td>
+  </tr>
+ 
+ 
+ <?php 
+
+
+
+
+
+ 
+  if (!$result) die("fallo".$db_pro->ErrorMsg());
+  while (!$result->EOF) {
+
+	
+$cod_merca=$result->fields["cod_merca"];
+$nombre=strtoupper($result->fields["nombre"]);
+$tipo_moneda=strtoupper($result->fields["tipo_moneda"]);
+ $precio_actualizado=strtoupper($result->fields["precio_actualizado"]);
+$proveedor=strtoupper($result->fields["proveedor"]);
+
+$sql1 = "select * from precio_costos";
+$result1 = $db_pro->Execute($sql1);
+$dolar_compra=strtoupper($result1->fields["dolar_compra"]);
+$dolar_venta=strtoupper($result1->fields["dolar_venta"]);
+$costo=strtoupper($result1->fields["costo"]);
+$empresas=strtoupper($result1->fields["empresas"]);
+$regaleria=strtoupper($result1->fields["regaleria"]);
+$por_menor=strtoupper($result1->fields["por_menor"]);
+
+
+$costo1 = $precio_actualizado - round(($precio_actualizado * $costo)/100,3); // en dolar
+
+IF ($tipo_moneda == "D"){
+$en_dolar = round(($costo1 * $dolar_compra),3);
+}elseif ($tipo_moneda = "P"){
+$en_dolar = $precio_actualizado;
+$costo1 = "-";
+ }
+
+
+
+$en_empresas_dolar = $costo1 * $empresas;
+$en_regaleria_dolar = $costo1 * $regaleria;
+$en_por_menor_dolar  = $costo1 * $por_menor;
+
+
+$en_empresas_pesos= $en_empresas_dolar * $dolar_venta;
+$en_regaleria_pesos = $en_regaleria_dolar * $dolar_venta;
+$en_por_menor_pesos  = $en_por_menor_dolar * $dolar_venta;
+
+?>    <tr><td bgcolor="#9FE1BB"><div align="left"><font size="2" face="Arial, Helvetica, sans-serif"><?php print("$cod_merca");?></font></div></td>
+<td bgcolor="#9FE1BB"><div align="left"><font size="1" face="Arial, Helvetica, sans-serif"><?php print("$nombre");?></font></div></td>
+<td bgcolor="#9FE1BB"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><?php print("$tipo_moneda");?></font></div></td>
+<td bgcolor="#9FE1BB"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><?php ECHO $costo1;?></font></div></td>
+<td bgcolor="#9FE1BB"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><?php ECHO $en_dolar;?></font></div></td>
+ <td bordercolor="#E8DCFC" bgcolor="#9FE1BB"><div align="center"><font size="1" face="Arial, Helvetica, sans-serif"><a href="mercaderia/modificar_mercaderia.php?cod_merca=<?php print("$cod_merca");?>"><img src="../../imagenes/office/027.ico" alt="Modificar" border = "0"></a></font></div></td>
+    <td bordercolor="#E8DCFC" bgcolor="#9FE1BB"><div align="center"><font size="1" face="Arial, Helvetica, sans-serif"><a href="mercaderia/borra.php?cod_merca=<?php print("$cod_merca");?>"><img src="../../imagenes/office/1047.ico" alt="Eliminar" border = "0"></a></font></div></td>
+    <td bordercolor="#E8DCFC" bgcolor="#9FE1BB"><div align="center"><font size="1" face="Arial, Helvetica, sans-serif"><a href="mercaderia/ficha.php?cod_merca=<?php print("$cod_merca");?>"><img src="../../imagenes/office/005.ico" alt="Ficha" border = "0"></a></font></div></td>
+  </tr>
+  <?php 
+
+$result->MoveNext();
+	}
+
+?>
+</table>

@@ -1,0 +1,67 @@
+switch ($cont){
+
+case "1":
+	{
+echo "(998 - ".number_format($valor_998,2).")";	
+echo "(677 - ".number_format($valor_677,2).")";
+$cont = $cont + 1;
+  echo "Orden: $ ".$importe = $importe + $valor_998 + $valor_677;
+ $acumulado_por_orden= $acumulado_por_orden + $importe;
+	break;
+	}
+
+case "2":
+	{
+echo "(998 - ".number_format($valor_998,2).") ";	
+echo "(677 - ".number_format($valor_677,2).") ";
+  echo "Orden: $ ".$importe = $importe + $valor_998 + $valor_677;
+  $acumulado_por_orden= $acumulado_por_orden + $importe;
+$cont = $cont + 1;
+	break;
+	}
+
+case "3":
+	{
+echo "(998 - ".number_format($valor_998,2).") ";	
+echo "(677 - ".number_format($valor_677,2).") ";
+$cont = $cont + 1;
+  echo "Orden: $ ".$importe = $importe + $valor_998 + $valor_677;
+$acumulado_por_orden= $acumulado_por_orden + $importe;
+	break;
+	}
+
+
+case "4":
+	{
+
+echo "(998 - ".number_format($valor_998,2).") ";
+echo "(677 - ".number_format($valor_677,2).") ";
+$cont = 1;
+  echo "Orden: $ ".$importe = $importe + $valor_998 + $valor_677;
+  $acumulado_por_orden= $acumulado_por_orden + $importe;
+break;
+}
+
+case "5":
+	{
+
+echo "(998 - ".number_format($valor_998,2).") ";
+echo "<br>";
+echo "(677 - ".number_format($valor_677,2).") ";
+$cont = 1;
+  echo "Orden: $ ".$importe = $importe + $valor_998 + $valor_677;
+  $acumulado_por_orden= $acumulado_por_orden + $importe;
+break;
+}
+
+case "6":
+	{
+echo "(998 - ".number_format($valor_998,2).") ";
+echo "(677 - ".number_format($valor_677,2).") ";
+$cont = 1;
+  echo "Orden: $ ".$importe = $importe + $valor_998 + $valor_677;
+  $acumulado_por_orden= $acumulado_por_orden + $importe;
+
+break;
+}
+}

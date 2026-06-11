@@ -1,0 +1,60 @@
+<?include ("../../../../conexiones/config_pro.php");
+$cod_detalle=$_REQUEST["cod_detalle"];
+
+$sql1 = "SELECT * FROM existencias  WHERE  `cod_detalle` = $cod_detalle";
+$result1 = $db->Execute($sql1);
+$cod_mercaderia=strtoupper($result1->fields["cod_mercaderia"]);
+
+$sql = "SELECT * FROM `mercaderia`  WHERE  `cod_merca` = $cod_mercaderia";
+$result = $db->Execute($sql);
+
+$presentacion=strtoupper($result->fields["presentacion"]);
+$nombre=strtoupper($result->fields["nombre"]);
+$lote=strtoupper($result1->fields["lote"]);
+$mes_lote=strtoupper($result1->fields["mes_lote"]);
+$anio_lote=strtoupper($result1->fields["anio_lote"]);
+
+ $cantidad_ingresada =$_REQUEST["cantidad_ingresada"];
+$cantidad_salida =$_REQUEST["cantidad_salida"];
+
+ $cantidad_ingresada_original =$_REQUEST["cantidad_ingresada_original"];
+$cantidad_salida_original =$_REQUEST["cantidad_salida_original"];
+
+
+$fecha = date("Y-m-d");
+$nro_factura = 99999;
+$fact = 3;
+
+$diferencia_ingresada = $cantidad_ingresada_original - $cantidad_ingresada;
+$diferencia_salida = $cantidad_salida_original - $cantidad_salida;
+
+if ($diferencia_ingresada < 0){
+	$diferencia_ingresada = ($diferencia_ingresada * -1);
+}
+
+if ($diferencia_salida < 0){
+	$diferencia_salida = ($diferencia_salida * -1);
+}
+
+
+echo  $sql = "UPDATE `existencias` SET `cantidad_ingresada` = '$cantidad_ingresada',  `cantidad_salida` = '$cantidad_salida' WHERE `cod_detalle` = '$cod_detalle'";
+//mysql_query($sql);
+
+
+if ($cantidad_ingresada != $cantidad_ingresada_original){
+echo  $sql = "INSERT INTO `stock` ( `cod_mercaderia` , `fecha` ,  `tipo_fact` , `cod_movimiento` , `nro_comprobante` , `cantidad` , `precio_unitario` , `lote` , `mes_lote` , `anio_lote` , `cuenta` ,  `tipo_cuenta` ) VALUES ('$cod_mercaderia' , '$fecha' , '$fact' , '4' , '$nro_factura' , '$diferencia_ingresada' , '$precio_unitario' , '$lote' , '$mes_lote' , '$anio_lote' , '$nro' ,  '$tipo_cuenta')" ;
+//mysql_query($sql);
+}
+
+if ($cantidad_salida != $cantidad_salida_original){
+echo  $sql = "INSERT INTO `stock` ( `cod_mercaderia` , `fecha` ,  `tipo_fact` , `cod_movimiento` , `nro_comprobante` , `cantidad` , `precio_unitario` , `lote` , `mes_lote` , `anio_lote` , `cuenta` ,  `tipo_cuenta` ) VALUES ('$cod_mercaderia' , '$fecha' , '$fact' , '7' , '$nro_factura' , '$diferencia_salida' , '$precio_unitario' , '$lote' , '$mes_lote' , '$anio_lote' , '$nro' ,  '$tipo_cuenta')" ;
+//mysql_query($sql);
+}
+
+
+$leyenda = "SE MODIFICO LA EXISTENCIA";
+include ("../../../../alertas/campo_informacion.php");
+include ("consultas.php");
+
+
+?>

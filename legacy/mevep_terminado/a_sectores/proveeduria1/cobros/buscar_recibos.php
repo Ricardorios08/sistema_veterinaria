@@ -1,0 +1,166 @@
+<style type="text/css">
+<!--
+.Estilo1 {
+	color: #FFFFFF;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.Estilo4 {font-family: Arial, Helvetica, sans-serif; font-size: 10px; }
+.Estilo5 {font-size: 12px}
+.Estilo6 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo7 {
+	font-size: 36px;
+	font-weight: bold;
+	color: #0000FF;
+}
+-->
+</style>
+<style type="text/css">
+<!--
+.Estilo1 {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.Estilo4 {font-size: 9px}
+.Estilo5 {font-family: Arial, Helvetica, sans-serif}
+.Estilo6 {font-size: 9px; font-family: Arial, Helvetica, sans-serif; }
+.Estilo11 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo11 {font-size: 9px; font-family: Arial, Helvetica, sans-serif; }
+.Estilo13 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo13 {font-size: 9px; font-family: Arial, Helvetica, sans-serif; }
+.Estilo14 {color: #000000; font-family: Arial, Helvetica, sans-serif; font-size: 12px;}
+-->
+</style>
+
+
+
+
+<?
+
+$nro_factura=STRTOUPPER($_REQUEST ['nro_factura']);
+
+$orde=$_POST["orden"];
+	for ($i=0;$i<count($orde);$i++)    
+	{     
+$orden = $orde[$i];    
+	}
+
+$hoy = date("d/m/y");
+
+
+
+?>
+
+
+
+
+<table width="682" height="79" border="0">
+  <!--DWLayoutTable-->
+<tr valign="middle" bgcolor="#000099">
+    <td height="29" colspan="6"><div align="center"><span class="Estilo5"><span class="Estilo1">Listado de Recibos Ingresados al: <?ECHO $hoy;?></span> </span></div></td>
+  </tr>
+   <tr bgcolor="#DAFAFC">
+     <td width="85" height="17"><div align="center" class="Estilo5"><span class="Estilo5">N&ordf; Recibo </span></div></td>
+     <td width="229"><div align="center" class="Estilo5">Denominaci&oacute;n</div></td>
+     <td width="91"><div align="center" class="Estilo6"><span class="Estilo5">Periodo</span></div></td>
+     <td width="92"><div align="center" class="Estilo6"><span class="Estilo5">Cant. Fact</span></div></td>
+     <td width="73"><div align="center" class="Estilo11"><span class="Estilo5">Fecha Pago </span></div></td>
+<td width="86"><div align="center" class="Estilo11"><span class="Estilo5">Total</span></div></td>
+   </tr>
+
+	 <?
+
+include ("../../../conexiones/config_grabacion.php");
+
+
+$sql="select * from recibos order by nro_recibo desc limit 3";
+$result = $db_cont->Execute($sql);
+
+  if (!$result) die("fallo".$db_cont->ErrorMsg());
+  while (!$result->EOF) {
+
+
+$nro_recibo=strtoupper($result->fields["nro_recibo"]);
+$fecha_pago=strtoupper($result->fields["fecha_pago"]);
+
+$dia = substr($fecha_pago,8,2);
+$mes = substr($fecha_pago,5,2);
+$anio = substr($fecha_pago,0,4);
+$fecha_pago = $dia."-".$mes."-".$anio;
+
+$cant_fact=strtoupper($result->fields["cant_fact"]);
+$importe_pagado=strtoupper($result->fields["importe_pagado"]);
+$periodo=strtoupper($result->fields["periodo"]);
+$anio=strtoupper($result->fields["anio"]);
+$cuenta=strtoupper($result->fields["cuenta"]);
+$tipo_cuenta=strtoupper($result->fields["tipo_cuenta"]);
+
+// tipos de cuentas:  1 asociados 2 externos 3 obras sociales 4 mega-analizar
+
+switch ($tipo_cuenta){
+	case "1":{
+$sql1="select * from datos_laboratorio where nro_laboratorio like '$cuenta'";
+$result1 = $db_bq->Execute($sql1);
+$nombre_laboratorio=strtoupper($result1->fields["nombre_laboratorio"]);
+$todo = $nombre_laboratorio." - ".$cuenta;
+break;}
+
+case "2":{
+
+$sql="select * from clientes where cuenta like '$cuenta'";
+$result = $db_pro->Execute($sql);
+$denominacion=strtoupper($result->fields["denominacion"]);
+$todo = $denominacion. " - ".$cuenta;
+	break;
+}
+
+	case "3":{
+$sql1="select * from datos_os where nro_os like '$cuenta'";
+$result1 = $db_os->Execute($sql1);
+$sigla=strtoupper($result1->fields["sigla"]);
+$denominacion=strtoupper($result1->fields["denominacion"]);
+$todo = $cuenta." - ".$sigla;
+break;
+}
+
+}
+
+
+?>
+
+   <tr>
+<td height="20"><div align="center" class="Estilo4 Estilo7"><span class="Estilo5"><?print("$nro_recibo");?></span></div></td>
+   
+
+	<td><div align="center" class="Estilo14">
+	  <div align="left" class="Estilo5"><?print("$todo");?></div>
+	</div></td>
+	<td><div align="left" class="Estilo5">
+	  <div align="center"><strong><?print("$periodo");?> - <?print("$anio");?></strong></div>
+	</div>      </td>
+
+    <td><div align="center" class="Estilo5"><?print("$cant_fact");?></div></td>
+    <td><div align="center" class="Estilo5"><span class="Estilo5"><?print("$fecha_pago");?></span></div></td>
+ <td> <div align="center" class="Estilo5"><font color="#000000"><font color="#000000"><span class="Estilo5"><?print("$importe_pagado");?></span></font></font> </div></td>
+  </tr>
+
+
+
+
+
+<?
+	$result->MoveNext();
+	}
+
+$tipo_cuenta = "";
+$todo = "";
+	?>
+</table>
+
+
+
+<!-- <iframe src="../facturacion/papel/factura_detalle.php?nro_factura=7130" width="100%" height="160" align="center">
+
+Texto alternativo para los usuarios que no ven iFrames. Por lo general se recomienda poner un enlace a la pagina contenida dentro del iFrame. Noticias iFrame.
+
+</iframe> -->
+

@@ -1,0 +1,28 @@
+<form action="guardar_completa.php" method="post" target = "central">
+ <table width="47%" height="32" border="0">
+  <tr bgcolor="#E6E6E6">
+    <td width="34%" height="26"><div align="left"><span class="Estilo8"><span class="Estilo1">N&ordm; Factura: </span><?echo $nro_factura;?> </span><span class="Estilo8"><strong>
+      </strong></span></div>      </td>
+    <td width="66%" height="26"><span class="Estilo8">Cobro
+        <input name="monto" type="text" size="8" tabindex ="2">
+- </span><span class="Estilo8">Debito
+<input name="debito" type="text" size="8" tabindex = "3" >
+<strong> </strong></span><span class="Estilo8"><strong>
+      <input type = "submit" name = "boton2" value = "SI" id ="boton27" tabindex= "4">
+    </strong></span><span class="Estilo8"><strong>
+    <input type="hidden" name="importe2" size = "10"  value = <?echo $importe;?>>
+</strong></span></td>
+    </tr>
+</table>
+<input type="hidden" name="nro_factura" size = "10"  value = <?echo $nro_factura;?>> 
+<input type="hidden" name="fecha_pago" size = "10"  value = <?echo $fecha;?>> 
+<input type="hidden" name="tipo_pago" size = "10"  value = <?echo $tipo_pago;?>> 
+<input type="hidden" name="nro_recibo" size = "10"  value = <?echo $nro_recibo;?>> 
+<input type="hidden" name="cant_fact" size = "10"  value = <?echo $cant_fact;?>>
+<input type="hidden" name="nro_os" size = "10"  value = <?echo $nro_os;?>>
+<input type="hidden" name="importe" size = "10"  value = <?echo $importe;?>>
+
+</form>
+<?
+
+		break;	

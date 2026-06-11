@@ -1,0 +1,29 @@
+<style type="text/css">
+<!--
+.Estilo2 {	color: #FFFFFF;
+	font-weight: bold;
+}
+.Estilo3 {
+	color: #006633;
+	font-weight: bold;
+}
+.Estilo4 {color: #FF0000}
+.Estilo5 {color: #000000}
+-->
+</style>
+<form action ="borra_ficha_si.php" method="post">
+<table width="397" border="1">
+  <tr bgcolor="#993300">
+    <td height="38" bgcolor="#000099"><div align="center"><span class="Estilo2">BORRAR MERCADERIA: </span></div></td>
+    </tr>
+  <tr bgcolor="#FFFF99">
+    <td bgcolor="#C1F2FF"><div align="center" class="Estilo3"><span class="Estilo5">Mercaderia</span>      
+      <input type="text" name="id" id= "id" size ="20">
+      <input type="submit" name="enviar" value = "ACEPTAR" onClick='alert("¿ESTA SEGURO DE BORRAR LA MERCADERIA?")'>
+    </div></td>
+    </tr>
+  <tr>
+    <td bgcolor="#FFFFFF"><div align="center" class="Estilo4">Ingrese el n&uacute;mero de la Mercaderia que van a BORRAR. </div></td>
+    </tr>
+</table>
+</form>

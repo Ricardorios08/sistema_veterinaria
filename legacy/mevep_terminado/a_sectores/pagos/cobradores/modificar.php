@@ -1,0 +1,37 @@
+<?php
+
+include ("../../../conexiones/config.inc.php");
+
+
+
+	$cod_cobrador=$_POST["cod_cobrador"];
+ 
+	$nombre_cobrador=$_POST["nombre_cobrador"];
+ 
+
+	$pla=$_POST["plan"];
+	for ($i=0;$i<count($pla);$i++)    
+	{     
+	$plan = $pla[$i];    
+	}
+
+
+	if ($plan == ""){
+ $sql="select * from cobradores where cod_cobrador = $cod_cobrador";
+$result = $db->Execute($sql);
+$plan=$result->fields["plan"];
+
+	}
+
+
+
+echo $sql = "UPDATE cobradores SET plan = '$plan' , nombre_cobrador = '$nombre_cobrador' WHERE cod_cobrador = '$cod_cobrador'";
+mysql_query($sql);
+
+
+$leyenda = "LOS DATOS HAN SIDO MODIFICADOS EN EL SISTEMA";
+include ("../../../alertas/campo_informacion.php");
+	
+
+?>
+

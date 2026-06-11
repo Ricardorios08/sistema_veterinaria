@@ -1,0 +1,137 @@
+<script language="javascript">
+function on_load()
+
+{
+document.getElementById("nro_factura").focus();
+}
+
+
+
+</script>
+
+<style type="text/css">
+<!--
+.Estilo3 {font-family: Arial, Helvetica, sans-serif}
+.Estilo4 {font-size: 10px}
+.Estilo35 {font-family: Arial, Helvetica, sans-serif; color: #FFFFFF; font-weight: bold; }
+-->
+</style>
+
+<style type="text/css">
+<!--
+.Estilo1 {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+-->
+</style>
+
+<?
+include ("../../../conexiones/config_grabacion.php");
+
+$hoy = date("d-m-Y");
+$anio_actual = $_REQUEST['anio_actual'];
+$anio_actual = date ("y");
+$dia = date("d");
+$mes=date("m");   
+
+$elegir_existencia= $_REQUEST['elegir_existencia'];
+$elegir_stock= $_REQUEST['elegir_stock'];
+	
+if ($elegir_existencia == "EXISTENCIAS"){
+	$leyenda = "NO SE PUEDE LIMPIAR LA TABLA EXISTENCIA PORQUE ES PRINCIPAL ELIJA OTRA";
+	include ("../../../alertas/campo_informacion2.php");
+	exit;
+}
+
+if ($elegir_stock == "STOCK"){
+	$leyenda = "NO SE PUEDE LIMPIAR LA TABLA STOCK PORQUE ES PRINCIPAL ELIJA OTRA";
+	include ("../../../alertas/campo_informacion2.php");
+	exit;
+}
+
+
+$sql1 = "TRUNCATE TABLE existencias";
+$result1 = $db_pro->Execute($sql1);
+
+$sql1 = "INSERT INTO existencias SELECT * FROM $elegir_existencia";
+$result1 = $db_pro->Execute($sql1);
+
+$sql1 = "TRUNCATE TABLE stock";
+$result1 = $db_pro->Execute($sql1);
+$sql1 = "INSERT INTO stock SELECT * FROM $elegir_stock";
+$result1 = $db_pro->Execute($sql1);
+
+
+
+?>
+
+
+<BODY onload = "on_load ()" >
+
+
+
+
+  <div align="left"></div>
+  <table width="103%" border="0">
+    <tr bgcolor="#FF0000">
+      <td height="29" colspan="2"><div align="center"><span class="Estilo35 Estilo1"> BACKUP DE EXISTENCIA Y FICHA DE STOCK </span><br>
+      </div></td>
+    </tr>
+    <tr bgcolor="#DAFAFC" >
+      <td height="65" colspan="2" bgcolor="#FFBC79" class="Estilo3"><div align="center">EL BACKUP SE REALIZO CON EXITO </div></td>
+    </tr>
+		    <tr bgcolor="#DAFAFC">
+              <!-- <td bgcolor="#FFBC79"><div align="right" class="Estilo10">Rengl&oacute;n 4</span></div></td>
+              <td bgcolor="#F2FACB"><span class="Estilo4"><span class="Estilo3">
+                <input name="renglon4" type="text" id= "renglon4" size ="40" maxlength="40"> -->
+              
+              <td width="276"></span></span></td>
+    </tr>
+  </table>
+
+
+
+
+
+<?
+
+include ("../../../conexiones/config_grabacion.php");
+
+?>
+<table width="790" border="0">
+  <tr>
+    <td width="371"><div align="left"><strong>TABLAS EXISTENCIAS</strong></div></td>
+    <td width="409"><div align="left"><strong>TABLAS DE FICHAS DE STOCK </strong></div></td>
+  </tr>
+  <tr>
+    <td valign="top"><em><?$sql = "SHOW TABLES like 'exist%'";
+$result1 = $db_pro->Execute($sql);
+
+if (!$result1) die("fallo".$db_pro->ErrorMsg());
+while (!$result1->EOF) {
+$tabla=strtoupper($result1->fields["Tables_in_proveeduria (exist%)"]);
+
+echo $tabla;
+if (strtoupper($nueva_tabla) == $tabla){
+?> <input name="checkbox2" type="checkbox" value="checkbox" checked><?
+}
+
+ECHO "<br>";
+$result1->MoveNext();
+	}?></em></td>
+    <td valign="top"><em><?$sql3 = "SHOW TABLES like 'sto%'";
+$result3 = $db_pro->Execute($sql3);
+
+if (!$result3) die("fallo".$db_pro->ErrorMsg());
+while (!$result3->EOF) {
+$tabla1=strtoupper($result3->fields["Tables_in_proveeduria (sto%)"]);
+echo $tabla1;
+if (strtoupper($nueva_tabla2) == $tabla1){
+?> <input name="checkbox2" type="checkbox" value="checkbox" checked><?
+}
+ECHO "<br>";
+$result3->MoveNext();
+	}?></em></td>
+  </tr>
+</table>

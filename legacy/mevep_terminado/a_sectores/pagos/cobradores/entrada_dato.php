@@ -1,0 +1,191 @@
+<link href="../../../laboratorio/css/fondo.css" rel="stylesheet" type="text/css" />
+<script language="javascript">
+function on_load()
+{
+document.getElementById("cod_socio").focus();
+}
+
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				case "cod_socio":
+				document.getElementById("apellido").focus();
+				break;
+				case "apellido":
+				document.getElementById("nombre").focus();
+				break;
+				case "nombre":
+				document.getElementById("tipo_doc").focus();
+				break;
+				case "tipo_doc":
+				document.getElementById("documento").focus();
+				break;
+				case "documento":
+				document.getElementById("telefono").focus();
+				break;
+
+				case "telefono":
+				document.getElementById("celular").focus();
+				break;
+				case "celular":
+				document.getElementById("domicilio").focus();
+				break;
+				case "domicilio":
+				document.getElementById("localidad").focus();
+				break;
+				case "localidad":
+				document.getElementById("departamento").focus();
+				break;
+				case "departamento":
+				document.getElementById("cod_postal").focus();
+				break;
+				case "cod_postal":
+				document.getElementById("mail").focus();
+				break;
+
+				case "mail":
+				document.getElementById("sexo").focus();
+				break;
+			
+				
+				
+				case "sexo":
+				document.getElementById("nombre_mascota").focus();
+				break;				
+				case "nombre_mascota":
+				document.getElementById("especie").focus();
+				break;				
+				case "especie":
+				document.getElementById("raza").focus();
+				break;				
+				case "raza":
+				document.getElementById("pelaje").focus();
+				break;				
+				case "pelaje":
+				document.getElementById("tamanio").focus();
+				break;				
+				case "tamanio":
+				document.getElementById("color").focus();
+				break;				
+				case "color":
+				document.getElementById("sexo_mascota").focus();
+				break;				
+				case "sexo_mascota":
+				document.getElementById("dia_nac").focus();
+				break;				
+				case "dia_nac":
+				document.getElementById("mes_nac").focus();
+				break;				
+				case "mes_nac":
+				document.getElementById("anio_nac").focus();
+				break;				
+				case "anio_nac":
+				document.getElementById("importe_cuota").focus();
+				break;				
+				
+				
+				
+				
+				
+				
+				
+				
+				case "importe_cuota":
+				document.getElementById("dia_ingreso").focus();
+				break;				
+				case "dia_ingreso":
+				document.getElementById("mes_ingreso").focus();
+				break;
+				case "mes_ingreso":
+				document.getElementById("anio_ingreso").focus();
+				break;
+				case "anio_ingreso":
+				document.getElementById("tipo_pago").focus();
+				break;				
+				case "tipo_pago":
+				document.getElementById("ruta").focus();
+				break;
+				case "ruta":
+				document.getElementById("motivo").focus();
+				break;		
+		
+		}
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+
+<style type="text/css">
+<!--
+.Estilo25 {font-family: "Trebuchet MS"}
+-->
+</style>
+<BODY onload = "on_load()">
+
+<?php 
+include ("../../../conexiones/config.inc.php");
+
+
+
+?>
+<form action="guardar.php" method="post">
+<table width="850" border="0" cellspacing="0">
+    <!--DWLayoutTable-->
+    <tr bordercolor="#FFFFFF">
+      <td height="30" colspan="2" bgcolor="#CCCCCC"><div align="center"><strong>NUEVO COBRADOR </strong></div></td>
+  </tr>
+    
+    
+    <tr bordercolor="#FFFFFF">
+      <td width="120" height="24"><div align="right" class="Estilo25">
+          <div align="right"><font color="#000000" size="2"> NOMBRE </font></div>
+      </div></td>
+      <td width="281"> <font color="#000000" size="2">
+        <input name="nombre" type="text" id="nombre"onKeyPress="return verif_caracter(this,event)" value="<?php echo $nombre_cobrador;?>" size="40" maxlength="60" tabindex="3">
+      </font></td>
+  <tr bordercolor="#FFFFFF">
+    <td height="24"><div align="right" class="Estilo25">
+        <div align="right"><font color="#000000" size="2">PLAN</font></div>
+    </div></td>
+    <td> <font color="#000000" size="2"><strong><font color="#000000" size="2">
+    <?php 
+$sql = "SELECT * FROM plan_cobrador order by cod_plan";
+$result = $db->Execute($sql);
+echo "<select name=plan[] size=1 id =nro_os onKeyPress='return verif_caracter(this,event)'>";
+echo"<option value=''>Seleccione PLAN</option>";
+
+if (!$result) die("fallo".$db->ErrorMsg());
+while (!$result->EOF) {
+
+$cod_plan=$result->fields["cod_plan"];
+$a1_10=strtoupper($result->fields["1_10"]);
+$a11_20=strtoupper($result->fields["11_20"]);
+$a21_30=strtoupper($result->fields["21_30"]);
+$deuda=strtoupper($result->fields["deuda"]);
+
+echo"<option value=$cod_plan>Plan $cod_plan: 1 al 10($a1_10%) / 11 al 20 ($a11_20%) / 21 al 30 ($a21_30%) / Deuda ($deuda)</option>";
+$result->MoveNext();
+	}
+echo"</select>";
+?>
+    </font></strong></font></td>
+  <tr bordercolor="#FFFFFF">
+    <td height="26" colspan="2"><div align="center"><font color="#000000" size="2">
+        <input type="submit" name="Submit" id ="Submit" value="GUARDAR">
+    </font></div></td>
+  <tr>
+    <td height="0"></td>
+    <td></td>
+  </tr>  
+</table>

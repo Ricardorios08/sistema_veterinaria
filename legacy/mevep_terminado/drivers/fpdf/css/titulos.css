@@ -1,0 +1,13 @@
+titulos {
+	position: static;
+	width: auto;
+	page-break-before: auto;
+}
+
+table#pract {
+overflow: auto;
+height: 200px; /* cambia eso! */
+}
+tr#m-header td {
+position: fixed
+}

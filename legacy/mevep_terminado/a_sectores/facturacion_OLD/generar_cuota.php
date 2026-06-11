@@ -1,0 +1,27 @@
+<?php
+
+$mes = "03";
+$anio = "2012";
+
+$fecha_generacion = date("Y-m-d");
+
+include ("../../conexiones/config.inc.php");
+
+ $sql="select * from socios order by cod_socio ";
+ $result = $db->Execute($sql);
+
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+	
+$cod_socio=$result->fields["cod_socio"];
+$cobrador=$result->fields["cobrador"];
+$importe_cuota=$result->fields["importe_cuota"];
+
+$sql = "INSERT INTO `pagos` ( `cod_socio` , `mes` , `anio` , `importe` , `cobrador` , `observaciones` , `estado` ,`fecha_generacion` ,   `fecha_pago` )  VALUES ( '$cod_socio' , '$mes' , '$anio' , '$importe_cuota' , '$cobrador' , '$observaciones' , 'PENDIENTE' ,  '$fecha_generacion'  , '')";
+mysql_query($sql);
+
+
+$result->MoveNext();
+	}
+

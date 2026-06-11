@@ -1,0 +1,7 @@
+<?php
+
+ //require_once('C:/Program Files(x86)/EasyPHP-5.3.8.1/php/php539x120816194729/pear/adodb/adodb.inc.php');
+ include("adodb.inc.php");
+
+ $db = NewADOConnection('mysql');
+ $db->Connect("localhost", "root", "", "laboratorio");

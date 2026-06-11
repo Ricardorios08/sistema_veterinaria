@@ -1,0 +1,163 @@
+<script type="text/javascript">
+function ocultamenu(){
+  var menu = document.getElementById("Atributos");
+  menu.style.display = "none";
+}
+function despliega(){
+  var menu = document.getElementById("Atributos");
+    if(menu.style.display == "none"){
+      menu.style.display = "block";
+    }
+    else{
+      menu.style.display = "none";
+    }
+}
+</script>
+<script LANGUAGE="JavaScript">
+function multicarga(documento1,documento2)
+{
+parent.izquierda.location.href=documento1;
+parent.central.location.href=documento2;
+}
+
+ar isCtrl = false; document.onkeyup=function(e){ if(e.which == 17) isCtrl=false; }
+document.onkeydown=function(e){ 
+	if(e.which == 27) 
+	isCtrl=true; if(e.which == 27) { 
+alert ("fds");
+		//run code for CTRL+S -- ie, save! return false; } if(e.which == 79 && isCtrl == true) { //run code for CTRL+O -- ie, open! return false; } if(e.which == 84 && isCtrl == true) { //run code for CTRL+T -- ie, new tab! return false; 
+		} 
+		}
+</script>
+
+
+<style type="text/css">
+<!--
+.Estilo4 {font-size: xx-small}
+.Estilo7 {font-family: Arial, Helvetica, sans-serif}
+.Estilo54 {font-size: 12px}
+.Estilo55 {color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo58 {color: #000099}
+.Estilo59 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000099; }
+.Estilo66 {color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; }
+.Estilo67 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo68 {font-size: 11px}
+-->
+</style>
+
+<link href="../../menus.css" rel="stylesheet" type="text/css" />
+
+
+<BODY background="../../../IMAGENES/logito.PNG" class="Estilo4" onload ="ocultamenu()">
+
+<FORM ACTION="separar_busqueda.php" method="post" TARGET = "central">
+<table width="140" border="0">
+  <tr>
+    <td height="26" valign="middle" bgcolor="#666666" class="Estilo7" scope="row"><div align="center"><span class="Estilo66">INVENTARIO</span></div></td>
+  </tr>
+  <tr>
+    <td valign="middle" class="Estilo7" scope="row"><div align="left"><font color="#0000FF"><a href="../inventario/existencia_actual.php" target = "central" class="Estilo59" >1. EXISTENCIA ACTUAL </a></font></div></td>
+  </tr>t
+  <tr>
+    <td valign="middle" class="Estilo7" scope="row">
+      <div align="left" class="Estilo54 Estilo58">
+        <div align="left"><a href="existencia_proveedor.php" target = "central" > <span class="Estilo7">  2. TOMA INVENTARIO.</span></a></div>
+      </div></td>
+  </tr>
+  <tr>
+    <td valign="middle" class="Estilo59" scope="row"> <div align="left"><font color="#0000FF">
+          </font>
+          <font color="#0000FF"><a href="../inventario/toma_inventario/pagina2.php" target = "central" > 3. CARGA EXISTENCIA </a></font></div></td>
+  </tr>
+  <!-- <tr>
+    <td valign="middle" class="Estilo59" scope="row"><div align="left"><font color="#0000FF"><a href="../inventario/existencia_todo.php" target = "central" class="Estilo68" >4. VALORIZADO ACTUAL </a> </font></div></td>
+  </tr>
+  <tr>
+    <td valign="middle" class="Estilo59" scope="row"><div align="left"><font color="#0000FF"><a href="../inventario/existencia_todo1.php" target = "central" class="Estilo68" >5. VALORIZADO DE INICIO </a></font></div></td>
+  </tr>
+   <tr>
+    <td valign="middle" class="Estilo59" scope="row"><div align="left"><font color="#0000FF"><a href="../inventario/existencia_cierre.php" target = "central" class="Estilo68" >6. VAL. DE CIERRE 31/08 </a></font></div></td>
+  </tr> -->
+
+    <tr>
+    <td valign="middle" class="Estilo59" scope="row"><div align="left"><font color="#0000FF"><a href="../inventario/existencia_todo2.php" target = "central" >4. INVENTARIO NUEVO </a></font></div></td>
+  </tr>
+    <tr>
+      <td valign="middle" class="Estilo59" scope="row">&nbsp;</td>
+    </tr>
+  <tr>
+    <!-- <td valign="middle" class="Estilo60" scope="row"> <div align="center"><font color="#0000FF">
+        </font>
+          <font color="#0000FF"><a href="mercaderia/entrada_mercaderia.php" target = "central" ><span class="Estilo7"> CONTROL INVENTARIO </span></a></font></div></td>
+  </tr> 
+  <tr>
+
+    <td valign="middle" class="Estilo4" scope="row"><div align="left" class="Estilo60">
+        <div align="center"><a href="existencia_todo.php" target = "central" ><span class="Estilo7"> EMISION INVENTARIO </span></a></div>
+    </div></td>
+  </tr>
+  <tr>-->
+    <td valign="middle" bgcolor="#666666" class="Estilo4" scope="row"><div align="center"><span class="Estilo55">INVENTARIO</span></div></td>
+  </tr>
+  <tr>
+    <td valign="middle" class="Estilo4" scope="row">
+        <div align="center">
+          <input name="cod_mercaderia" type="text" id="cod_mercaderia" size="6">
+          <input type="submit" name="Submit" value="Corregir">
+        </div></td>
+  </tr>
+  <!-- <tr>
+    <td valign="middle" class="Estilo4" scope="row"><div align="center">
+      <select name="emision[]" id="emision[]">
+          <option value="1" selected>PANTALLA</option>
+          <option value="2">IMPRESORA</option>
+      <!--     <option value="3">EXCEL</option> -->
+      </select>
+    </div></td>
+  </tr> 
+  <tr>
+    <td valign="middle" class="Estilo4" scope="row">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="middle" bgcolor="#666666" class="Estilo4" scope="row"><div align="center"><span class="Estilo55">PASO FINAL </span></div></td>
+  </tr>
+  <tr>
+    <td valign="middle"  scope="row"><div align="center" class="Estilo54">
+      <div align="left"><a href="backup.php" target = "central" ><span class="Estilo7">8. BACKUP</span></a></div>
+    </div></td>
+  </tr>
+  <tr>
+    <td valign="middle"  scope="row"><div align="center" class="Estilo54">
+      <div align="left"><a href="toma_inventario/CREAR_STOCK.php" target = "central" ><span class="Estilo7">9. CREAR STOCK</span></a></div>
+    </div></td>
+  </tr>
+  <tr>
+    <td valign="middle"  scope="row"><div align="center" class="Estilo54">
+      <div align="left"><a href="actualizacion.php" target = "central" ><span class="Estilo7">10. ACTUALIZAR</span></a></div>
+    </div></td>
+  </tr>
+  <tr>
+    <td valign="middle"  scope="row">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="middle"  scope="row"><div align="center"><span class="Estilo10"><a href="../procesos.php" target ="izquierda"><font color="#0000FF">Atras</font></a> </span></div></td>
+  </tr>
+  
+</table>
+
+<div align="center"></div>
+</form><script type="text/javascript">
+function ocultamenu(){
+  var menu = document.getElementById("Atributos");
+  menu.style.display = "none";
+}
+function despliega(){
+  var menu = document.getElementById("Atributos");
+    if(menu.style.display == "none"){
+      menu.style.display = "block";
+    }
+    else{
+      menu.style.display = "none";
+    }
+}
+</script>

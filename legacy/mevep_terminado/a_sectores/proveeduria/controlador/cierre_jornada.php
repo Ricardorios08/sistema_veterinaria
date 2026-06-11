@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Documento sin t&iacute;tulo</title>
+<link href="../../menus.css" rel="stylesheet" type="text/css" />
+<link href="../../css/botonera.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+<!--
+.Estilo69 {font-family: "Trebuchet MS"; color: #000000; }
+-->
+</style>
+</head>
+
+<body>
+
+<?php 
+
+$id = $_REQUEST['id'];
+
+$dia = date("d");
+$mes = date("m");
+$anio = date("y");
+
+
+?>
+ 
+<FORM ACTION="cierre_j.php" method="post" TARGET = "central">
+
+<table width="800" border="0" align="left">
+
+      
+      <tr>
+        <td colspan="2" align="center" bgcolor="#F0F0F0" scope="row">BUSCAR FACTURAS </td>
+      </tr>
+      <tr>
+        <td width="225" align="center" scope="row"><div align="right" class="Estilo69">
+          <div align="right"><span class="Estilo5"><font size="2"> DESDE:<font size="2"><font size="2">
+          </font></font></font></span></div>
+        </div></td>
+        <td width="565" align="center" scope="row"><div align="left"><span class="Estilo5"><font size="2"><font size="2"><font size="2">
+            <input name = "dia" type = "text" id="dia" value="<?php echo $dia;?>" size = "2" maxlength="2" />
+          </font></font>/<font size="2"><font size="2">
+          <input name = "mes" type = "text" id="mes" value="<?php echo $mes;?>" size = "2" maxlength="2" />
+          </font></font>/ <font size="2">
+          <input name = "anio" type = "text" id="anio4" value="<?php echo $anio;?>" size = "2" maxlength="2" />
+          </font></font></span></div></td>
+      </tr>
+      <tr>
+        <td align="center" scope="row"><div align="right" class="Estilo69">
+            <div align="right"><span class="Estilo5"><font size="2"> HASTA:<font size="2"><font size="2"> </font></font></font></span></div>
+        </div></td>
+        <td align="center" scope="row"><div align="left"><span class="Estilo5"><font size="2"><font size="2"><font size="2">
+            <input name = "dia1" type = "text" id="dia1" value="<?php echo $dia;?>" size = "2" maxlength="2" />
+            </font></font>/<font size="2"><font size="2">
+            <input name = "mes1" type = "text" id="mes1" value="<?php echo $mes;?>" size = "2" maxlength="2" />
+            </font></font>/ <font size="2">
+            <input name = "anio1" type = "text" id="anio4" value="<?php echo $anio;?>" size = "2" maxlength="2" />
+        </font></font></span></div></td>
+      </tr>
+      <tr>
+        <td align="center" scope="row">&nbsp;</td>
+        <td align="center" scope="row">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center" scope="row"><font size="2" face="Arial, Helvetica, sans-serif"><font size="2" face="Arial, Helvetica, sans-serif">
+          <input type = "submit" name = "ok" value = "BUSCAR" class="bot1"  />
+        </font></font></td>
+      </tr>
+  </table>
+</form>
+</body>
+</html>

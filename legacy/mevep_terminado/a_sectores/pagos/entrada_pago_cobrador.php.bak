@@ -1,0 +1,186 @@
+<link href="../../../laboratorio/css/fondo.css" rel="stylesheet" type="text/css" />
+<script language="javascript">
+function on_load()
+{
+document.getElementById("cod_barra").focus();
+document.getElementById("cod_barra").selected();
+}
+
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				case "cod_barra":
+				document.getElementById("fecha_pago").focus();
+				break;
+				case "fecha_pago":
+				document.getElementById("cod_socio").focus();
+				break;
+				case "cod_socio":
+				document.getElementById("mes").focus();
+				break;
+				case "mes":
+				document.getElementById("anio").focus();
+				break;
+				case "anio":
+				document.getElementById("importe").focus();
+				break;
+
+				case "importe":
+				document.getElementById("cobrador").focus();
+				break;
+						
+		}
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+
+<style type="text/css">
+<!--
+.Estilo25 {font-family: "Trebuchet MS"}
+.Estilo2 {font-size: 12px}
+.Estilo3 {font-family: "Trebuchet MS"; font-size: 12px; }
+-->
+</style>
+<BODY onload = "on_load()">
+
+<?php 
+include ("../../conexiones/config.inc.php");
+/* $sql="select * from socios where cod_socio < 82500 ORDER BY cod_socio DESC";
+$result = $db->Execute($sql);
+
+$cod_socio=($result->fields["cod_socio"] + 1);
+
+ $sql="select * from socios  ORDER BY ruta DESC";
+$result = $db->Execute($sql);
+
+$ruta=($result->fields["ruta"] + 1);
+
+
+
+
+*/
+
+$dia= date("d");
+$mes = date("m");
+$anio_a = date("Y");
+
+
+?>
+<form action="guardar.php" method="post">
+<table width="850" border="0" cellspacing="0">
+    <!--DWLayoutTable-->
+    <tr bordercolor="#FFFFFF">
+      <td height="30" colspan="2" bgcolor="#CCCCCC"><div align="center"><strong>INGRESO PAGO COBRADOR </strong></div></td>
+  </tr>
+    <tr align="center" bordercolor="#FFFFFF">
+      <td width="129" height="24"><div align="right" class="Estilo25 Estilo2">COD BARRA </div></td>
+      <td width="717"><div align="left"><font color="#000000" size="2">
+          <input name="cod_barra" type="text" id="cod_barra" onKeyPress="return verif_caracter(this,event)" size="40" maxlength="60" tabindex="2">
+          <span class="Estilo3">FECHA</span>
+          <input name="dia" type="text" id="fecha_pago3" tabindex="2"onKeyPress="return verif_caracter(this,event)" value="<?php echo $dia;?>" size="2" maxlength="2">
+          /
+          <input name="mes" type="text" id="fecha_pago4" tabindex="2"onKeyPress="return verif_caracter(this,event)" value="<?php echo $mes;?>" size="2" maxlength="2">
+          /
+          <input name="anio" type="text" id="fecha_pago5" tabindex="2"onKeyPress="return verif_caracter(this,event)" value="<?php echo $anio_a;?>" size="4" maxlength="4">
+          <input type="Submit" name="Submit" id ="Submit5" value="ACEPTAR" tabindex="29">
+</font></div></td>
+    </tr>
+  <tr>
+    <td height="0"></td>
+    <td></td>
+  </tr>  
+</table>
+
+<!-- <table width="800" border="0" cellspacing="0">
+
+  <tr bordercolor="#FFFFCC" bgcolor="#CCCCCC">
+  
+    <td><div align="left"><strong><font color="#000000" size="2" face="Trebuchet MS">COBRADOR: </font></strong><strong><font size="2" face="Trebuchet MS"><?php echo $cobrador1;?></font></strong></div>      </td>
+
+	  <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+    <td bordercolor="#E8DCFC" bgcolor="#FFFF99"><table width="929" border="0" cellspacing="0">
+      <tr bgcolor="#CCCCCC">
+        <td width="300"><div align="center"><span class="Estilo3 Estilo4">SOCIO</span></div></td>
+        <td width="108"><div align="center" class="Estilo3 Estilo4">FECHA CREACION </div></td>
+        <td width="52"><div align="center" class="Estilo5">MES</div></td>
+        <td width="61"><div align="center" class="Estilo5">A&Ntilde;O</div></td>
+        <td width="62"><div align="center" class="Estilo5">IMPORTE</div></td>
+        <td width="98"><div align="center" class="Estilo5">ESTADO</div></td>
+        <td width="150"><div align="center" class="Estilo5">COBRADOR</div></td>
+        <td width="82"><div align="center" class="Estilo5">FECHA PAGO </div></td>
+      </tr>
+ -->
+
+
+    <?php 
+/*
+$fecha_pago = date("Y-m-d");
+$sql1="select * from pagos where fecha_pago = '$fecha_pago' and estado = 'PAGADO'  limit 10";
+$result1 = $db->Execute($sql1);
+
+ 
+  if (!$result1) die("fallo".$db->ErrorMsg());
+  while (!$result1->EOF) {
+
+
+
+$cod_socio=strtoupper($result1->fields["cod_socio"]);
+$fecha_generacion=strtoupper($result1->fields["fecha_generacion"]);
+$mes=strtoupper($result1->fields["mes"]);
+$anio=strtoupper($result1->fields["anio"]);
+$importe=strtoupper($result1->fields["importe"]);
+$cobrador=strtoupper($result1->fields["cobrador"]);
+$estado=strtoupper($result1->fields["estado"]);
+$observaciones=strtoupper($result1->fields["observaciones"]);
+$fecha_pago=strtoupper($result1->fields["fecha_pago"]);
+
+
+  $sql="select * from socios where cod_socio = $cod_socio";
+ $result = $db->Execute($sql);
+	
+$cod_socio=$result->fields["cod_socio"];
+$apellido=strtoupper($result->fields["apellido"]);
+$nombre=strtoupper($result->fields["nombre"]);
+
+
+
+
+
+
+
+	  ?>
+      <tr>
+        <td><div align="left"><strong><font size="2" face="Trebuchet MS"><?php echo $cod_socio;?></font></strong>-<strong><font size="2" face="Trebuchet MS"><?php echo $apellido;?>, <?php echo $nombre;?> </font></strong></div></td>
+        <td><div align="center"><strong><font size="2" face="Trebuchet MS"><?php echo $fecha_generacion;?></font></strong></div></td>
+        <td><div align="center"><strong><font size="2" face="Trebuchet MS"><?php echo $mes;?></font></strong></div></td>
+        <td><div align="center"><strong><font size="2" face="Trebuchet MS"><?php echo $anio;?></font></strong></div></td>
+        <td><div align="right"><strong><font size="2" face="Trebuchet MS"><?php echo $importe;?></font></strong></div></td>
+        <td><div align="center"><strong><font size="2" face="Trebuchet MS"><?php echo $estado;?></font></strong></div></td>
+        <td><div align="center"><strong><font size="2" face="Trebuchet MS"><?php echo $cobrador;?></font></strong></div></td>
+        <td><div align="center"><strong><font size="2" face="Trebuchet MS"><?php echo $fecha_pago;?></font></strong></div></td>
+      </tr>
+      <?php 
+	$result1->MoveNext();
+	}
+	
+
+?>
+
+    </table></td>
+  </tr>
+  
+
+</table>
+*/

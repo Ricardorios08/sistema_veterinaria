@@ -1,0 +1,28 @@
+<BODY background="pescar.bmp"><CENTER><TABLE WIDTH="90%" BORDER=0><TR><TD>  
+
+<?php
+include ("../../../conexiones/config_pro.php");
+
+
+$cod_mevep=$_POST["cod_mevep"];
+
+$sql="select * from socios where cod_socio = $cod_mevep";
+$result = $db->Execute($sql);
+
+$apellido=strtoupper($result->fields["apellido"]);
+$nombre=strtoupper($result->fields["nombre"]);
+$documento=strtoupper($result->fields["documento"]);
+
+$nombre = $apellido.", ".$nombre;
+
+
+$cbu=$_POST["cbu"];
+$monto_descontar=$_POST["monto_descontar"];
+$fecha_ingreso=$_POST["fecha_ingreso"];
+
+$sql = "INSERT INTO `mevep`.`debito` (`cod_mevep`, `nombre`, `documento`, `cbu`, `monto_descontar` , `fecha_ingreso`) VALUES ('$cod_mevep', '$nombre', '$documento', '$cbu', '$monto_descontar' , '$fecha_ingreso')";
+mysql_query($sql);
+include ("../../proveeduria/debito/entrada_debito.php");
+
+?>
+

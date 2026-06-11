@@ -1,0 +1,496 @@
+<?$nro_factura;
+$hoy = date("d/m/y");
+?>
+<style type="text/css">
+<!--
+.Estilo5 {font-family: Arial, Helvetica, sans-serif}
+.Estilo6 {font-size: 9px; font-family: Arial, Helvetica, sans-serif; }
+.Estilo15 {font-size: 12px}
+.Estilo15 {font-family: Arial, Helvetica, sans-serif}
+.Estilo16 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo16 {font-size: 9px; font-family: Arial, Helvetica, sans-serif; }
+.Estilo17 {font-size: 12px}
+.Estilo17 {font-family: Arial, Helvetica, sans-serif}
+.Estilo18 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo18 {font-size: 9px; font-family: Arial, Helvetica, sans-serif; }
+.Estilo22 {font-size: 10px; font-family: Arial, Helvetica, sans-serif; }
+.Estilo23 {font-size: 10px}
+.Estilo62 {font-size: 12px}
+.Estilo62 {font-family: Arial, Helvetica, sans-serif}
+.Estilo64 {	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.Estilo64 {	color: #000000;
+	font-weight: bold;
+}
+.Estilo65 {font-size: 12px}
+.Estilo65 {font-family: Arial, Helvetica, sans-serif}
+.Estilo66 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo66 {font-size: 9px; font-family: Arial, Helvetica, sans-serif; }
+.Estilo72 {font-size: 18px}
+.Estilo73 {font-size: 16px}
+-->
+</style>
+
+ <body onUnload="window.opener.openedImprimir=0;" onLoad="window.print(); window.close();">
+
+
+   <!--DWLayoutTable-->
+   <hr noshade>
+   <table width="103%" border="0">
+   <!--DWLayoutTable-->
+   <tr valign="middle" bgcolor="#FFFFFF">
+     <td colspan="5" valign="top"><div align="center" class="Estilo67 Estilo72"><strong>FRANCISCO M. LOPEZ</strong></div>       
+       <div align="center" class="Estilo69 Estilo73"><strong>_________ COMPRAS _______ </strong></div>       <div align="center" class="Estilo71 Estilo23">RIOJA 0000 - 5500 MENDOZA </div>       <div align="center" class="Estilo71 Estilo23">IVA RESPONSABLE INSCRIPTO </div></td>
+     <td colspan="6" valign="top"><div align="left"><span class="Estilo65"><span class="Estilo64"><span class="Estilo68"><span class="Estilo3">IVA COMPRA</span><BR></span></span></span></div>       <span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">CUIT:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 00-00000000-0 <BR>ING. BRUTOS: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXENTO <BR>SEDE DE TIMBRADO: &nbsp;&nbsp;01 </span></span></td>
+   </tr>
+   <tr valign="middle" bgcolor="#FFFFFF">
+     <td colspan="5"><div align="left"><span class="Estilo65"><span class="Estilo64"><span class="Estilo3"> </span><?ECHO $perio;?> - <?ECHO $anio;?></span> </span></div></td>
+     <td colspan="6"><div align="right" class="Estilo22">Registro N&ordm; <?echo $registro;?> <span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">&nbsp;</span></span><span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">&nbsp;</span></span><span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">&nbsp;</span></span><span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">&nbsp;</span></span><span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">&nbsp;</span></span><span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">&nbsp;</span></span><span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">&nbsp;</span></span>HOJA N&ordm; <?echo $hoja;?> </div></td>
+   </tr>
+   <tr bgcolor="#FFFFFF">
+     <td colspan="11">
+   <hr noshade>     </tr>
+   <tr bgcolor="#FFFFFF">
+     <td width="74"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Fecha</span> </div>
+     <td width="282"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Comprobante</span></div>
+     <td width="278">
+       <div align="center"><span class="Estilo6 Estilo2  Estilo5">Denominaci&oacute;n</span></div>
+     <td width="50"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Tipo</span></div></td>
+     <td width="117"><div align="center"><span class="Estilo6 Estilo2  Estilo5">CUIT</span></div></td>
+     <td width="97"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Resp. Inscrip </span></div></td>
+     <td width="113"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Monotributo</span></div></td>
+     <td width="97"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Exento</span></div></td>
+     <td width="80"><div align="center"><span class="Estilo6 Estilo2  Estilo5">IVA R.I </span></div></td>
+     <td width="101"><div align="center"><span class="Estilo6 Estilo2  Estilo5">IVA Mon. </span></div></td>
+     <td width="145"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Total</span></div></td>
+   </tr>
+   <tr>
+     <td colspan="11"><!--DWLayoutEmptyCell-->&nbsp;</td>
+   </tr>
+
+   
+     <?
+
+include ("../../../conexiones/config_grabacion.php");
+
+
+
+$fecha_desde = $anio."-".$mes."-01"; 
+$fecha_hasta =$anio."-".$mes."-31";
+
+ $sql="select * from compras_encabezado where fecha BETWEEN '$fecha_desde' and '$fecha_hasta' ORDER by $ordenar";
+
+//echo $sql="select * from ventas_encabezado where fecha BETWEEN '$fecha_desde' and '$fecha_hasta' and iva > 0 ORDER by $ordenar";
+
+
+$result = $db_pro->Execute($sql);
+
+  if (!$result) die("fallo".$db_pro->ErrorMsg());
+  while (!$result->EOF) {
+
+
+$cuent = $cuenta;
+
+$nro_proveedor=strtoupper($result->fields["nro_proveedor"]);
+
+$contame = $contame +1;
+
+$cod_operacion=strtoupper($result->fields["cod_operacion"]);
+
+$tipo_fact=strtoupper($result->fields["tipo_fact"]);
+$nro_factura=strtoupper($result->fields["nro_factura"]);
+//$nro_factura = "0001-000".$nro_factura;
+$denominacion=strtoupper($result->fields["denominacion"]);
+$denominacion=substr($denominacion,0,25);
+
+$fecha=strtoupper($result->fields["fecha"]);
+$tipo_iva=strtoupper($result->fields["tipo_iva"]);
+
+
+
+if ($nro_cliente != 0){
+$sql1="select cuit from proveedores where cuenta = $nro_proveedor";
+$result1 = $db_pro->Execute($sql1);
+$cuit=strtoupper($result1->fields["cuit"]);
+
+}
+
+
+if ($cod_operacion == 6){
+	$cuit = "";
+}
+
+
+switch ($tipo_iva) {
+	case "1":{
+$condicion = "R.I.";
+		break;
+	}
+
+	case "3":{
+$condicion = "MON";
+		break;
+	}
+
+	case "4":{
+$condicion = "EXE";
+		break;
+	}
+
+	case "0":{
+$condicion = "MON";
+		break;
+	}
+
+}
+
+
+
+$dia = substr($fecha,8,2);
+$mes= substr($fecha,5,2);
+$anio = substr($fecha,0,4);
+
+$fecha = $dia."/".$mes."/".$anio;
+
+$bruto=strtoupper($result->fields["subtotal"]);
+$descuento=strtoupper($result->fields["descuento"]);
+$iva=strtoupper($result->fields["iva"]);
+//$neto_gravado=strtoupper($result->fields["neto_gravado"]);
+
+
+$neto_gravado =strtoupper($result->fields["neto_gravado"]);
+$total=$result->fields["total"];
+
+
+////////////////////////
+/*
+$nt = round(($neto_gravado * 0.21),2);
+
+$a = $nt - $iva;
+
+if ($a > 1){
+	echo "-------------------------".$nro_factura;
+
+	echo "<br>";
+}
+
+*/
+
+///////////////
+
+
+$net = round($neto_gravado + $iva,2);
+
+
+
+
+//$neto_gravado = $neto_gravado + $descuento;
+/*if ($cod_operacion == 3){
+$nota = $nota + $total;
+
+}else{
+
+ $total_final = $total_final + $total;
+}
+*/
+$periodo=strtoupper($result->fields["periodo"]);
+$anio=strtoupper($result->fields["anio"]);
+$tipo_fact=strtoupper($result->fields["tipo_fact"]);
+//$cod_operacion=strtoupper($result->fields["cod_operacion"]);
+$forma_pago=strtoupper($result->fields["forma_pago"]);
+$forma_pago;
+
+
+$movimiento = "FAC";
+
+
+
+SWITCH ($tipo_iva){
+
+case "1":{ //respo ins
+
+$neto_gravado_ri = $neto_gravado;
+$total_neto_gravado_ri = $total_neto_gravado_ri + $neto_gravado_ri;
+$iva_ri = $iva;
+$total_iva_ri = $total_iva_ri + $iva_ri;
+$acumula_fact_ri = $acumula_fact_ri + $neto_gravado_ri;
+$acumula_iva_ri = $acumula_iva_ri + $iva_ri;
+$total_final_ri = $total_final_ri + $neto_gravado_ri;
+
+BREAK;
+}
+
+
+
+case "4":{ //EXENTOS
+	
+/////////////
+
+
+$neto_gravado_ex = $neto_gravado;
+$total_final_ex = $total_final_ex + $neto_gravado_ex;
+$acumula_fact_ex = $acumula_fact_ex + $neto_gravado_ex;
+
+
+BREAK;
+}
+
+case "3":{ //monotributit
+
+
+$neto_gravado_mon = $neto_gravado;
+$total_neto_gravado_mon = $total_neto_gravado_mon + $neto_gravado;
+$iva_mon = $iva;
+$total_iva_mon = $total_iva_mon + $iva_mon;
+$total_final_mon = $total_final_mon + $neto_gravado_mon;
+
+$acumula_fact_mon = $acumula_fact_mon + $neto_gravado_mon;
+$acumula_iva_mon = $acumula_iva_mon + $iva_mon;
+
+
+BREAK;
+}
+
+
+}
+
+
+
+
+if ($neto_gravado_ri == 0.00){
+	$neto_gravado_ri = "-";
+
+}else {
+$neto_gravado_ri = "$".number_format($neto_gravado_ri,2);
+}
+
+
+if ($neto_gravado_ex == 0.00){
+	$neto_gravado_ex = "-";
+
+}else {
+$neto_gravado_ex = "$".number_format($neto_gravado_ex,2);
+}
+
+if ($neto_gravado_mon == 0.00){
+	$neto_gravado_mon = "-";
+
+}else {
+$neto_gravado_mon = "$".number_format($neto_gravado_mon,2);
+}
+
+if ($iva_ri == 0.00){
+	$iva_ri = "-";
+
+}else {
+$iva_ri = "$".number_format($iva_ri,2);
+}
+
+if ($iva_mon == 0.00){
+	$iva_mon = "-";
+
+}else {
+$iva_mon = "$".number_format($iva_mon,2);
+}
+
+
+if ($total == 0.00){
+	$total = "-";
+
+}else {
+$total = "$".number_format($total,2);
+}
+
+
+
+
+
+?>
+     <td><div align="center"><span class="Estilo5"><span class="Estilo5"><?print("$fecha");?></span></span></div></td>
+     <td>
+       <div align="center" class="Estilo5 Estilo5">         
+         <div align="left"><?print("$movimiento");?> <?print("$tipo_fact");?> - <?print("$nro_factura");?></div>
+       </div></td>
+     <td><div align="left" class="Estilo5" > <?print("$denominacion");?></div></td>
+     <td><div align="center" class="Estilo5">
+       <div align="left"><span class="Estilo5"><?print("$condicion");?></span>
+           
+     </div>
+     </div></td>
+     <td><div align="center" class="Estilo5"><?print("$cuit");?></div></td>
+     <!-- <td><div align="center" class="Estilo6"><span class="Estilo4 Estilo5"><?print("$proveedor");?></span></div></td> -->
+
+     <td width="97"><div align="right" class="Estilo5">
+       <div align="right"><?echo $neto_gravado_ri;?></div>
+     </div></td>
+     <td width="113"><div align="right" class="Estilo5"><?echo $neto_gravado_mon;?></div></td>
+     <td width="97"><div align="right" class="Estilo5">
+       <div align="right"><?echo $neto_gravado_ex;?></div>
+     </div></td>
+     <td width="80"><div align="right" class="Estilo5">
+       <div align="right"><?echo $iva_ri;?></div>
+     </div></td>
+     <td width="101"><div align="right" class="Estilo5"><?echo $iva_mon;?></div></td>
+     <td width="145"><div align="right" class="Estilo5"><?echo $total;?></div></td>
+ 
+   </tr>
+   <?$neto_gravado_ri= "";
+$neto_gravado_mon= "";
+$neto_gravado_ex= "";
+$iva_ri= "";
+$iva_mon= "";
+$total = "";
+$neto_nc = "";
+$iva_nc = "";
+$iva_mon_nc = "";
+$mon_nc = "";
+$ex_nc = "";
+
+//$condicion = "";  
+
+$cont = $cont +1;
+
+
+
+if ($cont == 28){
+$hoja = $hoja + 1;	
+?>
+   <tr valign="middle" bgcolor="#FFFFFF">
+     <td colspan="5" valign="top"><div align="center" class="Estilo67 Estilo72">
+       <div align="center" class="Estilo67 Estilo72"><strong>FRANCISCO M. LOPEZ</strong></div>
+       <div align="center" class="Estilo69 Estilo73"><strong>_________ COMPRAS _______ </strong></div>
+       <div align="center" class="Estilo71 Estilo23">RIOJA 0000 - 5500 MENDOZA </div>
+       <div align="center" class="Estilo71 Estilo23">IVA RESPONSABLE INSCRIPTO </div>
+     </div>       
+       </td>
+     <td colspan="6" valign="top"><div align="left"><span class="Estilo65"><span class="Estilo64"><span class="Estilo68"><span class="Estilo3">IVA VENTA</span><BR></span></span></span></div>       <span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">CUIT:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 00-00000000-0 <BR>ING. BRUTOS: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXENTO <BR>SEDE DE TIMBRADO: &nbsp;&nbsp;01 </span></span></td>
+   </tr>
+   <tr valign="middle" bgcolor="#FFFFFF">
+     <td colspan="5"><div align="left"><span class="Estilo65"><span class="Estilo64"><span class="Estilo3"> </span><?ECHO $perio;?> - <?ECHO $anio;?></span> </span></div></td>
+     <td colspan="6"><div align="right" class="Estilo22">Registro N&ordm; <?echo $registro;?> <span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">&nbsp;</span></span><span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">&nbsp;</span></span><span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">&nbsp;</span></span><span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">&nbsp;</span></span><span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">&nbsp;</span></span><span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">&nbsp;</span></span><span class="Estilo71 Estilo65"><span class="Estilo71 Estilo23">&nbsp;</span></span>HOJA N&ordm; <?echo $hoja;?> </div></td>
+   </tr>
+   <tr bgcolor="#FFFFFF">
+     <td colspan="11">
+   <hr noshade>     </tr>
+   <tr bgcolor="#FFFFFF">
+     <td width="74"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Fecha</span> </div>
+     <td width="282"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Comprobante</span></div>
+     <td width="278">
+       <div align="center"><span class="Estilo6 Estilo2  Estilo5">Denominaci&oacute;n</span></div>
+     <td width="50"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Tipo</span></div></td>
+     <td width="117"><div align="center"><span class="Estilo6 Estilo2  Estilo5">CUIT</span></div></td>
+     <td width="97"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Resp. Inscrip </span></div></td>
+     <td width="113"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Monotributo</span></div></td>
+     <td width="97"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Exento</span></div></td>
+     <td width="80"><div align="center"><span class="Estilo6 Estilo2  Estilo5">IVA R.I </span></div></td>
+     <td width="101"><div align="center"><span class="Estilo6 Estilo2  Estilo5">IVA Mon. </span></div></td>
+     <td width="145"><div align="center"><span class="Estilo6 Estilo2  Estilo5">Total</span></div></td>
+   </tr>
+   <tr>
+     <td colspan="11"><hr noshade></td>
+   </tr>
+
+     <?
+$cont = 0;
+
+}
+	$result->MoveNext();
+	}
+
+	$condicion = "";  
+
+$cuit = "";
+$tipo = "";
+
+
+
+$total_final_ri = $total_final_ri - $nc_ri;
+
+$total_final_mon = $total_final_mon - $nc_mon;
+$total_final_ex = $total_final_ex - $nc_ex;
+
+$total_iva_ri = $total_iva_ri - $nc_iva_ri;
+$total_iva_mon = $total_iva_mon - $nc_iva_mon;
+
+$total_fin = $total_final - $nota;
+
+
+$suma_totales= $total_final_ri + $total_final_mon + $total_final_ex + $total_iva_mon + $total_iva_ri;
+$diferencia = number_format($suma_totales - $total_fin,2);
+
+
+
+if ($total_final_ri == 0.00){
+	$total_final_ri = "-";
+
+}else {
+$total_final_ri = "$".number_format($total_final_ri,2);
+}
+
+
+if ($total_final_mon == 0.00){
+	$total_final_mon = "-";
+
+}else {
+$total_final_mon = "$".number_format($total_final_mon,2);
+}
+
+if ($total_final_ex == 0.00){
+	$total_final_ex = "-";
+
+}else {
+$total_final_ex = "$".number_format($total_final_ex,2);
+}
+
+if ($total_iva_ri == 0.00){
+	$total_iva_ri = "-";
+
+}else {
+$total_iva_ri = "$".number_format($total_iva_ri,2);
+}
+
+if ($total_iva_mon == 0.00){
+	$total_iva_mon = "-";
+
+}else {
+$total_iva_mon = "$".number_format($total_iva_mon,2);
+}
+
+if ($total_final == 0.00){
+	$total_final = "-";
+
+}else {
+$total_final = "$".number_format($total_final,2);
+}
+
+
+
+$total_nc = $nc_ri + $nc_mon + $nc_ex + $nc_iva_ri + $nc_iva_mon;
+$total_fa = $acumula_fact_ri+ $acumula_fact_mon + $acumula_fact_ex + $acumula_iva_ri + $acumula_iva_mon;
+
+
+	?>
+   <tr>
+     <td colspan="5"><!--DWLayoutEmptyCell-->&nbsp;</td>
+     <td><hr noshade></td>
+     <td><div align="center">
+         <hr noshade>
+     </div></td>
+     <td><div align="center">
+         <hr noshade>
+     </div></td>
+     <td><hr noshade></td>
+     <td><hr noshade></td>
+     <td><hr noshade></td>
+   </tr>
+   <tr>
+     <td colspan="5"><div align="right" class="Estilo62"><strong>TOTALES</strong></div></td>
+     <td class="Estilo62"><div class="Estilo65"><strong><span class="Estilo66"><?echo $total_final_ri;?></span></strong></div></td>
+     <td class="Estilo62"><div align="right"><span class="Estilo17"><strong><span class="Estilo18"><?echo $total_final_mon;?></span></strong></span></div></td>
+     <td class="Estilo62"><div align="right"><strong><span class="Estilo15"><span class="Estilo16"><?echo $total_final_ex;?></span></span></strong></div></td>
+     <td class="Estilo62"><div align="right" class="Estilo65"><strong><span class="Estilo66"><?echo $total_iva_ri;?></span></strong></div></td>
+     <td class="Estilo62"><div align="right"><strong><span class="Estilo65"><span class="Estilo66"><?echo $total_iva_mon;?></span></span></strong></div></td>
+     <td class="Estilo62"><div align="right" class="Estilo66"><strong><?echo $total_fin;?></strong></div></td>
+   </tr>
+ </table>

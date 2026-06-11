@@ -1,0 +1,42 @@
+<?
+
+$dia = $_REQUEST['dia'];
+$mes = $_REQUEST['mes'];
+$anio = $_REQUEST['anio'];
+$cheque= $_REQUEST['cheque'];
+
+$fecha_a = $dia."/".$mes."/".$anio;
+$fecha = $anio."-".$mes."-".$dia;
+
+
+$opcion= $_REQUEST['opcion'];
+
+switch ($opcion){
+	case "1":{
+		include ("diario_vta.php");
+		break;
+
+	}
+
+case "2":{
+		include ("diario_vta_global.php");
+		break;
+
+	}
+
+	case "3":{
+		include ("diario_vta_global_detalle.php");
+		break;
+
+	}
+
+	case "4":{
+		include ("diario_vta_global_asociados.php");
+		break;
+
+	}
+
+}
+
+
+?>

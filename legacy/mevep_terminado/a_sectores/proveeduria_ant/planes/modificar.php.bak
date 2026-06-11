@@ -1,0 +1,186 @@
+<script language="javascript">
+function on_load()
+{
+document.getElementById("plan").focus();
+document.getElementById("plan").style.backgroundColor = "#CCFFCC";
+}
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				case "plan":
+				document.getElementById("descuento_1").focus();
+				document.getElementById("plan").style.backgroundColor = "#ffffff";
+				document.getElementById("descuento_1").style.backgroundColor = "#CCFFCC";
+
+				break;
+
+				case "descuento_1":
+				document.getElementById("descuento_2").focus();
+				document.getElementById("descuento_1").style.backgroundColor = "#ffffff";
+				document.getElementById("descuento_2").style.backgroundColor = "#CCFFCC";
+				break;
+
+			case "descuento_2":
+				document.getElementById("recargo_1").focus();
+				document.getElementById("descuento_2").style.backgroundColor = "#ffffff";
+				document.getElementById("recargo_1").style.backgroundColor = "#CCFFCC";
+				break;
+
+
+
+				case "recargo_1":
+				document.getElementById("recargo_2").focus();
+				document.getElementById("recargo_1").style.backgroundColor = "#ffffff";
+				document.getElementById("recargo_2").style.backgroundColor = "#CCFFCC";
+				break;
+
+				case "recargo_2":
+				document.getElementById("recargo_flete").focus();
+				document.getElementById("recargo_2").style.backgroundColor = "#ffffff";
+				document.getElementById("recargo_flete").style.backgroundColor = "#CCFFCC";
+				break;
+				
+				case "recargo_flete":
+document.getElementById("recargo_impuesto").focus();
+document.getElementById("recargo_flete").style.backgroundColor = "#ffffff";
+document.getElementById("recargo_impuesto").style.backgroundColor = "#CCFFCC";
+				break;
+				
+
+case "recargo_impuesto":
+document.getElementById("cuotas").focus();
+document.getElementById("recargo_impuesto").style.backgroundColor = "#ffffff";
+document.getElementById("cuotas").style.backgroundColor = "#CCFFCC";
+				break;
+
+
+
+				case "cuotas":
+				document.getElementById("recargo_mensual").focus();
+				document.getElementById("cuotas").style.backgroundColor = "#ffffff";
+				document.getElementById("recargo_mensual").style.backgroundColor = "#CCFFCC";
+				break;
+
+				case "recargo_mensual":		
+document.getElementById("guardar").focus();
+document.getElementById("recargo_mensual").style.backgroundColor = "#ffffff";
+				break;
+		}
+		return false;
+	}
+	return true;
+}
+
+
+</script>
+
+<?$hoy = date("d/m/y");
+
+include ("../../../conexiones/config_pro.php");
+$a = $_GET['id'];
+ $sql="select * from tasas_planes where cod_plan = $a";
+$result = $db->Execute($sql);
+
+$cod_plan=strtoupper($result->fields["cod_plan"]);
+$descuento_1=strtoupper($result->fields["descuento_1"]);
+$descuento_2=strtoupper($result->fields["descuento_2"]);
+$recargo_1=strtoupper($result->fields["recargo_1"]);
+$recargo_2=strtoupper($result->fields["recargo_2"]);
+$recargo_flete=strtoupper($result->fields["recargo_flete"]);
+$recargo_impuesto=strtoupper($result->fields["recargo_impuestos"]);
+$cuotas=strtoupper($result->fields["cuotas"]);
+$recargo_mensual=strtoupper($result->fields["recargo_mensual"]);
+?>
+
+
+<BODY onload = "on_load ()">
+<table width="98%" border="0">
+  <tr>
+    <th width="38%" scope="col"><FORM name="form" ACTION="guardar_modificacion_plan.php" METHOD = "POST">
+      <table width="100%" border="0">
+        <tr align="center" bordercolor="#FFFFFF" bgcolor="#000099">
+          <td height="34" colspan="2"><font color="#FFFFFF" face="Arial, Helvetica, sans-serif"><strong>Planes y Tasas </strong></font></td>
+        </tr>
+        <tr bordercolor="#FFFFFF" bgcolor="#EEEEEE">
+          <td bgcolor="#C1F2FF"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Fecha</font>:<font color="#006633" size="2" face="Arial, Helvetica, sans-serif"> </font></div></td>
+          <td width="48%" bgcolor="#E1F2EF"><font color="#006633" size="2" face="Arial, Helvetica, sans-serif">
+            <input type="text" name="fecha" id="fecha" onKeyPress="return verif_caracter(this,event)" size="8" value="<?echo $hoy;?>">
+          </font></td>
+        </tr>
+        <tr bordercolor="#FFFFFF" bgcolor="#EEEEEE">
+          <td width="52%" bgcolor="#C1F2FF"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">N&ordm; Plan </font> </div></td>
+          <td bgcolor="#E1F2EF"><font size="2" face="Arial, Helvetica, sans-serif">
+            <input type="text" name="plan" id="plan" onKeyPress="return verif_caracter(this,event)" size="5" value = "<?echo $cod_plan;?>">
+          </font><font color="#006633" size="2" face="Arial, Helvetica, sans-serif">&nbsp; </font><font color="#006633" size="2" face="Arial, Helvetica, sans-serif">&nbsp; </font></td>
+        </tr>
+        <tr bordercolor="#FFFFFF" bgcolor="#EEEEEE">
+          <td bgcolor="#C1F2FF"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Descuento 1 </font> </div></td>
+          <td bgcolor="#E1F2EF"><font size="2" face="Arial, Helvetica, sans-serif">
+            <input name="descuento_1" type="text" id="descuento_1" onKeyPress="return verif_caracter(this,event)" value="<?echo $descuento_1;?>"  size="5">
+          </font></td>
+        </tr>
+        <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+          <td bgcolor="#C1F2FF"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Descuento 2 </font></div></td>
+          <td bgcolor="#E1F2EF"><font size="2" face="Arial, Helvetica, sans-serif">
+            <input name="descuento_2" type="text"  id="descuento_2" onKeyPress="return verif_caracter(this,event)" value="<?echo $descuento_2;?>"  size="5">
+          </font></td>
+        </tr>
+        <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+          <td bgcolor="#C1F2FF"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Recargo 1 </font></div></td>
+          <td bgcolor="#E1F2EF"><font size="2" face="Arial, Helvetica, sans-serif">
+            <input name="recargo_1" type="text" id="recargo_1"onKeyPress="return verif_caracter(this,event)" value="<?echo $recargo_1;?>"  size="5">
+          </font></td>
+        </tr>
+        <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+          <td bgcolor="#C1F2FF"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Recargo 2 </font></div></td>
+          <td bgcolor="#E1F2EF"><font size="2" face="Arial, Helvetica, sans-serif">
+            <input name="recargo_2" type="text" id="recargo_2"onKeyPress="return verif_caracter(this,event)" value="<?echo $recargo_2;?>"  size="5">
+          </font></td>
+        </tr>
+        <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+          <td bgcolor="#C1F2FF"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Recargo Flete </font></div></td>
+          <td bgcolor="#E1F2EF"><font size="2" face="Arial, Helvetica, sans-serif">
+            <input name="recargo_flete" type="text" id ="recargo_flete" onKeyPress="return verif_caracter(this,event)" value="<?echo $recargo_flete;?>" size="5">
+          </font>    
+        </tr>
+        <tr bordercolor="#FFFFFF">
+          <td bgcolor="#C1F2FF"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Recargo Impuesto </font></div></td>
+          <td bgcolor="#E1F2EF"><font size="2" face="Arial, Helvetica, sans-serif">
+            <input name="recargo_impuesto" type="text" id ="recargo_impuesto" onKeyPress="return verif_caracter(this,event)" value="<?echo $recargo_impuesto;?>" size="5">
+          </font></td>
+        </tr>
+        <tr bordercolor="#FFFFFF">
+          <td bgcolor="#C1F2FF"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Cuotas</font></div></td>
+          <td bgcolor="#E1F2EF"><div align="left"><font size="2" face="Arial, Helvetica, sans-serif"> </font> <font size="2"> </font> </div>
+              <font size="2" face="Arial, Helvetica, sans-serif">
+              <input name="cuotas" type="text" id ="cuotas" onKeyPress="return verif_caracter(this,event)" value="<?echo $cuotas;?>" size="5">
+            </font></td>
+        </tr>
+
+        <tr bordercolor="#FFFFFF" bgcolor="#FFFFCC">
+          <td bgcolor="#C1F2FF"><div align="right"><font color="#000000" size="2" face="Arial, Helvetica, sans-serif">Recargo Mensual </font></div></td>
+          <td bgcolor="#E1F2EF"><font size="2" face="Arial, Helvetica, sans-serif">
+            <input name="recargo_mensual" type="text" id="recargo_mensual" onKeyPress="return verif_caracter(this,event)" value="<?echo $recargo_mensual;?>" size="10">
+          </font></td>
+        </tr>
+        <tr bordercolor="#FFFFFF" bgcolor="#E6E6E6">
+          <td colspan="2"><div align="center"><font size="2" face="Arial, Helvetica, sans-serif">
+              <input type="Submit" name="guardar" id= "guardar2" value="GUARDAR PLAN" target = "arriba">
+          </font></div></td>
+        </tr>
+      </table>
+        </form></th>
+    <th width="62%" valign="top" scope="col">
+	
+	<?include ("buscar_plan.php");?>
+
+
+	</th></tr></table>

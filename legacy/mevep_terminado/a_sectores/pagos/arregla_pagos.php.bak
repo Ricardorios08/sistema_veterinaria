@@ -1,0 +1,56 @@
+<?php 
+
+include ("../../conexiones/config.inc.php");
+
+$nro_boleta = "45799";
+
+$sql="select * from pagos8 order by nro_boleta desc ";
+ $result = $db->Execute($sql);
+
+ 
+
+  if (!$result) die("fallo".$db->ErrorMsg());
+  while (!$result->EOF) {
+
+	
+$cod_socio=$result->fields["cod_socio"];
+ 
+
+$importe_cuota=$result->fields["importe"];
+$cobrador=$result->fields["cobrador"];
+$observaciones=$result->fields["observaciones"];
+$fecha_generacion=$result->fields["fecha_generacion"];
+$socio=$result->fields["socio"];
+
+ $nro_boleta = $nro_boleta + 1;
+
+
+$sql1="select * from pagos where cod_socio = $cod_socio and mes = 08 and anio = 2014";
+ $result1 = $db->Execute($sql1);
+$cod_socio1=$result1->fields["cod_socio"];
+
+if ($cod_socio != $cod_socio1){
+
+echo $nro_boleta;
+echo " ";
+echo $cod_socio;
+echo " ";
+echo $cod_socio1;
+echo "<br>";
+$cant = $cant + 1;
+
+
+ echo   $sql = "INSERT INTO `pagos` ( `cod_socio` , `mes` , `anio` , `importe` , `cobrador` , `observaciones` , `estado` ,`fecha_generacion` ,   `fecha_pago` ,  `nro_boleta` , `socio` , `hora` , `tipo_creacion`)  VALUES ( '$cod_socio' , '8' , '2014' , '$importe_cuota' , '$cobrador' , '$observaciones' , 'PENDIENTE' ,  '$fecha_generacion'  , '' , '$nro_boleta' , '$socio' , '' , '0')";
+ mysql_query($sql);
+
+
+
+}
+
+
+$result->MoveNext();
+	}
+
+
+	echo "<br>";
+	echo "regs ".$cant;

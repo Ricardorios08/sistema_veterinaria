@@ -1,0 +1,260 @@
+<style type="text/css">
+<!--
+.Estilo6 {font-size: 12}
+.Estilo26 {
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+-->
+
+
+<!--
+.Estilo53 {font-family: Arial, Helvetica, sans-serif}
+-->
+
+
+
+</style>
+	<?	
+$anio_actual = date("y");
+$mes_actual = date("m");
+
+
+$nro_factura= $_REQUEST['nro_factura'];
+$dia= $_REQUEST['dia'];
+$mes= $_REQUEST['mes'];
+$año= $_REQUEST['anio'];
+$nro_cliente= $_REQUEST['nro_cliente'];
+$matricula= $_REQUEST['matricula'];
+echo $hab_lote= $_REQUEST['hab_lote'];
+
+
+ $operador=$_REQUEST["operador"];
+
+if ($for_pago != 1){
+$forma_pag=$_REQUEST["forma_pago"];
+	for ($i=0;$i<count($forma_pag);$i++)    
+	{     
+	$forma_pago = $forma_pag[$i];    
+	}
+}
+
+
+$forma_pago;
+$pla=$_REQUEST["plan"];
+	for ($i=0;$i<count($pla);$i++)    
+	{     
+	$plan = $pla[$i];    
+	}
+
+
+if ($plan == ""){
+	$sql = "SELECT * FROM `ventas1_encab_temp`  WHERE  `nro_factura` = $nro_factura";
+$result = $db->Execute($sql);
+$plan=strtoupper($result->fields["plan"]);
+}
+
+else{
+
+
+$sql8 = "SELECT * FROM `condiciones_clientes` where cuenta = $nro_cliente";
+$result8 = $db->Execute($sql8);
+$plan_encabezado=strtoupper($result8->fields["plan"]);
+
+
+if ($plan != $plan_encabezado){
+$sql = "UPDATE `ventas_temp` SET `plan` = '$plan' WHERE nro_factura = $nro_factura ";
+mysql_query($sql);
+
+}
+}
+
+
+
+$forma_pago2;
+if ($forma_pago == ""){
+include("../../../conexiones/config_pro.php");
+$sql = "SELECT * FROM `ventas1_encab_temp`  WHERE  `nro_factura` = $nro_factura";
+$result = $db->Execute($sql);
+ $forma_pago=strtoupper($result->fields["forma_pago"]);
+}
+
+$forma_pago;
+
+$sql = "UPDATE `ventas1_encab_temp` SET `forma_pago` = '$forma_pago' WHERE nro_factura = $nro_factura ";
+mysql_query($sql);
+
+//echo $sql = "INSERT INTO `ventas_temp` ( `nro_factura` , `cod_operacion` , `tipo` , `nro_cliente` , `nro_cuenta` , `plan` , `operador` , `denominacion` , `fecha` ) VALUES ( '$nro_factura' , '$cod_operacion' , '$tipo' , '$nro_cliente' , '$nro_cuenta' , '$plan' , '$operador' , '$denominacion' , '$fecha' )";
+//mysql_query($sql);
+
+
+$cantidad= $_REQUEST['cantidad'];
+$cod_mercaderia= $_REQUEST['cod_mercaderia'];
+$band= $_REQUEST['band'];
+
+$sql = "SELECT * FROM `mercaderia`  WHERE  `cod_merca` = $cod_mercaderia";
+$result = $db->Execute($sql);
+$descripcion=strtoupper($result->fields["descripcion"]);
+$presentacion=strtoupper($result->fields["presentacion"]);
+
+
+$precio_actualizado=strtoupper($result->fields["precio_actualizado"]);
+$margendif=strtoupper($result->fields["margendif"]);
+
+
+$porce_margendif = (($precio_actualizado * $margendif) /100);
+$precio_actualizado = $precio_actualizado + $porce_margendif;
+$cantidad_salida1 = "";
+
+//$sql13 = "TRUNCATE TABLE `existencia_temporal`";
+//$result13 = $db->Execute($sql13);
+
+//echo $sql12 = "INSERT INTO `proveeduria`.`existencia_temporal` SELECT * FROM `proveeduria`.`existencias` WHERE  `cod_mercaderia` = '$cod_mercaderia' order by anio_lote, mes_lote";
+//$result12 = $db->Execute($sql12);
+
+$sql1 = "SELECT * FROM existencias  WHERE  `cod_mercaderia` = '$cod_mercaderia' order by anio_lote, mes_lote";
+$result1 = $db->Execute($sql1);
+
+$sql18 = "SELECT SUM(cantidad_ingresada) as cant FROM existencias  WHERE  `cod_mercaderia` = '$cod_mercaderia' ";
+$result18 = $db->Execute($sql18);
+$cant_lotes=strtoupper($result18->fields["cant"]);
+
+$sql18 = "SELECT SUM(cantidad_salida) as salid FROM existencias  WHERE  `cod_mercaderia` = '$cod_mercaderia' ";
+$result18 = $db->Execute($sql18);
+$cant_salid_lotes=strtoupper($result18->fields["salid"]);
+
+$sql19 = "SELECT SUM(cantidad) as cant FROM ventas1_deta_temp  WHERE  `cod_mercaderia` = '$cod_mercaderia' ";
+$result19 = $db->Execute($sql19);
+$cant_temp=strtoupper($result19->fields["cant"]);
+
+$cantidad_stock = $cant_lotes - $cant_salid_lotes - $cant_temp;
+
+
+if ($cantidad_stock < $cantidad){
+	$leyenda = "No alcanza la cantidad requerida en Existencia quedan ".number_format($cantidad_stock);
+	include ("../../../alertas/campo_informacion2.php");
+	include_once ("mostrar_detalle.php");
+	exit;
+}
+
+if ($cantidad_stock == 0){
+	//$leyenda = "No alcanza la cantidad requerida en Existencia o no ingreso nada";
+	//include ("../../../alertas/campo_informacion.php");
+	include_once ("mostrar_detalle.php");
+	exit;
+}
+
+$band = "NO";
+
+if (!$result1) die("fallo".$db->ErrorMsg());
+
+ while (!$result1->EOF) { 
+
+
+	 
+$lote=strtoupper($result1->fields["lote"]);
+$mes_lote=strtoupper($result1->fields["mes_lote"]);
+$anio_lote=strtoupper($result1->fields["anio_lote"]);
+$cantidad_ingresada=strtoupper($result1->fields["cantidad_ingresada"]);
+$cantidad_salida=strtoupper($result1->fields["cantidad_salida"]);
+
+if ($hab_lote == "NO"){
+
+
+
+if (($anio_lote != '00') or ($mes_lote != '00')){
+if ($anio_lote < $anio_actual){
+$leyenda = "Mercaderia Vencida se venció en el Año ".$anio_lote;
+	include ("../../../alertas/campo_informacion.php");
+   $result1->MoveNext();
+//	include ("mostrar_detalle.php");
+	//break;
+}else{
+
+
+	$result1->MoveNext();
+
+
+/*
+	if (($mes_lote < $mes_actual) && ($anio_lote < $anio_actual)){
+	$leyenda = "Mercaderia Vencida se venció el: ".$mes_lote." - ".$anio_lote;
+	include ("../../../alertas/campo_informacion.php");
+	include ("mostrar_detalle.php");
+	break;		
+
+	}*/
+
+
+}
+}
+}else{
+	
+	
+}
+
+// cierra el lote vencido NO
+
+
+
+
+
+
+
+
+//------------------------------------------------------------------------------------
+
+$cantidad_existente = $cantidad_ingresada - $cantidad_salida;
+
+switch ($band){
+
+	case "NO":{
+	
+		if ($cantidad < $cantidad_existente){ // cantidad menor que existencia
+		include ("cuentas.php");
+		include ("mostrar_detalle.php");
+		exit;
+		}elseif($cantidad == $cantidad_existente){ // cantidad igual que existencia
+
+	
+		$cantidad_salida1 = $cantidad_salida1 + $cantidad;
+		include ("cuentas.php");
+		include ("mostrar_detalle.php");
+		exit;
+		}elseif($cantidad > $cantidad_existente){  // cantidad mayor que existencia
+		$dif = $cantidad - $cantidad_existente;
+		$cantidad_restante = $cantidad - $dif;
+		include ("cuentas_bucle.php");
+		$band = "SI";
+		$result1->MoveNext();}
+break;
+	}
+
+	
+	case "SI":{
+		if ($dif < $cantidad_existente){       // Diferencia menor que existencia
+		include ("cuentas.php");
+		include ("mostrar_detalle.php");
+		exit;
+		}elseif($dif == $cantidad_existente){   // Diferencia igual que existencia
+		include ("cuentas.php");
+		include ("mostrar_detalle.php");
+		exit;
+		}elseif($dif > $cantidad_existente){    // Diferencia mayor que existencia
+		$dif = $dif - $cantidad_existente;
+		$cantidad_restante = $cantidad - $dif;
+		include ("cuentas_bucle.php");
+		
+		$result1->MoveNext();
+		
+		//include ("mostrar_detalle.php");
+		}
+		break;
+		
+	}
+
+
+}
+ 
+ 
+ }

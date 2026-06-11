@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Documento sin t&iacute;tulo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+
+	
+
+.Estilo1 {
+	font-family: "Arial Black";
+	font-size: 24px;
+}
+.Estilo5 {color: #000099}
+.Estilo15 {font-family: Arial, Helvetica, sans-serif}
+body {
+	background-color: #FFFFFF;
+	background-image: url(../imagenes/blanco.jpg);
+	background-repeat: no-repeat;
+}
+.Estilo21 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.Estilo24 {font-size: 14px; font-family: Arial, Helvetica, sans-serif; }
+-->
+</style>
+<script language="javascript">
+<!--
+function on_load()
+{
+document.getElementById("usuario").focus();
+}
+
+
+function verif_caracter(obj,evt)
+{
+
+	evt = (evt) ? evt : event;
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13) 
+
+	{
+		switch(obj.id)
+		{
+				case "usuario":
+				document.getElementById("password").focus();
+				
+				break;
+				case "password":
+				document.getElementById("entrar").focus();
+				break;
+			
+		}
+		return false;
+	}
+	return true;
+}
+
+
+
+</SCRIPT>
+</head>
+
+<BODY onLoad="on_load()" > 
+
+<?php
+
+include("../conexiones/config.inc.php");
+require_once("../nusoap/lib/nusoap.php");
+
+$wsdl='http://sistemadeordenes.com.ar/sulb/nusoap/lib/servicio_ordenes_descarga.php?wsdl';
+$client=new nusoap_client($wsdl, 'wsdl');  
+$param1=array('sql'=>$desde , 'apellido'=>$hasta);
+$response= $client->call('requisitos', $param1);
+
+if ($response != ""){
+  $sql = "TRUNCATE TABLE requisitos_os";
+ $result = $db->Execute($sql);
+
+$hoy = date("Y-m-d");
+
+  $a = "INSERT INTO `requisitos_os` (`nro_os` ,`denominacion` ,`sigla` ,`requisitos` ,`version` ,`suspendido` ,`vigencia` ,`comunes` ,`especiales` ,`alta` ,`antibiograma` ,`diagnostico` ,
+`planes` ,`info_planes` ,`planes_rechazados` ,`motivo_rechazo`) VALUES ".$response;
+ $result = $db->Execute($a);
+
+
+$wsdl='http://sistemadeordenes.com.ar/sulb/nusoap/lib/servicio_ordenes_descarga.php?wsdl';
+$client=new nusoap_client($wsdl, 'wsdl');  
+$param1=array('sql'=>$desde , 'apellido'=>$hasta);
+$response= $client->call('rechazadas', $param1);
+
+  $sql = "TRUNCATE TABLE a_practicas_rechazadas";
+ $result = $db->Execute($sql);
+
+$hoy = date("Y-m-d");
+
+ $a = "INSERT INTO `a_practicas_rechazadas`  (`nro_os`, `cod_practica`, `motivo`, `fecha` , `tipo` , `plan` ) VALUES ".$response;
+ $result = $db->Execute($a);
+
+
+//-------------------------------------------------------------------------------------------//
+
+$wsdl='http://sistemadeordenes.com.ar/sulb/nusoap/lib/servicio_ordenes_descarga.php?wsdl';
+$client=new nusoap_client($wsdl, 'wsdl');  
+$param1=array('sql'=>$desde , 'apellido'=>$hasta);
+$response= $client->call('planes', $param1);
+
+  $sql = "TRUNCATE TABLE planes_os";
+ $result = $db->Execute($sql);
+
+$hoy = date("Y-m-d");
+
+  $a = "INSERT INTO `planes_os` (`nro_os`, `cod_operacion`, `nro_plan`, `nombre_plan`, `reducido_plan`, `coseguro`, `comunes`, `especiales`, `alta`, `pmo`, `texto`) VALUES ".$response;
+ $result = $db->Execute($a);
+
+
+$leyenda = "SE ACTUALIZARON LOS REQUISITOS A LA FECHA";
+include("../alertas/campo_informacion.php");
+}
+
+?>
+
+
+</body>
+</html>
+
+
