@@ -16,7 +16,7 @@ const Nomenclature = () => {
     const [nombre, setNombre] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [precio, setPrecio] = useState('');
-    const [categoria, setCategoria] = useState('odontologico');
+    const [categoria, setCategoria] = useState('veterinario');
     const [tipo, setTipo] = useState('publica');
 
     // Edit State
@@ -25,7 +25,7 @@ const Nomenclature = () => {
     const [editNombre, setEditNombre] = useState('');
     const [editDescripcion, setEditDescripcion] = useState('');
     const [editPrecio, setEditPrecio] = useState('');
-    const [editCategoria, setEditCategoria] = useState('odontologico');
+    const [editCategoria, setEditCategoria] = useState('veterinario');
 
     const [globalSearch, setGlobalSearch] = useState('');
     const [selectedCategoryFilter, setSelectedCategoryFilter] = useState('todos');
@@ -87,7 +87,7 @@ const Nomenclature = () => {
             setNombre('');
             setDescripcion('');
             setPrecio('');
-            setCategoria('odontologico');
+            setCategoria('veterinario');
             setTipo('publica');
             fetchPractices();
             fetchGlobalPractices();
@@ -143,7 +143,7 @@ const Nomenclature = () => {
         setEditNombre(p.nombre);
         setEditDescripcion(p.descripcion || '');
         setEditPrecio(p.precio);
-        setEditCategoria(p.categoria || 'odontologico');
+        setEditCategoria(p.categoria || 'veterinario');
     };
 
     const handleSaveEdit = async (id) => {
@@ -176,10 +176,11 @@ const Nomenclature = () => {
 
     const getCategoryBadge = (cat) => {
         const colors = {
-            odontologico: { bg: 'rgba(16, 185, 129, 0.15)', border: '#10b981', label: 'Odontológico' },
-            medico: { bg: 'rgba(59, 130, 246, 0.15)', border: '#3b82f6', label: 'Médico' },
-            anestesista: { bg: 'rgba(245, 158, 11, 0.15)', border: '#f59e0b', label: 'Anestesista' },
-            bioquimico: { bg: 'rgba(139, 92, 246, 0.15)', border: '#8b5cf6', label: 'Bioquímico' },
+            veterinario: { bg: 'rgba(16, 185, 129, 0.15)', border: '#10b981', label: 'Veterinario' },
+            radiologo: { bg: 'rgba(59, 130, 246, 0.15)', border: '#3b82f6', label: 'Radiología' },
+            bioquimico: { bg: 'rgba(139, 92, 246, 0.15)', border: '#8b5cf6', label: 'Bioquímica' },
+            peluquero: { bg: 'rgba(245, 158, 11, 0.15)', border: '#f59e0b', label: 'Peluquería' },
+            cobrador: { bg: 'rgba(234, 179, 8, 0.15)', border: '#eab308', label: 'Cobranza / Caja' },
             otro: { bg: 'rgba(107, 114, 128, 0.15)', border: '#6b7280', label: 'Otro' }
         };
         const style = colors[cat] || colors.otro;
@@ -217,7 +218,7 @@ const Nomenclature = () => {
                             setNombre('');
                             setDescripcion('');
                             setPrecio('');
-                            setCategoria('odontologico');
+                            setCategoria('veterinario');
                             setShowModal(true);
                         }}
                         className="btn btn-primary"
@@ -234,10 +235,11 @@ const Nomenclature = () => {
                 <span style={{ color: 'var(--text-dim)', fontSize: '0.85rem', marginRight: '0.5rem' }}>Filtrar por Especialidad:</span>
                 {[
                     { id: 'todos', label: 'Todos' },
-                    { id: 'odontologico', label: 'Odontológicos' },
-                    { id: 'medico', label: 'Médicos' },
-                    { id: 'anestesista', label: 'Anestesistas' },
-                    { id: 'bioquimico', label: 'Bioquímicos' },
+                    { id: 'veterinario', label: 'Veterinario' },
+                    { id: 'radiologo', label: 'Radiología' },
+                    { id: 'bioquimico', label: 'Bioquímica' },
+                    { id: 'peluquero', label: 'Peluquería' },
+                    { id: 'cobrador', label: 'Cobranza / Caja' },
                     { id: 'otro', label: 'Otros' }
                 ].map(tab => (
                     <button
@@ -398,10 +400,11 @@ const Nomenclature = () => {
                                                     onChange={(e) => setEditCategoria(e.target.value)}
                                                     style={{ padding: '0.2rem', minHeight: 'auto', fontSize: '0.85rem' }}
                                                 >
-                                                    <option value="odontologico">Odontológico</option>
-                                                    <option value="medico">Médico</option>
-                                                    <option value="anestesista">Anestesista</option>
-                                                    <option value="bioquimico">Bioquímico</option>
+                                                    <option value="veterinario">Veterinario</option>
+                                                    <option value="radiologo">Radiología</option>
+                                                    <option value="bioquimico">Bioquímica</option>
+                                                    <option value="peluquero">Peluquería</option>
+                                                    <option value="cobrador">Cobranza / Caja</option>
                                                     <option value="otro">Otro</option>
                                                 </select>
                                             ) : getCategoryBadge(p.categoria)}
@@ -585,10 +588,11 @@ const Nomenclature = () => {
                                     onChange={(e) => setCategoria(e.target.value)} 
                                     style={{ background: 'var(--bg-card)', color: '#fff', border: '1px solid var(--border-color)', height: '42px' }}
                                 >
-                                    <option value="odontologico">Odontológico</option>
-                                    <option value="medico">Médico</option>
-                                    <option value="anestesista">Anestesista</option>
-                                    <option value="bioquimico">Bioquímico</option>
+                                    <option value="veterinario">Veterinario</option>
+                                    <option value="radiologo">Radiología</option>
+                                    <option value="bioquimico">Bioquímica</option>
+                                    <option value="peluquero">Peluquería</option>
+                                    <option value="cobrador">Cobranza / Caja</option>
                                     <option value="otro">Otro</option>
                                 </select>
                             </div>

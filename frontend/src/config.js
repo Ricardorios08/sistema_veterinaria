@@ -1,12 +1,5 @@
-const BACKEND_PORT = import.meta.env.VITE_BACKEND_PORT || 3000;
+// En desarrollo, Vite proxy redirige /api → http://localhost:3010/api
+// En producción, se usan rutas relativas también (misma base URL)
+export const API_URL = '/api';
 
-// Detect if we are in development using Vite's built-in env variable
-const isDevelopment = import.meta.env.DEV;
-
-const API_BASE_URL = isDevelopment
-    ? `http://${window.location.hostname}:${BACKEND_PORT}`
-    : ''; // In production, we use relative paths
-
-export const API_URL = `${API_BASE_URL}/api`;
-
-export default API_BASE_URL;
+export default '';

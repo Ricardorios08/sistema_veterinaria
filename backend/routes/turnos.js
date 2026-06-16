@@ -39,7 +39,7 @@ router.get('/', authenticateToken, async (req, res) => {
             params.push(req.user.prestador_id);
         }
 
-        if (req.user.rol === 'profesional') {
+        if (['profesional', 'veterinario', 'peluquero', 'traslado'].includes(req.user.rol)) {
             sql += ' AND t.odontologo_id = ?';
             params.push(req.user.id);
         }

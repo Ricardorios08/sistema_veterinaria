@@ -78,7 +78,7 @@ const Login = ({ onLogin }) => {
         </form>
 
         <div className="login-footer">
-          © 2026 Migration Tool
+          © 2026 SULB-VET
         </div>
       </div>
     </div>

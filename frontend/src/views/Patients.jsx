@@ -384,7 +384,6 @@ const Patients = ({ activePatientId, setActivePatientId, initialTab = 'info', op
                                         <th>Paciente</th>
                                         <th>DNI</th>
                                         <th>Teléfono</th>
-                                        <th>Cobertura Médica</th>
                                         <th style={{ textAlign: 'center' }}>Acción</th>
                                     </tr>
                                 </thead>
@@ -409,13 +408,7 @@ const Patients = ({ activePatientId, setActivePatientId, initialTab = 'info', op
                                                 </td>
                                                 <td>{p.dni}</td>
                                                 <td>{p.telefono || '-'}</td>
-                                                <td>
-                                                    {p.cobertura_medica ? (
-                                                        <span className="role-badge municipalidad" style={{ textTransform: 'none' }}>
-                                                            {p.cobertura_medica}
-                                                        </span>
-                                                    ) : '-'}
-                                                </td>
+
                                                 <td style={{ textAlign: 'center' }}>
                                                     <button 
                                                         className="btn btn-secondary" 
@@ -522,17 +515,7 @@ const Patients = ({ activePatientId, setActivePatientId, initialTab = 'info', op
                                     <span>Email: <strong>{selectedPatient.email || 'No registrado'}</strong></span>
                                 </div>
                             </div>
-                            <div className="users-list-card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                <h3>Cobertura y Obra Social</h3>
-                                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                                    <Heart size={16} color="var(--primary)" />
-                                    <span>Obra Social: <strong>{selectedPatient.cobertura_medica_nombre || selectedPatient.cobertura_medica || 'Particular / Sin cobertura'}</strong></span>
-                                </div>
-                                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                                    <Award size={16} color="var(--primary)" />
-                                    <span>Nº Afiliado: <strong>{selectedPatient.numero_afiliado || '-'}</strong></span>
-                                </div>
-                            </div>
+
                         </div>
                     )}
 
@@ -543,7 +526,7 @@ const Patients = ({ activePatientId, setActivePatientId, initialTab = 'info', op
                                 pacienteId={selectedPatient.id} 
                                 odontogramaData={odontograma} 
                                 onUpdate={() => fetchPatientDetails(selectedPatient.id)}
-                                isReadOnly={currentUser?.rol !== 'profesional'}
+                                isReadOnly={!['profesional', 'veterinario', 'peluquero', 'traslado'].includes(currentUser?.rol)}
                             />
                         </div>
                     )}
@@ -558,7 +541,7 @@ const Patients = ({ activePatientId, setActivePatientId, initialTab = 'info', op
                                         <FileText size={16} style={{ marginRight: '4px' }} />
                                         Imprimir PDF
                                     </button>
-                                    {currentUser?.rol === 'profesional' && (
+                                    {['profesional', 'veterinario', 'peluquero', 'traslado'].includes(currentUser?.rol) && (
                                         <button onClick={() => setShowHcModal(true)} className="btn btn-primary" style={{ width: 'auto', padding: '0.5rem 1.5rem' }}>
                                             <Plus size={16} style={{ marginRight: '4px' }} />
                                             Nueva Ficha Clínica
@@ -596,7 +579,7 @@ const Patients = ({ activePatientId, setActivePatientId, initialTab = 'info', op
                                                     </span>
 
                                                     {/* Annul record button (attending professional only, and not already annulled) */}
-                                                    {currentUser?.rol === 'profesional' && hc.odontologo_id === currentUser.id && hc.anulado !== 1 && (
+                                                    {['profesional', 'veterinario', 'peluquero', 'traslado'].includes(currentUser?.rol) && hc.odontologo_id === currentUser.id && hc.anulado !== 1 && (
                                                         <button 
                                                             type="button"
                                                             className="delete-btn"
@@ -762,25 +745,7 @@ const Patients = ({ activePatientId, setActivePatientId, initialTab = 'info', op
                                 <label>Fecha de Nacimiento</label>
                                 <input type="date" className="input-field" value={fechaNacimiento} onChange={e => setFechaNacimiento(e.target.value)} />
                             </div>
-                            <div className="form-group">
-                                <label>Obra Social / Cobertura</label>
-                                <select 
-                                    className="input-field" 
-                                    value={obraSocialId} 
-                                    onChange={e => setObraSocialId(e.target.value)}
-                                >
-                                    <option value="">Particular / Sin Cobertura</option>
-                                    {obrasSociales.map(os => (
-                                        <option key={os.id} value={os.id}>
-                                            {os.sigla ? `[${os.sigla}] ` : ''}{os.nombre}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label>Nº Afiliado</label>
-                                <input type="text" className="input-field" value={numeroAfiliado} onChange={e => setNumeroAfiliado(e.target.value)} />
-                            </div>
+
 
                             {crudError && (
                                 <div className="login-error" style={{ gridColumn: 'span 2' }}>
@@ -831,25 +796,7 @@ const Patients = ({ activePatientId, setActivePatientId, initialTab = 'info', op
                                 <label>Fecha de Nacimiento</label>
                                 <input type="date" className="input-field" value={editFechaNacimiento} onChange={e => setEditFechaNacimiento(e.target.value)} />
                             </div>
-                            <div className="form-group">
-                                <label>Obra Social / Cobertura</label>
-                                <select 
-                                    className="input-field" 
-                                    value={editObraSocialId} 
-                                    onChange={e => setEditObraSocialId(e.target.value)}
-                                >
-                                    <option value="">Particular / Sin Cobertura</option>
-                                    {obrasSociales.map(os => (
-                                        <option key={os.id} value={os.id}>
-                                            {os.sigla ? `[${os.sigla}] ` : ''}{os.nombre}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label>Nº Afiliado</label>
-                                <input type="text" className="input-field" value={editNumeroAfiliado} onChange={e => setEditNumeroAfiliado(e.target.value)} />
-                            </div>
+
 
                             {crudError && (
                                 <div className="login-error" style={{ gridColumn: 'span 2' }}>
@@ -1004,7 +951,7 @@ const Patients = ({ activePatientId, setActivePatientId, initialTab = 'info', op
                             </div>
 
                             {/* INTEGRATED ODONTOGRAM inside HC Modal */}
-                            {(currentUser?.rol === 'profesional' || currentUser?.rol === 'admin' || currentUser?.rol === 'superadmin') && (
+                            {(['profesional', 'veterinario', 'peluquero', 'traslado', 'admin', 'superadmin'].includes(currentUser?.rol)) && (
                                 <div style={{ marginTop: '1.5rem', borderTop: '1px solid var(--border)', paddingTop: '1.5rem', marginBottom: '1.5rem' }}>
                                     <h4 style={{ marginBottom: '1rem', color: 'var(--primary)', fontSize: '0.95rem' }}>Actualizar Odontograma</h4>
                                     <div style={{ background: 'rgba(0,0,0,0.2)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--border)', overflowX: 'auto' }}>

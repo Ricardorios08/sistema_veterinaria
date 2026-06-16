@@ -61,9 +61,7 @@ const Appointments = ({ user }) => {
         apellido: '',
         dni: '',
         telefono: '',
-        email: '',
-        cobertura_medica: '',
-        obra_social_id: ''
+        email: ''
     });
     const [obrasSociales, setObrasSociales] = useState([]);
 
@@ -105,20 +103,21 @@ const Appointments = ({ user }) => {
 
     const fetchInitialData = async () => {
         try {
-            const [patRes, docRes, osRes] = await Promise.all([
+            const [patRes, docRes] = await Promise.all([
                 axios.get(`${API_URL}/pacientes`),
-                axios.get(`${API_URL}/auth/users`),
-                axios.get(`${API_URL}/obras-sociales`)
+                axios.get(`${API_URL}/auth/users`)
             ]);
             setPatients(patRes.data);
-            setObrasSociales(osRes.data);
 
             // Filter users to only professional roles
-            const profs = docRes.data.filter(u => u.rol === 'profesional');
+            const profs = docRes.data.filter(u => {
+                const userRoles = u.roles ? u.roles.split(',') : [u.rol];
+                return userRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado'].includes(r));
+            });
             setDoctors(profs);
 
             // Automatically select professional based on role
-            if (user?.rol === 'profesional') {
+            if (['profesional', 'veterinario', 'peluquero', 'traslado'].includes(user?.rol)) {
                 setSelectedDoctorId(String(user.id));
             } else if (profs.length > 0) {
                 setSelectedDoctorId(String(profs[0].id));
@@ -394,7 +393,7 @@ const Appointments = ({ user }) => {
                     <h1 style={{ margin: 0 }}>Agenda y Disponibilidad</h1>
                     <p style={{ color: 'var(--text-dim)', margin: '4px 0 0 0' }}>Carga y gestión de turnos optimizada para Recepción</p>
                 </div>
-                {user?.rol !== 'profesional' && (
+                {!['profesional', 'veterinario', 'peluquero', 'traslado'].includes(user?.rol) && (
                     <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                         <label style={{ fontSize: '0.9rem', color: 'var(--text-dim)', fontWeight: 'bold' }}>Profesional:</label>
                         <select
@@ -695,7 +694,6 @@ const Appointments = ({ user }) => {
                                         </h4>
                                         <div style={{ display: 'flex', gap: '1rem', marginTop: '4px', fontSize: '0.8rem', color: 'var(--text-dim)' }}>
                                             <span>DNI: <strong>{selectedPatientObj.dni}</strong></span>
-                                            <span>Obra Social: <strong>{selectedPatientObj.cobertura_medica || 'Particular'}</strong></span>
                                         </div>
                                         <div style={{ marginTop: '2px', fontSize: '0.8rem', color: 'var(--text-dim)' }}>
                                             Teléfono: <strong>{selectedPatientObj.telefono || 'Sin registrar'}</strong>
@@ -794,29 +792,7 @@ const Appointments = ({ user }) => {
                                         </div>
                                     </div>
 
-                                    <div className="form-group" style={{ marginBottom: '0.8rem' }}>
-                                        <label>Obra Social / Cobertura</label>
-                                        <select
-                                            className="input-field"
-                                            value={newPatient.obra_social_id}
-                                            onChange={e => {
-                                                const osId = e.target.value;
-                                                const selectedOs = obrasSociales.find(o => o.id === parseInt(osId));
-                                                setNewPatient({
-                                                    ...newPatient,
-                                                    obra_social_id: osId,
-                                                    cobertura_medica: selectedOs ? selectedOs.nombre : ''
-                                                });
-                                            }}
-                                        >
-                                            <option value="">Particular / Sin Cobertura</option>
-                                            {obrasSociales.map(os => (
-                                                <option key={os.id} value={os.id}>
-                                                    {os.sigla ? `[${os.sigla}] ` : ''}{os.nombre}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
+
                                 </div>
                             ) : (
                                 /* Searchable autocomplete input */
@@ -871,7 +847,6 @@ const Appointments = ({ user }) => {
                                                     </div>
                                                     <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', display: 'flex', gap: '12px', marginTop: '2px' }}>
                                                         <span>DNI: <strong>{p.dni}</strong></span>
-                                                        <span>OS: <strong>{p.cobertura_medica || 'Particular'}</strong></span>
                                                         <span>Tel: <strong>{p.telefono || 'Sin tel.'}</strong></span>
                                                     </div>
                                                 </div>

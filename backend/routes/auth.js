@@ -69,6 +69,14 @@ router.post('/login', async (req, res) => {
         let activeRol = user.rol;
         if (finalRoles.includes('profesional')) {
             activeRol = 'profesional';
+        } else if (finalRoles.includes('veterinario')) {
+            activeRol = 'veterinario';
+        } else if (finalRoles.includes('peluquero')) {
+            activeRol = 'peluquero';
+        } else if (finalRoles.includes('traslado')) {
+            activeRol = 'traslado';
+        } else if (finalRoles.includes('cobrador')) {
+            activeRol = 'cobrador';
         } else if (finalRoles.includes('recepcion')) {
             activeRol = 'recepcion';
         } else if (finalRoles.includes('admin')) {

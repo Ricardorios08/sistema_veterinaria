@@ -20,7 +20,7 @@ const ObrasSociales = ({ user }) => {
     const [editSigla, setEditSigla] = useState('');
     const [editDescripcion, setEditDescripcion] = useState('');
 
-    const isReadOnly = user?.rol === 'profesional';
+    const isReadOnly = ['profesional', 'veterinario', 'peluquero', 'traslado'].includes(user?.rol);
 
     useEffect(() => {
         fetchObras();

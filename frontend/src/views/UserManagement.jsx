@@ -186,8 +186,8 @@ const UserManagement = () => {
                 password, 
                 rol: selectedRoles[0],
                 roles: selectedRoles,
-                tipo_profesional_id: selectedRoles.includes('profesional') && tipoProfesionalId ? parseInt(tipoProfesionalId) : null,
-                matricula: selectedRoles.includes('profesional') ? matricula : null,
+                tipo_profesional_id: selectedRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(r)) && tipoProfesionalId ? parseInt(tipoProfesionalId) : null,
+                matricula: selectedRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(r)) ? matricula : null,
                 prestador_id: currentUser?.rol === 'superadmin' && prestadorId ? parseInt(prestadorId) : null,
                 mail,
                 celular,
@@ -246,8 +246,8 @@ const UserManagement = () => {
                 password: editPassword || undefined,
                 rol: editRoles[0] || editRol,
                 roles: editRoles,
-                tipo_profesional_id: editRoles.includes('profesional') && editTipoProfesionalId ? parseInt(editTipoProfesionalId) : null,
-                matricula: editRoles.includes('profesional') ? editMatricula : null,
+                tipo_profesional_id: editRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(r)) && editTipoProfesionalId ? parseInt(editTipoProfesionalId) : null,
+                matricula: editRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(r)) ? editMatricula : null,
                 prestador_id: currentUser?.rol === 'superadmin' && editPrestadorId ? parseInt(editPrestadorId) : null,
                 nombre: editNombre,
                 apellido: editApellido,
@@ -414,9 +414,13 @@ const UserManagement = () => {
                                 <label style={{ display: 'block', marginBottom: '0.5rem' }}>Roles Asignados</label>
                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', background: 'rgba(255,255,255,0.03)', padding: '0.75rem', borderRadius: '6px', border: '1px solid var(--border)' }}>
                                     {[
-                                        { id: 'profesional', name: 'Profesional de la Salud' },
+                                        { id: 'veterinario', name: 'Veterinario' },
+                                        { id: 'peluquero', name: 'Peluquero' },
+                                        { id: 'traslado', name: 'Traslado' },
+                                        { id: 'cobrador', name: 'Cobrador' },
                                         { id: 'recepcion', name: 'Recepción' },
                                         { id: 'admin', name: 'Administrador' },
+                                        { id: 'profesional', name: 'Profesional (Legacy)' },
                                         ...(currentUser?.rol === 'superadmin' ? [{ id: 'superadmin', name: 'Super Administrador' }] : [])
                                     ].map(r => (
                                         <label key={r.id} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', fontSize: '0.9rem', color: '#fff', userSelect: 'none' }}>
@@ -458,7 +462,7 @@ const UserManagement = () => {
                             )}
         
                             {/* DYNAMIC PROFESSIONAL FIELDS */}
-                            {selectedRoles.includes('profesional') && (
+                            {selectedRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(r)) && (
                                 <>
                                     <div className="form-group" style={{ marginBottom: 0 }}>
                                         <label>Especialidad / Tipo de Profesional</label>
@@ -552,9 +556,13 @@ const UserManagement = () => {
                         >
                             <option value="">Todos los roles</option>
                             <option value="usuario">Usuario</option>
-                            <option value="profesional">Profesional</option>
+                            <option value="veterinario">Veterinario</option>
+                            <option value="peluquero">Peluquero</option>
+                            <option value="traslado">Traslado</option>
+                            <option value="cobrador">Cobrador</option>
                             <option value="recepcion">Recepcion</option>
                             <option value="admin">Admin</option>
+                            <option value="profesional">Profesional (Legacy)</option>
                             {currentUser?.rol === 'superadmin' && <option value="superadmin">SuperAdmin</option>}
                         </select>
                     </div>
@@ -638,10 +646,13 @@ const UserManagement = () => {
                                         {editingUserId === u.id ? (
                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', background: 'rgba(0,0,0,0.15)', padding: '0.4rem', borderRadius: '4px', border: '1px solid var(--border)' }}>
                                                 {[
-                                                    
-                                                    { id: 'profesional', name: 'Profesional' },
+                                                    { id: 'veterinario', name: 'Veterinario' },
+                                                    { id: 'peluquero', name: 'Peluquero' },
+                                                    { id: 'traslado', name: 'Traslado' },
+                                                    { id: 'cobrador', name: 'Cobrador' },
                                                     { id: 'recepcion', name: 'Recepc' },
                                                     { id: 'admin', name: 'Admin' },
+                                                    { id: 'profesional', name: 'Profesional (Legacy)' },
                                                     ...(currentUser?.rol === 'superadmin' ? [{ id: 'superadmin', name: 'SuperAdmin' }] : [])
                                                 ].map(r => (
                                                     <label key={r.id} style={{ display: 'flex', alignItems: 'center', gap: '0.2rem', fontSize: '0.75rem', cursor: 'pointer', color: '#fff', margin: 0 }}>
@@ -765,7 +776,7 @@ const UserManagement = () => {
                                     )}
                                     <td>
                                         {editingUserId === u.id ? (
-                                            editRoles.includes('profesional') ? (
+                                            editRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(r)) ? (
                                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                                                     <select 
                                                         className="input-field"
@@ -791,7 +802,7 @@ const UserManagement = () => {
                                                 <span style={{ color: 'var(--text-dim)' }}>No aplica</span>
                                             )
                                         ) : (
-                                            (u.roles ? u.roles.split(',').includes('profesional') : u.rol === 'profesional') ? (
+                                            (u.roles ? u.roles.split(',').some(r => ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(r)) : ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(u.rol)) ? (
                                                 <div>
                                                     <span className="role-badge municipalidad" style={{ textTransform: 'none', marginRight: '0.5rem' }}>
                                                         {u.tipo_profesional_nombre || 'Sin especialidad'}
@@ -813,7 +824,7 @@ const UserManagement = () => {
                                             </div>
                                         ) : (
                                             <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', alignItems: 'center' }}>
-                                                {(u.roles ? u.roles.split(',').includes('profesional') : u.rol === 'profesional') && (
+                                                {(u.roles ? u.roles.split(',').some(r => ['profesional', 'veterinario', 'peluquero', 'traslado'].includes(r)) : ['profesional', 'veterinario', 'peluquero', 'traslado'].includes(u.rol)) && (
                                                     <button 
                                                         onClick={() => handleOpenScheduleModal(u)}
                                                         className="btn"

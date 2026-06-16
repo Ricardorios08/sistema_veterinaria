@@ -34,7 +34,7 @@ const WaitingList = ({ user, onSelectPatient, refreshTrigger }) => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  const isProfesional = user?.rol === 'profesional';
+  const isProfesional = ['profesional', 'veterinario', 'peluquero', 'traslado'].includes(user?.rol);
 
   useEffect(() => {
     // Get local date YYYY-MM-DD
@@ -57,7 +57,10 @@ const WaitingList = ({ user, onSelectPatient, refreshTrigger }) => {
       // If admin, fetch doctors list
       if (isAdmin) {
         const docRes = await axios.get(`${API_URL}/auth/users`);
-        const profs = docRes.data.filter(u => u.rol === 'profesional');
+        const profs = docRes.data.filter(u => {
+          const userRoles = u.roles ? u.roles.split(',') : [u.rol];
+          return userRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado'].includes(r));
+        });
         setDoctors(profs);
       } else if (isProfesional) {
         // If professional, lock to their ID

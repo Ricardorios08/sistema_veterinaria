@@ -19,13 +19,14 @@ import { API_URL } from '../config';
 const Sidebar = ({ currentView, setView, collapsed, setCollapsed, mobileOpen, setMobileOpen, user, onLogout }) => {
   const isAdmin = user?.rol === 'admin';
   const isSuperAdmin = user?.rol === 'superadmin';
-  const isProfesional = user?.rol === 'profesional';
+  const isProfesional = ['profesional', 'veterinario', 'peluquero', 'traslado'].includes(user?.rol);
   const isRecepcion = user?.rol === 'recepcion';
-  const hasAccessToAppointments = isRecepcion || isProfesional;
-  const hasAccessToWaitingList = isProfesional || isRecepcion;
-  const hasAccessToPatients = isProfesional || isRecepcion;
-  const hasAccessToNomenclature = isRecepcion || isProfesional;
-  const hasAccessToObrasSociales = isRecepcion || isProfesional;
+  const hasAccessToAppointments = isRecepcion || isProfesional || isAdmin || isSuperAdmin;
+  const hasAccessToWaitingList = isProfesional || isRecepcion || isAdmin || isSuperAdmin;
+  const hasAccessToSocios = isProfesional || isRecepcion || isAdmin || isSuperAdmin;
+  const hasAccessToParticulares = isProfesional || isRecepcion || isAdmin || isSuperAdmin;
+  const hasAccessToMascotas = isProfesional || isRecepcion || isAdmin || isSuperAdmin;
+  const hasAccessToNomenclature = isRecepcion || isProfesional || isAdmin || isSuperAdmin;
   const hasAccessToUsers = isAdmin || isSuperAdmin;
 
   const roles = user?.roles || (user?.rol ? [user.rol] : []);
@@ -99,15 +100,41 @@ const Sidebar = ({ currentView, setView, collapsed, setCollapsed, mobileOpen, se
           </div>
         )}
 
-        {/* Fichero de Pacientes (Admins, Profesionales y Recepción) */}
-        {hasAccessToPatients && (
+        {/* Socios (Dueños) */}
+        {hasAccessToSocios && (
           <div
-            className={`menu-item patients ${currentView === 'patients' ? 'active' : ''}`}
-            onClick={() => setView('patients')}
-            title={collapsed ? "Pacientes" : ""}
+            className={`menu-item patients ${currentView === 'socios' ? 'active' : ''}`}
+            onClick={() => setView('socios')}
+            title={collapsed ? "Socios" : ""}
           >
             <Users size={20} />
-            {!collapsed && <span>Pacientes</span>}
+            {!collapsed && <span>Socios</span>}
+            {!collapsed && <ChevronRight size={16} style={{ marginLeft: 'auto', opacity: 0.5 }} />}
+          </div>
+        )}
+
+        {/* Particulares */}
+        {hasAccessToParticulares && (
+          <div
+            className={`menu-item patients ${currentView === 'particulares' ? 'active' : ''}`}
+            onClick={() => setView('particulares')}
+            title={collapsed ? "Particulares" : ""}
+          >
+            <UserCircle size={20} />
+            {!collapsed && <span>Particulares</span>}
+            {!collapsed && <ChevronRight size={16} style={{ marginLeft: 'auto', opacity: 0.5 }} />}
+          </div>
+        )}
+
+        {/* Mascotas */}
+        {hasAccessToMascotas && (
+          <div
+            className={`menu-item waiting-list ${currentView === 'mascotas' ? 'active' : ''}`}
+            onClick={() => setView('mascotas')}
+            title={collapsed ? "Mascotas" : ""}
+          >
+            <Heart size={20} />
+            {!collapsed && <span>Mascotas</span>}
             {!collapsed && <ChevronRight size={16} style={{ marginLeft: 'auto', opacity: 0.5 }} />}
           </div>
         )}
@@ -121,19 +148,6 @@ const Sidebar = ({ currentView, setView, collapsed, setCollapsed, mobileOpen, se
           >
             <Activity size={20} />
             {!collapsed && <span>Nomenclador</span>}
-            {!collapsed && <ChevronRight size={16} style={{ marginLeft: 'auto', opacity: 0.5 }} />}
-          </div>
-        )}
-
-        {/* Obras Sociales (Admins y Recepción) */}
-        {hasAccessToObrasSociales && (
-          <div
-            className={`menu-item obras-sociales ${currentView === 'obras-sociales' ? 'active' : ''}`}
-            onClick={() => setView('obras-sociales')}
-            title={collapsed ? "Obras Sociales" : ""}
-          >
-            <Heart size={20} />
-            {!collapsed && <span>Obras Sociales</span>}
             {!collapsed && <ChevronRight size={16} style={{ marginLeft: 'auto', opacity: 0.5 }} />}
           </div>
         )}
@@ -206,11 +220,22 @@ const Sidebar = ({ currentView, setView, collapsed, setCollapsed, mobileOpen, se
                   textTransform: 'capitalize'
                 }}
               >
-                {roles.map(r => (
-                  <option key={r} value={r} style={{ background: '#18181b', color: '#fff' }}>
-                    {r === 'superadmin' ? 'Super Admin' : r === 'profesional' ? 'Profesional' : r === 'recepcion' ? 'Recepción' : r === 'admin' ? 'Administrador' : 'Usuario'}
-                  </option>
-                ))}
+                 {roles.map(r => {
+                   let name = 'Usuario';
+                   if (r === 'superadmin') name = 'Super Admin';
+                   else if (r === 'admin') name = 'Administrador';
+                   else if (r === 'recepcion') name = 'Recepción';
+                   else if (r === 'profesional') name = 'Profesional';
+                   else if (r === 'veterinario') name = 'Veterinario';
+                   else if (r === 'peluquero') name = 'Peluquero';
+                   else if (r === 'traslado') name = 'Traslado';
+                   else if (r === 'cobrador') name = 'Cobrador';
+                   return (
+                     <option key={r} value={r} style={{ background: '#18181b', color: '#fff' }}>
+                       {name}
+                     </option>
+                   );
+                 })}
               </select>
             </div>
           ) : (

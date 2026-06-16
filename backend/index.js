@@ -46,8 +46,10 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/pacientes", require("./routes/pacientes"));
 app.use("/api/nomenclador", require("./routes/nomenclador"));
 app.use("/api/turnos", require("./routes/turnos"));
-app.use("/api/obras-sociales", require("./routes/obrasSociales"));
 app.use("/api/prestadores", require("./routes/prestadores"));
+app.use("/api/socios", require("./routes/socios"));
+app.use("/api/particulares", require("./routes/particulares"));
+app.use("/api/mascotas", require("./routes/mascotas"));
 
 // Health check
 app.get("/api/test-connections", async (req, res) => {

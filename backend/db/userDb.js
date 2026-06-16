@@ -35,7 +35,7 @@ logDebug(`[USER DB] MARIA_PASS corregida existe: ${!!resolvedPass} (Longitud fin
         const conn = await mariadb.createConnection({
             host: resolvedHost,
             port: parseInt(process.env.MARIA_PORT || "3306"),
-            database: process.env.MARIA_DB_NAME || 'u259434644_odomed',
+            database: process.env.MARIA_DB_NAME || 'u259434644_veterinaria',
             user: process.env.MARIA_USER,
             password: resolvedPass,
             connectTimeout: 5000
@@ -50,16 +50,16 @@ logDebug(`[USER DB] MARIA_PASS corregida existe: ${!!resolvedPass} (Longitud fin
 })();
 
 const poolConfig = {
-     host: resolvedHost, 
-     port: parseInt(process.env.MARIA_PORT || "3306"),
-     database: process.env.MARIA_DB_NAME || 'u259434644_odomed',
-     user: process.env.MARIA_USER,
-     password: resolvedPass,
-     // Lower connectionLimit to 4 to prevent exceeding hosting limits (e.g. max_connections_per_hour)
-     connectionLimit: 4, 
-     connectTimeout: 10000,
-     acquireTimeout: 10000,
-     allowPublicKeyRetrieval: true
+    host: resolvedHost,
+    port: parseInt(process.env.MARIA_PORT || "3306"),
+    database: process.env.MARIA_DB_NAME || 'u259434644_veterinaria',
+    user: process.env.MARIA_USER,
+    password: resolvedPass,
+    // Lower connectionLimit to 4 to prevent exceeding hosting limits (e.g. max_connections_per_hour)
+    connectionLimit: 4,
+    connectTimeout: 10000,
+    acquireTimeout: 10000,
+    allowPublicKeyRetrieval: true
 };
 
 // Single pool shared for all queries

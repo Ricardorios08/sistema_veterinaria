@@ -9,9 +9,11 @@ import LogViewer from './views/LogViewer';
 import Patients from './views/Patients';
 import Nomenclature from './views/Nomenclature';
 import Appointments from './views/Appointments';
-import ObrasSociales from './views/ObrasSociales';
 import WaitingList from './views/WaitingList';
 import Prestadores from './views/Prestadores';
+import Socios from './views/Socios';
+import Particulares from './views/Particulares';
+import Mascotas from './views/Mascotas';
 import { API_URL } from './config';
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
   const [activeTurnoId, setActiveTurnoId] = useState(null);
   const [isPatientModalOpen, setIsPatientModalOpen] = useState(false);
   const [waitingListRefresh, setWaitingListRefresh] = useState(0);
+  const [preselectedOwner, setPreselectedOwner] = useState(null);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -53,10 +56,10 @@ function App() {
           setUser(userData);
           // Set default view based on role
           if (userData.rol === 'superadmin' || userData.rol === 'admin') {
-            setView('users');
+            setView('socios');
           } else if (userData.rol === 'recepcion') {
-            setView('appointments');
-          } else if (userData.rol === 'profesional') {
+            setView('socios');
+          } else if (['profesional', 'veterinario', 'peluquero', 'traslado'].includes(userData.rol)) {
             setView('waiting-list');
           } else {
             setView('profile');
@@ -77,10 +80,10 @@ function App() {
   const handleLogin = (userData) => {
     setUser(userData);
     if (userData.rol === 'superadmin' || userData.rol === 'admin') {
-      setView('users');
+      setView('socios');
     } else if (userData.rol === 'recepcion') {
-      setView('appointments');
-    } else if (userData.rol === 'profesional') {
+      setView('socios');
+    } else if (['profesional', 'veterinario', 'peluquero', 'traslado'].includes(userData.rol)) {
       setView('waiting-list');
     } else {
       setView('profile');
@@ -162,6 +165,18 @@ function App() {
                 </div>
               )}
             </>
+          ) : view === 'socios' ? (
+            <Socios currentUser={user} onAddMascota={(type, id, label) => {
+              setPreselectedOwner({ type, id, label });
+              setView('mascotas');
+            }} />
+          ) : view === 'particulares' ? (
+            <Particulares currentUser={user} onAddMascota={(type, id, label) => {
+              setPreselectedOwner({ type, id, label });
+              setView('mascotas');
+            }} />
+          ) : view === 'mascotas' ? (
+            <Mascotas currentUser={user} initialOwner={preselectedOwner} clearInitialOwner={() => setPreselectedOwner(null)} />
           ) : view === 'patients' ? (
             <Patients 
               activePatientId={selectedPatientId} 
@@ -175,8 +190,6 @@ function App() {
             />
           ) : view === 'nomenclature' ? (
             <Nomenclature user={user} />
-          ) : view === 'obras-sociales' ? (
-            <ObrasSociales user={user} />
           ) : view === 'prestadores' ? (
             <Prestadores />
           ) : view === 'users' ? (
