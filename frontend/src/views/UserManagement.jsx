@@ -12,6 +12,7 @@ const UserManagement = () => {
     const [selectedRoles, setSelectedRoles] = useState(['profesional']);
     const [tipoProfesionalId, setTipoProfesionalId] = useState('');
     const [matricula, setMatricula] = useState('');
+    const [codCobrador, setCodCobrador] = useState('');
     const [mail, setMail] = useState('');
     const [celular, setCelular] = useState('');
     const [direccion, setDireccion] = useState('');
@@ -39,6 +40,7 @@ const UserManagement = () => {
     const [editRoles, setEditRoles] = useState([]);
     const [editTipoProfesionalId, setEditTipoProfesionalId] = useState('');
     const [editMatricula, setEditMatricula] = useState('');
+    const [editCodCobrador, setEditCodCobrador] = useState('');
     const [editNombre, setEditNombre] = useState('');
     const [editApellido, setEditApellido] = useState('');
     const [editMail, setEditMail] = useState('');
@@ -58,6 +60,7 @@ const UserManagement = () => {
         setSelectedRoles(['profesional']);
         setTipoProfesionalId('');
         setMatricula('');
+        setCodCobrador('');
         setPrestadorId('');
         setMail('');
         setCelular('');
@@ -186,8 +189,9 @@ const UserManagement = () => {
                 password, 
                 rol: selectedRoles[0],
                 roles: selectedRoles,
-                tipo_profesional_id: selectedRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(r)) && tipoProfesionalId ? parseInt(tipoProfesionalId) : null,
-                matricula: selectedRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(r)) ? matricula : null,
+                tipo_profesional_id: selectedRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado'].includes(r)) && tipoProfesionalId ? parseInt(tipoProfesionalId) : null,
+                matricula: selectedRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado'].includes(r)) ? matricula : null,
+                cod_cobrador: selectedRoles.includes('cobrador') ? codCobrador : null,
                 prestador_id: currentUser?.rol === 'superadmin' && prestadorId ? parseInt(prestadorId) : null,
                 mail,
                 celular,
@@ -201,6 +205,7 @@ const UserManagement = () => {
             setSelectedRoles(['profesional']);
             setTipoProfesionalId('');
             setMatricula('');
+            setCodCobrador('');
             setPrestadorId('');
             setMail('');
             setCelular('');
@@ -231,6 +236,7 @@ const UserManagement = () => {
         setEditPassword('');
         setEditTipoProfesionalId(u.tipo_profesional_id || '');
         setEditMatricula(u.matricula || '');
+        setEditCodCobrador(u.cod_cobrador || '');
         setEditPrestadorId(u.prestador_id || '');
         setEditNombre(u.nombre || '');
         setEditApellido(u.apellido || '');
@@ -246,8 +252,9 @@ const UserManagement = () => {
                 password: editPassword || undefined,
                 rol: editRoles[0] || editRol,
                 roles: editRoles,
-                tipo_profesional_id: editRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(r)) && editTipoProfesionalId ? parseInt(editTipoProfesionalId) : null,
-                matricula: editRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(r)) ? editMatricula : null,
+                tipo_profesional_id: editRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado'].includes(r)) && editTipoProfesionalId ? parseInt(editTipoProfesionalId) : null,
+                matricula: editRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado'].includes(r)) ? editMatricula : null,
+                cod_cobrador: editRoles.includes('cobrador') ? editCodCobrador : null,
                 prestador_id: currentUser?.rol === 'superadmin' && editPrestadorId ? parseInt(editPrestadorId) : null,
                 nombre: editNombre,
                 apellido: editApellido,
@@ -462,7 +469,7 @@ const UserManagement = () => {
                             )}
         
                             {/* DYNAMIC PROFESSIONAL FIELDS */}
-                            {selectedRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(r)) && (
+                            {selectedRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado'].includes(r)) && (
                                 <>
                                     <div className="form-group" style={{ marginBottom: 0 }}>
                                         <label>Especialidad / Tipo de Profesional</label>
@@ -490,6 +497,20 @@ const UserManagement = () => {
                                         />
                                     </div>
                                 </>
+                            )}
+
+                            {selectedRoles.includes('cobrador') && (
+                                <div className="form-group" style={{ marginBottom: 0 }}>
+                                    <label>Código de Cobrador (Legacy)</label>
+                                    <input 
+                                        type="text" 
+                                        className="input-field"
+                                        value={codCobrador} 
+                                        onChange={(e) => setCodCobrador(e.target.value)} 
+                                        placeholder="Ej: 11"
+                                        required
+                                    />
+                                </div>
                             )}
         
                             <div style={{ gridColumn: '1 / -1', display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '0.5rem' }}>
@@ -776,40 +797,64 @@ const UserManagement = () => {
                                     )}
                                     <td>
                                         {editingUserId === u.id ? (
-                                            editRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(r)) ? (
-                                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                                    <select 
-                                                        className="input-field"
-                                                        value={editTipoProfesionalId}
-                                                        onChange={(e) => setEditTipoProfesionalId(e.target.value)}
-                                                        style={{ padding: '0.2rem', minHeight: 'auto' }}
-                                                    >
-                                                        <option value="">Selecciona especialidad...</option>
-                                                        {professionalTypes.map(t => (
-                                                            <option key={t.id} value={t.id}>{t.nombre}</option>
-                                                        ))}
-                                                    </select>
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                                                {editRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado'].includes(r)) && (
+                                                    <>
+                                                        <select 
+                                                            className="input-field"
+                                                            value={editTipoProfesionalId}
+                                                            onChange={(e) => setEditTipoProfesionalId(e.target.value)}
+                                                            style={{ padding: '0.2rem', minHeight: 'auto' }}
+                                                        >
+                                                            <option value="">Selecciona especialidad...</option>
+                                                            {professionalTypes.map(t => (
+                                                                <option key={t.id} value={t.id}>{t.nombre}</option>
+                                                            ))}
+                                                        </select>
+                                                        <input 
+                                                            type="text"
+                                                            placeholder="Matrícula"
+                                                            className="input-field"
+                                                            value={editMatricula}
+                                                            onChange={(e) => setEditMatricula(e.target.value)}
+                                                            style={{ padding: '0.2rem', minHeight: 'auto', fontSize: '0.8rem' }}
+                                                        />
+                                                    </>
+                                                )}
+                                                {editRoles.includes('cobrador') && (
                                                     <input 
                                                         type="text"
-                                                        placeholder="Matrícula"
+                                                        placeholder="Cód. Cobrador"
                                                         className="input-field"
-                                                        value={editMatricula}
-                                                        onChange={(e) => setEditMatricula(e.target.value)}
+                                                        value={editCodCobrador}
+                                                        onChange={(e) => setEditCodCobrador(e.target.value)}
                                                         style={{ padding: '0.2rem', minHeight: 'auto', fontSize: '0.8rem' }}
                                                     />
-                                                </div>
-                                            ) : (
-                                                <span style={{ color: 'var(--text-dim)' }}>No aplica</span>
-                                            )
+                                                )}
+                                                {!editRoles.some(r => ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(r)) && (
+                                                    <span style={{ color: 'var(--text-dim)' }}>No aplica</span>
+                                                )}
+                                            </div>
                                         ) : (
                                             (u.roles ? u.roles.split(',').some(r => ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(r)) : ['profesional', 'veterinario', 'peluquero', 'traslado', 'cobrador'].includes(u.rol)) ? (
-                                                <div>
-                                                    <span className="role-badge municipalidad" style={{ textTransform: 'none', marginRight: '0.5rem' }}>
-                                                        {u.tipo_profesional_nombre || 'Sin especialidad'}
-                                                    </span>
-                                                    <span style={{ fontSize: '0.85rem', color: 'var(--text-dim)' }}>
-                                                        M.P.: <strong>{u.matricula || 'N/A'}</strong>
-                                                    </span>
+                                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                                                    {(u.roles ? u.roles.split(',').some(r => ['profesional', 'veterinario', 'peluquero', 'traslado'].includes(r)) : ['profesional', 'veterinario', 'peluquero', 'traslado'].includes(u.rol)) && (
+                                                        <div>
+                                                            <span className="role-badge municipalidad" style={{ textTransform: 'none', marginRight: '0.5rem' }}>
+                                                                {u.tipo_profesional_nombre || 'Sin especialidad'}
+                                                            </span>
+                                                            <span style={{ fontSize: '0.85rem', color: 'var(--text-dim)' }}>
+                                                                M.P.: <strong>{u.matricula || 'N/A'}</strong>
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    {(u.roles ? u.roles.split(',').includes('cobrador') : u.rol === 'cobrador') && (
+                                                        <div>
+                                                            <span className="role-badge cobrador" style={{ textTransform: 'none', background: 'rgba(59, 130, 246, 0.15)', color: '#60a5fa', border: '1px solid rgba(59, 130, 246, 0.3)', padding: '2px 6px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600 }}>
+                                                                Cobrador Cód: <strong>{u.cod_cobrador || 'Sin asignar'}</strong>
+                                                            </span>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             ) : (
                                                 <span style={{ color: 'var(--text-dim)', fontSize: '0.85rem' }}>-</span>

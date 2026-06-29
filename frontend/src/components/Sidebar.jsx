@@ -11,7 +11,8 @@ import {
   Activity,
   Heart,
   Clock,
-  Building
+  Building,
+  CreditCard,
 } from 'lucide-react';
 
 import { API_URL } from '../config';
@@ -28,6 +29,8 @@ const Sidebar = ({ currentView, setView, collapsed, setCollapsed, mobileOpen, se
   const hasAccessToMascotas = isProfesional || isRecepcion || isAdmin || isSuperAdmin;
   const hasAccessToNomenclature = isRecepcion || isProfesional || isAdmin || isSuperAdmin;
   const hasAccessToUsers = isAdmin || isSuperAdmin;
+  const isCobrador = user?.rol === 'cobrador';
+  const hasAccessToPagos = isAdmin || isSuperAdmin || isRecepcion || isCobrador;
 
   const roles = user?.roles || (user?.rol ? [user.rol] : []);
 
@@ -103,8 +106,8 @@ const Sidebar = ({ currentView, setView, collapsed, setCollapsed, mobileOpen, se
         {/* Socios (Dueños) */}
         {hasAccessToSocios && (
           <div
-            className={`menu-item patients ${currentView === 'socios' ? 'active' : ''}`}
-            onClick={() => setView('socios')}
+            className={`menu-item patients ${['socios', 'socios-dashboard', 'particulares', 'mascotas', 'informes', 'acomodar-ruta'].includes(currentView) ? 'active' : ''}`}
+            onClick={() => setView('socios-dashboard')}
             title={collapsed ? "Socios" : ""}
           >
             <Users size={20} />
@@ -113,18 +116,7 @@ const Sidebar = ({ currentView, setView, collapsed, setCollapsed, mobileOpen, se
           </div>
         )}
 
-        {/* Particulares */}
-        {hasAccessToParticulares && (
-          <div
-            className={`menu-item patients ${currentView === 'particulares' ? 'active' : ''}`}
-            onClick={() => setView('particulares')}
-            title={collapsed ? "Particulares" : ""}
-          >
-            <UserCircle size={20} />
-            {!collapsed && <span>Particulares</span>}
-            {!collapsed && <ChevronRight size={16} style={{ marginLeft: 'auto', opacity: 0.5 }} />}
-          </div>
-        )}
+
 
         {/* Mascotas */}
         {hasAccessToMascotas && (
@@ -135,6 +127,19 @@ const Sidebar = ({ currentView, setView, collapsed, setCollapsed, mobileOpen, se
           >
             <Heart size={20} />
             {!collapsed && <span>Mascotas</span>}
+            {!collapsed && <ChevronRight size={16} style={{ marginLeft: 'auto', opacity: 0.5 }} />}
+          </div>
+        )}
+
+        {/* Pagos (Admin, Recepción, Cobrador) */}
+        {hasAccessToPagos && (
+          <div
+            className={`menu-item ${currentView === 'pagos' ? 'active' : ''}`}
+            onClick={() => setView('pagos')}
+            title={collapsed ? "Pagos" : ""}
+          >
+            <CreditCard size={20} />
+            {!collapsed && <span>Pagos</span>}
             {!collapsed && <ChevronRight size={16} style={{ marginLeft: 'auto', opacity: 0.5 }} />}
           </div>
         )}

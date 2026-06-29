@@ -445,129 +445,151 @@ const Mascotas = ({ currentUser, initialOwner, clearInitialOwner }) => {
             {/* Modal Formulario Mascota */}
             {showForm && (
                 <div className="modal-overlay" onClick={() => setShowForm(false)}>
-                    <div className="modal-content" style={{ maxWidth: '600px' }} onClick={e => e.stopPropagation()}>
+                    <div className="modal-content" style={{ maxWidth: '850px', width: '100%' }} onClick={e => e.stopPropagation()}>
                         <div className="modal-header">
                             <h2>{editingId ? 'Editar Mascota' : 'Nueva Mascota'}</h2>
                             <button className="btn-icon" onClick={() => setShowForm(false)}>✕</button>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="login-form" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                            {/* Búsqueda de dueño */}
-                            <div className="form-group" style={{ gridColumn: 'span 2', position: 'relative' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
-                                    <label style={{ margin: 0 }}>Dueño</label>
-                                    <div style={{ display: 'flex', gap: '0.75rem' }}>
-                                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.8rem', cursor: 'pointer', margin: 0 }}>
-                                            <input type="radio" checked={ownerType === 'socio'} onChange={() => handleOwnerTypeChange('socio')} />
-                                            Socio
-                                        </label>
-                                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.8rem', cursor: 'pointer', margin: 0 }}>
-                                            <input type="radio" checked={ownerType === 'particular'} onChange={() => handleOwnerTypeChange('particular')} />
-                                            Particular
-                                        </label>
+                        <form onSubmit={handleSubmit} style={{ margin: 0, display: 'flex', flexDirection: 'column' }}>
+                            <div className="modal-body">
+                                <div className="form-grid-2">
+                                    {/* ── Dueño / Responsable ── */}
+                                    <div className="form-section-title">
+                                        👤 Dueño / Responsable
                                     </div>
-                                </div>
-                                <input className="form-input" placeholder={`Buscar ${ownerType} por apellido...`}
-                                    value={ownerSearch}
-                                    onChange={e => searchOwners(e.target.value)} />
-                                {owners.length > 0 && (
-                                    <div style={{ border: '1px solid var(--border)', borderRadius: '6px', marginTop: '4px', background: 'var(--surface)', maxHeight: '150px', overflowY: 'auto', position: 'absolute', width: '100%', zIndex: 10 }}>
-                                        {owners.map(o => (
-                                            <div key={o.id}
-                                                style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', borderBottom: '1px solid var(--border)', background: 'var(--surface)' }}
-                                                onClick={() => {
-                                                    if (ownerType === 'particular') {
-                                                        setForm(f => ({ ...f, particular_id: o.id, socio_id: null, origen: 'particular' }));
-                                                    } else {
-                                                        setForm(f => ({ ...f, socio_id: o.id, particular_id: null, origen: 'socio' }));
-                                                    }
-                                                    setOwnerSearch(`${o.apellido}, ${o.nombre}`);
-                                                    setOwners([]);
-                                                }}>
-                                                <strong>{o.apellido}, {o.nombre}</strong>
-                                                {o.documento && <span style={{ color: 'var(--text-dim)', marginLeft: '0.5rem' }}>DNI: {o.documento}</span>}
+                                    
+                                    <div className="form-group" style={{ gridColumn: 'span 2', position: 'relative' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
+                                            <label style={{ margin: 0 }}>Dueño</label>
+                                            <div style={{ display: 'flex', gap: '0.75rem' }}>
+                                                <label style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.8rem', cursor: 'pointer', margin: 0 }}>
+                                                    <input type="radio" checked={ownerType === 'socio'} onChange={() => handleOwnerTypeChange('socio')} />
+                                                    Socio
+                                                </label>
+                                                <label style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.8rem', cursor: 'pointer', margin: 0 }}>
+                                                    <input type="radio" checked={ownerType === 'particular'} onChange={() => handleOwnerTypeChange('particular')} />
+                                                    Particular
+                                                </label>
                                             </div>
-                                        ))}
+                                        </div>
+                                        <input className="form-input" placeholder={`Buscar ${ownerType} por apellido...`}
+                                            value={ownerSearch}
+                                            onChange={e => searchOwners(e.target.value)} />
+                                        {owners.length > 0 && (
+                                            <div style={{ border: '1px solid var(--border)', borderRadius: '6px', marginTop: '4px', background: 'var(--surface)', maxHeight: '150px', overflowY: 'auto', position: 'absolute', width: '100%', zIndex: 10 }}>
+                                                {owners.map(o => (
+                                                    <div key={o.id}
+                                                        style={{ padding: '0.5rem 0.75rem', cursor: 'pointer', borderBottom: '1px solid var(--border)', background: 'var(--surface)' }}
+                                                        onClick={() => {
+                                                            if (ownerType === 'particular') {
+                                                                setForm(f => ({ ...f, particular_id: o.id, socio_id: null, origen: 'particular' }));
+                                                            } else {
+                                                                setForm(f => ({ ...f, socio_id: o.id, particular_id: null, origen: 'socio' }));
+                                                            }
+                                                            setOwnerSearch(`${o.apellido}, ${o.nombre}`);
+                                                            setOwners([]);
+                                                        }}>
+                                                        <strong>{o.apellido}, {o.nombre}</strong>
+                                                        {o.documento && <span style={{ color: 'var(--text-dim)', marginLeft: '0.5rem' }}>DNI: {o.documento}</span>}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                        {(form.socio_id || form.particular_id) && (
+                                            <div style={{ fontSize: '0.8rem', color: 'var(--success)', marginTop: '4px' }}>
+                                                ✓ {ownerType === 'particular' ? 'Particular' : 'Socio'} seleccionado
+                                                <button type="button" style={{ marginLeft: '0.5rem', fontSize: '0.75rem', background: 'none', border: 'none', color: 'var(--text-dim)', cursor: 'pointer' }}
+                                                    onClick={() => {
+                                                        setForm(f => ({ ...f, socio_id: '', particular_id: '' }));
+                                                        setOwnerSearch('');
+                                                    }}>
+                                                    (quitar)
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
-                                )}
-                                {(form.socio_id || form.particular_id) && (
-                                    <div style={{ fontSize: '0.8rem', color: 'var(--success)', marginTop: '4px' }}>
-                                        ✓ {ownerType === 'particular' ? 'Particular' : 'Socio'} seleccionado
-                                        <button type="button" style={{ marginLeft: '0.5rem', fontSize: '0.75rem', background: 'none', border: 'none', color: 'var(--text-dim)', cursor: 'pointer' }}
-                                            onClick={() => {
-                                                setForm(f => ({ ...f, socio_id: '', particular_id: '' }));
-                                                setOwnerSearch('');
-                                            }}>
-                                            (quitar)
-                                        </button>
+
+                                    {/* ── Datos de la Mascota ── */}
+                                    <div className="form-section-title">
+                                        🐾 Datos de la Mascota
                                     </div>
-                                )}
-                            </div>
+                                    
+                                    <div className="form-group" style={{ gridColumn: 'span 2' }}>
+                                        <label>Nombre *</label>
+                                        <input className="form-input" required value={form.nombre}
+                                            onChange={e => setForm(f => ({ ...f, nombre: e.target.value }))} />
+                                    </div>
+                                    
+                                    <div className="form-group">
+                                        <label>Especie</label>
+                                        <input className="form-input" list="especies-list" value={form.especie}
+                                            onChange={e => setForm(f => ({ ...f, especie: e.target.value.toUpperCase() }))} />
+                                        <datalist id="especies-list">
+                                            {especies.map(esp => <option key={esp} value={esp} />)}
+                                        </datalist>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Raza</label>
+                                        <input className="form-input" value={form.raza}
+                                            onChange={e => setForm(f => ({ ...f, raza: e.target.value }))} />
+                                    </div>
+                                    
+                                    <div className="form-group">
+                                        <label>Sexo</label>
+                                        <select className="form-input" value={form.sexo}
+                                            onChange={e => setForm(f => ({ ...f, sexo: e.target.value }))}>
+                                            <option value="">Sin especificar</option>
+                                            <option value="Macho">Macho</option>
+                                            <option value="HEMBRA">Hembra</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Fecha de Nacimiento</label>
+                                        <input className="form-input" type="date" value={form.fecha_nac}
+                                            onChange={e => setForm(f => ({ ...f, fecha_nac: e.target.value }))} />
+                                    </div>
+                                    
+                                    <div className="form-group">
+                                        <label>Color</label>
+                                        <input className="form-input" value={form.color}
+                                            onChange={e => setForm(f => ({ ...f, color: e.target.value }))} />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Pelaje</label>
+                                        <input className="form-input" value={form.pelaje}
+                                            onChange={e => setForm(f => ({ ...f, pelaje: e.target.value }))} />
+                                    </div>
+                                    
+                                    <div className="form-group" style={{ gridColumn: 'span 2' }}>
+                                        <label>Tamaño</label>
+                                        <select className="form-input" value={form.tamanio}
+                                            onChange={e => setForm(f => ({ ...f, tamanio: e.target.value }))}>
+                                            <option value="">Sin especificar</option>
+                                            <option>PEQUEÑO</option><option>MEDIANO</option><option>GRANDE</option><option>GIGANTE</option>
+                                        </select>
+                                    </div>
 
-                            <div className="form-group" style={{ gridColumn: 'span 2' }}>
-                                <label>Nombre *</label>
-                                <input className="form-input" required value={form.nombre}
-                                    onChange={e => setForm(f => ({ ...f, nombre: e.target.value }))} />
-                            </div>
-                            <div className="form-group">
-                                <label>Especie</label>
-                                <input className="form-input" list="especies-list" value={form.especie}
-                                    onChange={e => setForm(f => ({ ...f, especie: e.target.value.toUpperCase() }))} />
-                                <datalist id="especies-list">
-                                    {especies.map(esp => <option key={esp} value={esp} />)}
-                                </datalist>
-                            </div>
-                            <div className="form-group">
-                                <label>Raza</label>
-                                <input className="form-input" value={form.raza}
-                                    onChange={e => setForm(f => ({ ...f, raza: e.target.value }))} />
-                            </div>
-                            <div className="form-group">
-                                <label>Color</label>
-                                <input className="form-input" value={form.color}
-                                    onChange={e => setForm(f => ({ ...f, color: e.target.value }))} />
-                            </div>
-                            <div className="form-group">
-                                <label>Pelaje</label>
-                                <input className="form-input" value={form.pelaje}
-                                    onChange={e => setForm(f => ({ ...f, pelaje: e.target.value }))} />
-                            </div>
-                            <div className="form-group">
-                                <label>Tamaño</label>
-                                <select className="form-input" value={form.tamanio}
-                                    onChange={e => setForm(f => ({ ...f, tamanio: e.target.value }))}>
-                                    <option value="">Sin especificar</option>
-                                    <option>PEQUEÑO</option><option>MEDIANO</option><option>GRANDE</option><option>GIGANTE</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label>Sexo</label>
-                                <select className="form-input" value={form.sexo}
-                                    onChange={e => setForm(f => ({ ...f, sexo: e.target.value }))}>
-                                    <option value="">Sin especificar</option>
-                                    <option value="Macho">Macho</option>
-                                    <option value="HEMBRA">Hembra</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label>Fecha de Nacimiento</label>
-                                <input className="form-input" type="date" value={form.fecha_nac}
-                                    onChange={e => setForm(f => ({ ...f, fecha_nac: e.target.value }))} />
-                            </div>
-                            <div className="form-group" style={{ gridColumn: 'span 2' }}>
-                                <label>Observaciones</label>
-                                <textarea className="form-input" rows={2} value={form.observaciones}
-                                    onChange={e => setForm(f => ({ ...f, observaciones: e.target.value }))} />
-                            </div>
-
-                            {message.text && (
-                                <div className={message.type === 'success' ? 'success-msg' : 'login-error'}
-                                    style={{ gridColumn: 'span 2' }}>
-                                    {message.text}
+                                    {/* ── Observaciones ── */}
+                                    <div className="form-section-title">
+                                        📝 Observaciones
+                                    </div>
+                                    
+                                    <div className="form-group" style={{ gridColumn: 'span 2', marginBottom: 0 }}>
+                                        <textarea className="form-input" rows={2} placeholder="Notas clínicas o de comportamiento..." value={form.observaciones}
+                                            onChange={e => setForm(f => ({ ...f, observaciones: e.target.value }))} />
+                                    </div>
                                 </div>
-                            )}
 
-                            <div style={{ gridColumn: 'span 2', display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
+                                {message.text && (
+                                    <div className={message.type === 'success' ? 'success-msg' : 'login-error'}
+                                        style={{ marginTop: '1.5rem', marginBottom: 0 }}>
+                                        {message.text}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="modal-footer">
                                 <button type="button" className="btn-secondary" onClick={() => setShowForm(false)}>Cancelar</button>
                                 <button type="submit" className="btn-primary">{editingId ? 'Guardar cambios' : 'Crear mascota'}</button>
                             </div>

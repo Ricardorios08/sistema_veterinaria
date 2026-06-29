@@ -1,24 +1,21 @@
-const mariadb = require('mariadb');
+const mevepDb = require('./db/mevepDb');
 
 async function run() {
-    let conn;
+    console.log("Listing tables in MEVEP database...");
     try {
-        conn = await mariadb.createConnection({
-            host: '193.203.175.222',
-            user: 'u259434644_mevep',
-            password: 'S0p0rt3s2021',
-            database: 'u259434644_mevep',
-            port: 3306,
-            connectTimeout: 8000
-        });
-        const tables = await conn.query("SHOW TABLES");
-        const list = tables.map(r => Object.values(r)[0]);
-        console.log("Tables in mevep:", list);
+        const tables = await mevepDb.query("SHOW TABLES");
+        console.log("Tables in MEVEP:", tables);
+        
+        for (const tRow of tables) {
+            const tableName = Object.values(tRow)[0];
+            if (['socios', 'pagos', 'cobradores', 'rutas'].includes(tableName.toLowerCase())) {
+                console.log(`\n--- Columns of table: ${tableName} ---`);
+                const columns = await mevepDb.query(`DESCRIBE \`${tableName}\``);
+                console.table(columns);
+            }
+        }
     } catch (err) {
-        console.error("Error:", err.message);
-    } finally {
-        if (conn) await conn.end();
-        process.exit(0);
+        console.error("Error:", err);
     }
 }
 

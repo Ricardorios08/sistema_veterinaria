@@ -12,8 +12,12 @@ import Appointments from './views/Appointments';
 import WaitingList from './views/WaitingList';
 import Prestadores from './views/Prestadores';
 import Socios from './views/Socios';
+import SociosDashboard from './views/SociosDashboard';
 import Particulares from './views/Particulares';
 import Mascotas from './views/Mascotas';
+import InformesSocios from './views/InformesSocios';
+import AcomodarRuta from './views/AcomodarRuta';
+import Pagos from './views/Pagos';
 import { API_URL } from './config';
 
 function App() {
@@ -56,9 +60,11 @@ function App() {
           setUser(userData);
           // Set default view based on role
           if (userData.rol === 'superadmin' || userData.rol === 'admin') {
-            setView('socios');
+            setView('socios-dashboard');
           } else if (userData.rol === 'recepcion') {
-            setView('socios');
+            setView('socios-dashboard');
+          } else if (userData.rol === 'cobrador') {
+            setView('pagos');
           } else if (['profesional', 'veterinario', 'peluquero', 'traslado'].includes(userData.rol)) {
             setView('waiting-list');
           } else {
@@ -80,9 +86,11 @@ function App() {
   const handleLogin = (userData) => {
     setUser(userData);
     if (userData.rol === 'superadmin' || userData.rol === 'admin') {
-      setView('socios');
+      setView('socios-dashboard');
     } else if (userData.rol === 'recepcion') {
-      setView('socios');
+      setView('socios-dashboard');
+    } else if (userData.rol === 'cobrador') {
+      setView('pagos');
     } else if (['profesional', 'veterinario', 'peluquero', 'traslado'].includes(userData.rol)) {
       setView('waiting-list');
     } else {
@@ -165,6 +173,28 @@ function App() {
                 </div>
               )}
             </>
+          ) : view === 'socios-dashboard' ? (
+            <SociosDashboard
+              currentUser={user}
+              onNavigate={(action) => {
+                if (action === 'list-socios') setView('socios');
+                else if (action === 'new-socio') { setView('socios'); }
+                else if (action === 'list-particulares') setView('particulares');
+                else if (action === 'new-particular') setView('particulares');
+                else if (action === 'list-mascotas') setView('mascotas');
+                else if (action === 'new-mascota') setView('mascotas');
+                else if (action === 'informes') setView('informes');
+                else if (action === 'acomodar-ruta') setView('acomodar-ruta');
+              }}
+            />
+          ) : view === 'informes' ? (
+            <InformesSocios currentUser={user} onBack={() => setView('socios-dashboard')} />
+          ) : view === 'acomodar-ruta' ? (
+            <AcomodarRuta currentUser={user} onBack={() => setView('socios-dashboard')} />
+          ) : view === 'pagos' ? (
+            <Pagos currentUser={user} onBack={() => setView(
+              ['admin','superadmin','recepcion'].includes(user?.rol) ? 'socios-dashboard' : 'profile'
+            )} />
           ) : view === 'socios' ? (
             <Socios currentUser={user} onAddMascota={(type, id, label) => {
               setPreselectedOwner({ type, id, label });

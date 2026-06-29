@@ -277,95 +277,135 @@ const Particulares = ({ currentUser, onAddMascota }) => {
             {/* Modal Formulario */}
             {showForm && (
                 <div className="modal-overlay" onClick={() => setShowForm(false)}>
-                    <div className="modal-content" style={{ maxWidth: '700px' }} onClick={e => e.stopPropagation()}>
+                    <div className="modal-content" style={{ maxWidth: '850px', width: '100%' }} onClick={e => e.stopPropagation()}>
                         <div className="modal-header">
                             <h2>{editingId ? 'Editar Particular' : 'Nuevo Particular'}</h2>
                             <button className="btn-icon" onClick={() => setShowForm(false)}>✕</button>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="login-form" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                            <div className="form-group">
-                                <label>Apellido *</label>
-                                <input className="form-input" required value={form.apellido}
-                                    onChange={e => setForm(f => ({ ...f, apellido: e.target.value }))} />
-                            </div>
-                            <div className="form-group">
-                                <label>Nombre *</label>
-                                <input className="form-input" required value={form.nombre}
-                                    onChange={e => setForm(f => ({ ...f, nombre: e.target.value }))} />
-                            </div>
-                            <div className="form-group">
-                                <label>Tipo Doc.</label>
-                                <select className="form-input" value={form.tipo_doc}
-                                    onChange={e => setForm(f => ({ ...f, tipo_doc: e.target.value }))}>
-                                    <option value="D.N.I">D.N.I</option>
-                                    <option value="PASAPORTE">Pasaporte</option>
-                                    <option value="OTRO">Otro</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label>Documento</label>
-                                <input className="form-input" value={form.documento}
-                                    onChange={e => setForm(f => ({ ...f, documento: e.target.value }))} />
-                            </div>
-                            <div className="form-group">
-                                <label>Teléfono</label>
-                                <input className="form-input" value={form.telefono}
-                                    onChange={e => setForm(f => ({ ...f, telefono: e.target.value }))} />
-                            </div>
-                            <div className="form-group">
-                                <label>Celular</label>
-                                <input className="form-input" value={form.celular}
-                                    onChange={e => setForm(f => ({ ...f, celular: e.target.value }))} />
-                            </div>
-                            <div className="form-group" style={{ gridColumn: 'span 2' }}>
-                                <label>Domicilio</label>
-                                <input className="form-input" value={form.domicilio}
-                                    onChange={e => setForm(f => ({ ...f, domicilio: e.target.value }))} />
-                            </div>
-                            <div className="form-group">
-                                <label>Localidad</label>
-                                <input className="form-input" value={form.localidad}
-                                    onChange={e => setForm(f => ({ ...f, localidad: e.target.value }))} />
-                            </div>
-                            <div className="form-group">
-                                <label>Departamento</label>
-                                <input className="form-input" value={form.departamento}
-                                    onChange={e => setForm(f => ({ ...f, departamento: e.target.value }))} />
-                            </div>
-                            <div className="form-group">
-                                <label>Mail</label>
-                                <input className="form-input" type="email" value={form.mail}
-                                    onChange={e => setForm(f => ({ ...f, mail: e.target.value }))} />
-                            </div>
-                            <div className="form-group">
-                                <label>Sexo</label>
-                                <select className="form-input" value={form.sexo}
-                                    onChange={e => setForm(f => ({ ...f, sexo: e.target.value }))}>
-                                    <option value="">Sin especificar</option>
-                                    <option value="M">Masculino</option>
-                                    <option value="F">Femenino</option>
-                                </select>
-                            </div>
-                            <div className="form-group" style={{ gridColumn: 'span 2' }}>
-                                <label>Fecha Ingreso</label>
-                                <input className="form-input" type="date" value={form.fecha_ingreso}
-                                    onChange={e => setForm(f => ({ ...f, fecha_ingreso: e.target.value }))} />
-                            </div>
-                            <div className="form-group" style={{ gridColumn: 'span 2' }}>
-                                <label>Observaciones</label>
-                                <textarea className="form-input" rows={2} value={form.observaciones}
-                                    onChange={e => setForm(f => ({ ...f, observaciones: e.target.value }))} />
-                            </div>
+                        <form onSubmit={handleSubmit} style={{ margin: 0, display: 'flex', flexDirection: 'column' }}>
+                            <div className="modal-body">
+                                <div className="form-grid-2">
+                                    {/* ── Datos Personales ── */}
+                                    <div className="form-section-title">
+                                        👤 Datos Personales
+                                    </div>
+                                    
+                                    <div className="form-group">
+                                        <label>Apellido *</label>
+                                        <input className="form-input" required value={form.apellido}
+                                            onChange={e => setForm(f => ({ ...f, apellido: e.target.value }))} />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Nombre *</label>
+                                        <input className="form-input" required value={form.nombre}
+                                            onChange={e => setForm(f => ({ ...f, nombre: e.target.value }))} />
+                                    </div>
+                                    
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                                        <div className="form-group">
+                                            <label>Tipo Doc.</label>
+                                            <select className="form-input" value={form.tipo_doc}
+                                                onChange={e => setForm(f => ({ ...f, tipo_doc: e.target.value }))}>
+                                                <option value="D.N.I">D.N.I</option>
+                                                <option value="PASAPORTE">Pasaporte</option>
+                                                <option value="OTRO">Otro</option>
+                                            </select>
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Documento</label>
+                                            <input className="form-input" value={form.documento}
+                                                onChange={e => setForm(f => ({ ...f, documento: e.target.value }))} />
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="form-group">
+                                        <label>Sexo</label>
+                                        <select className="form-input" value={form.sexo}
+                                            onChange={e => setForm(f => ({ ...f, sexo: e.target.value }))}>
+                                            <option value="">Sin especificar</option>
+                                            <option value="M">Masculino</option>
+                                            <option value="F">Femenino</option>
+                                        </select>
+                                    </div>
 
-                            {message.text && (
-                                <div className={message.type === 'success' ? 'success-msg' : 'login-error'}
-                                    style={{ gridColumn: 'span 2' }}>
-                                    {message.text}
+                                    {/* ── Contacto ── */}
+                                    <div className="form-section-title">
+                                        📞 Datos de Contacto
+                                    </div>
+                                    
+                                    <div className="form-group">
+                                        <label>Mail</label>
+                                        <input className="form-input" type="email" value={form.mail}
+                                            onChange={e => setForm(f => ({ ...f, mail: e.target.value }))} />
+                                    </div>
+                                    
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                                        <div className="form-group">
+                                            <label>Teléfono</label>
+                                            <input className="form-input" value={form.telefono}
+                                                onChange={e => setForm(f => ({ ...f, telefono: e.target.value }))} />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Celular</label>
+                                            <input className="form-input" value={form.celular}
+                                                onChange={e => setForm(f => ({ ...f, celular: e.target.value }))} />
+                                        </div>
+                                    </div>
+
+                                    {/* ── Domicilio ── */}
+                                    <div className="form-section-title">
+                                        📍 Domicilio y Localización
+                                    </div>
+                                    
+                                    <div className="form-group" style={{ gridColumn: 'span 2' }}>
+                                        <label>Domicilio</label>
+                                        <input className="form-input" value={form.domicilio}
+                                            onChange={e => setForm(f => ({ ...f, domicilio: e.target.value }))} />
+                                    </div>
+                                    
+                                    <div className="form-group">
+                                        <label>Localidad</label>
+                                        <input className="form-input" value={form.localidad}
+                                            onChange={e => setForm(f => ({ ...f, localidad: e.target.value }))} />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Departamento</label>
+                                        <input className="form-input" value={form.departamento}
+                                            onChange={e => setForm(f => ({ ...f, departamento: e.target.value }))} />
+                                    </div>
+
+                                    {/* ── Información de Cliente ── */}
+                                    <div className="form-section-title">
+                                        👤 Registro
+                                    </div>
+                                    
+                                    <div className="form-group" style={{ gridColumn: 'span 2' }}>
+                                        <label>Fecha Ingreso</label>
+                                        <input className="form-input" type="date" value={form.fecha_ingreso}
+                                            onChange={e => setForm(f => ({ ...f, fecha_ingreso: e.target.value }))} />
+                                    </div>
+
+                                    {/* ── Observaciones ── */}
+                                    <div className="form-section-title">
+                                        📝 Observaciones
+                                    </div>
+                                    
+                                    <div className="form-group" style={{ gridColumn: 'span 2', marginBottom: 0 }}>
+                                        <textarea className="form-input" rows={2} placeholder="Notas adicionales sobre el particular..." value={form.observaciones}
+                                            onChange={e => setForm(f => ({ ...f, observaciones: e.target.value }))} />
+                                    </div>
                                 </div>
-                            )}
 
-                            <div style={{ gridColumn: 'span 2', display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
+                                {message.text && (
+                                    <div className={message.type === 'success' ? 'success-msg' : 'login-error'}
+                                        style={{ marginTop: '1.5rem', marginBottom: 0 }}>
+                                        {message.text}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="modal-footer">
                                 <button type="button" className="btn-secondary" onClick={() => setShowForm(false)}>Cancelar</button>
                                 <button type="submit" className="btn-primary">{editingId ? 'Guardar cambios' : 'Crear particular'}</button>
                             </div>

@@ -89,7 +89,8 @@ router.post('/login', async (req, res) => {
                 nombre_usuario: user.nombre_usuario, 
                 rol: activeRol, 
                 roles: finalRoles,
-                prestador_id: user.prestador_id 
+                prestador_id: user.prestador_id,
+                cod_cobrador: user.cod_cobrador
             },
             JWT_SECRET,
             { expiresIn: '8h' }
@@ -102,7 +103,8 @@ router.post('/login', async (req, res) => {
                 nombre_usuario: user.nombre_usuario, 
                 rol: activeRol, 
                 roles: finalRoles, 
-                prestador_id: user.prestador_id 
+                prestador_id: user.prestador_id,
+                cod_cobrador: user.cod_cobrador
             } 
         });
         logAction(user.nombre_usuario, 'LOGIN', 'Inicio de sesión exitoso', req);
@@ -128,6 +130,10 @@ router.post('/switch-role', authenticateToken, async (req, res) => {
         const allRolesResult = await userDb.query('SELECT rol FROM user_rol WHERE user_id = ?', [req.user.id], req.user.rol);
         const allRoles = allRolesResult.map(r => r.rol);
 
+        // Fetch user from DB to get the most updated cod_cobrador
+        const users = await userDb.query('SELECT cod_cobrador FROM user WHERE id = ?', [req.user.id], req.user.rol);
+        const cod_cobrador = users[0]?.cod_cobrador || null;
+
         // Generate a new token with the switched active role
         const token = jwt.sign(
             { 
@@ -135,7 +141,8 @@ router.post('/switch-role', authenticateToken, async (req, res) => {
                 nombre_usuario: req.user.nombre_usuario, 
                 rol: rol, // Switched active role!
                 roles: allRoles,
-                prestador_id: req.user.prestador_id 
+                prestador_id: req.user.prestador_id,
+                cod_cobrador: cod_cobrador
             },
             JWT_SECRET,
             { expiresIn: '8h' }
@@ -148,7 +155,8 @@ router.post('/switch-role', authenticateToken, async (req, res) => {
                 nombre_usuario: req.user.nombre_usuario, 
                 rol: rol, 
                 roles: allRoles,
-                prestador_id: req.user.prestador_id 
+                prestador_id: req.user.prestador_id,
+                cod_cobrador: cod_cobrador
             } 
         });
         logAction(req.user.nombre_usuario, 'ROLE_SWITCH', `Cambio de rol activo a: ${rol}`, req);
@@ -168,7 +176,7 @@ router.post('/impersonate', authenticateToken, async (req, res) => {
     if (!userId) return res.status(400).json({ error: 'ID de usuario no especificado' });
 
     try {
-        const targetUsers = await userDb.query('SELECT id, nombre_usuario, rol, prestador_id FROM user WHERE id = ? AND FechaBaja IS NULL', [userId], req.user.rol);
+        const targetUsers = await userDb.query('SELECT id, nombre_usuario, rol, prestador_id, cod_cobrador FROM user WHERE id = ? AND FechaBaja IS NULL', [userId], req.user.rol);
         if (targetUsers.length === 0) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
@@ -183,7 +191,8 @@ router.post('/impersonate', authenticateToken, async (req, res) => {
                 nombre_usuario: targetUser.nombre_usuario,
                 rol: targetUser.rol,
                 roles: targetRoles.length > 0 ? targetRoles : [targetUser.rol],
-                prestador_id: targetUser.prestador_id
+                prestador_id: targetUser.prestador_id,
+                cod_cobrador: targetUser.cod_cobrador
             },
             JWT_SECRET,
             { expiresIn: '2h' }
@@ -198,7 +207,8 @@ router.post('/impersonate', authenticateToken, async (req, res) => {
                 nombre_usuario: targetUser.nombre_usuario,
                 rol: targetUser.rol,
                 roles: targetRoles.length > 0 ? targetRoles : [targetUser.rol],
-                prestador_id: targetUser.prestador_id
+                prestador_id: targetUser.prestador_id,
+                cod_cobrador: targetUser.cod_cobrador
             }
         });
     } catch (err) {
@@ -221,6 +231,7 @@ router.get('/users', authenticateToken, async (req, res) => {
                    u.prestador_id, p.nombre as prestador_nombre,
                    tp.nombre as tipo_profesional_nombre,
                    u.nombre, u.apellido, u.mail, u.celular, u.direccion,
+                   u.cod_cobrador,
                    GROUP_CONCAT(DISTINCT ur.rol) as roles
             FROM user u
             LEFT JOIN tipo_profesional tp ON u.tipo_profesional_id = tp.id
@@ -262,7 +273,7 @@ router.get('/tipos-profesional', authenticateToken, async (req, res) => {
 
 // POST /users (creates professional or standard users)
 router.post('/users', authenticateToken, isAdmin, async (req, res) => {
-    const { password, rol, roles, tipo_profesional_id, matricula, prestador_id, nombre, apellido, mail, celular, direccion } = req.body;
+    const { password, rol, roles, tipo_profesional_id, matricula, prestador_id, nombre, apellido, mail, celular, direccion, cod_cobrador } = req.body;
     if (!nombre || !apellido || !password) {
         return res.status(400).json({ error: 'Nombre, Apellido y Contraseña son obligatorios' });
     }
@@ -312,8 +323,8 @@ router.post('/users', authenticateToken, isAdmin, async (req, res) => {
 
         const hashedPass = await bcrypt.hash(password, 10);
         const insertResult = await userDb.query(
-            'INSERT INTO user (nombre_usuario, password, rol, tipo_profesional_id, matricula, prestador_id, nombre, apellido, mail, celular, direccion, CreacionUsuario, FechaCreacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())', 
-            [generatedUsername, hashedPass, finalRoles[0], tipo_profesional_id || null, matricula || null, finalPrestadorId, nombre, apellido, mail || null, celular || null, direccion || null, req.user.nombre_usuario], 
+            'INSERT INTO user (nombre_usuario, password, rol, tipo_profesional_id, matricula, prestador_id, nombre, apellido, mail, celular, direccion, cod_cobrador, CreacionUsuario, FechaCreacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())', 
+            [generatedUsername, hashedPass, finalRoles[0], tipo_profesional_id || null, matricula || null, finalPrestadorId, nombre, apellido, mail || null, celular || null, direccion || null, cod_cobrador || null, req.user.nombre_usuario], 
             req.user.rol
         );
         
@@ -380,7 +391,7 @@ router.delete('/users/:id', authenticateToken, async (req, res) => {
 router.put('/users/:id', authenticateToken, async (req, res) => {
     try {
         const { id } = req.params;
-        const { password, rol, roles, tipo_profesional_id, matricula, prestador_id, nombre, apellido, mail, celular, direccion } = req.body;
+        const { password, rol, roles, tipo_profesional_id, matricula, prestador_id, nombre, apellido, mail, celular, direccion, cod_cobrador } = req.body;
         const isSuperAdmin = req.user.rol === 'superadmin';
         const isAdminUser = req.user.rol === 'admin' || req.user.rol === 'recepcion' || isSuperAdmin;
 
@@ -432,8 +443,8 @@ router.put('/users/:id', authenticateToken, async (req, res) => {
             params.push(hashedPass);
         }
 
-        updates.push('rol = ?', 'tipo_profesional_id = ?', 'matricula = ?');
-        params.push(finalRol, tipo_profesional_id !== undefined ? tipo_profesional_id : null, matricula !== undefined ? matricula : null);
+        updates.push('rol = ?', 'tipo_profesional_id = ?', 'matricula = ?', 'cod_cobrador = ?');
+        params.push(finalRol, tipo_profesional_id !== undefined ? tipo_profesional_id : null, matricula !== undefined ? matricula : null, cod_cobrador !== undefined ? cod_cobrador : null);
 
         if (nombre !== undefined) {
             updates.push('nombre = ?');
