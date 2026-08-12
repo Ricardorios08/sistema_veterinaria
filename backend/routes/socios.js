@@ -735,4 +735,241 @@ router.post('/acomodar-ruta', authenticateToken, async (req, res) => {
     }
 });
 
+// ─────────────────────────────────────────────────
+// POST /api/socios/pagar-varios  — Pagar cuotas seleccionadas en bloque
+// ─────────────────────────────────────────────────
+router.post('/pagar-varios', authenticateToken, async (req, res) => {
+    try {
+        const { cod_socio, boletas = [], cobrador } = req.body;
+        if (!cod_socio || !Array.isArray(boletas) || boletas.length === 0) {
+            return res.status(400).json({ error: 'Código de socio y lista de boletas son obligatorios' });
+        }
+
+        const hoy = new Date().toISOString().split('T')[0];
+
+        // 1. Actualizar en mevepDb (legacy)
+        for (const boleta of boletas) {
+            await mevepDb.query(
+                `UPDATE pagos SET estado = 'PAGADO', fecha_pago = ?, cobrador = COALESCE(?, cobrador)
+                 WHERE cod_socio = ? AND nro_boleta = ? AND estado LIKE 'PENDIENTE%'`,
+                [hoy, cobrador || null, cod_socio, boleta]
+            );
+        }
+
+        // 2. Sincronizar en userDb (nueva base de datos)
+        try {
+            const socioRows = await userDb.query('SELECT id FROM socio WHERE cod_mevep = ? AND FechaBaja IS NULL', [cod_socio]);
+            if (socioRows.length > 0) {
+                const socioId = socioRows[0].id;
+                for (const boleta of boletas) {
+                    await userDb.query(
+                        `UPDATE pago SET estado = 'PAGADO', fecha_pago = ?, ModificacionUsuario = ?
+                         WHERE socio_id = ? AND nro_boleta = ? AND estado LIKE 'PENDIENTE%'`,
+                        [hoy, req.user.nombre_usuario, socioId, boleta]
+                    );
+                }
+            }
+        } catch (e) {
+            console.error('[pagar-varios] Error sync userDb:', e.message);
+        }
+
+        logAction(req.user.nombre_usuario, 'SOCIO_PAGAR_VARIOS', `Pago de ${boletas.length} cuotas para socio ${cod_socio}`, req);
+        res.json({ message: 'Pagos registrados correctamente', total_pagados: boletas.length });
+    } catch (err) {
+        console.error('[pagar-varios]', err.message);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// ─────────────────────────────────────────────────
+// POST /api/socios/corregir-pagos  — Revertir cuotas pagadas a pendiente
+// ─────────────────────────────────────────────────
+router.post('/corregir-pagos', authenticateToken, async (req, res) => {
+    try {
+        const { cod_socio, boletas = [], seguridad } = req.body;
+        if (!cod_socio || !Array.isArray(boletas) || boletas.length === 0) {
+            return res.status(400).json({ error: 'Código de socio y lista de boletas son obligatorios' });
+        }
+
+        // Validar contraseña de seguridad ("raza" en legacy o rol admin)
+        const isAdmin = ['admin', 'superadmin'].includes(req.user.rol);
+        const passValid = seguridad && seguridad.trim().toLowerCase() === 'raza';
+        if (!isAdmin && !passValid) {
+            return res.status(403).json({ error: 'Contraseña de seguridad incorrecta' });
+        }
+
+        // 1. Actualizar en mevepDb (legacy)
+        for (const boleta of boletas) {
+            await mevepDb.query(
+                `UPDATE pagos SET estado = 'PENDIENTE', fecha_pago = '0000-00-00'
+                 WHERE cod_socio = ? AND nro_boleta = ? AND estado = 'PAGADO'`,
+                [cod_socio, boleta]
+            );
+        }
+
+        // 2. Sincronizar en userDb
+        try {
+            const socioRows = await userDb.query('SELECT id FROM socio WHERE cod_mevep = ? AND FechaBaja IS NULL', [cod_socio]);
+            if (socioRows.length > 0) {
+                const socioId = socioRows[0].id;
+                for (const boleta of boletas) {
+                    await userDb.query(
+                        `UPDATE pago SET estado = 'PENDIENTE', fecha_pago = NULL, ModificacionUsuario = ?
+                         WHERE socio_id = ? AND nro_boleta = ? AND estado = 'PAGADO'`,
+                        [req.user.nombre_usuario, socioId, boleta]
+                    );
+                }
+            }
+        } catch (e) {
+            console.error('[corregir-pagos] Error sync userDb:', e.message);
+        }
+
+        logAction(req.user.nombre_usuario, 'SOCIO_CORREGIR_PAGOS', `Reversión de ${boletas.length} cuotas para socio ${cod_socio}`, req);
+        res.json({ message: 'Cuotas corregidas a pendiente correctamente', total_corregidos: boletas.length });
+    } catch (err) {
+        console.error('[corregir-pagos]', err.message);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// ─────────────────────────────────────────────────
+// POST /api/socios/eliminar-deuda  — Borrar cuota/deuda específica con contraseña
+// ─────────────────────────────────────────────────
+router.post('/eliminar-deuda', authenticateToken, async (req, res) => {
+    try {
+        const { cod_socio, nro_boleta, mes, anio, contra } = req.body;
+        if (!cod_socio || (!nro_boleta && (!mes || !anio))) {
+            return res.status(400).json({ error: 'Código de socio y número de boleta o mes/año son obligatorios' });
+        }
+
+        // Validar contraseña de seguridad ("450 gramos" en legacy o rol admin)
+        const isAdmin = ['admin', 'superadmin'].includes(req.user.rol);
+        const passValid = contra && contra.trim().toLowerCase() === '450 gramos';
+        if (!isAdmin && !passValid) {
+            return res.status(403).json({ error: 'Contraseña de seguridad incorrecta para borrar la deuda' });
+        }
+
+        // 1. Eliminar de mevepDb (legacy)
+        let deleteSql = 'DELETE FROM pagos WHERE cod_socio = ?';
+        let deleteParams = [cod_socio];
+        if (nro_boleta) {
+            deleteSql += ' AND nro_boleta = ?';
+            deleteParams.push(nro_boleta);
+        } else {
+            deleteSql += ' AND mes = ? AND anio = ?';
+            deleteParams.push(mes, anio);
+        }
+        await mevepDb.query(deleteSql, deleteParams);
+
+        // 2. Eliminar de userDb
+        try {
+            const socioRows = await userDb.query('SELECT id FROM socio WHERE cod_mevep = ? AND FechaBaja IS NULL', [cod_socio]);
+            if (socioRows.length > 0) {
+                const socioId = socioRows[0].id;
+                let userDelSql = 'DELETE FROM pago WHERE socio_id = ?';
+                let userDelParams = [socioId];
+                if (nro_boleta) {
+                    userDelSql += ' AND nro_boleta = ?';
+                    userDelParams.push(nro_boleta);
+                } else {
+                    userDelSql += ' AND mes = ? AND anio = ?';
+                    userDelParams.push(mes, anio);
+                }
+                await userDb.query(userDelSql, userDelParams);
+            }
+        } catch (e) {
+            console.error('[eliminar-deuda] Error sync userDb:', e.message);
+        }
+
+        logAction(req.user.nombre_usuario, 'SOCIO_ELIMINAR_DEUDA', `Deuda eliminada socio ${cod_socio} boleta ${nro_boleta || `${mes}/${anio}`}`, req);
+        res.json({ message: 'Deuda eliminada correctamente' });
+    } catch (err) {
+        console.error('[eliminar-deuda]', err.message);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// ─────────────────────────────────────────────────
+// POST /api/socios/pago-manual-individual  — Registrar cobro manual individual
+// ─────────────────────────────────────────────────
+router.post('/pago-manual-individual', authenticateToken, async (req, res) => {
+    try {
+        const { cod_socio, nro_boleta, mes, anio, fecha_pago, cobrador, importe } = req.body;
+        if (!cod_socio || !nro_boleta) {
+            return res.status(400).json({ error: 'Código de socio y número de boleta son obligatorios' });
+        }
+
+        const fechaPagoFinal = fecha_pago || new Date().toISOString().split('T')[0];
+
+        // 1. Actualizar mevepDb
+        await mevepDb.query(
+            `UPDATE pagos SET estado = 'PAGADO', fecha_pago = ?, cobrador = COALESCE(?, cobrador), importe = COALESCE(?, importe)
+             WHERE cod_socio = ? AND nro_boleta = ?`,
+            [fechaPagoFinal, cobrador || null, importe || null, cod_socio, nro_boleta]
+        );
+
+        // 2. Sincronizar en userDb
+        try {
+            const socioRows = await userDb.query('SELECT id FROM socio WHERE cod_mevep = ? AND FechaBaja IS NULL', [cod_socio]);
+            if (socioRows.length > 0) {
+                const socioId = socioRows[0].id;
+                await userDb.query(
+                    `UPDATE pago SET estado = 'PAGADO', fecha_pago = ?, cobrador = COALESCE(?, cobrador), importe = COALESCE(?, importe), ModificacionUsuario = ?
+                     WHERE socio_id = ? AND nro_boleta = ?`,
+                    [fechaPagoFinal, cobrador || null, importe || null, req.user.nombre_usuario, socioId, nro_boleta]
+                );
+            }
+        } catch (e) {
+            console.error('[pago-manual-individual] Error sync userDb:', e.message);
+        }
+
+        logAction(req.user.nombre_usuario, 'SOCIO_PAGO_MANUAL_INDIVIDUAL', `Pago manual registrado para socio ${cod_socio} boleta ${nro_boleta}`, req);
+        res.json({ message: 'Pago registrado correctamente' });
+    } catch (err) {
+        console.error('[pago-manual-individual]', err.message);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// ─────────────────────────────────────────────────
+// POST /api/socios/agregar-lista-espera  — Encolar socio en lista de espera
+// ─────────────────────────────────────────────────
+router.post('/agregar-lista-espera', authenticateToken, async (req, res) => {
+    try {
+        const { cod_socio, tipo = 'socio', cod_operacion = '' } = req.body;
+        if (!cod_socio) {
+            return res.status(400).json({ error: 'Código de socio es obligatorio' });
+        }
+
+        const hoy = new Date().toISOString().split('T')[0];
+
+        // Verificar si ya está en lista de espera hoy
+        let existentes = [];
+        try {
+            existentes = await mevepDb.query(
+                "SELECT cod_socio, atendido FROM lista_espera WHERE fecha_llegada = ? AND cod_socio = ? AND tipo = ?",
+                [hoy, cod_socio, tipo]
+            );
+        } catch (_) {}
+
+        if (existentes.length > 0 && existentes[0].atendido === 'N') {
+            return res.status(409).json({ error: 'El socio ya se encuentra registrado en la lista de espera de hoy' });
+        }
+
+        // Insertar en lista_espera
+        await mevepDb.query(
+            `INSERT INTO lista_espera (fecha_llegada, hora_llegada, cod_socio, atendido, cod_operacion, tipo)
+             VALUES (?, '0', ?, 'N', ?, ?)`,
+            [hoy, cod_socio, cod_operacion || '0', tipo]
+        );
+
+        logAction(req.user.nombre_usuario, 'SOCIO_AGREGAR_LISTA_ESPERA', `Socio ${cod_socio} enviado a lista de espera`, req);
+        res.json({ message: 'Socio agregado a la lista de espera correctamente' });
+    } catch (err) {
+        console.error('[agregar-lista-espera]', err.message);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = router;
+

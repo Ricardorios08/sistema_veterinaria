@@ -1,28 +1,40 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { API_URL } from '../config';
+import PagarVariosModal from '../components/PagarVariosModal';
+import CorregirPagosModal from '../components/CorregirPagosModal';
+import PagoManualCuotaModal from '../components/PagoManualCuotaModal';
+import AcomodarRutaModal from '../components/AcomodarRutaModal';
+import { DollarSign, RefreshCw, Route, Clock, FileText, PlusCircle, CheckCircle2, AlertCircle } from 'lucide-react';
 
 const MESES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
-const CuotaChip = ({ cuota }) => {
+const CuotaChip = ({ cuota, onClick }) => {
     const pagado = cuota.estado === 'PAGADO';
     return (
-        <div title={pagado ? `Pagado el ${cuota.fecha_pago || '—'}` : `Pendiente · Boleta ${cuota.nro_boleta}`}
+        <div
+            onClick={onClick}
+            title={pagado ? `Pagado el ${cuota.fecha_pago || '—'}` : `Haga clic para pago manual o borrar deuda · Boleta ${cuota.nro_boleta || '—'}`}
             style={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center',
                 padding: '6px 10px', borderRadius: '8px', minWidth: '68px',
                 background: pagado ? 'rgba(52,211,153,0.12)' : 'rgba(251,191,36,0.15)',
                 border: `1px solid ${pagado ? '#34d39944' : '#fbbf2466'}`,
-                cursor: 'default', transition: 'all 0.15s',
-            }}>
+                cursor: 'pointer', transition: 'all 0.15s',
+                transform: 'scale(1)',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+        >
             <span style={{ fontSize: '0.68rem', fontWeight: 700, color: pagado ? '#34d399' : '#fbbf24', lineHeight: 1 }}>
-                {MESES[(cuota.mes - 1) % 12]}/{String(cuota.anio).slice(2)}
+                {MESES[(parseInt(cuota.mes) - 1) % 12]}/{String(cuota.anio).slice(2)}
             </span>
             <span style={{ fontSize: '0.72rem', color: pagado ? '#34d399bb' : '#fbbf24bb', marginTop: '2px' }}>
-                ${(cuota.importe / 1000).toFixed(1)}K
+                ${(parseFloat(cuota.importe || 0) / 1000).toFixed(1)}K
             </span>
-            <span style={{ fontSize: '0.6rem', marginTop: '2px', color: pagado ? '#34d399' : '#fbbf24', opacity: 0.8 }}>
-                {pagado ? '✓' : '⏳'}
+            <span style={{ fontSize: '0.6rem', marginTop: '2px', color: pagado ? '#34d399' : '#fbbf24', opacity: 0.9 }}>
+                {pagado ? '✓ Pagado' : '⏳ Cobrar'}
             </span>
         </div>
     );
@@ -42,8 +54,13 @@ const Socios = ({ currentUser, onAddMascota }) => {
 
     // Cuotas / pagos
     const [pagosData, setPagosData] = useState(null);
-    const [loadingPagos, setLoadingPagos] = useState(false);
     const [mostrarTodasCuotas, setMostrarTodasCuotas] = useState(false);
+
+    // Modales de acciones legacy
+    const [showPagarVarios, setShowPagarVarios] = useState(false);
+    const [showCorregirPagos, setShowCorregirPagos] = useState(false);
+    const [selectedCuotaManual, setSelectedCuotaManual] = useState(null);
+    const [showAcomodarRuta, setShowAcomodarRuta] = useState(false);
 
     // Formulario crear/editar
     const [showForm, setShowForm] = useState(false);
@@ -57,6 +74,7 @@ const Socios = ({ currentUser, onAddMascota }) => {
         ruta: '', cobrador: '', no_imprimir: 'FALSO'
     });
     const [message, setMessage] = useState({ type: '', text: '' });
+    const [actionFeedback, setActionFeedback] = useState(null);
 
     const LIMIT = 50;
 
@@ -74,7 +92,7 @@ const Socios = ({ currentUser, onAddMascota }) => {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [search]);
 
     const fetchCobradores = async () => {
         try {
@@ -85,8 +103,8 @@ const Socios = ({ currentUser, onAddMascota }) => {
         }
     };
 
-    useEffect(() => { 
-        fetchSocios(1, ''); 
+    useEffect(() => {
+        fetchSocios(1, '');
         fetchCobradores();
     }, []);
 
@@ -112,6 +130,29 @@ const Socios = ({ currentUser, onAddMascota }) => {
             console.error(err);
         } finally {
             setLoadingDetalle(false);
+        }
+    };
+
+    const refreshCurrentSocio = () => {
+        if (selectedSocio) {
+            fetchDetalle(selectedSocio);
+            fetchSocios(page, search);
+        }
+    };
+
+    const handleAgregarListaEspera = async () => {
+        if (!detalle && !selectedSocio) return;
+        const codSocio = detalle?.cod_mevep || selectedSocio.id;
+        try {
+            await axios.post(`${API_URL}/socios/agregar-lista-espera`, {
+                cod_socio: codSocio,
+                tipo: 'socio'
+            });
+            setActionFeedback({ type: 'success', text: 'Socio agregado a la lista de espera correctamente' });
+            setTimeout(() => setActionFeedback(null), 3500);
+        } catch (err) {
+            setActionFeedback({ type: 'error', text: err.response?.data?.error || 'Error al agregar a lista de espera' });
+            setTimeout(() => setActionFeedback(null), 3500);
         }
     };
 
@@ -205,7 +246,7 @@ const Socios = ({ currentUser, onAddMascota }) => {
                 )}
             </form>
 
-            <div style={{ display: 'grid', gridTemplateColumns: selectedSocio ? '1fr 380px' : '1fr', gap: '1.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: selectedSocio ? '1fr 420px' : '1fr', gap: '1.5rem' }}>
                 {/* Tabla */}
                 <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
                     {loading ? (
@@ -269,49 +310,91 @@ const Socios = ({ currentUser, onAddMascota }) => {
                     )}
                 </div>
 
-                {/* Panel de detalle */}
+                {/* Panel de detalle de Socio */}
                 {selectedSocio && (
-                    <div className="card" style={{ position: 'sticky', top: '1rem', alignSelf: 'flex-start', maxHeight: 'calc(100vh - 10rem)', overflowY: 'auto' }}>
+                    <div className="card" style={{ position: 'sticky', top: '1rem', alignSelf: 'flex-start', maxHeight: 'calc(100vh - 8rem)', overflowY: 'auto' }}>
 
                         {/* Header del panel */}
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.6rem' }}>
                             <div>
                                 {detalle?.cod_mevep && (
-                                    <div style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginBottom: '2px' }}>
+                                    <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', marginBottom: '2px' }}>
                                         Socio N° <strong style={{ color: '#38bdf8' }}>{detalle.cod_mevep}</strong>
                                     </div>
                                 )}
-                                <h3 style={{ margin: 0, fontSize: '1rem' }}>{selectedSocio.apellido}, {selectedSocio.nombre}</h3>
+                                <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#fff' }}>{selectedSocio.apellido}, {selectedSocio.nombre}</h3>
                             </div>
                             <button className="btn-icon" onClick={() => { setSelectedSocio(null); setPagosData(null); }}>✕</button>
                         </div>
 
+                        {actionFeedback && (
+                            <div style={{
+                                background: actionFeedback.type === 'success' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
+                                border: `1px solid ${actionFeedback.type === 'success' ? '#10b981' : '#ef4444'}`,
+                                color: actionFeedback.type === 'success' ? '#6ee7b7' : '#fca5a5',
+                                padding: '0.5rem 0.8rem', borderRadius: '6px', marginBottom: '1rem', fontSize: '0.8rem',
+                                display: 'flex', alignItems: 'center', gap: '6px'
+                            }}>
+                                {actionFeedback.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
+                                {actionFeedback.text}
+                            </div>
+                        )}
+
                         {loadingDetalle ? (
-                            <div style={{ color: 'var(--text-dim)', textAlign: 'center', padding: '2rem' }}>Cargando...</div>
+                            <div style={{ color: 'var(--text-dim)', textAlign: 'center', padding: '2rem' }}>Cargando datos...</div>
                         ) : detalle && (
                             <>
-                                {/* ── Datos personales ── */}
-                                <div style={{ display: 'grid', gap: '0.4rem', fontSize: '0.82rem', marginBottom: '1rem' }}>
+                                {/* ── Datos Personales & Cobranza ── */}
+                                <div style={{ display: 'grid', gap: '0.4rem', fontSize: '0.82rem', marginBottom: '1rem', background: 'rgba(255,255,255,0.02)', padding: '0.75rem', borderRadius: '8px' }}>
                                     {detalle.documento && <div><span style={{ color: 'var(--text-dim)' }}>DNI:</span> {detalle.tipo_doc} {detalle.documento}</div>}
                                     {(detalle.celular || detalle.telefono) && <div><span style={{ color: 'var(--text-dim)' }}>Tel:</span> {detalle.celular || detalle.telefono}</div>}
                                     {detalle.mail && <div><span style={{ color: 'var(--text-dim)' }}>Mail:</span> {detalle.mail}</div>}
                                     {detalle.domicilio && <div><span style={{ color: 'var(--text-dim)' }}>Dom:</span> {detalle.domicilio}</div>}
                                     {detalle.departamento && <div><span style={{ color: 'var(--text-dim)' }}>Localidad:</span> {detalle.departamento}</div>}
-                                    {(detalle.ruta || detalle.cobrador || detalle.no_imprimir === 'VERDADERO') && (
-                                        <div>
-                                            {detalle.ruta && <span style={{ marginRight: '1rem' }}><span style={{ color: 'var(--text-dim)' }}>Ruta:</span> <strong>{detalle.ruta}</strong></span>}
-                                            {detalle.cobrador && <span><span style={{ color: 'var(--text-dim)' }}>Cobrador:</span> <strong>{detalle.cobrador}</strong></span>}
-                                            {detalle.no_imprimir === 'VERDADERO' && <span style={{ marginLeft: '1rem', color: '#f87171', fontWeight: 600 }}>(Cobro Local)</span>}
-                                        </div>
-                                    )}
+                                    
+                                    <div style={{ display: 'flex', gap: '0.8rem', marginTop: '0.4rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                                        {/* Botón dinámico Ruta: XX */}
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowAcomodarRuta(true)}
+                                            className="btn-secondary"
+                                            style={{ fontSize: '0.75rem', padding: '0.25rem 0.6rem', display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(59, 130, 246, 0.1)', color: '#93c5fd', borderColor: 'rgba(59, 130, 246, 0.3)' }}
+                                            title="Haga clic para modificar ruta y datos de cobranza"
+                                        >
+                                            <Route size={14} /> Ruta: <strong>{detalle.ruta || '—'}</strong>
+                                        </button>
+
+                                        {detalle.cobrador && (
+                                            <span style={{ fontSize: '0.75rem', color: '#cbd5e1' }}>
+                                                Cobrador: <strong>{detalle.cobrador}</strong>
+                                            </span>
+                                        )}
+                                        {detalle.no_imprimir === 'VERDADERO' ? (
+                                            <span style={{ fontSize: '0.75rem', color: '#f87171', fontWeight: 600 }}>(Pago Local)</span>
+                                        ) : (
+                                            <span style={{ fontSize: '0.75rem', color: '#34d399', fontWeight: 600 }}>(Pago Cobrador)</span>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* ── Botones de Acciones Rápidas (Lista de Espera / Historia Clínica) ── */}
+                                <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.2rem', flexWrap: 'wrap' }}>
+                                    <button
+                                        type="button"
+                                        onClick={handleAgregarListaEspera}
+                                        className="btn btn-secondary"
+                                        style={{ flex: 1, fontSize: '0.75rem', padding: '0.4rem 0.6rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '4px', background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', borderColor: 'rgba(16, 185, 129, 0.3)' }}
+                                    >
+                                        <Clock size={14} /> LISTA DE ESPERA
+                                    </button>
                                 </div>
 
                                 {/* ── Sección Cuotas / Pagos ── */}
                                 {pagosData && (
-                                    <div style={{ marginBottom: '1.25rem' }}>
+                                    <div style={{ marginBottom: '1.25rem', background: 'rgba(0,0,0,0.15)', padding: '0.8rem', borderRadius: '8px', border: '1px solid var(--border)' }}>
                                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.6rem' }}>
                                             <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-dim)' }}>
-                                                💳 Cuotas
+                                                💳 Estado de Cuotas
                                             </span>
                                             {/* Badge estado */}
                                             {pagosData.resumen.estado === 'al_dia' && (
@@ -325,32 +408,11 @@ const Socios = ({ currentUser, onAddMascota }) => {
                                                 </span>
                                             )}
                                             {pagosData.resumen.estado === 'inhabilitado' && (
-                                                <span style={{ background: 'rgba(239,68,68,0.15)', color: '#f87171', border: '1px solid #f8717144', borderRadius: '20px', padding: '2px 10px', fontSize: '0.7rem', fontWeight: 700, animation: 'pulse 1.5s infinite' }}>
-                                                    🔴 INHABILITADO
+                                                <span style={{ background: 'rgba(239,68,68,0.15)', color: '#f87171', border: '1px solid #f8717144', borderRadius: '20px', padding: '2px 10px', fontSize: '0.7rem', fontWeight: 700 }}>
+                                                    🔴 INHABILITADO POR DEUDA
                                                 </span>
                                             )}
                                         </div>
-
-                                        {/* Info cobrador / modo pago */}
-                                        {(pagosData.resumen.cobrador_nombre || pagosData.resumen.ruta) && (
-                                            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
-                                                {pagosData.resumen.modo_pago && (
-                                                    <span style={{ background: 'rgba(129,140,248,0.12)', color: '#818cf8', border: '1px solid #818cf833', borderRadius: '6px', padding: '2px 8px', fontSize: '0.7rem' }}>
-                                                        Pago: {pagosData.resumen.modo_pago}
-                                                    </span>
-                                                )}
-                                                {pagosData.resumen.cobrador_nombre && (
-                                                    <span style={{ background: 'rgba(129,140,248,0.12)', color: '#818cf8', border: '1px solid #818cf833', borderRadius: '6px', padding: '2px 8px', fontSize: '0.7rem' }}>
-                                                        Cobrador: {pagosData.resumen.cobrador_nombre}
-                                                    </span>
-                                                )}
-                                                {pagosData.resumen.ruta > 0 && (
-                                                    <span style={{ background: 'rgba(129,140,248,0.12)', color: '#818cf8', border: '1px solid #818cf833', borderRadius: '6px', padding: '2px 8px', fontSize: '0.7rem' }}>
-                                                        Ruta: {pagosData.resumen.ruta}
-                                                    </span>
-                                                )}
-                                            </div>
-                                        )}
 
                                         {/* Deuda total si tiene pendientes */}
                                         {pagosData.resumen.deuda_total > 0 && (
@@ -360,18 +422,43 @@ const Socios = ({ currentUser, onAddMascota }) => {
                                                 marginBottom: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center'
                                             }}>
                                                 <span style={{ fontSize: '0.75rem', color: '#fbbf24' }}>Deuda total:</span>
-                                                <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#fbbf24' }}>
-                                                    ${pagosData.resumen.deuda_total.toLocaleString('es-AR')}
+                                                <span style={{ fontSize: '0.95rem', fontWeight: 800, color: '#fbbf24' }}>
+                                                    ${pagosData.resumen.deuda_total.toLocaleString('es-AR', { minimumFractionDigits: 2 })}
                                                 </span>
                                             </div>
                                         )}
+
+                                        {/* BOTONES DE ACCIÓN DE PAGOS: Pagar Varios / Corregir Pagos */}
+                                        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.8rem' }}>
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowPagarVarios(true)}
+                                                className="btn btn-primary"
+                                                style={{ flex: 1, fontSize: '0.75rem', padding: '0.35rem 0.5rem', background: '#10b981', borderColor: '#10b981', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontWeight: 'bold' }}
+                                            >
+                                                <DollarSign size={14} /> Pagar Varios
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowCorregirPagos(true)}
+                                                className="btn btn-secondary"
+                                                style={{ flex: 1, fontSize: '0.75rem', padding: '0.35rem 0.5rem', background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b', borderColor: 'rgba(245, 158, 11, 0.3)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontWeight: 'bold' }}
+                                            >
+                                                <RefreshCw size={14} /> Corregir Pagos
+                                            </button>
+                                        </div>
 
                                         {/* Grid de chips de cuotas */}
                                         {pagosData.cuotas.length > 0 ? (
                                             <>
                                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
                                                     {(mostrarTodasCuotas ? pagosData.cuotas : pagosData.cuotas.slice(0, 12)).map((c, i) => (
-                                                        <CuotaChip key={i} cuota={c} />
+                                                        <CuotaChip
+                                                            key={i}
+                                                            cuota={c}
+                                                            onClick={() => setSelectedCuotaManual(c)}
+                                                        />
                                                     ))}
                                                 </div>
                                                 {pagosData.cuotas.length > 12 && (
@@ -396,11 +483,11 @@ const Socios = ({ currentUser, onAddMascota }) => {
                                     <h4 style={{ margin: 0, color: 'var(--accent)', fontSize: '0.9rem' }}>
                                         🐶 Mascotas ({detalle.mascotas?.length || 0})
                                     </h4>
-                                    <button className="btn-secondary" style={{ fontSize: '0.72rem', padding: '0.25rem 0.6rem' }}
+                                    <button className="btn-secondary" style={{ fontSize: '0.72rem', padding: '0.25rem 0.6rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                                         onClick={() => {
                                             if (onAddMascota) onAddMascota('socio', selectedSocio.id, `${selectedSocio.apellido}, ${selectedSocio.nombre}`);
                                         }}>
-                                        + Agregar
+                                        <PlusCircle size={12} /> Agregar
                                     </button>
                                 </div>
                                 {detalle.mascotas?.length === 0 ? (
@@ -409,12 +496,17 @@ const Socios = ({ currentUser, onAddMascota }) => {
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                         {detalle.mascotas.map(m => (
                                             <div key={m.id} className="card" style={{ padding: '0.75rem', background: 'var(--surface-alt)' }}>
-                                                <div style={{ fontWeight: 600 }}>{m.nombre}</div>
-                                                <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>
-                                                    {[m.especie, m.raza, m.sexo].filter(Boolean).join(' · ')}
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                    <div style={{ fontWeight: 600, color: '#fff' }}>{m.nombre}</div>
+                                                    <span style={{ fontSize: '0.75rem', color: '#93c5fd', background: 'rgba(59,130,246,0.1)', padding: '2px 6px', borderRadius: '4px' }}>
+                                                        {m.especie || 'Mascota'}
+                                                    </span>
+                                                </div>
+                                                <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginTop: '2px' }}>
+                                                    {[m.raza, m.pelaje, m.sexo].filter(Boolean).join(' · ')}
                                                 </div>
                                                 {m.fecha_nac && (
-                                                    <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>
+                                                    <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', marginTop: '2px' }}>
                                                         Nac: {new Date(m.fecha_nac).toLocaleDateString('es-AR')}
                                                     </div>
                                                 )}
@@ -428,7 +520,7 @@ const Socios = ({ currentUser, onAddMascota }) => {
                 )}
             </div>
 
-            {/* Modal Formulario */}
+            {/* Modal Formulario Crear / Editar */}
             {showForm && (
                 <div className="modal-overlay" onClick={() => setShowForm(false)}>
                     <div className="modal-content" style={{ maxWidth: '850px', width: '100%' }} onClick={e => e.stopPropagation()}>
@@ -597,6 +689,48 @@ const Socios = ({ currentUser, onAddMascota }) => {
                         </form>
                     </div>
                 </div>
+            )}
+
+            {/* Modal Pagar Varios */}
+            {showPagarVarios && selectedSocio && (
+                <PagarVariosModal
+                    socio={detalle || selectedSocio}
+                    cuotas={pagosData?.cuotas || []}
+                    cobradores={cobradores}
+                    onClose={() => setShowPagarVarios(false)}
+                    onSuccess={refreshCurrentSocio}
+                />
+            )}
+
+            {/* Modal Corregir Pagos */}
+            {showCorregirPagos && selectedSocio && (
+                <CorregirPagosModal
+                    socio={detalle || selectedSocio}
+                    cuotas={pagosData?.cuotas || []}
+                    onClose={() => setShowCorregirPagos(false)}
+                    onSuccess={refreshCurrentSocio}
+                />
+            )}
+
+            {/* Modal Pago Manual Cuota Individual */}
+            {selectedCuotaManual && selectedSocio && (
+                <PagoManualCuotaModal
+                    socio={detalle || selectedSocio}
+                    cuota={selectedCuotaManual}
+                    cobradores={cobradores}
+                    onClose={() => setSelectedCuotaManual(null)}
+                    onSuccess={refreshCurrentSocio}
+                />
+            )}
+
+            {/* Modal Acomodar Ruta */}
+            {showAcomodarRuta && selectedSocio && (
+                <AcomodarRutaModal
+                    socio={detalle || selectedSocio}
+                    cobradores={cobradores}
+                    onClose={() => setShowAcomodarRuta(false)}
+                    onSuccess={refreshCurrentSocio}
+                />
             )}
         </div>
     );
